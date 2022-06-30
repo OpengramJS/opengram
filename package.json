@@ -12,10 +12,10 @@
   "bugs": {
     "url": "https://github.com/OpengramJS/opengram/issues"
   },
-  "main": "opengram.js",
+  "main": "src/opengram.js",
   "files": [
-    "core/**/*.js",
-    "scenes/**/*.js",
+    "src/core/**/*.js",
+    "src/scenes/**/*.js",
     "*.js"
   ],
   "scripts": {
