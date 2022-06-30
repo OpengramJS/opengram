@@ -1,6 +1,3 @@
-# IDEA
-.idea
-
 # Logs
 logs
 *.log
@@ -23,10 +20,6 @@ coverage
 # node-waf configuration
 .lock-wscript
 
-# lock scripts
-package-lock.json
-yarn.lock
-
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
 
@@ -40,4 +33,4 @@ node_modules
 .node_repl_history
 .env
 .vscode
-package-lock.json
+.idea
