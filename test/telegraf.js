@@ -1,6 +1,6 @@
 const test = require('ava')
-const Telegraf = require('../')
-const { session } = Telegraf
+const Opengram = require('../')
+const { session } = Opengram
 
 const BaseTextMessage = {
   chat: { id: 1 },
@@ -21,7 +21,7 @@ const UpdateTypes = [
 
 UpdateTypes.forEach((update) => {
   test.cb('should provide update payload for ' + update.type, (t) => {
-    const bot = new Telegraf()
+    const bot = new Opengram()
     bot.on(update.type, (ctx) => {
       t.true(update.prop in ctx)
       t.true('telegram' in ctx)
@@ -37,7 +37,7 @@ UpdateTypes.forEach((update) => {
 })
 
 test.cb('should provide update payload for text', (t) => {
-  const bot = new Telegraf()
+  const bot = new Opengram()
   bot.on('text', (ctx) => {
     t.true('telegram' in ctx)
     t.true('updateType' in ctx)
@@ -52,7 +52,7 @@ test.cb('should provide update payload for text', (t) => {
 })
 
 test.cb('should provide shortcuts for `message` update', (t) => {
-  const bot = new Telegraf()
+  const bot = new Opengram()
   bot.on('message', (ctx) => {
     t.true('reply' in ctx)
     t.true('replyWithPhoto' in ctx)
@@ -108,7 +108,7 @@ test.cb('should provide shortcuts for `message` update', (t) => {
 })
 
 test.cb('should provide shortcuts for `callback_query` update', (t) => {
-  const bot = new Telegraf()
+  const bot = new Opengram()
   bot.on('callback_query', (ctx) => {
     t.true('answerCbQuery' in ctx)
     t.true('reply' in ctx)
@@ -162,7 +162,7 @@ test.cb('should provide shortcuts for `callback_query` update', (t) => {
 })
 
 test.cb('should provide shortcuts for `shipping_query` update', (t) => {
-  const bot = new Telegraf()
+  const bot = new Opengram()
   bot.on('shipping_query', (ctx) => {
     t.true('answerShippingQuery' in ctx)
     t.end()
@@ -171,7 +171,7 @@ test.cb('should provide shortcuts for `shipping_query` update', (t) => {
 })
 
 test.cb('should provide shortcuts for `pre_checkout_query` update', (t) => {
-  const bot = new Telegraf()
+  const bot = new Opengram()
   bot.on('pre_checkout_query', (ctx) => {
     t.true('answerPreCheckoutQuery' in ctx)
     t.end()
@@ -180,7 +180,7 @@ test.cb('should provide shortcuts for `pre_checkout_query` update', (t) => {
 })
 
 test.cb('should provide chat and sender info', (t) => {
-  const bot = new Telegraf()
+  const bot = new Opengram()
   bot.on(['text', 'message'], (ctx) => {
     t.is(ctx.from.id, 42)
     t.is(ctx.chat.id, 1)
@@ -190,7 +190,7 @@ test.cb('should provide chat and sender info', (t) => {
 })
 
 test.cb('should provide shortcuts for `inline_query` update', (t) => {
-  const bot = new Telegraf()
+  const bot = new Opengram()
   bot.on('inline_query', (ctx) => {
     t.true('answerInlineQuery' in ctx)
     t.end()
@@ -199,7 +199,7 @@ test.cb('should provide shortcuts for `inline_query` update', (t) => {
 })
 
 test.cb('should provide subtype for `channel_post` update', (t) => {
-  const bot = new Telegraf('', { channelMode: true })
+  const bot = new Opengram('', { channelMode: true })
   bot.on('text', (ctx) => {
     t.is(ctx.channelPost.text, 'foo')
     t.end()
@@ -208,7 +208,7 @@ test.cb('should provide subtype for `channel_post` update', (t) => {
 })
 
 test.cb('should share state', (t) => {
-  const bot = new Telegraf()
+  const bot = new Opengram()
   bot.on('message', (ctx, next) => {
     ctx.state.answer = 41
     return next()
@@ -223,7 +223,7 @@ test.cb('should share state', (t) => {
 })
 
 test('should store session state', (t) => {
-  const bot = new Telegraf()
+  const bot = new Opengram()
   bot.use(session())
   bot.hears('calc', (ctx) => {
     t.true('session' in ctx)
@@ -242,7 +242,7 @@ test('should store session state', (t) => {
 })
 
 test('should store session state with custom store', (t) => {
-  const bot = new Telegraf()
+  const bot = new Opengram()
   const dummyStore = {}
   bot.use(session({
     store: {
@@ -271,7 +271,7 @@ test('should store session state with custom store', (t) => {
 })
 
 test.cb('should work with context extensions', (t) => {
-  const bot = new Telegraf()
+  const bot = new Opengram()
   bot.context.db = {
     getUser: () => undefined
   }
@@ -284,7 +284,7 @@ test.cb('should work with context extensions', (t) => {
 })
 
 test.cb('should handle webhook response', (t) => {
-  const bot = new Telegraf()
+  const bot = new Opengram()
   bot.on('message', async ({ reply }) => {
     const result = await reply(':)')
     t.deepEqual(result, { webhook: true })
@@ -302,14 +302,14 @@ const resStub = {
 }
 
 test.cb('should respect webhookReply option', (t) => {
-  const bot = new Telegraf(null, { telegram: { webhookReply: false } })
+  const bot = new Opengram(null, { telegram: { webhookReply: false } })
   bot.catch((err) => { throw err }) // Disable log
   bot.on('message', ({ reply }) => reply(':)'))
   t.throwsAsync(bot.handleUpdate({ message: BaseTextMessage }, resStub)).then(() => t.end())
 })
 
 test.cb('should respect webhookReply runtime change', (t) => {
-  const bot = new Telegraf()
+  const bot = new Opengram()
   bot.webhookReply = false
   bot.catch((err) => { throw err }) // Disable log
   bot.on('message', (ctx) => ctx.reply(':)'))
@@ -319,7 +319,7 @@ test.cb('should respect webhookReply runtime change', (t) => {
 })
 
 test.cb('should respect webhookReply runtime change (per request)', (t) => {
-  const bot = new Telegraf()
+  const bot = new Opengram()
   bot.catch((err) => { throw err }) // Disable log
   bot.on('message', async (ctx) => {
     ctx.webhookReply = false

@@ -50,7 +50,7 @@ const MessageSubTypesMapping = {
   forward_date: 'forward'
 }
 
-class TelegrafContext {
+class OpengramContext {
   constructor (update, telegram, options) {
     this.tg = telegram
     this.update = update
@@ -63,7 +63,7 @@ class TelegrafContext {
     } else {
       this.updateSubTypes = []
     }
-    Object.getOwnPropertyNames(TelegrafContext.prototype)
+    Object.getOwnPropertyNames(OpengramContext.prototype)
       .filter((key) => key !== 'constructor' && typeof this[key] === 'function')
       .forEach((key) => (this[key] = this[key].bind(this)))
   }
@@ -169,7 +169,7 @@ class TelegrafContext {
 
   assert (value, method) {
     if (!value) {
-      throw new Error(`Telegraf: "${method}" isn't available for "${this.updateType}::${this.updateSubTypes}"`)
+      throw new Error(`Opengram: "${method}" isn't available for "${this.updateType}::${this.updateSubTypes}"`)
     }
   }
 
@@ -592,4 +592,4 @@ class TelegrafContext {
   }
 }
 
-module.exports = TelegrafContext
+module.exports = OpengramContext

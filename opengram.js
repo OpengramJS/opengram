@@ -1,4 +1,4 @@
-const debug = require('debug')('telegraf:core')
+const debug = require('debug')('opengram:core')
 const Telegram = require('./telegram')
 const Extra = require('./extra')
 const Composer = require('./composer')
@@ -20,7 +20,7 @@ const DEFAULT_OPTIONS = {
 
 const noop = () => { }
 
-class Telegraf extends Composer {
+class Opengram extends Composer {
   constructor (token, options) {
     super()
     this.options = {
@@ -117,7 +117,7 @@ class Telegraf extends Composer {
         if (domain.startsWith('https://') || domain.startsWith('http://')) {
           domain = new URL(domain).host
         }
-        const hookPath = config.webhook.hookPath || `/telegraf/${crypto.randomBytes(32).toString('hex')}`
+        const hookPath = config.webhook.hookPath || `/opengram/${crypto.randomBytes(32).toString('hex')}`
         const { port, host, tlsOptions, cb } = config.webhook
         this.startWebhook(hookPath, tlsOptions, port, host, cb)
         if (!domain) {
@@ -165,8 +165,8 @@ class Telegraf extends Composer {
   handleUpdate (update, webhookResponse) {
     debug('Processing update', update.update_id)
     const tg = new Telegram(this.token, this.telegram.options, webhookResponse)
-    const TelegrafContext = this.options.contextType
-    const ctx = new TelegrafContext(update, tg, this.options)
+    const OpengramContext = this.options.contextType
+    const ctx = new OpengramContext(update, tg, this.options)
     Object.assign(ctx, this.context)
     return this.middleware()(ctx).catch((err) => this.handleError(err, ctx))
   }
@@ -206,14 +206,14 @@ class Telegraf extends Composer {
   }
 }
 
-module.exports = Object.assign(Telegraf, {
+module.exports = Object.assign(Opengram, {
   Context,
   Composer,
-  default: Telegraf,
+  default: Opengram,
   Extra,
   Markup,
   Router,
-  Telegraf,
+  Opengram,
   Telegram,
   Stage,
   BaseScene,

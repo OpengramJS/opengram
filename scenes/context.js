@@ -1,4 +1,4 @@
-const debug = require('debug')('telegraf:scenes:context')
+const debug = require('debug')('opengram:scenes:context')
 const { safePassThru } = require('../composer')
 
 const noop = () => Promise.resolve()

@@ -1,4 +1,4 @@
-const debug = require('debug')('telegraf:client')
+const debug = require('debug')('opengram:client')
 const crypto = require('crypto')
 const fetch = require('node-fetch').default
 const fs = require('fs')
