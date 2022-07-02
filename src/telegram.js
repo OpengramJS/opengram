@@ -186,8 +186,8 @@ class Telegram extends ApiClient {
     return this.callApi('setChatPermissions', { chat_id: chatId, permissions })
   }
 
-  kickChatMember (chatId, userId, untilDate) {
-    return this.callApi('kickChatMember', { chat_id: chatId, user_id: userId, until_date: untilDate })
+  kickChatMember (chatId, userId, untilDate, extra) {
+    return this.callApi('kickChatMember', { chat_id: chatId, user_id: userId, until_date: untilDate, ...extra })
   }
 
   promoteChatMember (chatId, userId, extra) {
@@ -443,6 +443,28 @@ class Telegram extends ApiClient {
       from_chat_id: fromChatId,
       message_id: messageId,
       ...extra
+    })
+  }
+
+  createChatInviteLink (chatId, extra) {
+    return this.callApi('createChatInviteLink', {
+      chat_id: chatId,
+      ...extra
+    })
+  }
+
+  editChatInviteLink (chatId, inviteLink, extra) {
+    return this.callApi('editChatInviteLink', {
+      chat_id: chatId,
+      invite_link: inviteLink,
+      ...extra
+    })
+  }
+
+  revokeChatInviteLink (chatId, inviteLink) {
+    return this.callApi('revokeChatInviteLink', {
+      chat_id: chatId,
+      invite_link: inviteLink
     })
   }
 }
