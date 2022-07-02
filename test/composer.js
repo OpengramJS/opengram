@@ -13,7 +13,10 @@ const topLevelUpdates = [
   { type: 'channel_post', update: { channel_post: {} } },
   { type: 'edited_channel_post', update: { edited_channel_post: {} } },
   { type: 'chosen_inline_result', update: { chosen_inline_result: {} } },
-  { type: 'poll', update: { poll: {} } }
+  { type: 'poll', update: { poll: {} } },
+  { type: 'poll_answer', update: { poll_answer: {} } },
+  { type: 'my_chat_member', update: { my_chat_member: {} } },
+  { type: 'chat_member', update: { chat_member: {} } }
 ]
 
 topLevelUpdates.forEach((update) => {
@@ -66,7 +69,11 @@ const updateTypes = [
   'contact',
   'channel_chat_created',
   'audio',
-  'poll'
+  'poll',
+  'message_auto_delete_timer_changed',
+  'voice_chat_started',
+  'voice_chat_ended',
+  'voice_chat_participants_invited'
 ]
 
 updateTypes.forEach((update) => {
