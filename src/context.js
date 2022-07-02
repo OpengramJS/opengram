@@ -374,6 +374,16 @@ class OpengramContext {
     return this.telegram.promoteChatMember(this.chat.id, ...args)
   }
 
+  banChatSenderChat (...args) {
+    this.assert(this.chat, 'banChatSenderChat')
+    return this.telegram.banChatSenderChat(this.chat.id, ...args)
+  }
+
+  unbanChatSenderChat (...args) {
+    this.assert(this.chat, 'unbanChatSenderChat')
+    return this.telegram.unbanChatSenderChat(this.chat.id, ...args)
+  }
+
   setChatAdministratorCustomTitle (...args) {
     this.assert(this.chat, 'setChatAdministratorCustomTitle')
     return this.telegram.setChatAdministratorCustomTitle(this.chat.id, ...args)

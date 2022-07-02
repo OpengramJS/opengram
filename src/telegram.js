@@ -206,6 +206,14 @@ class Telegram extends ApiClient {
     return this.callApi('restrictChatMember', { chat_id: chatId, user_id: userId, ...extra })
   }
 
+  banChatSenderChat (chatId, senderChatId) {
+    return this.callApi('banChatSenderChat', { chat_id: chatId, sender_chat_id: senderChatId })
+  }
+
+  unbanChatSenderChat (chatId, senderChatId) {
+    return this.callApi('unbanChatSenderChat', { chat_id: chatId, sender_chat_id: senderChatId })
+  }
+
   setChatAdministratorCustomTitle (chatId, userId, title) {
     return this.callApi('setChatAdministratorCustomTitle', { chat_id: chatId, user_id: userId, custom_title: title })
   }
