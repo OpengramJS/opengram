@@ -27,6 +27,11 @@ test('should generate Markdown options', (t) => {
   t.deepEqual(extra, { parse_mode: 'Markdown' })
 })
 
+test('should generate MarkdownV2 options', (t) => {
+  const extra = { ...Extra.markdownV2() }
+  t.deepEqual(extra, { parse_mode: 'MarkdownV2' })
+})
+
 test('should generate notifications options', (t) => {
   const extra = { ...Extra.notifications(false) }
   t.deepEqual(extra, { disable_notification: true })
