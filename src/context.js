@@ -590,6 +590,16 @@ class OpengramContext {
     this.assert(message, 'forwardMessage')
     return this.telegram.forwardMessage(chatId, this.chat.id, message.message_id, extra)
   }
+
+  copyMessage (chatId, extra) {
+    const message = this.message ||
+      this.editedMessage ||
+      this.channelPost ||
+      this.editedChannelPost ||
+      (this.callbackQuery && this.callbackQuery.message)
+    this.assert(message, 'copyMessage')
+    return this.telegram.copyMessage(chatId, message.chat.id, message.message_id, extra)
+  }
 }
 
 module.exports = OpengramContext
