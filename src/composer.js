@@ -78,6 +78,10 @@ class Composer {
     return this.use(Composer.cashtag(...args))
   }
 
+  spoiler (...args) {
+    return this.use(Composer.spoiler(...args))
+  }
+
   start (...fns) {
     return this.command('start', Composer.tap((ctx) => {
       ctx.startPayload = ctx.message.text.substring(7)
@@ -244,6 +248,10 @@ class Composer {
 
   static cashtag (cashtag, ...fns) {
     return Composer.entityText('cashtag', normalizeTextArguments(cashtag, '$'), ...fns)
+  }
+
+  static spoiler (text, ...fns) {
+    return Composer.entityText('spoiler', text, ...fns)
   }
 
   static match (triggers, ...fns) {
