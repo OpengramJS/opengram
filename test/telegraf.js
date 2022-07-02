@@ -288,7 +288,7 @@ test.cb('should work with context extensions', (t) => {
 })
 
 test.cb('should handle webhook response', (t) => {
-  const bot = new Opengram()
+  const bot = new Opengram(null, { telegram: { webhookReply: true } })
   bot.on('message', async ({ reply }) => {
     const result = await reply(':)')
     t.deepEqual(result, { webhook: true })
