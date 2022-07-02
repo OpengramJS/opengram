@@ -479,6 +479,20 @@ class Telegram extends ApiClient {
       invite_link: inviteLink
     })
   }
+
+  approveChatJoinRequest (chatId, userId) {
+    return this.callApi('approveChatJoinRequest', {
+      chat_id: chatId,
+      user_id: userId
+    })
+  }
+
+  declineChatJoinRequest (chatId, userId) {
+    return this.callApi('declineChatJoinRequest', {
+      chat_id: chatId,
+      user_id: userId
+    })
+  }
 }
 
 module.exports = Telegram

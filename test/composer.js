@@ -16,7 +16,8 @@ const topLevelUpdates = [
   { type: 'poll', update: { poll: {} } },
   { type: 'poll_answer', update: { poll_answer: {} } },
   { type: 'my_chat_member', update: { my_chat_member: {} } },
-  { type: 'chat_member', update: { chat_member: {} } }
+  { type: 'chat_member', update: { chat_member: {} } },
+  { type: 'chat_join_request', update: { chat_join_request: {} } }
 ]
 
 topLevelUpdates.forEach((update) => {

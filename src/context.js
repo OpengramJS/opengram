@@ -11,7 +11,8 @@ const UpdateTypes = [
   'poll',
   'poll_answer',
   'my_chat_member',
-  'chat_member'
+  'chat_member',
+  'chat_join_request'
 ]
 
 const MessageSubTypes = [
@@ -133,6 +134,10 @@ class OpengramContext {
 
   get chatMember () {
     return this.update.chat_member
+  }
+
+  get chatJoinRequest () {
+    return this.update.chat_join_request
   }
 
   get chat () {
@@ -652,6 +657,16 @@ class OpengramContext {
   revokeChatInviteLink (...args) {
     this.assert(this.chat, 'revokeChatInviteLink')
     return this.telegram.revokeChatInviteLink(this.chat.id, ...args)
+  }
+
+  approveChatJoinRequest (...args) {
+    this.assert(this.chat, 'approveChatJoinRequest')
+    return this.telegram.approveChatJoinRequest(this.chat.id, ...args)
+  }
+
+  declineChatJoinRequest (...args) {
+    this.assert(this.chat, 'declineChatJoinRequest')
+    return this.telegram.declineChatJoinRequest(this.chat.id, ...args)
   }
 }
 

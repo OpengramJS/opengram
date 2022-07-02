@@ -20,7 +20,8 @@ const UpdateTypes = [
   { type: 'poll', prop: 'poll', update: { poll: {} } },
   { type: 'poll_answer', prop: 'pollAnswer', update: { poll_answer: {} } },
   { type: 'my_chat_member', prop: 'myChatMember', update: { my_chat_member: {} } },
-  { type: 'chat_member', prop: 'chatMember', update: { chat_member: {} } }
+  { type: 'chat_member', prop: 'chatMember', update: { chat_member: {} } },
+  { type: 'chat_join_request', prop: 'chatJoinRequest', update: { chat_join_request: {} } }
 ]
 
 UpdateTypes.forEach((update) => {
@@ -126,6 +127,8 @@ test.cb('should provide shortcuts for `message` update', (t) => {
     t.true('createChatInviteLink' in ctx)
     t.true('editChatInviteLink' in ctx)
     t.true('revokeChatInviteLink' in ctx)
+    t.true('approveChatJoinRequest' in ctx)
+    t.true('declineChatJoinRequest' in ctx)
     t.end()
   })
   bot.handleUpdate({ message: BaseTextMessage })
@@ -200,6 +203,8 @@ test.cb('should provide shortcuts for `callback_query` update', (t) => {
     t.true('createChatInviteLink' in ctx)
     t.true('editChatInviteLink' in ctx)
     t.true('revokeChatInviteLink' in ctx)
+    t.true('approveChatJoinRequest' in ctx)
+    t.true('declineChatJoinRequest' in ctx)
     t.end()
   })
   bot.handleUpdate({ callback_query: BaseTextMessage })
