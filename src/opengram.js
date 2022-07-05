@@ -138,6 +138,7 @@ class Opengram extends Composer {
           .setWebhook(`https://${domain}${hookPath}`, {
             drop_pending_updates: config.dropPendingUpdates,
             allowed_updates: config.allowedUpdates,
+            ip_address: config.webhook.ipAddress,
             max_connections: config.webhook.maxConnections
           })
           .then(() => debug(`Bot started with webhook @ https://${domain}`))
