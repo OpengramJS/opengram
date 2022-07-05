@@ -9,4 +9,4 @@ class TelegramError extends Error {
   }
 }
 
-module.exports = TelegramError
+module.exports = { TelegramError }

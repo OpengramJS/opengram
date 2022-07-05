@@ -4,7 +4,7 @@ const fetch = require('node-fetch').default
 const fs = require('fs')
 const https = require('https')
 const path = require('path')
-const TelegramError = require('./error')
+const { TelegramError } = require('./error')
 const MultipartStream = require('./multipart-stream')
 const { isStream } = MultipartStream
 
