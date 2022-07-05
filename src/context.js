@@ -193,7 +193,7 @@ class OpengramContext {
 
   assert (value, method) {
     if (!value) {
-      throw new Error(`Opengram: "${method}" isn't available for "${this.updateType}::${this.updateSubTypes}"`)
+      throw new TypeError(`Opengram: "${method}" isn't available for "${this.updateType}::${this.updateSubTypes}"`)
     }
   }
 
