@@ -362,25 +362,22 @@ class Composer {
     return (ctx, next) => {
       let index = -1
       return execute(0, ctx)
-      function execute (i, context) {
+      async function execute (i, context) {
         if (!(context instanceof Context)) {
-          return Promise.reject(new Error('next(ctx) called with invalid context'))
+          throw new Error('next(ctx) called with invalid context')
         }
         if (i <= index) {
-          return Promise.reject(new Error('next() called multiple times'))
+          throw new Error('next() called multiple times')
         }
         index = i
         const handler = middlewares[i] ? Composer.unwrap(middlewares[i]) : next
         if (!handler) {
-          return Promise.resolve()
+          return
         }
-        try {
-          return Promise.resolve(
-            handler(context, (ctx = context) => execute(i + 1, ctx))
-          )
-        } catch (err) {
-          return Promise.reject(err)
-        }
+
+        await handler(context, async (ctx = context) => {
+          await execute(i + 1, ctx)
+        })
       }
     }
   }
