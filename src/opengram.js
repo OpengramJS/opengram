@@ -137,7 +137,8 @@ class Opengram extends Composer {
         return this.telegram
           .setWebhook(`https://${domain}${hookPath}`, {
             drop_pending_updates: config.dropPendingUpdates,
-            allowed_updates: config.allowedUpdates
+            allowed_updates: config.allowedUpdates,
+            max_connections: config.webhook.maxConnections
           })
           .then(() => debug(`Bot started with webhook @ https://${domain}`))
       })
