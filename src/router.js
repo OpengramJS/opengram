@@ -2,7 +2,7 @@ const { compose, lazy, passThru } = require('./composer')
 
 class Router {
   constructor (routeFn, handlers = new Map()) {
-    if (!routeFn) {
+    if (typeof routeFn !== 'function') {
       throw new Error('Missing routing function')
     }
     this.routeFn = routeFn
@@ -29,7 +29,7 @@ class Router {
   middleware () {
     return lazy((ctx) => {
       return Promise.resolve(this.routeFn(ctx)).then((result) => {
-        if (!result || !result.route || !this.handlers.has(result.route)) {
+        if (result == null) {
           return this.otherwiseHandler
         }
         Object.assign(ctx, result.context)
