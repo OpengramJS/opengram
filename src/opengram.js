@@ -106,7 +106,9 @@ class Opengram extends Composer {
         this.context.botInfo = botInfo
         if (!config.webhook) {
           const { timeout, limit, allowedUpdates, stopCallback } = config.polling || {}
-          return this.telegram.deleteWebhook()
+          return this.telegram.deleteWebhook({
+            drop_pending_updates: config.dropPendingUpdates
+          })
             .then(() => this.startPolling(timeout, limit, allowedUpdates, stopCallback))
             .then(() => debug('Bot started with long-polling'))
         }
@@ -125,7 +127,10 @@ class Opengram extends Composer {
           return
         }
         return this.telegram
-          .setWebhook(`https://${domain}${hookPath}`)
+          .setWebhook(`https://${domain}${hookPath}`, {
+            drop_pending_updates: config.dropPendingUpdates,
+            allowed_updates: config.allowedUpdates
+          })
           .then(() => debug(`Bot started with webhook @ https://${domain}`))
       })
   }
