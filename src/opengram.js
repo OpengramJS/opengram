@@ -97,6 +97,14 @@ class Opengram extends Composer {
     return this
   }
 
+  secretPathComponent () {
+    return crypto
+      .createHash('sha3-256')
+      .update(this.token)
+      .update(process.version) // salt
+      .digest('hex')
+  }
+
   launch (config = {}) {
     debug('Connecting to Telegram')
     return this.telegram.getMe()
@@ -119,7 +127,7 @@ class Opengram extends Composer {
         if (domain.startsWith('https://') || domain.startsWith('http://')) {
           domain = new URL(domain).host
         }
-        const hookPath = config.webhook.hookPath || `/opengram/${crypto.randomBytes(32).toString('hex')}`
+        const hookPath = config.webhook.hookPath || `/telegraf/${this.secretPathComponent()}`
         const { port, host, tlsOptions, cb } = config.webhook
         this.startWebhook(hookPath, tlsOptions, port, host, cb)
         if (!domain) {

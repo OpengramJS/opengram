@@ -380,3 +380,11 @@ test.cb('should respect webhookReply runtime change (per request)', (t) => {
   })
   t.throwsAsync(bot.handleUpdate({ message: BaseTextMessage }, resStub)).then(() => t.end())
 })
+
+test('should deterministically generate `secretPathComponent`', (t) => {
+  const foo = new Opengram('foo')
+  const bar = new Opengram('bar')
+  t.deepEqual(foo.secretPathComponent(), foo.secretPathComponent())
+  t.deepEqual(bar.secretPathComponent(), bar.secretPathComponent())
+  t.notDeepEqual(foo.secretPathComponent(), bar.secretPathComponent())
+})
