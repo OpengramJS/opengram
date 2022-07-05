@@ -88,7 +88,7 @@ class Opengram extends Composer {
     const callback = cb && typeof cb === 'function'
       ? (req, res) => webhookCb(req, res, () => cb(req, res))
       : webhookCb
-    this.webhookServer = tlsOptions
+    this.webhookServer = tlsOptions != null
       ? require('https').createServer(tlsOptions, callback)
       : require('http').createServer(callback)
     this.webhookServer.listen(port, host, () => {
