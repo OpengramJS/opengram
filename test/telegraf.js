@@ -388,3 +388,16 @@ test('should deterministically generate `secretPathComponent`', (t) => {
   t.deepEqual(bar.secretPathComponent(), bar.secretPathComponent())
   t.notDeepEqual(foo.secretPathComponent(), bar.secretPathComponent())
 })
+
+test('should redact secret part of token when throw api calling error', async (t) => {
+  const token = '123456789:SOMETOKEN1SOMETOKEN2SOMETOKEN'
+  const bot = new Opengram(token, {
+    telegram: {
+      apiRoot: 'http://notexists'
+    }
+  })
+  const error = await t.throwsAsync(bot.telegram.callApi('test'))
+  console.log()
+  t.regex(error.message, /http:\/\/notexists\/bot\/123456789:\[REDACTED\]\/test/)
+  t.notRegex(error.message, new RegExp(token))
+})

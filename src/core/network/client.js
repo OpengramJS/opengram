@@ -46,6 +46,14 @@ const WEBHOOK_REPLY_STUB = {
   details: 'https://core.telegram.org/bots/api#making-requests-when-getting-updates'
 }
 
+function redactToken (error) {
+  error.message = error.message.replace(
+    /(\d+):[^/]+\//,
+    '/$1:[REDACTED]/'
+  )
+  throw error
+}
+
 function safeJSONParse (text) {
   try {
     return JSON.parse(text)
@@ -265,7 +273,7 @@ class ApiClient {
       .then((config) => {
         const apiUrl = `${options.apiRoot}/bot${token}/${method}`
         config.agent = options.agent
-        return fetch(apiUrl, config)
+        return fetch(apiUrl, config).catch(redactToken)
       })
       .then((res) => res.text())
       .then((text) => {
