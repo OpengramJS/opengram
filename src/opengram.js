@@ -11,6 +11,7 @@ const Context = require('./context')
 const generateCallback = require('./core/network/webhook')
 const crypto = require('crypto')
 const { URL } = require('url')
+const { TelegramError } = require('./core/network/error')
 
 const DEFAULT_OPTIONS = {
   retryAfter: 1,
@@ -219,6 +220,7 @@ class Opengram extends Composer {
 
 module.exports = Object.assign(Opengram, {
   Context,
+  TelegramError,
   Composer,
   default: Opengram,
   Extra,
