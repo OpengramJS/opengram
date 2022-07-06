@@ -141,27 +141,25 @@ class OpengramContext {
   }
 
   get chat () {
-    return (this.message && this.message.chat) ||
-      (this.editedMessage && this.editedMessage.chat) ||
-      (this.callbackQuery && this.callbackQuery.message && this.callbackQuery.message.chat) ||
-      (this.channelPost && this.channelPost.chat) ||
-      (this.editedChannelPost && this.editedChannelPost.chat) ||
-      (this.myChatMember && this.myChatMember.chat) ||
-      (this.chatMember && this.chatMember.chat)
+    const message = this.myChatMember ||
+      this.chatMember ||
+      this.chatJoinRequest ||
+      getMessageFromAnySource(this)
+    return message && message.chat
   }
 
   get from () {
-    return (this.message && this.message.from) ||
-      (this.editedMessage && this.editedMessage.from) ||
-      (this.callbackQuery && this.callbackQuery.from) ||
-      (this.inlineQuery && this.inlineQuery.from) ||
-      (this.channelPost && this.channelPost.from) ||
-      (this.editedChannelPost && this.editedChannelPost.from) ||
-      (this.shippingQuery && this.shippingQuery.from) ||
-      (this.preCheckoutQuery && this.preCheckoutQuery.from) ||
-      (this.chosenInlineResult && this.chosenInlineResult.from) ||
-      (this.myChatMember && this.myChatMember.from) ||
-      (this.chatMember && this.chatMember.from)
+    const message = this.callbackQuery ||
+      this.inlineQuery ||
+      this.shippingQuery ||
+      this.preCheckoutQuery ||
+      this.chosenInlineResult ||
+      this.myChatMember ||
+      this.chatMember ||
+      this.chatJoinRequest ||
+      getMessageFromAnySource(this)
+
+    return message && message.from
   }
 
   get inlineMessageId () {
@@ -624,32 +622,20 @@ class OpengramContext {
     if (typeof messageId !== 'undefined') {
       return this.telegram.deleteMessage(this.chat.id, messageId)
     }
-    const message = this.message ||
-      this.editedMessage ||
-      this.channelPost ||
-      this.editedChannelPost ||
-      (this.callbackQuery && this.callbackQuery.message)
+    const message = getMessageFromAnySource(this)
     this.assert(message, 'deleteMessage')
     return this.telegram.deleteMessage(this.chat.id, message.message_id)
   }
 
   forwardMessage (chatId, extra) {
     this.assert(this.chat, 'forwardMessage')
-    const message = this.message ||
-      this.editedMessage ||
-      this.channelPost ||
-      this.editedChannelPost ||
-      (this.callbackQuery && this.callbackQuery.message)
+    const message = getMessageFromAnySource(this)
     this.assert(message, 'forwardMessage')
     return this.telegram.forwardMessage(chatId, this.chat.id, message.message_id, extra)
   }
 
   copyMessage (chatId, extra) {
-    const message = this.message ||
-      this.editedMessage ||
-      this.channelPost ||
-      this.editedChannelPost ||
-      (this.callbackQuery && this.callbackQuery.message)
+    const message = getMessageFromAnySource(this)
     this.assert(message, 'copyMessage')
     return this.telegram.copyMessage(chatId, message.chat.id, message.message_id, extra)
   }
@@ -678,6 +664,16 @@ class OpengramContext {
     this.assert(this.chat, 'declineChatJoinRequest')
     return this.telegram.declineChatJoinRequest(this.chat.id, ...args)
   }
+}
+
+function getMessageFromAnySource (ctx) {
+  return (
+    ctx.message ||
+    ctx.editedMessage ||
+    (this.callbackQuery && this.callbackQuery.message) ||
+    ctx.channelPost ||
+    ctx.editedChannelPost
+  )
 }
 
 module.exports = OpengramContext
