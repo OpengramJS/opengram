@@ -8,7 +8,7 @@ class WizardScene extends Composer {
     this.id = id
     this.options = typeof options === 'function'
       ? { steps: [options, ...steps], leaveHandlers: [] }
-      : { steps: steps, leaveHandlers: [], ...options }
+      : { steps, leaveHandlers: [], ...options }
     this.leaveHandler = compose(this.options.leaveHandlers)
   }
 

@@ -129,50 +129,50 @@ class Markup {
   }
 
   static button (text, hide = false) {
-    return { text: text, hide: hide }
+    return { text, hide }
   }
 
   static contactRequestButton (text, hide = false) {
-    return { text: text, request_contact: true, hide: hide }
+    return { text, request_contact: true, hide }
   }
 
   static locationRequestButton (text, hide = false) {
-    return { text: text, request_location: true, hide: hide }
+    return { text, request_location: true, hide }
   }
 
   static pollRequestButton (text, type, hide = false) {
-    return { text: text, request_poll: { type }, hide: hide }
+    return { text, request_poll: { type }, hide }
   }
 
   static urlButton (text, url, hide = false) {
-    return { text: text, url: url, hide: hide }
+    return { text, url, hide }
   }
 
   static callbackButton (text, data, hide = false) {
-    return { text: text, callback_data: data, hide: hide }
+    return { text, callback_data: data, hide }
   }
 
   static switchToChatButton (text, value, hide = false) {
-    return { text: text, switch_inline_query: value, hide: hide }
+    return { text, switch_inline_query: value, hide }
   }
 
   static switchToCurrentChatButton (text, value, hide = false) {
-    return { text: text, switch_inline_query_current_chat: value, hide: hide }
+    return { text, switch_inline_query_current_chat: value, hide }
   }
 
   static gameButton (text, hide = false) {
-    return { text: text, callback_game: {}, hide: hide }
+    return { text, callback_game: {}, hide }
   }
 
   static payButton (text, hide = false) {
-    return { text: text, pay: true, hide: hide }
+    return { text, pay: true, hide }
   }
 
   static loginButton (text, url, opts = {}, hide = false) {
     return {
-      text: text,
-      login_url: { ...opts, url: url },
-      hide: hide
+      text,
+      login_url: { ...opts, url },
+      hide
     }
   }
 

@@ -434,7 +434,7 @@ class Telegram extends ApiClient {
   setPassportDataErrors (userId, errors) {
     return this.callApi('setPassportDataErrors', {
       user_id: userId,
-      errors: errors
+      errors
     })
   }
 

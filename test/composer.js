@@ -86,7 +86,7 @@ updateTypes.forEach((update) => {
     })
     const message = { ...baseMessage }
     message[update] = {}
-    bot.handleUpdate({ message: message })
+    bot.handleUpdate({ message })
   })
 })
 
@@ -94,7 +94,7 @@ test.cb('should route venue', (t) => {
   const bot = new Opengram()
   bot.on('venue', () => t.end())
   const message = { location: {}, venue: { title: 'location', address: 'n/a' }, ...baseMessage }
-  bot.handleUpdate({ message: message })
+  bot.handleUpdate({ message })
 })
 
 test.cb('should route location', (t) => {
@@ -105,7 +105,7 @@ test.cb('should route location', (t) => {
     t.end()
   })
   const message = { location: {}, venue: { title: 'location', address: 'n/a' }, ...baseMessage }
-  bot.handleUpdate({ message: message })
+  bot.handleUpdate({ message })
 })
 
 test.cb('should route forward', (t) => {
@@ -118,7 +118,7 @@ test.cb('should route forward', (t) => {
     forward_date: 1460829948,
     ...baseMessage
   }
-  bot.handleUpdate({ message: message })
+  bot.handleUpdate({ message })
 })
 
 test('should throw error then called with undefined middleware', (t) => {
