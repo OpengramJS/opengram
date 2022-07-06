@@ -397,7 +397,6 @@ test('should redact secret part of token when throw api calling error', async (t
     }
   })
   const error = await t.throwsAsync(bot.telegram.callApi('test'))
-  console.log()
   t.regex(error.message, /http:\/\/notexists\/bot\/123456789:\[REDACTED\]\/test/)
   t.notRegex(error.message, new RegExp(token))
 })
