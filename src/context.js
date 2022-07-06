@@ -148,6 +148,11 @@ class OpengramContext {
     return message && message.chat
   }
 
+  get senderChat () {
+    const message = getMessageFromAnySource(this)
+    return message && message.sender_chat
+  }
+
   get from () {
     const message = this.callbackQuery ||
       this.inlineQuery ||
