@@ -289,6 +289,15 @@ class ApiClient {
     const apiUrl = `${options.apiRoot}/bot${token}/${method}`
     config.agent = options.agent
     const res = await fetch(apiUrl, config).catch(redactToken)
+
+    if (res.status >= 500) {
+      const errorPayload = {
+        error_code: res.status,
+        description: res.statusText
+      }
+      throw new TelegramError(errorPayload, { method, payload })
+    }
+
     const text = await res.text()
     const responseData = safeJSONParse(text) || {
       error_code: 500,
