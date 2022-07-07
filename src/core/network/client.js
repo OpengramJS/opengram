@@ -40,7 +40,8 @@ const DEFAULT_OPTIONS = {
   agent: new https.Agent({
     keepAlive: true,
     keepAliveMsecs: 10000
-  })
+  }),
+  testEnv: false
 }
 
 const WEBHOOK_REPLY_STUB = {
@@ -288,7 +289,7 @@ class ApiClient {
       : await buildJSONConfig(payload)
 
     const apiUrl = new URL(
-      `./${this.options.apiPrefix}${token}/${method}`,
+      `./${this.options.apiPrefix}${token}${options.testEnv ? '/test' : ''}/${method}`,
       options.apiRoot
     )
     config.agent = options.agent
