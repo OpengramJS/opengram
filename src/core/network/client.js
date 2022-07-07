@@ -175,7 +175,7 @@ async function attachFormValue (form, id, value, agent) {
 
 async function attachFormMedia (form, media, id, agent) {
   let fileName = media.filename || `${id}.${DEFAULT_EXTENSIONS[id] || 'dat'}`
-  if (media.url) {
+  if (media.url !== undefined) {
     const res = await fetch(media.url, { agent })
     form.addPart({
       headers: { 'content-disposition': `form-data; name="${id}"; filename="${fileName}"` },
