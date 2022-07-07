@@ -12,10 +12,11 @@ const generateCallback = require('./core/network/webhook')
 const crypto = require('crypto')
 const { URL } = require('url')
 const { TelegramError } = require('./core/network/error')
+const pTimeout = require('p-timeout')
 
 const DEFAULT_OPTIONS = {
   retryAfter: 1,
-  handlerTimeout: 0,
+  handlerTimeout: Infinity,
   contextType: Context
 }
 
@@ -162,25 +163,30 @@ class Opengram extends Composer {
 
   handleUpdates (updates) {
     if (!Array.isArray(updates)) {
-      return Promise.reject(new Error('Updates must be an array'))
+      throw new Error('Updates must be an array')
     }
-    const processAll = Promise.all(updates.map((update) => this.handleUpdate(update)))
-    if (this.options.handlerTimeout === 0) {
-      return processAll
-    }
-    return Promise.race([
-      processAll,
-      new Promise((resolve) => setTimeout(resolve, this.options.handlerTimeout))
-    ])
+    return Promise.all(updates.map((update) => this.handleUpdate(update)))
   }
 
-  handleUpdate (update, webhookResponse) {
+  async handleUpdate (update, webhookResponse) {
     debug('Processing update', update.update_id)
     const tg = new Telegram(this.token, this.telegram.options, webhookResponse)
     const OpengramContext = this.options.contextType
     const ctx = new OpengramContext(update, tg, this.options)
     Object.assign(ctx, this.context)
-    return this.middleware()(ctx).catch((err) => this.handleError(err, ctx))
+
+    try {
+      await pTimeout(
+        this.middleware()(ctx),
+        this.options.handlerTimeout
+      )
+    } catch (err) {
+      return await this.handleError(err, ctx)
+    } finally {
+      if (webhookResponse && webhookResponse.writableEnded === false) {
+        webhookResponse.end()
+      }
+    }
   }
 
   async fetchUpdates () {

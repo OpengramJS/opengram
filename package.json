@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "debug": "^4.0.1",
+    "p-timeout": "^4.1.0",
     "node-fetch": "^2.2.0",
     "sandwich-stream": "^2.0.1"
   },
