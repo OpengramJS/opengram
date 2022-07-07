@@ -30,7 +30,7 @@ class Opengram extends Composer {
       ...options
     }
     this.token = token
-    this.handleError = (err) => {
+    this.handleError = async err => {
       console.error()
       console.error((err.stack || err.toString()).replace(/^/gm, '  '))
       console.error()
