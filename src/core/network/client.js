@@ -35,6 +35,7 @@ const DEFAULT_EXTENSIONS = {
 
 const DEFAULT_OPTIONS = {
   apiRoot: 'https://api.telegram.org',
+  apiPrefix: 'bot',
   webhookReply: false,
   agent: new https.Agent({
     keepAlive: true,
@@ -287,7 +288,7 @@ class ApiClient {
       : await buildJSONConfig(payload)
 
     const apiUrl = new URL(
-      `./bot${token}/${method}`,
+      `./${this.options.apiPrefix}${token}/${method}`,
       options.apiRoot
     )
     config.agent = options.agent
