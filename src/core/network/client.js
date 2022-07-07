@@ -225,7 +225,7 @@ async function answerToWebhook (response, payload = {}, options) {
     return WEBHOOK_REPLY_STUB
   }
 
-  const { headers, body } = buildFormDataConfig(payload, options.agent)
+  const { headers, body } = await buildFormDataConfig(payload, options.agent)
 
   if (isKoaResponse(response)) {
     Object.keys(headers).forEach(key => response.set(key, headers[key]))
