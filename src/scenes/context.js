@@ -1,5 +1,5 @@
 const debug = require('debug')('opengram:scenes:context')
-const { safePassThru } = require('../composer')
+const Composer = require('../composer')
 
 const noop = () => Promise.resolve()
 const now = () => Math.floor(Date.now() / 1000)
@@ -8,6 +8,7 @@ class SceneContext {
   constructor (ctx, scenes, options) {
     this.ctx = ctx
     this.scenes = scenes
+    this.leaving = false
     this.options = options
   }
 
@@ -46,7 +47,7 @@ class SceneContext {
     }
     const leave = silent ? noop() : this.leave()
     return leave.then(() => {
-      debug('Enter scene', sceneId, initialState, silent)
+      debug('Entering scene', sceneId, initialState, silent)
       this.session.current = sceneId
       this.state = initialState
       const ttl = this.current.ttl || this.options.ttl
@@ -67,12 +68,24 @@ class SceneContext {
     return this.enter(this.session.current, this.state)
   }
 
-  leave () {
-    debug('Leave scene')
-    const handler = this.current && this.current.leaveMiddleware
-      ? this.current.leaveMiddleware()
-      : safePassThru()
-    return handler(this.ctx, noop).then(() => this.reset())
+  async leave () {
+    if (this.leaving) return
+    debug('Leaving scene')
+    try {
+      this.leaving = true
+      if (this.current === undefined) {
+        return
+      }
+      const handler =
+        'leaveMiddleware' in this.current &&
+        typeof this.current.leaveMiddleware === 'function'
+          ? this.current.leaveMiddleware()
+          : Composer.passThru()
+      await handler(this.ctx, noop)
+      return this.reset()
+    } finally {
+      this.leaving = false
+    }
   }
 }
 
