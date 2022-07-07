@@ -41,6 +41,7 @@ const DEFAULT_OPTIONS = {
     keepAlive: true,
     keepAliveMsecs: 10000
   }),
+  attachmentAgent: undefined,
   testEnv: false
 }
 
@@ -225,7 +226,7 @@ async function answerToWebhook (response, payload = {}, options) {
     return WEBHOOK_REPLY_STUB
   }
 
-  const { headers, body } = await buildFormDataConfig(payload, options.agent)
+  const { headers, body } = await buildFormDataConfig(payload, options.attachmentAgent)
 
   if (isKoaResponse(response)) {
     Object.keys(headers).forEach(key => response.set(key, headers[key]))
@@ -285,7 +286,7 @@ class ApiClient {
 
     debug('HTTP call', method, payload)
     const config = includesMedia(payload)
-      ? await buildFormDataConfig({ method, ...payload }, options.agent)
+      ? await buildFormDataConfig({ method, ...payload }, options.attachmentAgent)
       : await buildJSONConfig(payload)
 
     const apiUrl = new URL(
