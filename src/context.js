@@ -675,7 +675,7 @@ function getMessageFromAnySource (ctx) {
   return (
     ctx.message ||
     ctx.editedMessage ||
-    (this.callbackQuery && this.callbackQuery.message) ||
+    (ctx.callbackQuery && ctx.callbackQuery.message) ||
     ctx.channelPost ||
     ctx.editedChannelPost
   )
