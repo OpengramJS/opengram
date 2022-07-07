@@ -286,7 +286,10 @@ class ApiClient {
       ? await buildFormDataConfig({ method, ...payload }, options.agent)
       : await buildJSONConfig(payload)
 
-    const apiUrl = `${options.apiRoot}/bot${token}/${method}`
+    const apiUrl = new URL(
+      `./bot${token}/${method}`,
+      options.apiRoot
+    )
     config.agent = options.agent
     config.signal = signal
     const res = await fetch(apiUrl, config).catch(redactToken)
