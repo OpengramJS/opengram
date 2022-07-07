@@ -183,38 +183,41 @@ class Opengram extends Composer {
     return this.middleware()(ctx).catch((err) => this.handleError(err, ctx))
   }
 
-  fetchUpdates () {
+  async fetchUpdates () {
     if (!this.polling.started) {
       this.polling.stopCallback && this.polling.stopCallback()
       return
     }
+
     const { timeout, limit, offset, allowedUpdates } = this.polling
-    this.telegram.getUpdates(timeout, limit, offset, allowedUpdates)
-      .catch((err) => {
-        if (err.code === 401 || err.code === 409) {
-          throw err
-        }
-        const wait = (err.parameters && err.parameters.retry_after) || this.options.retryAfter
-        console.error(`Failed to fetch updates. Waiting: ${wait}s`, err.message)
-        return new Promise((resolve) => setTimeout(resolve, wait * 1000, []))
-      })
-      .then((updates) => this.polling.started
-        ? this.handleUpdates(updates).then(() => updates)
-        : []
-      )
-      .catch((err) => {
-        console.error('Failed to process updates.', err)
-        this.polling.started = false
-        this.polling.offset = 0
-        this.polling.stopCallback && this.polling.stopCallback()
-        return []
-      })
-      .then((updates) => {
-        if (updates.length > 0) {
-          this.polling.offset = updates[updates.length - 1].update_id + 1
-        }
-        this.fetchUpdates()
-      })
+
+    let updates = []
+
+    try {
+      updates = await this.telegram.getUpdates(timeout, limit, offset, allowedUpdates)
+    } catch (err) {
+      if (err.code === 401 || err.code === 409) {
+        throw err
+      }
+
+      const wait = (err.parameters && err.parameters.retry_after) || this.options.retryAfter
+      console.error(`Failed to fetch updates. Waiting: ${wait}s`, err.message)
+
+      updates = await new Promise(resolve => setTimeout(resolve, wait * 1000, []))
+    }
+
+    try {
+      if (this.polling.started && updates.length) {
+        await this.handleUpdates(updates)
+        this.polling.offset = updates[updates.length - 1].update_id + 1
+      }
+    } catch (err) {
+      console.error('Failed to process updates.', err)
+      this.polling.started = false
+      this.polling.offset = 0
+    }
+
+    this.fetchUpdates()
   }
 }
 
