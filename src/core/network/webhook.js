@@ -31,7 +31,7 @@ function timingSafeEqual (a, b) {
 }
 
 module.exports = function (hookPath, updateHandler, errorHandler) {
-  return (req, res, next) => {
+  return async (req, res, next) => {
     debug('Incoming request', req.method, req.url)
     if (req.method !== 'POST' || !timingSafeEqual(hookPath, req.url)) {
       if (typeof next === 'function') {
@@ -40,30 +40,28 @@ module.exports = function (hookPath, updateHandler, errorHandler) {
       res.statusCode = 403
       return res.end()
     }
+
+    let update
+
+    if (req.body != null) {
+      update = req.body
+      await updateHandler(update, res)
+      return
+    }
+
     let body = ''
-    req.on('data', (chunk) => {
-      body += chunk.toString()
-    })
-    req.on('end', () => {
-      let update = {}
-      try {
-        update = JSON.parse(body)
-      } catch (error) {
-        res.writeHead(415)
-        res.end()
-        return errorHandler(error)
-      }
-      updateHandler(update, res)
-        .then(() => {
-          if (!res.finished) {
-            res.end()
-          }
-        })
-        .catch((err) => {
-          debug('Webhook error', err)
-          res.writeHead(500)
-          res.end()
-        })
-    })
+    for await (const chunk of req) {
+      body += String(chunk)
+    }
+
+    try {
+      update = JSON.parse(body)
+    } catch (error) {
+      res.writeHead(415)
+      res.end()
+      return errorHandler(error)
+    }
+
+    await updateHandler(update, res)
   }
 }
