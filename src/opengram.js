@@ -13,6 +13,7 @@ const crypto = require('crypto')
 const { URL } = require('url')
 const { TelegramError } = require('./core/network/error')
 const pTimeout = require('p-timeout')
+const { compactOptions } = require('./core/helpers/compact')
 
 const DEFAULT_OPTIONS = {
   retryAfter: 1,
@@ -27,7 +28,7 @@ class Opengram extends Composer {
     super()
     this.options = {
       ...DEFAULT_OPTIONS,
-      ...options
+      ...compactOptions(options)
     }
     this.token = token
     this.handleError = async err => {

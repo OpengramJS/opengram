@@ -7,6 +7,7 @@ const path = require('path')
 const util = require('util')
 const { TelegramError } = require('./error')
 const MultipartStream = require('./multipart-stream')
+const { compactOptions } = require('../helpers/compact')
 const { isStream } = MultipartStream
 
 const WEBHOOK_BLACKLIST = [
@@ -251,7 +252,7 @@ class ApiClient {
     this.token = token
     this.options = {
       ...DEFAULT_OPTIONS,
-      ...options
+      ...compactOptions(options)
     }
     if (this.options.apiRoot.startsWith('http://')) {
       this.options.agent = null
