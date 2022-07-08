@@ -84,7 +84,8 @@ class Composer {
 
   start (...fns) {
     return this.command('start', Composer.tap((ctx) => {
-      ctx.startPayload = ctx.message.text.substring(7)
+      const entity = ctx.message.entities[0]
+      ctx.startPayload = ctx.message.text.slice(entity.length + 1)
     }), ...fns)
   }
 
