@@ -1,5 +1,6 @@
 const replicators = require('./core/replicators')
 const ApiClient = require('./core/network/client')
+const { isAbsolute } = require('path')
 
 class Telegram extends ApiClient {
   getMe () {
@@ -10,16 +11,26 @@ class Telegram extends ApiClient {
     return this.callApi('getFile', { file_id: fileId })
   }
 
-  getFileLink (fileId) {
-    return Promise.resolve(fileId)
-      .then((fileId) => {
-        if (fileId && fileId.file_path) {
-          return fileId
-        }
-        const id = fileId && fileId.file_id ? fileId.file_id : fileId
-        return this.getFile(id)
-      })
-      .then((file) => `${this.options.apiRoot}/file/bot${this.token}/${file.file_path}`)
+  async getFileLink (fileId) {
+    if (typeof fileId === 'string') {
+      fileId = await this.getFile(fileId)
+    } else if (fileId.file_path === undefined) {
+      fileId = await this.getFile(fileId.file_id)
+    }
+
+    // Local bot API instances return the absolute path to the file
+    if (fileId.file_path !== undefined && isAbsolute(fileId.file_path)) {
+      const url = new URL(this.options.apiRoot)
+      url.port = ''
+      url.pathname = fileId.file_path
+      url.protocol = 'file:'
+      return url
+    }
+
+    return new URL(
+      `./file/${this.options.apiPrefix}${this.token}/${fileId.file_path}`,
+      this.options.apiRoot
+    )
   }
 
   getUpdates (timeout, limit, offset, allowedUpdates) {
