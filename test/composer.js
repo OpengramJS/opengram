@@ -493,6 +493,16 @@ test.cb('should handle start command', (t) => {
   bot.handleUpdate({ message: { text: '/start', entities: [{ type: 'bot_command', offset: 0, length: 6 }], ...baseMessage } })
 })
 
+test.cb('should handle command with payload', (t) => {
+  const bot = new Opengram()
+  bot.start((ctx) => {
+    t.true('startPayload' in ctx)
+    t.is('payload', ctx.startPayload)
+    t.end()
+  })
+  bot.handleUpdate({ message: { text: '/start payload', entities: [{ type: 'bot_command', offset: 0, length: 6 }], ...baseMessage } })
+})
+
 test.cb('should handle help command', (t) => {
   const bot = new Opengram()
   bot.help(() => t.end())
@@ -570,9 +580,31 @@ test.cb('should handle command in group', (t) => {
   bot.handleUpdate({ message: { text: '/start@bot', entities: [{ type: 'bot_command', offset: 0, length: 10 }], chat: { id: 2, type: 'group' } } })
 })
 
+test.cb('should handle command with payload in group', (t) => {
+  const bot = new Opengram()
+  bot.options.username = 'bot'
+  bot.start((ctx) => {
+    t.true('startPayload' in ctx)
+    t.is('payload', ctx.startPayload)
+    t.end()
+  })
+  bot.handleUpdate({ message: { text: '/start@bot payload', entities: [{ type: 'bot_command', offset: 0, length: 10 }], chat: { id: 2, type: 'group' } } })
+})
+
 test.cb('should handle command in supergroup', (t) => {
   const bot = new Opengram()
   bot.options.username = 'bot'
   bot.start(() => t.end())
   bot.handleUpdate({ message: { text: '/start@bot', entities: [{ type: 'bot_command', offset: 0, length: 10 }], chat: { id: 2, type: 'supergroup' } } })
+})
+
+test.cb('should handle command with payload in supergroup', (t) => {
+  const bot = new Opengram()
+  bot.options.username = 'bot'
+  bot.start((ctx) => {
+    t.true('startPayload' in ctx)
+    t.is('payload', ctx.startPayload)
+    t.end()
+  })
+  bot.handleUpdate({ message: { text: '/start@bot payload', entities: [{ type: 'bot_command', offset: 0, length: 10 }], chat: { id: 2, type: 'supergroup' } } })
 })
