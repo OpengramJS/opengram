@@ -400,3 +400,16 @@ test('should redact secret part of token when throw api calling error', async (t
   t.regex(error.message, /http:\/\/notexists\/bot\/123456789:\[REDACTED\]\/test/)
   t.notRegex(error.message, new RegExp(token))
 })
+
+test('should redact secret part of token when throw api calling error when using apiPrefix', async (t) => {
+  const token = '123456789:SOMETOKEN1SOMETOKEN2SOMETOKEN'
+  const bot = new Opengram(token, {
+    telegram: {
+      apiRoot: 'http://notexists',
+      apiPrefix: 'someprefix'
+    }
+  })
+  const error = await t.throwsAsync(bot.telegram.callApi('test'))
+  t.regex(error.message, /http:\/\/notexists\/someprefix\/123456789:\[REDACTED\]\/test/)
+  t.notRegex(error.message, new RegExp(token))
+})
