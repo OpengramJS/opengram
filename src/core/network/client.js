@@ -223,7 +223,7 @@ async function answerToWebhook (response, payload = {}, options) {
     }
 
     // If callback available, wait
-    await responseEnd(JSON.stringify(payload), 'utf-8')
+    await responseEnd.call(response, JSON.stringify(payload), 'utf-8')
     return WEBHOOK_REPLY_STUB
   }
 
