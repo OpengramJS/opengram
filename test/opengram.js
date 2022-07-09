@@ -2,6 +2,19 @@ const test = require('ava')
 const Opengram = require('../')
 const { session } = Opengram
 
+class MockResponse {
+  constructor () {
+    this.writableEnded = false
+  }
+
+  setHeader () {}
+  end (body, encoding, cb) {
+    this.writableEnded = true
+    this.body = body
+    cb && cb()
+  }
+}
+
 const BaseTextMessage = {
   chat: { id: 1 },
   text: 'foo'
@@ -25,7 +38,7 @@ const UpdateTypes = [
 ]
 
 UpdateTypes.forEach((update) => {
-  test.cb('should provide update payload for ' + update.type, (t) => {
+  test('should provide update payload for ' + update.type, async t => {
     const bot = new Opengram()
     bot.on(update.type, (ctx) => {
       t.true(update.prop in ctx)
@@ -35,13 +48,12 @@ UpdateTypes.forEach((update) => {
       t.true('from' in ctx)
       t.true('state' in ctx)
       t.is(ctx.updateType, update.type)
-      t.end()
     })
-    bot.handleUpdate(update.update)
+    await bot.handleUpdate(update.update)
   })
 })
 
-test.cb('should provide update payload for text', (t) => {
+test('should provide update payload for text', async t => {
   const bot = new Opengram()
   bot.on('text', (ctx) => {
     t.true('telegram' in ctx)
@@ -51,12 +63,11 @@ test.cb('should provide update payload for text', (t) => {
     t.true('from' in ctx)
     t.true('state' in ctx)
     t.is(ctx.updateType, 'message')
-    t.end()
   })
-  bot.handleUpdate({ message: BaseTextMessage })
+  await bot.handleUpdate({ message: BaseTextMessage })
 })
 
-test.cb('should provide shortcuts for `message` update', (t) => {
+test('should provide shortcuts for `message` update', async t => {
   const bot = new Opengram()
   bot.on('message', (ctx) => {
     t.true('reply' in ctx)
@@ -131,12 +142,11 @@ test.cb('should provide shortcuts for `message` update', (t) => {
     t.true('revokeChatInviteLink' in ctx)
     t.true('approveChatJoinRequest' in ctx)
     t.true('declineChatJoinRequest' in ctx)
-    t.end()
   })
-  bot.handleUpdate({ message: BaseTextMessage })
+  await bot.handleUpdate({ message: BaseTextMessage })
 })
 
-test.cb('should provide shortcuts for `callback_query` update', (t) => {
+test('should provide shortcuts for `callback_query` update', async t => {
   const bot = new Opengram()
   bot.on('callback_query', (ctx) => {
     t.true('answerCbQuery' in ctx)
@@ -209,58 +219,52 @@ test.cb('should provide shortcuts for `callback_query` update', (t) => {
     t.true('revokeChatInviteLink' in ctx)
     t.true('approveChatJoinRequest' in ctx)
     t.true('declineChatJoinRequest' in ctx)
-    t.end()
   })
-  bot.handleUpdate({ callback_query: BaseTextMessage })
+  await bot.handleUpdate({ callback_query: BaseTextMessage })
 })
 
-test.cb('should provide shortcuts for `shipping_query` update', (t) => {
+test('should provide shortcuts for `shipping_query` update', async t => {
   const bot = new Opengram()
   bot.on('shipping_query', (ctx) => {
     t.true('answerShippingQuery' in ctx)
-    t.end()
   })
-  bot.handleUpdate({ shipping_query: BaseTextMessage })
+  await bot.handleUpdate({ shipping_query: BaseTextMessage })
 })
 
-test.cb('should provide shortcuts for `pre_checkout_query` update', (t) => {
+test('should provide shortcuts for `pre_checkout_query` update', async t => {
   const bot = new Opengram()
   bot.on('pre_checkout_query', (ctx) => {
     t.true('answerPreCheckoutQuery' in ctx)
-    t.end()
   })
-  bot.handleUpdate({ pre_checkout_query: BaseTextMessage })
+  await bot.handleUpdate({ pre_checkout_query: BaseTextMessage })
 })
 
-test.cb('should provide chat and sender info', (t) => {
+test('should provide chat and sender info', async t => {
   const bot = new Opengram()
-  bot.on(['text', 'message'], (ctx) => {
+  bot.on(['text', 'message'], ctx => {
     t.is(ctx.from.id, 42)
     t.is(ctx.chat.id, 1)
-    t.end()
   })
-  bot.handleUpdate({ message: { ...BaseTextMessage, from: { id: 42 } } })
+  await bot.handleUpdate({ message: { ...BaseTextMessage, from: { id: 42 } } })
 })
 
-test.cb('should provide shortcuts for `inline_query` update', (t) => {
+test('should provide shortcuts for `inline_query` update', async t => {
   const bot = new Opengram()
-  bot.on('inline_query', (ctx) => {
+  bot.on('inline_query', ctx => {
     t.true('answerInlineQuery' in ctx)
-    t.end()
   })
-  bot.handleUpdate({ inline_query: BaseTextMessage })
+  await bot.handleUpdate({ inline_query: BaseTextMessage })
 })
 
-test.cb('should provide subtype for `channel_post` update', (t) => {
+test('should provide subtype for `channel_post` update', async t => {
   const bot = new Opengram('', { channelMode: true })
-  bot.on('text', (ctx) => {
+  bot.on('text', ctx => {
     t.is(ctx.channelPost.text, 'foo')
-    t.end()
   })
-  bot.handleUpdate({ channel_post: BaseTextMessage })
+  await bot.handleUpdate({ channel_post: BaseTextMessage })
 })
 
-test.cb('should share state', (t) => {
+test('should share state', async t => {
   const bot = new Opengram()
   bot.on('message', (ctx, next) => {
     ctx.state.answer = 41
@@ -268,22 +272,21 @@ test.cb('should share state', (t) => {
   }, (ctx, next) => {
     ctx.state.answer++
     return next()
-  }, (ctx) => {
+  }, ctx => {
     t.is(ctx.state.answer, 42)
-    t.end()
   })
-  bot.handleUpdate({ message: BaseTextMessage })
+  await bot.handleUpdate({ message: BaseTextMessage })
 })
 
-test('should store session state', (t) => {
+test('should store session state', t => {
   const bot = new Opengram()
   bot.use(session())
-  bot.hears('calc', (ctx) => {
+  bot.hears('calc', ctx => {
     t.true('session' in ctx)
     t.true('counter' in ctx.session)
     t.is(ctx.session.counter, 2)
   })
-  bot.on('message', (ctx) => {
+  bot.on('message', ctx => {
     t.true('session' in ctx)
     ctx.session.counter = ctx.session.counter || 0
     ctx.session.counter++
@@ -294,7 +297,7 @@ test('should store session state', (t) => {
     .then(() => bot.handleUpdate({ message: { ...BaseTextMessage, from: { id: 42 }, chat: { id: 42 }, text: 'calc' } }))
 })
 
-test('should store session state with custom store', (t) => {
+test('should store session state with custom store', t => {
   const bot = new Opengram()
   const dummyStore = {}
   bot.use(session({
@@ -307,12 +310,12 @@ test('should store session state with custom store', (t) => {
       }
     }
   }))
-  bot.hears('calc', (ctx) => {
+  bot.hears('calc', ctx => {
     t.true('session' in ctx)
     t.true('counter' in ctx.session)
     t.is(ctx.session.counter, 2)
   })
-  bot.on('message', (ctx) => {
+  bot.on('message', ctx => {
     t.true('session' in ctx)
     ctx.session.counter = ctx.session.counter || 0
     ctx.session.counter++
@@ -323,62 +326,77 @@ test('should store session state with custom store', (t) => {
     .then(() => bot.handleUpdate({ message: { ...BaseTextMessage, from: { id: 42 }, chat: { id: 42 }, text: 'calc' } }))
 })
 
-test.cb('should work with context extensions', (t) => {
-  const bot = new Opengram()
-  bot.context.db = {
-    getUser: () => undefined
-  }
-  bot.on('message', (ctx) => {
-    t.true('db' in ctx)
-    t.true('getUser' in ctx.db)
-    t.end()
-  })
-  bot.handleUpdate({ message: BaseTextMessage })
+test('should work with context extensions', async t => {
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.context.db = {
+        getUser: () => undefined
+      }
+      bot.on('message', ctx => {
+        t.true('db' in ctx)
+        t.true('getUser' in ctx.db)
+        resolve()
+      })
+      bot.handleUpdate({ message: BaseTextMessage })
+    })
+  )
 })
 
-test.cb('should handle webhook response', (t) => {
-  const bot = new Opengram(null, { telegram: { webhookReply: true } })
-  bot.on('message', async (ctx) => {
-    const result = await ctx.reply(':)')
-    t.deepEqual(result, { webhook: true })
+test('should handle webhook response', async t => {
+  const bot = new Opengram('token', {
+    telegram: {
+      webhookReply: true
+    }
   })
-  const res = {
-    setHeader: () => undefined,
-    end: () => t.end()
-  }
-  bot.handleUpdate({ message: BaseTextMessage }, res)
+  bot.use(async ctx => {
+    const result = await ctx.replyWithChatAction('typing')
+    t.is(result.webhook, true)
+  })
+  const res = new MockResponse()
+  await bot.handleUpdate({ message: BaseTextMessage }, res)
+  t.true(res.writableEnded)
+  t.deepEqual(JSON.parse(res.body), {
+    method: 'sendChatAction',
+    chat_id: 1,
+    action: 'typing'
+  })
 })
 
-const resStub = {
-  setHeader: () => undefined,
-  end: () => undefined
-}
-
-test.cb('should respect webhookReply option', (t) => {
+test('should respect webhookReply option', async t => {
   const bot = new Opengram(null, { telegram: { webhookReply: false } })
-  bot.catch((err) => { throw err }) // Disable log
-  bot.on('message', ({ reply }) => reply(':)'))
-  t.throwsAsync(bot.handleUpdate({ message: BaseTextMessage }, resStub)).then(() => t.end())
+  bot.catch(err => { throw err }) // Disable log
+  bot.on('message', async ctx => ctx.replyWithChatAction('typing'))
+  const res = new MockResponse()
+  await t.throwsAsync(bot.handleUpdate({ message: BaseTextMessage }, res))
+  t.true(res.writableEnded)
+  t.is(res.body, undefined)
 })
 
-test.cb('should respect webhookReply runtime change', (t) => {
-  const bot = new Opengram()
+test('should respect webhookReply runtime change', async t => {
+  const bot = new Opengram({ telegram: { webhookReply: true } })
   bot.webhookReply = false
   bot.catch((err) => { throw err }) // Disable log
-  bot.on('message', (ctx) => ctx.reply(':)'))
-
+  bot.on('message', async ctx => ctx.replyWithChatAction('typing'))
+  const res = new MockResponse()
   // Throws cause Bot Token is required for http call'
-  t.throwsAsync(bot.handleUpdate({ message: BaseTextMessage }, resStub)).then(() => t.end())
+  await t.throwsAsync(bot.handleUpdate({ message: BaseTextMessage }, res))
+
+  t.true(res.writableEnded)
+  t.is(res.body, undefined)
 })
 
-test.cb('should respect webhookReply runtime change (per request)', (t) => {
+test('should respect webhookReply runtime change (per request)', async t => {
   const bot = new Opengram()
   bot.catch((err) => { throw err }) // Disable log
   bot.on('message', async (ctx) => {
     ctx.webhookReply = false
     return ctx.reply(':)')
   })
-  t.throwsAsync(bot.handleUpdate({ message: BaseTextMessage }, resStub)).then(() => t.end())
+  const res = new MockResponse()
+  await t.throwsAsync(bot.handleUpdate({ message: BaseTextMessage }, res))
+  t.true(res.writableEnded)
+  t.is(res.body, undefined)
 })
 
 test('should deterministically generate `secretPathComponent`', (t) => {
@@ -389,7 +407,7 @@ test('should deterministically generate `secretPathComponent`', (t) => {
   t.notDeepEqual(foo.secretPathComponent(), bar.secretPathComponent())
 })
 
-test('should redact secret part of token when throw api calling error', async (t) => {
+test('should redact secret part of token when throw api calling error', async t => {
   const token = '123456789:SOMETOKEN1SOMETOKEN2SOMETOKEN'
   const bot = new Opengram(token, {
     telegram: {
@@ -401,7 +419,7 @@ test('should redact secret part of token when throw api calling error', async (t
   t.notRegex(error.message, new RegExp(token))
 })
 
-test('should redact secret part of token when throw api calling error when using apiPrefix', async (t) => {
+test('should redact secret part of token when throw api calling error when using apiPrefix', async t => {
   const token = '123456789:SOMETOKEN1SOMETOKEN2SOMETOKEN'
   const bot = new Opengram(token, {
     telegram: {

@@ -1,5 +1,6 @@
 const test = require('ava')
 const Opengram = require('../')
+const { reject } = require('eslint-plugin-promise/rules/lib/promise-statics')
 const { Composer } = Opengram
 
 const baseMessage = { chat: { id: 1 }, from: { id: 42, username: 'opengram' } }
@@ -20,27 +21,39 @@ const topLevelUpdates = [
   { type: 'chat_join_request', update: { chat_join_request: {} } }
 ]
 
-topLevelUpdates.forEach((update) => {
-  test.cb('should route ' + update.type, (t) => {
-    const bot = new Opengram()
-    bot.on(update.type, () => t.end())
-    bot.handleUpdate(update.update)
+topLevelUpdates.forEach(update => {
+  test('should route ' + update.type, async t => {
+    await t.notThrowsAsync(
+      new Promise(resolve => {
+        const bot = new Opengram()
+        bot.on(update.type, () => resolve())
+        bot.handleUpdate(update.update)
+      })
+    )
   })
 })
 
-test.cb('should route many types', (t) => {
-  const bot = new Opengram()
-  bot.on(['chosen_inline_result', 'message'], () => t.end())
-  bot.handleUpdate({ inline_query: baseMessage })
-  bot.handleUpdate({ message: baseMessage })
-})
+test('should route many types', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.on(['chosen_inline_result', 'message'], () => resolve())
+      bot.handleUpdate({ inline_query: baseMessage })
+      bot.handleUpdate({ message: baseMessage })
+    })
+  )
+)
 
-test.cb('should route sub types', (t) => {
-  const bot = new Opengram()
-  bot.on('text', () => t.end())
-  bot.handleUpdate({ message: { voice: {}, ...baseMessage } })
-  bot.handleUpdate({ message: { text: 'hello', ...baseMessage } })
-})
+test('should route sub types', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.on('text', () => resolve())
+      bot.handleUpdate({ message: { voice: {}, ...baseMessage } })
+      bot.handleUpdate({ message: { text: 'hello', ...baseMessage } })
+    })
+  )
+)
 
 const updateTypes = [
   'voice',
@@ -78,533 +91,935 @@ const updateTypes = [
   'voice_chat_scheduled'
 ]
 
-updateTypes.forEach((update) => {
-  test.cb('should route update type: ' + update, (t) => {
-    const bot = new Opengram()
-    bot.on(update, (ctx) => {
-      t.end()
-    })
-    const message = { ...baseMessage }
-    message[update] = {}
-    bot.handleUpdate({ message })
-  })
-})
-
-test.cb('should route venue', (t) => {
-  const bot = new Opengram()
-  bot.on('venue', () => t.end())
-  const message = { location: {}, venue: { title: 'location', address: 'n/a' }, ...baseMessage }
-  bot.handleUpdate({ message })
-})
-
-test.cb('should route location', (t) => {
-  const bot = new Opengram()
-  bot.on('venue', (ctx) => {
-    t.true(ctx.updateSubTypes.includes('venue'))
-    t.true(ctx.updateSubTypes.includes('location'))
-    t.end()
-  })
-  const message = { location: {}, venue: { title: 'location', address: 'n/a' }, ...baseMessage }
-  bot.handleUpdate({ message })
-})
-
-test.cb('should route forward', (t) => {
-  const bot = new Opengram()
-  bot.on('forward', (ctx) => {
-    t.true(ctx.updateSubTypes.includes('forward'))
-    t.end()
-  })
-  const message = {
-    forward_date: 1460829948,
-    ...baseMessage
-  }
-  bot.handleUpdate({ message })
-})
-
-test('should throw error then called with undefined middleware', (t) => {
-  const composer = new Composer()
-  t.throws(() => {
-    composer.compose(() => undefined)
-  })
-})
-
-test.cb('should throw error then called with invalid middleware', (t) => {
-  const bot = new Opengram()
-  bot.catch((e) => t.end())
-  bot.on('text', 'foo')
-  bot.handleUpdate({ message: { text: 'hello', ...baseMessage } })
-})
-
-test.cb('should throw error then "next()" called twice', (t) => {
-  const bot = new Opengram()
-  bot.catch((e) => t.end())
-  bot.use((ctx, next) => {
-    next()
-    return next()
-  })
-  bot.handleUpdate({ message: { text: 'hello', ...baseMessage } })
-})
-
-test.cb('should throw error then "next()" called with wrong context', (t) => {
-  const bot = new Opengram()
-  bot.catch((e) => t.end())
-  bot.use((ctx, next) => next('bad context'))
-  bot.hears('hello', () => t.fail())
-  bot.handleUpdate({ message: { text: 'hello', ...baseMessage } })
-})
-
-test('should throw error then called with undefined trigger', (t) => {
-  const bot = new Opengram()
-  t.throws(() => {
-    bot.hears(['foo', null])
-  })
-})
-
-test.cb('should support Composer instance as middleware', (t) => {
-  const bot = new Opengram()
-  const composer = new Composer()
-  composer.on('text', (ctx) => {
-    t.is('bar', ctx.state.foo)
-    t.end()
-  })
-  bot.use(({ state }, next) => {
-    state.foo = 'bar'
-    return next()
-  }, composer)
-  bot.handleUpdate({ message: { text: 'hello', ...baseMessage } })
-})
-
-test.cb('should support Composer instance as handler', (t) => {
-  const bot = new Opengram()
-  const composer = new Composer()
-  composer.on('text', () => t.end())
-  bot.on('text', composer)
-  bot.handleUpdate({ message: { text: 'hello', ...baseMessage } })
-})
-
-test.cb('should handle text triggers', (t) => {
-  const bot = new Opengram()
-  bot.hears('hello world', () => t.end())
-  bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
-})
-
-test.cb('should handle fork', (t) => {
-  const bot = new Opengram()
-  bot.use(Opengram.fork(() => t.end()))
-  bot.handleUpdate({ message: { voice: {}, ...baseMessage } })
-})
-
-test.cb('Composer.branch should work with value', (t) => {
-  const bot = new Opengram()
-  bot.use(Composer.branch(true, () => t.end()))
-  bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
-})
-
-test.cb('Composer.branch should work with fn', (t) => {
-  const bot = new Opengram()
-  bot.use(Composer.branch((ctx) => false, null, () => t.end()))
-  bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
-})
-
-test.cb('Composer.branch should work with async fn', (t) => {
-  const bot = new Opengram()
-  bot.use(Composer.branch(
-    (ctx) => {
-      return new Promise((resolve) => setTimeout(resolve, 100, false))
-    },
-    () => {
-      t.fail()
-      t.end()
-    },
-    () => t.end())
+updateTypes.forEach(update =>
+  test('should route update type: ' + update, async t =>
+    await t.notThrowsAsync(
+      new Promise(resolve => {
+        const bot = new Opengram()
+        bot.on(update, resolve)
+        const message = { ...baseMessage }
+        message[update] = {}
+        bot.handleUpdate({ message })
+      })
+    )
   )
-  bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
-})
+)
 
-test.cb('Composer.acl should work with user id', (t) => {
-  const bot = new Opengram()
-  bot.use(Composer.acl(42, () => t.end()))
-  bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
-})
-
-test.cb('Composer.acl should passthru', (t) => {
-  const bot = new Opengram()
-  bot.use(Composer.acl(42, Composer.passThru()))
-  bot.use(() => t.end())
-  bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
-})
-
-test.cb('Composer.acl should not be false positive', (t) => {
-  const bot = new Opengram()
-  bot.use(Composer.acl(999, () => t.fail()))
-  bot.use(() => t.end())
-  bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
-})
-
-test.cb('Composer.acl should work with user ids', (t) => {
-  const bot = new Opengram()
-  bot.use(Composer.acl([42, 43], () => t.end()))
-  bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
-})
-
-test.cb('Composer.acl should work with fn', (t) => {
-  const bot = new Opengram()
-  bot.use(Composer.acl((ctx) => ctx.from.username === 'opengram', () => t.end()))
-  bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
-})
-
-test.cb('Composer.acl should work with async fn', (t) => {
-  const bot = new Opengram()
-  bot.use(Composer.acl((ctx) => new Promise((resolve) => setTimeout(resolve, 100, true)), () => t.end()))
-  bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
-})
-
-test.cb('Composer.optional should work with truthy value', (t) => {
-  const bot = new Opengram()
-  bot.use(Composer.optional(true, () => t.end()))
-  bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
-})
-
-test.cb('Composer.optional should work with false value', (t) => {
-  const bot = new Opengram()
-  bot.use(Composer.optional(false, () => {
-    t.fail()
-    t.end()
-  }))
-  bot.use(() => t.end())
-  bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
-})
-
-test.cb('Composer.optional should work with fn', (t) => {
-  const bot = new Opengram()
-  bot.use(Composer.optional((ctx) => true, () => t.end()))
-  bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
-})
-
-test.cb('Composer.optional should work with async fn', (t) => {
-  const bot = new Opengram()
-  bot.use(Composer.optional(
-    (ctx) => {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve(false)
-        }, 100)
-      })
-    },
-    () => {
-      t.fail()
-      t.end()
-    }
-  ))
-  bot.use(() => t.end())
-  bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
-})
-
-test.cb('Composer.filter should work with fn', (t) => {
-  const bot = new Opengram()
-  bot.filter(({ message }) => message.text.length < 2)
-  bot.use(() => t.end())
-  bot.handleUpdate({ message: { text: '-', ...baseMessage } })
-  bot.handleUpdate({ message: { text: 'hello', ...baseMessage } })
-  bot.handleUpdate({ message: { text: 'hello world ', ...baseMessage } })
-})
-
-test.cb('Composer.filter should work with async fn', (t) => {
-  const bot = new Opengram()
-  bot.filter(({ message }) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(message.text.length < 2)
-      }, 100)
+test('should route venue', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.on('venue', resolve)
+      const message = {
+        location: {},
+        venue: { title: 'location', address: 'n/a' },
+        ...baseMessage
+      }
+      bot.handleUpdate({ message })
     })
-  })
-  bot.use(() => t.end())
-  bot.handleUpdate({ message: { text: '-', ...baseMessage } })
-  bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
-})
+  )
+)
 
-test.cb('Composer.drop should work with fn', (t) => {
-  const bot = new Opengram()
-  bot.drop(({ message }) => message.text.length > 2)
-  bot.use(() => t.end())
-  bot.handleUpdate({ message: { text: '-', ...baseMessage } })
-  bot.handleUpdate({ message: { text: 'hello', ...baseMessage } })
-  bot.handleUpdate({ message: { text: 'hello world ', ...baseMessage } })
-})
-
-test.cb('Composer.drop should work with async fn', (t) => {
-  const bot = new Opengram()
-  bot.drop(({ message }) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(message.text.length > 2)
-      }, 100)
-    })
-  })
-  bot.use(() => t.end())
-  bot.handleUpdate({ message: { text: '-', ...baseMessage } })
-  bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
-})
-
-test.cb('Composer.lazy should work with fn', (t) => {
-  const bot = new Opengram()
-  bot.use(Composer.lazy((ctx) => () => t.end()))
-  bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
-})
-
-test.cb('Composer.lazy should support middlewares', (t) => {
-  const bot = new Opengram()
-  bot.use(Composer.lazy((ctx) => (_, next) => next()))
-  bot.use(() => t.end())
-  bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
-})
-
-test.cb('Composer.dispatch should work with handlers array', (t) => {
-  const bot = new Opengram()
-  bot.use(Composer.dispatch(1, [
-    () => {
-      t.fail()
-      t.end()
-    },
-    () => t.end()
-  ]))
-  bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
-})
-
-test.cb('Composer.dispatch should work', (t) => {
-  const bot = new Opengram()
-  bot.use(Composer.dispatch('b', {
-    b: () => t.end()
-  }))
-  bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
-})
-
-test.cb('Composer.dispatch should work with async fn', (t) => {
-  const bot = new Opengram()
-  bot.use(Composer.dispatch(
-    (ctx) => {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve(1)
-        }, 300)
+test('should route location', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.on('venue', ctx => {
+        t.true(ctx.updateSubTypes.includes('venue'))
+        t.true(ctx.updateSubTypes.includes('location'))
+        resolve()
       })
-    }, [
-      () => {
-        t.fail()
-        t.end()
-      },
-      () => t.end()
-    ]))
-  bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
+      const message = { location: {}, venue: { title: 'location', address: 'n/a' }, ...baseMessage }
+      bot.handleUpdate({ message })
+    })
+  )
+)
+
+test('should route forward', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.on('forward', ctx => {
+        t.true(ctx.updateSubTypes.includes('forward'))
+        resolve()
+      })
+      const message = { forward_date: 1460829948, ...baseMessage }
+      bot.handleUpdate({ message })
+    })
+  )
+)
+
+test('should throw error then called with undefined middleware', async t =>
+  await t.throwsAsync(
+    new Promise(() => {
+      const composer = new Composer()
+      composer.compose(() => undefined)
+    })
+  )
+)
+
+test('should throw error then called with invalid middleware', async t =>
+  await t.notThrowsAsync(
+    new Promise((resolve) => {
+      const bot = new Opengram()
+      bot.catch(resolve)
+      bot.on('text', 'foo')
+      bot.handleUpdate({ message: { text: 'hello', ...baseMessage } })
+    })
+  )
+)
+
+test('should throw error then "next()" called twice', async t => {
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.catch(resolve)
+      bot.use((ctx, next) => {
+        next()
+        return next()
+      })
+      bot.handleUpdate({ message: { text: 'hello', ...baseMessage } })
+    })
+  )
 })
 
-test.cb('Composer.log should just work', (t) => {
-  const bot = new Opengram()
-  bot.use(Composer.log(() => t.end()))
-  bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
+test('should throw error then "next()" called with wrong context', async t =>
+  await t.notThrowsAsync(
+    new Promise((resolve, reject) => {
+      const bot = new Opengram()
+      bot.catch(resolve)
+      bot.use((ctx, next) => next('bad context'))
+      // eslint-disable-next-line prefer-promise-reject-errors
+      bot.hears('hello', reject)
+      bot.handleUpdate({ message: { text: 'hello', ...baseMessage } })
+    })
+  )
+)
+
+test('should throw error then called with undefined trigger', async t =>
+  await t.throwsAsync(
+    new Promise(() => {
+      const bot = new Opengram()
+      bot.hears(['foo', null])
+    })
+  )
+)
+
+test('should support Composer instance as middleware', async t =>
+  await t.notThrowsAsync(
+    new Promise((resolve) => {
+      const bot = new Opengram()
+      const composer = new Composer()
+      composer.on('text', (ctx) => {
+        t.is('bar', ctx.state.foo)
+        resolve()
+      })
+      bot.use(({ state }, next) => {
+        state.foo = 'bar'
+        return next()
+      }, composer)
+      bot.handleUpdate({ message: { text: 'hello', ...baseMessage } })
+    })
+  )
+)
+
+test('should support Composer instance as handler', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      const composer = new Composer()
+      composer.on('text', resolve)
+      bot.on('text', composer)
+      bot.handleUpdate({ message: { text: 'hello', ...baseMessage } })
+    })
+  )
+)
+
+test('should handle text triggers', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.hears('hello world', resolve)
+      bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
+    })
+  )
+)
+
+test('should handle fork', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.use(Opengram.fork(resolve))
+      bot.handleUpdate({ message: { voice: {}, ...baseMessage } })
+    })
+  )
+)
+
+test('Composer.branch should work with value', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.use(Composer.branch(true, resolve))
+      bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
+    })
+  )
+)
+
+test('Composer.branch should work with fn', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.use(
+        Composer.branch(
+          () => false,
+          null,
+          resolve
+        )
+      )
+      bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
+    })
+  )
+)
+
+test('Composer.branch should work with async fn', async t =>
+  await t.notThrowsAsync(
+    new Promise((resolve, reject) => {
+      const bot = new Opengram()
+      bot.use(
+        Composer.branch(
+          () => {
+            return new Promise((resolve) => setTimeout(resolve, 100, false))
+          },
+          () => {
+            // eslint-disable-next-line prefer-promise-reject-errors
+            reject()
+            resolve()
+          },
+          () => resolve()
+        )
+      )
+      bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
+    })
+  )
+)
+
+test('Composer.acl should work with user id', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.use(Composer.acl(42, resolve))
+      bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
+    })
+  )
+)
+
+test('Composer.acl should passthru', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.use(Composer.acl(42, Composer.passThru()))
+      bot.use(resolve)
+      bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
+    })
+  )
+)
+
+test('Composer.acl should not be false positive', async t =>
+  await t.notThrowsAsync(
+    new Promise((resolve, reject) => {
+      const bot = new Opengram()
+      // eslint-disable-next-line prefer-promise-reject-errors
+      bot.use(Composer.acl(999, reject))
+      bot.use(resolve)
+      bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
+    })
+  )
+)
+
+test('Composer.acl should work with user ids', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.use(Composer.acl([42, 43], resolve))
+      bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
+    })
+  )
+)
+
+test('Composer.acl should work with fn', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.use(
+        Composer.acl(
+          (ctx) => ctx.from.username === 'opengram',
+          resolve
+        )
+      )
+      bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
+    })
+  )
+)
+
+test('Composer.acl should work with async fn', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.use(
+        Composer.acl(
+          (ctx) => new Promise(resolve => setTimeout(resolve, 100, true)),
+          resolve
+        )
+      )
+      bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
+    })
+  )
+)
+
+test('Composer.optional should work with truthy value', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.use(Composer.optional(true, resolve))
+      bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
+    })
+  )
+)
+
+test('Composer.optional should work with false value', async t =>
+  await t.notThrowsAsync(
+    new Promise((resolve, reject) => {
+      const bot = new Opengram()
+      bot.use(
+        Composer.optional(false, reject)
+      )
+      bot.use(resolve)
+      bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
+    })
+  )
+)
+
+test('Composer.optional should work with fn', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.use(
+        Composer.optional(
+          () => true,
+          resolve
+        )
+      )
+      bot.use(reject)
+      bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
+    })
+  )
+)
+
+test('Composer.optional should work with async fn', async t =>
+  await t.notThrowsAsync(
+    new Promise((resolve, reject) => {
+      const bot = new Opengram()
+      bot.use(
+        Composer.optional(
+          () => {
+            return new Promise(resolve => {
+              setTimeout(() => {
+                resolve(false)
+              }, 100)
+            })
+          },
+          reject
+        )
+      )
+      bot.use(resolve)
+      bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
+    })
+  )
+)
+
+test('Composer.filter should work with fn', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.filter(({ message }) => message.text.length < 2)
+      bot.use(resolve)
+      bot.handleUpdate({ message: { text: '-', ...baseMessage } })
+      bot.handleUpdate({ message: { text: 'hello', ...baseMessage } })
+      bot.handleUpdate({ message: { text: 'hello world ', ...baseMessage } })
+    })
+  )
+)
+
+test('Composer.filter should work with async fn', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.filter(({ message }) => {
+        return new Promise(resolve => {
+          setTimeout(() => {
+            resolve(message.text.length < 2)
+          }, 100)
+        })
+      })
+      bot.use(resolve)
+      bot.handleUpdate({ message: { text: '-', ...baseMessage } })
+      bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
+    })
+  )
+)
+
+test('Composer.drop should work with fn', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.drop(({ message }) => message.text.length > 2)
+      bot.use(resolve)
+      bot.handleUpdate({ message: { text: '-', ...baseMessage } })
+      bot.handleUpdate({ message: { text: 'hello', ...baseMessage } })
+      bot.handleUpdate({ message: { text: 'hello world ', ...baseMessage } })
+    })
+  )
+)
+
+test('Composer.drop should work with async fn', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.drop(({ message }) => {
+        return new Promise(resolve => {
+          setTimeout(() => {
+            resolve(message.text.length > 2)
+          }, 100)
+        })
+      })
+      bot.use(resolve)
+      bot.handleUpdate({ message: { text: '-', ...baseMessage } })
+      bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
+    })
+  )
+)
+
+test('Composer.lazy should work with fn', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.use(Composer.lazy(() => () => resolve()))
+      bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
+    })
+  )
+)
+
+test('Composer.lazy should support middlewares', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.use(Composer.lazy(() => (_, next) => next()))
+      bot.use(resolve)
+      bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
+    })
+  )
+)
+
+test('Composer.dispatch should work with handlers array', async t =>
+  await t.notThrowsAsync(
+    new Promise((resolve, reject) => {
+      const bot = new Opengram()
+      bot.use(
+        Composer.dispatch(() => 1, [
+          reject,
+          resolve
+        ])
+      )
+      bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
+    })
+  )
+)
+
+test('Composer.dispatch should work', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.use(
+        Composer.dispatch(() => 'b', {
+          b: resolve
+        })
+      )
+      bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
+    })
+  )
+)
+
+test('Composer.dispatch should work with async fn', async t =>
+  await t.notThrowsAsync(
+    new Promise((resolve, reject) => {
+      const bot = new Opengram()
+      bot.use(
+        Composer.dispatch(
+          () => {
+            return new Promise(resolve => {
+              setTimeout(() => {
+                resolve(1)
+              }, 300)
+            })
+          },
+          [
+            reject,
+            resolve
+          ]
+        )
+      )
+      bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
+    })
+  )
+)
+
+test('Composer.log should just work', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.use(Composer.log(resolve))
+      bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
+    })
+  )
+)
+
+test('Composer.entity should work', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.use(Composer.entity('hashtag', resolve))
+      bot.handleUpdate({
+        message: {
+          text: '#foo',
+          entities: [{ type: 'hashtag', offset: 0, length: 4 }]
+        }
+      })
+    })
+  )
+)
+
+test('Composer.entity should not infer', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.use(Composer.entity('command', resolve))
+      bot.use(resolve)
+      bot.handleUpdate({
+        message: {
+          text: '#foo',
+          entities: [{ type: 'hashtag', offset: 0, length: 4 }]
+        }
+      })
+    })
+  )
+)
+
+test('Composer.entity should work with arrays', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.use(Composer.entity(['command', 'hashtag'], resolve))
+      bot.handleUpdate({
+        message: {
+          text: '#foo',
+          entities: [{ type: 'hashtag', offset: 0, length: 4 }]
+        }
+      })
+    })
+  )
+)
+
+test('Composer.entity should work with predicate', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.use(
+        Composer.entity(
+          (entity, value) => entity.type === 'hashtag' && value === '#foo',
+          resolve
+        )
+      )
+      bot.handleUpdate({
+        message: {
+          text: '#foo',
+          entities: [{ type: 'hashtag', offset: 0, length: 4 }]
+        }
+      })
+    })
+  )
+)
+
+test('Composer.mention should work', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.use(Composer.mention(resolve))
+      bot.handleUpdate({
+        message: {
+          text: 'bar @foo',
+          entities: [{ type: 'mention', offset: 4, length: 4 }]
+        }
+      })
+    })
+  )
+)
+
+test('Composer.mention should work with pattern', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.use(Composer.mention('foo', resolve))
+      bot.handleUpdate({
+        message: {
+          text: 'bar @foo',
+          entities: [{ type: 'mention', offset: 4, length: 4 }]
+        }
+      })
+    })
+  )
+)
+
+test('Composer.hashtag should work', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.use(Composer.hashtag(resolve))
+      bot.handleUpdate({
+        message: {
+          text: '#foo',
+          entities: [{ type: 'hashtag', offset: 0, length: 4 }]
+        }
+      })
+    })
+  )
+)
+
+test('Composer.hashtag should work with pattern', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.use(Composer.hashtag('foo', resolve))
+      bot.handleUpdate({
+        message: {
+          text: 'bar #foo',
+          entities: [{ type: 'hashtag', offset: 4, length: 4 }]
+        }
+      })
+    })
+  )
+)
+
+test('Composer.hashtag should work with hash pattern', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.use(Composer.hashtag('#foo', resolve))
+      bot.handleUpdate({
+        message: {
+          text: 'bar #foo',
+          entities: [{ type: 'hashtag', offset: 4, length: 4 }]
+        }
+      })
+    })
+  )
+)
+
+test('Composer.hashtag should work with patterns array', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.use(Composer.hashtag(['news', 'foo'], resolve))
+      bot.handleUpdate({
+        message: {
+          text: 'bar #foo',
+          entities: [{ type: 'hashtag', offset: 4, length: 4 }]
+        }
+      })
+    })
+  )
+)
+
+test('should handle text triggers via functions', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.hears(
+        (text) => text.startsWith('Hi'),
+        resolve
+      )
+      bot.handleUpdate({ message: { text: 'Hi there!', ...baseMessage } })
+    })
+  )
+)
+
+test('should handle regex triggers', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.hears(/hello (.+)/, ctx => {
+        t.is('world', ctx.match[1])
+        resolve()
+      })
+      bot.handleUpdate({ message: { text: 'Ola!', ...baseMessage } })
+      bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
+    })
+  )
+)
+
+test('should handle command', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.command('foo', resolve)
+      bot.handleUpdate({
+        message: {
+          text: '/foo',
+          entities: [{ type: 'bot_command', offset: 0, length: 4 }],
+          ...baseMessage
+        }
+      })
+    })
+  )
+)
+
+test('should handle start command', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.start(resolve)
+      bot.handleUpdate({
+        message: {
+          text: '/start',
+          entities: [{ type: 'bot_command', offset: 0, length: 6 }],
+          ...baseMessage
+        }
+      })
+    })
+  )
+)
+
+test('should handle command with payload', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.start(ctx => {
+        t.true('startPayload' in ctx)
+        t.is('payload', ctx.startPayload)
+        resolve()
+      })
+      bot.handleUpdate({
+        message: {
+          text: '/start payload',
+          entities: [{ type: 'bot_command', offset: 0, length: 6 }],
+          ...baseMessage
+        }
+      })
+    })
+  )
+)
+
+test('should handle help command', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.help(resolve)
+      bot.handleUpdate({
+        message: {
+          text: '/help',
+          entities: [{ type: 'bot_command', offset: 0, length: 5 }],
+          ...baseMessage
+        }
+      })
+    })
+  )
+)
+
+test('should handle settings command', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.settings(resolve)
+      bot.handleUpdate({
+        message: {
+          text: '/settings',
+          entities: [{ type: 'bot_command', offset: 0, length: 9 }],
+          ...baseMessage
+        }
+      })
+    })
+  )
+)
+
+test('should handle group command', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram(null, {
+        username: 'bot'
+      })
+      bot.start(resolve)
+      bot.handleUpdate({
+        message: {
+          text: '/start@bot',
+          entities: [{ type: 'bot_command', offset: 0, length: 10 }],
+          ...baseGroupMessage
+        }
+      })
+    })
+  )
+)
+
+test('should handle game query', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.gameQuery(resolve)
+      bot.handleUpdate({ callback_query: { game_short_name: 'foo' } })
+    })
+  )
+)
+
+test('should handle action', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.action('foo', resolve)
+      bot.handleUpdate({ callback_query: { data: 'foo' } })
+    })
+  )
+)
+
+test('should handle regex action', async t =>
+  await t.notThrowsAsync(
+    new Promise((resolve) => {
+      const bot = new Opengram()
+      bot.action(/foo (\d+)/, (ctx) => {
+        t.true('match' in ctx)
+        t.is('42', ctx.match[1])
+        resolve()
+      })
+      bot.handleUpdate({ callback_query: { data: 'foo 42' } })
+    })
+  )
+)
+
+test('should handle inline query', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.inlineQuery('foo', resolve)
+      bot.handleUpdate({ inline_query: { query: 'foo' } })
+    })
+  )
+)
+
+test('should handle regex inline query', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.inlineQuery(/foo (\d+)/, (ctx) => {
+        t.true('match' in ctx)
+        t.is('42', ctx.match[1])
+        resolve()
+      })
+      bot.handleUpdate({ inline_query: { query: 'foo 42' } })
+    })
+  )
+)
+
+test('should support middlewares', async t =>
+  await t.notThrowsAsync(
+    new Promise((resolve, reject) => {
+      const bot = new Opengram()
+      bot.action('bar', () => {
+        // eslint-disable-next-line prefer-promise-reject-errors
+        reject()
+      })
+      bot.use(resolve)
+      bot.handleUpdate({ callback_query: { data: 'foo' } })
+    })
+  )
+)
+
+test('should handle short command', async t => {
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram()
+      bot.start(() => resolve())
+      bot.handleUpdate({
+        message: { text: '/start', entities: [{ type: 'bot_command', offset: 0, length: 6 }], ...baseMessage }
+      })
+    })
+  )
 })
 
-test.cb('Composer.entity should work', (t) => {
-  const bot = new Opengram()
-  bot.use(Composer.entity('hashtag', () => t.end()))
-  bot.handleUpdate({ message: { text: '#foo', entities: [{ type: 'hashtag', offset: 0, length: 4 }] } })
-})
+test('should handle command in group', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram(null, { username: 'bot' })
+      bot.start(resolve)
+      bot.handleUpdate({
+        message: {
+          text: '/start@bot',
+          entities: [{ type: 'bot_command', offset: 0, length: 10 }],
+          chat: { id: 2, type: 'group' }
+        }
+      })
+    })
+  )
+)
 
-test.cb('Composer.entity should not infer', (t) => {
-  const bot = new Opengram()
-  bot.use(Composer.entity('command', () => t.end()))
-  bot.use(() => t.end())
-  bot.handleUpdate({ message: { text: '#foo', entities: [{ type: 'hashtag', offset: 0, length: 4 }] } })
-})
+test('should handle command with payload in group', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram(null, { username: 'bot' })
+      bot.start(ctx => {
+        t.true('startPayload' in ctx)
+        t.is('payload', ctx.startPayload)
+        resolve()
+      })
+      bot.handleUpdate({
+        message: {
+          text: '/start@bot payload',
+          entities: [{ type: 'bot_command', offset: 0, length: 10 }],
+          chat: { id: 2, type: 'group' }
+        }
+      })
+    })
+  )
+)
 
-test.cb('Composer.entity should work with arrays', (t) => {
-  const bot = new Opengram()
-  bot.use(Composer.entity(['command', 'hashtag'], () => t.end()))
-  bot.handleUpdate({ message: { text: '#foo', entities: [{ type: 'hashtag', offset: 0, length: 4 }] } })
-})
+test('should handle command in supergroup', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram(null, { username: 'bot' })
+      bot.start(resolve)
+      bot.handleUpdate({
+        message: {
+          text: '/start@bot',
+          entities: [{ type: 'bot_command', offset: 0, length: 10 }],
+          chat: { id: 2, type: 'supergroup' }
+        }
+      })
+    })
+  )
+)
 
-test.cb('Composer.entity should work with predicate', (t) => {
-  const bot = new Opengram()
-  bot.use(Composer.entity((entity, value) => entity.type === 'hashtag' && value === '#foo', () => t.end()))
-  bot.handleUpdate({ message: { text: '#foo', entities: [{ type: 'hashtag', offset: 0, length: 4 }] } })
-})
-
-test.cb('Composer.mention should work', (t) => {
-  const bot = new Opengram()
-  bot.use(Composer.mention(() => t.end()))
-  bot.handleUpdate({ message: { text: 'bar @foo', entities: [{ type: 'mention', offset: 4, length: 4 }] } })
-})
-
-test.cb('Composer.mention should work with pattern', (t) => {
-  const bot = new Opengram()
-  bot.use(Composer.mention('foo', () => t.end()))
-  bot.handleUpdate({ message: { text: 'bar @foo', entities: [{ type: 'mention', offset: 4, length: 4 }] } })
-})
-
-test.cb('Composer.hashtag should work', (t) => {
-  const bot = new Opengram()
-  bot.use(Composer.hashtag(() => t.end()))
-  bot.handleUpdate({ message: { text: '#foo', entities: [{ type: 'hashtag', offset: 0, length: 4 }] } })
-})
-
-test.cb('Composer.hashtag should work with pattern', (t) => {
-  const bot = new Opengram()
-  bot.use(Composer.hashtag('foo', () => t.end()))
-  bot.handleUpdate({ message: { text: 'bar #foo', entities: [{ type: 'hashtag', offset: 4, length: 4 }] } })
-})
-
-test.cb('Composer.hashtag should work with hash pattern', (t) => {
-  const bot = new Opengram()
-  bot.use(Composer.hashtag('#foo', () => t.end()))
-  bot.handleUpdate({ message: { text: 'bar #foo', entities: [{ type: 'hashtag', offset: 4, length: 4 }] } })
-})
-
-test.cb('Composer.hashtag should work with patterns array', (t) => {
-  const bot = new Opengram()
-  bot.use(Composer.hashtag(['news', 'foo'], () => t.end()))
-  bot.handleUpdate({ message: { text: 'bar #foo', entities: [{ type: 'hashtag', offset: 4, length: 4 }] } })
-})
-
-test.cb('should handle text triggers via functions', (t) => {
-  const bot = new Opengram()
-  bot.hears((text) => text.startsWith('Hi'), () => t.end())
-  bot.handleUpdate({ message: { text: 'Hi there!', ...baseMessage } })
-})
-
-test.cb('should handle regex triggers', (t) => {
-  const bot = new Opengram()
-  bot.hears(/hello (.+)/, (ctx) => {
-    t.is('world', ctx.match[1])
-    t.end()
-  })
-  bot.handleUpdate({ message: { text: 'Ola!', ...baseMessage } })
-  bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
-})
-
-test.cb('should handle command', (t) => {
-  const bot = new Opengram()
-  bot.command('foo', () => t.end())
-  bot.handleUpdate({ message: { text: '/foo', entities: [{ type: 'bot_command', offset: 0, length: 4 }], ...baseMessage } })
-})
-
-test.cb('should handle start command', (t) => {
-  const bot = new Opengram()
-  bot.start(() => t.end())
-  bot.handleUpdate({ message: { text: '/start', entities: [{ type: 'bot_command', offset: 0, length: 6 }], ...baseMessage } })
-})
-
-test.cb('should handle command with payload', (t) => {
-  const bot = new Opengram()
-  bot.start((ctx) => {
-    t.true('startPayload' in ctx)
-    t.is('payload', ctx.startPayload)
-    t.end()
-  })
-  bot.handleUpdate({ message: { text: '/start payload', entities: [{ type: 'bot_command', offset: 0, length: 6 }], ...baseMessage } })
-})
-
-test.cb('should handle help command', (t) => {
-  const bot = new Opengram()
-  bot.help(() => t.end())
-  bot.handleUpdate({ message: { text: '/help', entities: [{ type: 'bot_command', offset: 0, length: 5 }], ...baseMessage } })
-})
-
-test.cb('should handle settings command', (t) => {
-  const bot = new Opengram()
-  bot.settings(() => t.end())
-  bot.handleUpdate({ message: { text: '/settings', entities: [{ type: 'bot_command', offset: 0, length: 9 }], ...baseMessage } })
-})
-
-test.cb('should handle group command', (t) => {
-  const bot = new Opengram(null, { username: 'bot' })
-  bot.start(() => t.end())
-  bot.handleUpdate({ message: { text: '/start@bot', entities: [{ type: 'bot_command', offset: 0, length: 10 }], ...baseGroupMessage } })
-})
-
-test.cb('should handle game query', (t) => {
-  const bot = new Opengram()
-  bot.gameQuery(() => t.end())
-  bot.handleUpdate({ callback_query: { game_short_name: 'foo' } })
-})
-
-test.cb('should handle action', (t) => {
-  const bot = new Opengram()
-  bot.action('foo', () => t.end())
-  bot.handleUpdate({ callback_query: { data: 'foo' } })
-})
-
-test.cb('should handle regex action', (t) => {
-  const bot = new Opengram()
-  bot.action(/foo (\d+)/, (ctx) => {
-    t.true('match' in ctx)
-    t.is('42', ctx.match[1])
-    t.end()
-  })
-  bot.handleUpdate({ callback_query: { data: 'foo 42' } })
-})
-
-test.cb('should handle inline query', (t) => {
-  const bot = new Opengram()
-  bot.inlineQuery('foo', () => t.end())
-  bot.handleUpdate({ inline_query: { query: 'foo' } })
-})
-
-test.cb('should handle regex inline query', (t) => {
-  const bot = new Opengram()
-  bot.inlineQuery(/foo (\d+)/, (ctx) => {
-    t.true('match' in ctx)
-    t.is('42', ctx.match[1])
-    t.end()
-  })
-  bot.handleUpdate({ inline_query: { query: 'foo 42' } })
-})
-
-test.cb('should support middlewares', (t) => {
-  const bot = new Opengram()
-  bot.action('bar', (ctx) => {
-    t.fail()
-  })
-  bot.use(() => t.end())
-  bot.handleUpdate({ callback_query: { data: 'foo' } })
-})
-
-test.cb('should handle short command', (t) => {
-  const bot = new Opengram()
-  bot.start(() => t.end())
-  bot.handleUpdate({ message: { text: '/start', entities: [{ type: 'bot_command', offset: 0, length: 6 }], ...baseMessage } })
-})
-
-test.cb('should handle command in group', (t) => {
-  const bot = new Opengram('---', { username: 'bot' })
-  bot.start(() => t.end())
-  bot.handleUpdate({ message: { text: '/start@bot', entities: [{ type: 'bot_command', offset: 0, length: 10 }], chat: { id: 2, type: 'group' } } })
-})
-
-test.cb('should handle command with payload in group', (t) => {
-  const bot = new Opengram()
-  bot.options.username = 'bot'
-  bot.start((ctx) => {
-    t.true('startPayload' in ctx)
-    t.is('payload', ctx.startPayload)
-    t.end()
-  })
-  bot.handleUpdate({ message: { text: '/start@bot payload', entities: [{ type: 'bot_command', offset: 0, length: 10 }], chat: { id: 2, type: 'group' } } })
-})
-
-test.cb('should handle command in supergroup', (t) => {
-  const bot = new Opengram()
-  bot.options.username = 'bot'
-  bot.start(() => t.end())
-  bot.handleUpdate({ message: { text: '/start@bot', entities: [{ type: 'bot_command', offset: 0, length: 10 }], chat: { id: 2, type: 'supergroup' } } })
-})
-
-test.cb('should handle command with payload in supergroup', (t) => {
-  const bot = new Opengram()
-  bot.options.username = 'bot'
-  bot.start((ctx) => {
-    t.true('startPayload' in ctx)
-    t.is('payload', ctx.startPayload)
-    t.end()
-  })
-  bot.handleUpdate({ message: { text: '/start@bot payload', entities: [{ type: 'bot_command', offset: 0, length: 10 }], chat: { id: 2, type: 'supergroup' } } })
-})
+test('should handle command with payload in supergroup', async t =>
+  await t.notThrowsAsync(
+    new Promise(resolve => {
+      const bot = new Opengram(null, { username: 'bot' })
+      bot.start(ctx => {
+        t.true('startPayload' in ctx)
+        t.is('payload', ctx.startPayload)
+        resolve()
+      })
+      bot.handleUpdate({
+        message: {
+          text: '/start@bot payload',
+          entities: [{ type: 'bot_command', offset: 0, length: 10 }],
+          chat: { id: 2, type: 'supergroup' }
+        }
+      })
+    })
+  )
+)
