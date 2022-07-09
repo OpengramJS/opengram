@@ -41,27 +41,29 @@ class SceneContext {
     delete this.ctx[sessionName].__scenes
   }
 
-  enter (sceneId, initialState, silent) {
+  async enter (sceneId, initialState, silent) {
     if (!sceneId || !this.scenes.has(sceneId)) {
       throw new Error(`Can't find scene: ${sceneId}`)
     }
-    const leave = silent ? noop() : this.leave()
-    return leave.then(() => {
-      debug('Entering scene', sceneId, initialState, silent)
-      this.session.current = sceneId
-      this.state = initialState
-      const ttl = this.current.ttl || this.options.ttl
-      if (ttl) {
-        this.session.expires = now() + ttl
-      }
-      if (silent) {
-        return Promise.resolve()
-      }
-      const handler = typeof this.current.enterMiddleware === 'function'
+    if (!silent) {
+      await this.leave()
+    }
+    debug('Entering scene', sceneId, initialState, silent)
+    this.session.current = sceneId
+    this.state = initialState
+    const ttl = this.current.ttl || this.options.ttl
+    if (ttl) {
+      this.session.expires = now() + ttl
+    }
+    if (!this.current || silent) {
+      return
+    }
+    const handler =
+      'enterMiddleware' in this.current &&
+      typeof this.current.enterMiddleware === 'function'
         ? this.current.enterMiddleware()
         : this.current.middleware()
-      return handler(this.ctx, noop)
-    })
+    return await handler(this.ctx, noop)
   }
 
   reenter () {

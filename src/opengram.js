@@ -108,57 +108,72 @@ class Opengram extends Composer {
       .digest('hex')
   }
 
-  launch (config = {}) {
+  async launch (config = {}) {
     debug('Connecting to Telegram')
-    return this.telegram.getMe()
-      .then((botInfo) => {
-        debug(`Launching @${botInfo.username}`)
-        this.options.username = botInfo.username
-        this.context.botInfo = botInfo
-        if (!config.webhook) {
-          const { timeout, limit, allowedUpdates, stopCallback } = config.polling || {}
-          return this.telegram.deleteWebhook({
-            drop_pending_updates: config.dropPendingUpdates
-          })
-            .then(() => this.startPolling(timeout, limit, allowedUpdates, stopCallback))
-            .then(() => debug('Bot started with long-polling'))
-        }
-        if (typeof config.webhook.domain !== 'string' && typeof config.webhook.hookPath !== 'string') {
-          throw new Error('Webhook domain or webhook path is required')
-        }
-        let domain = config.webhook.domain || ''
-        if (domain.startsWith('https://') || domain.startsWith('http://')) {
-          domain = new URL(domain).host
-        }
-        const hookPath = config.webhook.hookPath || `/telegraf/${this.secretPathComponent()}`
-        const { port, host, tlsOptions, cb } = config.webhook
-        this.startWebhook(hookPath, tlsOptions, port, host, cb)
-        if (!domain) {
-          debug('Bot started with webhook')
-          return
-        }
-        return this.telegram
-          .setWebhook(`https://${domain}${hookPath}`, {
-            drop_pending_updates: config.dropPendingUpdates,
-            allowed_updates: config.allowedUpdates,
-            ip_address: config.webhook.ipAddress,
-            max_connections: config.webhook.maxConnections
-          })
-          .then(() => debug(`Bot started with webhook @ https://${domain}`))
-      })
+
+    const botInfo = await this.telegram.getMe()
+
+    debug(`Launching @${botInfo.username}`)
+    this.options.username = botInfo.username
+    this.context.botInfo = botInfo
+    if (!config.webhook) {
+      const { timeout, limit, allowedUpdates, stopCallback } = config.polling || {}
+      await this.telegram.deleteWebhook({ drop_pending_updates: config.dropPendingUpdates })
+      await this.startPolling(timeout, limit, allowedUpdates, stopCallback)
+      debug('Bot started with long-polling')
+      return this
+    }
+
+    if (
+      typeof config.webhook.domain !== 'string' &&
+      typeof config.webhook.hookPath !== 'string'
+    ) {
+      throw new Error('Webhook domain or webhook path is required')
+    }
+
+    let domain = config.webhook.domain || ''
+
+    if (domain.startsWith('https://') || domain.startsWith('http://')) {
+      domain = new URL(domain).host
+    }
+
+    const hookPath = config.webhook.hookPath || `/telegraf/${this.secretPathComponent()}`
+    const { port, host, tlsOptions, cb } = config.webhook
+    this.startWebhook(hookPath, tlsOptions, port, host, cb)
+
+    if (!domain) {
+      debug('Bot started with webhook')
+      return this
+    }
+
+    const webHookExtra = {
+      drop_pending_updates: config.dropPendingUpdates,
+      allowed_updates: config.allowedUpdates,
+      ip_address: config.webhook.ipAddress,
+      max_connections: config.webhook.maxConnections
+    }
+
+    await this.telegram.setWebhook(`https://${domain}${hookPath}`, webHookExtra)
+    debug(`Bot started with webhook @ https://${domain}`)
+
+    return this
   }
 
-  stop (cb = noop) {
+  async stop (cb = noop) {
     debug('Stopping bot...')
-    return new Promise((resolve) => {
+    await new Promise((resolve, reject) => {
       const done = () => resolve() & cb()
       if (this.webhookServer) {
-        return this.webhookServer.close(done)
+        this.webhookServer.close((err) => {
+          if (err) reject(err)
+          else done()
+        })
       } else if (!this.polling.started) {
-        return done()
+        done()
+      } else {
+        this.polling.stopCallback = done
+        this.polling.started = false
       }
-      this.polling.stopCallback = done
-      this.polling.started = false
     })
   }
 
