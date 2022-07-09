@@ -10,19 +10,13 @@ const MultipartStream = require('./multipart-stream')
 const { compactOptions } = require('../helpers/compact')
 const { isStream } = MultipartStream
 
-const WEBHOOK_BLACKLIST = [
-  'getChat',
-  'getChatAdministrators',
-  'getChatMember',
-  'getChatMembersCount',
-  'getFile',
-  'getFileLink',
-  'getGameHighScores',
-  'getMe',
-  'getUserProfilePhotos',
-  'getWebhookInfo',
-  'exportChatInviteLink'
-]
+const WEBHOOK_REPLY_METHOD_ALLOWLIST = new Set([
+  'answerCallbackQuery',
+  'answerInlineQuery',
+  'deleteMessage',
+  'leaveChat',
+  'sendChatAction'
+])
 
 const DEFAULT_EXTENSIONS = {
   audio: 'mp3',
@@ -37,7 +31,7 @@ const DEFAULT_EXTENSIONS = {
 const DEFAULT_OPTIONS = {
   apiRoot: 'https://api.telegram.org',
   apiPrefix: 'bot',
-  webhookReply: false,
+  webhookReply: true,
   agent: new https.Agent({
     keepAlive: true,
     keepAliveMsecs: 10000
@@ -275,7 +269,7 @@ class ApiClient {
       .filter((key) => typeof data[key] !== 'undefined' && data[key] !== null)
       .reduce((acc, key) => ({ ...acc, [key]: data[key] }), {})
 
-    if (options.webhookReply && response && !responseEnd && !WEBHOOK_BLACKLIST.includes(method)) {
+    if (options.webhookReply && response && !responseEnd && WEBHOOK_REPLY_METHOD_ALLOWLIST.has(method)) {
       debug('Call via webhook', method, payload)
       this.responseEnd = true
       return await answerToWebhook(response, { method, ...payload }, options)
