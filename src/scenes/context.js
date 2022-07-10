@@ -33,7 +33,9 @@ class SceneContext {
 
   get current () {
     const sceneId = this.session.current || this.options.default
-    return (sceneId && this.scenes.has(sceneId)) ? this.scenes.get(sceneId) : null
+    return sceneId === undefined || !this.scenes.has(sceneId)
+      ? undefined
+      : this.scenes.get(sceneId)
   }
 
   reset () {
