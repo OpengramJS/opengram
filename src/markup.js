@@ -1,3 +1,5 @@
+const { escapeHTML } = require('./core/helpers/escape')
+
 class Markup {
   forceReply (value = true) {
     this.force_reply = value
@@ -222,7 +224,7 @@ class Markup {
         available.splice(index, 1)
       }
 
-      result.push(chars[offset])
+      result.push(escapeHTML(chars[offset]))
 
       while (true) {
         const index = opened.findIndex((entity) => entity.offset + entity.length - 1 === offset)
