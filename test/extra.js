@@ -61,3 +61,13 @@ test('should generate caption options from static method', t => {
   const extra = { ...Extra.caption('text') }
   t.deepEqual(extra, { caption: 'text' })
 })
+
+test('should generate entities from static method', t => {
+  const extra = { ...Extra.entities([{ offset: 0, length: 4, type: 'code' }]) }
+  t.deepEqual(extra, { entities: [{ offset: 0, length: 4, type: 'code' }] })
+})
+
+test('should generate caption entities from static method', t => {
+  const extra = { ...Extra.captionEntities([{ offset: 0, length: 4, type: 'code' }]) }
+  t.deepEqual(extra, { caption_entities: [{ offset: 0, length: 4, type: 'code' }] })
+})

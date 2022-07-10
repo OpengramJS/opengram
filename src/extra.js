@@ -52,6 +52,16 @@ class Extra {
     return this
   }
 
+  entities (entities) {
+    this.entities = entities
+    return this
+  }
+
+  captionEntities (entities) {
+    this.caption_entities = entities
+    return this
+  }
+
   static inReplyTo (messageId) {
     return new Extra().inReplyTo(messageId)
   }
@@ -72,6 +82,10 @@ class Extra {
     return new Extra().markup(markup)
   }
 
+  static entities (entities) {
+    return new Extra().entities(entities)
+  }
+
   static HTML (value) {
     return new Extra().HTML(value)
   }
@@ -86,6 +100,10 @@ class Extra {
 
   static caption (caption) {
     return new Extra().caption(caption)
+  }
+
+  static captionEntities (entities) {
+    return new Extra().captionEntities(entities)
   }
 }
 
