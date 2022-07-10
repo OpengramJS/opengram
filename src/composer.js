@@ -1,4 +1,4 @@
-const Context = require('./context')
+const { OpengramContext: Context } = require('./context')
 
 class Composer {
   constructor (...fns) {

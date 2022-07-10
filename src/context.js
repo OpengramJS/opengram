@@ -681,4 +681,4 @@ function getMessageFromAnySource (ctx) {
   )
 }
 
-module.exports = OpengramContext
+module.exports = { OpengramContext, MessageSubTypesMapping }
