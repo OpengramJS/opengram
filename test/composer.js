@@ -1,6 +1,5 @@
 const test = require('ava')
 const Opengram = require('../')
-const { reject } = require('eslint-plugin-promise/rules/lib/promise-statics')
 const { Composer } = Opengram
 
 const baseMessage = { chat: { id: 1 }, from: { id: 42, username: 'opengram' } }
