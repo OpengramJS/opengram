@@ -191,8 +191,8 @@ class Composer {
     }
     return Composer.optional((ctx) => {
       const message = ctx.message || ctx.channelPost
-      const entities = message && (message.entities || message.caption_entities)
-      const text = message && (message.text || message.caption)
+      const entities = getEntities(message)
+      const text = getText(message)
       return entities && entities.some((entity) =>
         predicate(entity, text.substring(entity.offset, entity.offset + entity.length), ctx)
       )
@@ -257,12 +257,10 @@ class Composer {
 
   static match (triggers, ...fns) {
     return Composer.optional((ctx) => {
-      const text = (
-        (ctx.message && (ctx.message.caption || ctx.message.text)) ||
-        (ctx.channelPost && (ctx.channelPost.caption || ctx.channelPost.text)) ||
-        (ctx.callbackQuery && ctx.callbackQuery.data) ||
+      const text = getText(ctx.message) ||
+        getText(ctx.channelPost) ||
+        getText(ctx.callbackQuery) ||
         (ctx.inlineQuery && ctx.inlineQuery.query)
-      )
       for (const trigger of triggers) {
         ctx.match = trigger(text, ctx)
         if (ctx.match) {
@@ -278,7 +276,7 @@ class Composer {
 
   static command (command, ...fns) {
     if (fns.length === 0) {
-      return Composer.entity(['bot_command'], command)
+      return Composer.entity('bot_command', command)
     }
     const commands = normalizeTextArguments(command, '/')
     return Composer.mount('text', Composer.lazy((ctx) => {
@@ -326,7 +324,10 @@ class Composer {
 
   static chatType (type, ...fns) {
     const types = Array.isArray(type) ? type : [type]
-    return Composer.optional((ctx) => ctx.chat && types.includes(ctx.chat.type), ...fns)
+    return Composer.optional((ctx) => {
+      const chat = ctx.chat
+      return chat !== undefined && types.includes(chat.type)
+    }, ...fns)
   }
 
   static privateChat (...fns) {
@@ -410,6 +411,24 @@ function normalizeTextArguments (argument, prefix) {
   return args
     .filter(Boolean)
     .map((arg) => prefix && typeof arg === 'string' && !arg.startsWith(prefix) ? `${prefix}${arg}` : arg)
+}
+
+function getEntities (msg) {
+  if (msg == null) return []
+  if ('caption_entities' in msg) return msg.caption_entities ?? []
+  if ('entities' in msg) return msg.entities ?? []
+  return []
+}
+
+function getText (
+  msg
+) {
+  if (msg == null) return undefined
+  if ('caption' in msg) return msg.caption
+  if ('text' in msg) return msg.text
+  if ('data' in msg) return msg.data
+  if ('game_short_name' in msg) return msg.game_short_name
+  return undefined
 }
 
 module.exports = Composer
