@@ -313,7 +313,7 @@ test('should store session state with custom store', t => {
   bot.hears('calc', ctx => {
     t.true('session' in ctx)
     t.true('counter' in ctx.session)
-    t.is(ctx.session.counter, 2)
+    t.is(dummyStore['42:42'].session.counter, 2)
   })
   bot.on('message', ctx => {
     t.true('session' in ctx)
