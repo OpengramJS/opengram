@@ -14,6 +14,7 @@ const { URL } = require('url')
 const { TelegramError } = require('./core/network/error')
 const pTimeout = require('p-timeout')
 const { compactOptions } = require('./core/helpers/compact')
+const WizardScene = require('./scenes/wizard')
 
 const DEFAULT_OPTIONS = {
   retryAfter: 1,
@@ -255,5 +256,6 @@ module.exports = Object.assign(Opengram, {
   Telegram,
   Stage,
   BaseScene,
+  Scenes: { BaseScene, WizardScene, Stage },
   session
 })
