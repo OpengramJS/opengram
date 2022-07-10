@@ -400,7 +400,7 @@ test('Composer.optional should work with false value', async t =>
 
 test('Composer.optional should work with fn', async t =>
   await t.notThrowsAsync(
-    new Promise(resolve => {
+    new Promise((resolve, reject) => {
       const bot = new Opengram()
       bot.use(
         Composer.optional(
