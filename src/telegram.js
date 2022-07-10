@@ -312,15 +312,13 @@ class Telegram extends ApiClient {
     })
   }
 
-  editMessageCaption (chatId, messageId, inlineMessageId, caption, extra = {}) {
+  editMessageCaption (chatId, messageId, inlineMessageId, caption, extra) {
     return this.callApi('editMessageCaption', {
       caption,
       chat_id: chatId,
       message_id: messageId,
       inline_message_id: inlineMessageId,
-      ...extra.parse_mode && { parse_mode: extra.parse_mode },
-      ...extra.caption_entities && { caption_entities: extra.caption_entities },
-      reply_markup: extra.parse_mode || extra.reply_markup ? extra.reply_markup : extra
+      ...extra
     })
   }
 
@@ -335,16 +333,16 @@ class Telegram extends ApiClient {
         caption: extra.caption,
         caption_entities: extra.caption_entities
       },
-      reply_markup: extra.reply_markup ? extra.reply_markup : extra
+      reply_markup: extra.reply_markup
     })
   }
 
-  editMessageReplyMarkup (chatId, messageId, inlineMessageId, markup) {
+  editMessageReplyMarkup (chatId, messageId, inlineMessageId, extra) {
     return this.callApi('editMessageReplyMarkup', {
       chat_id: chatId,
       message_id: messageId,
       inline_message_id: inlineMessageId,
-      reply_markup: markup
+      ...extra
     })
   }
 
@@ -359,12 +357,12 @@ class Telegram extends ApiClient {
     })
   }
 
-  stopMessageLiveLocation (chatId, messageId, inlineMessageId, markup) {
+  stopMessageLiveLocation (chatId, messageId, inlineMessageId, extra) {
     return this.callApi('stopMessageLiveLocation', {
       chat_id: chatId,
       message_id: messageId,
       inline_message_id: inlineMessageId,
-      reply_markup: markup
+      ...extra
     })
   }
 
