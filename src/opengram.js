@@ -39,6 +39,7 @@ class Opengram extends Composer {
       throw err
     }
     this.context = {}
+    this.botInfoCall = undefined
     this.polling = {
       offset: 0,
       started: false
@@ -186,6 +187,13 @@ class Opengram extends Composer {
   }
 
   async handleUpdate (update, webhookResponse) {
+    if (this.context.botInfo === undefined) {
+      debug('Update %d is waiting for `botInfo` to be initialized', update.update_id)
+      const getBotInfoPromise = this.botInfoCall || (this.botInfoCall = this.telegram.getMe())
+      const botInfo = await getBotInfoPromise
+      this.options.username = botInfo.username
+      this.context.botInfo = botInfo
+    }
     debug('Processing update', update.update_id)
     const tg = new Telegram(this.token, this.telegram.options, webhookResponse)
     const OpengramContext = this.options.contextType

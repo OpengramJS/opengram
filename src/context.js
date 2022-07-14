@@ -64,6 +64,7 @@ class OpengramContext {
     this.update = update
     this.options = options
     this.updateType = UpdateTypes.find((key) => key in this.update)
+
     if (this.updateType === 'message' || (this.options.channelMode && this.updateType === 'channel_post')) {
       this.updateSubTypes = MessageSubTypes
         .filter((key) => key in this.update[this.updateType])
@@ -77,7 +78,7 @@ class OpengramContext {
   }
 
   get me () {
-    return this.options && this.options.username
+    return this.botInfo && this.botInfo.username
   }
 
   get telegram () {
