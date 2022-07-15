@@ -1,5 +1,6 @@
 const test = require('ava')
-const { Opengram, session, Scenes } = require('../')
+const { session, Scenes } = require('../')
+const { createBot } = require('./utils')
 
 const BaseTextMessage = {
   chat: { id: 1 },
@@ -9,7 +10,7 @@ const BaseTextMessage = {
 
 test('should execute enter middleware in scene', async t => {
   await t.notThrowsAsync(new Promise(resolve => {
-    const bot = new Opengram()
+    const bot = createBot()
     const scene = new Scenes.BaseScene('hello')
     scene.enter(resolve)
     const stage = new Scenes.Stage([scene])
@@ -22,7 +23,7 @@ test('should execute enter middleware in scene', async t => {
 
 test('should execute enter middleware in wizard scene', async t => {
   await t.notThrowsAsync(new Promise(resolve => {
-    const bot = new Opengram()
+    const bot = createBot()
     const scene = new Scenes.WizardScene('hello', [])
     scene.enter(resolve)
     const stage = new Scenes.Stage([scene])
@@ -35,7 +36,7 @@ test('should execute enter middleware in wizard scene', async t => {
 
 test('should execute first step in wizard scene on enter', async t => {
   await t.notThrowsAsync(new Promise(resolve => {
-    const bot = new Opengram()
+    const bot = createBot()
     const scene = new Scenes.WizardScene(
       'hello',
       resolve
@@ -50,7 +51,7 @@ test('should execute first step in wizard scene on enter', async t => {
 
 test('should execute both enter middleware and first step in wizard scene on enter', async t => {
   t.plan(2)
-  const bot = new Opengram()
+  const bot = createBot()
   const scene = new Scenes.WizardScene(
     'hello',
     ctx => {

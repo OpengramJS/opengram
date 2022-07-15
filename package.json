@@ -20,7 +20,7 @@
   ],
   "scripts": {
     "lint": "eslint .",
-    "test": "ava test/*",
+    "test": "ava",
     "precommit": "npm run lint && npm test",
     "remark": "npx remark README.md --use remark-preset-lint-consistent --use remark-preset-lint-recommended",
     "docs": "jsdoc ."
@@ -28,6 +28,12 @@
   "type": "commonjs",
   "engines": {
     "node": ">=12.18"
+  },
+  "ava": {
+    "files": [
+      "test/*",
+      "!test/utils.js"
+    ]
   },
   "dependencies": {
     "debug": "^4.0.1",

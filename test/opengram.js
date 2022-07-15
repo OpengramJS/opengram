@@ -1,5 +1,6 @@
 const test = require('ava')
 const Opengram = require('../')
+const { createBot } = require('./utils')
 const { session } = Opengram
 
 class MockResponse {
@@ -39,7 +40,7 @@ const UpdateTypes = [
 
 UpdateTypes.forEach((update) => {
   test('should provide update payload for ' + update.type, async t => {
-    const bot = new Opengram()
+    const bot = createBot()
     bot.on(update.type, (ctx) => {
       t.true(update.prop in ctx)
       t.true('telegram' in ctx)
@@ -54,7 +55,7 @@ UpdateTypes.forEach((update) => {
 })
 
 test('should provide update payload for text', async t => {
-  const bot = new Opengram()
+  const bot = createBot()
   bot.on('text', (ctx) => {
     t.true('telegram' in ctx)
     t.true('updateType' in ctx)
@@ -68,7 +69,7 @@ test('should provide update payload for text', async t => {
 })
 
 test('should provide shortcuts for `message` update', async t => {
-  const bot = new Opengram()
+  const bot = createBot()
   bot.on('message', (ctx) => {
     t.true('reply' in ctx)
     t.true('setPassportDataErrors' in ctx)
@@ -147,7 +148,7 @@ test('should provide shortcuts for `message` update', async t => {
 })
 
 test('should provide shortcuts for `callback_query` update', async t => {
-  const bot = new Opengram()
+  const bot = createBot()
   bot.on('callback_query', (ctx) => {
     t.true('answerCbQuery' in ctx)
     t.true('answerGameQuery' in ctx)
@@ -224,7 +225,7 @@ test('should provide shortcuts for `callback_query` update', async t => {
 })
 
 test('should provide shortcuts for `shipping_query` update', async t => {
-  const bot = new Opengram()
+  const bot = createBot()
   bot.on('shipping_query', (ctx) => {
     t.true('answerShippingQuery' in ctx)
   })
@@ -232,7 +233,7 @@ test('should provide shortcuts for `shipping_query` update', async t => {
 })
 
 test('should provide shortcuts for `pre_checkout_query` update', async t => {
-  const bot = new Opengram()
+  const bot = createBot()
   bot.on('pre_checkout_query', (ctx) => {
     t.true('answerPreCheckoutQuery' in ctx)
   })
@@ -240,7 +241,7 @@ test('should provide shortcuts for `pre_checkout_query` update', async t => {
 })
 
 test('should provide chat and sender info', async t => {
-  const bot = new Opengram()
+  const bot = createBot()
   bot.on(['text', 'message'], ctx => {
     t.is(ctx.from.id, 42)
     t.is(ctx.chat.id, 1)
@@ -249,7 +250,7 @@ test('should provide chat and sender info', async t => {
 })
 
 test('should provide shortcuts for `inline_query` update', async t => {
-  const bot = new Opengram()
+  const bot = createBot()
   bot.on('inline_query', ctx => {
     t.true('answerInlineQuery' in ctx)
   })
@@ -257,7 +258,7 @@ test('should provide shortcuts for `inline_query` update', async t => {
 })
 
 test('should provide subtype for `channel_post` update', async t => {
-  const bot = new Opengram('', { channelMode: true })
+  const bot = createBot('', { channelMode: true })
   bot.on('text', ctx => {
     t.is(ctx.channelPost.text, 'foo')
   })
@@ -265,7 +266,7 @@ test('should provide subtype for `channel_post` update', async t => {
 })
 
 test('should share state', async t => {
-  const bot = new Opengram()
+  const bot = createBot()
   bot.on('message', (ctx, next) => {
     ctx.state.answer = 41
     return next()
@@ -279,7 +280,7 @@ test('should share state', async t => {
 })
 
 test('should store session state', t => {
-  const bot = new Opengram()
+  const bot = createBot()
   bot.use(session())
   bot.hears('calc', ctx => {
     t.true('session' in ctx)
@@ -298,7 +299,7 @@ test('should store session state', t => {
 })
 
 test('should store session state with custom store', t => {
-  const bot = new Opengram()
+  const bot = createBot()
   const dummyStore = {}
   bot.use(session({
     store: {
@@ -329,7 +330,7 @@ test('should store session state with custom store', t => {
 test('should work with context extensions', async t => {
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.context.db = {
         getUser: () => undefined
       }
@@ -344,7 +345,7 @@ test('should work with context extensions', async t => {
 })
 
 test('should handle webhook response', async t => {
-  const bot = new Opengram('token', {
+  const bot = createBot('token', {
     telegram: {
       webhookReply: true
     }
@@ -364,7 +365,7 @@ test('should handle webhook response', async t => {
 })
 
 test('should respect webhookReply option', async t => {
-  const bot = new Opengram(null, { telegram: { webhookReply: false } })
+  const bot = createBot(null, { telegram: { webhookReply: false } })
   bot.catch(err => { throw err }) // Disable log
   bot.on('message', async ctx => ctx.replyWithChatAction('typing'))
   const res = new MockResponse()
@@ -374,7 +375,7 @@ test('should respect webhookReply option', async t => {
 })
 
 test('should respect webhookReply runtime change', async t => {
-  const bot = new Opengram({ telegram: { webhookReply: true } })
+  const bot = createBot({ telegram: { webhookReply: true } })
   bot.webhookReply = false
   bot.catch((err) => { throw err }) // Disable log
   bot.on('message', async ctx => ctx.replyWithChatAction('typing'))
@@ -387,7 +388,7 @@ test('should respect webhookReply runtime change', async t => {
 })
 
 test('should respect webhookReply runtime change (per request)', async t => {
-  const bot = new Opengram()
+  const bot = createBot()
   bot.catch((err) => { throw err }) // Disable log
   bot.on('message', async (ctx) => {
     ctx.webhookReply = false
@@ -400,8 +401,8 @@ test('should respect webhookReply runtime change (per request)', async t => {
 })
 
 test('should deterministically generate `secretPathComponent`', (t) => {
-  const foo = new Opengram('foo')
-  const bar = new Opengram('bar')
+  const foo = createBot('foo')
+  const bar = createBot('bar')
   t.deepEqual(foo.secretPathComponent(), foo.secretPathComponent())
   t.deepEqual(bar.secretPathComponent(), bar.secretPathComponent())
   t.notDeepEqual(foo.secretPathComponent(), bar.secretPathComponent())
@@ -409,7 +410,7 @@ test('should deterministically generate `secretPathComponent`', (t) => {
 
 test('should redact secret part of token when throw api calling error', async t => {
   const token = '123456789:SOMETOKEN1SOMETOKEN2SOMETOKEN'
-  const bot = new Opengram(token, {
+  const bot = createBot(token, {
     telegram: {
       apiRoot: 'http://notexists'
     }
@@ -421,7 +422,7 @@ test('should redact secret part of token when throw api calling error', async t 
 
 test('should redact secret part of token when throw api calling error when using apiPrefix', async t => {
   const token = '123456789:SOMETOKEN1SOMETOKEN2SOMETOKEN'
-  const bot = new Opengram(token, {
+  const bot = createBot(token, {
     telegram: {
       apiRoot: 'http://notexists',
       apiPrefix: 'someprefix'

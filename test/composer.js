@@ -1,5 +1,6 @@
 const test = require('ava')
 const Opengram = require('../')
+const { createBot } = require('./utils')
 const { Composer } = Opengram
 
 const baseMessage = { chat: { id: 1 }, from: { id: 42, username: 'opengram' } }
@@ -24,7 +25,7 @@ topLevelUpdates.forEach(update => {
   test('should route ' + update.type, async t => {
     await t.notThrowsAsync(
       new Promise(resolve => {
-        const bot = new Opengram()
+        const bot = createBot()
         bot.on(update.type, () => resolve())
         bot.handleUpdate(update.update)
       })
@@ -35,7 +36,7 @@ topLevelUpdates.forEach(update => {
 test('should route many types', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.on(['chosen_inline_result', 'message'], () => resolve())
       bot.handleUpdate({ inline_query: baseMessage })
       bot.handleUpdate({ message: baseMessage })
@@ -46,7 +47,7 @@ test('should route many types', async t =>
 test('should route sub types', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.on('text', () => resolve())
       bot.handleUpdate({ message: { voice: {}, ...baseMessage } })
       bot.handleUpdate({ message: { text: 'hello', ...baseMessage } })
@@ -94,7 +95,7 @@ updateTypes.forEach(update =>
   test('should route update type: ' + update, async t =>
     await t.notThrowsAsync(
       new Promise(resolve => {
-        const bot = new Opengram()
+        const bot = createBot()
         bot.on(update, resolve)
         const message = { ...baseMessage }
         message[update] = {}
@@ -107,7 +108,7 @@ updateTypes.forEach(update =>
 test('should route venue', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.on('venue', resolve)
       const message = {
         location: {},
@@ -122,7 +123,7 @@ test('should route venue', async t =>
 test('should route location', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.on('venue', ctx => {
         t.true(ctx.updateSubTypes.includes('venue'))
         t.true(ctx.updateSubTypes.includes('location'))
@@ -137,7 +138,7 @@ test('should route location', async t =>
 test('should route forward', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.on('forward', ctx => {
         t.true(ctx.updateSubTypes.includes('forward'))
         resolve()
@@ -160,7 +161,7 @@ test('should throw error then called with undefined middleware', async t =>
 test('should throw error then called with invalid middleware', async t =>
   await t.notThrowsAsync(
     new Promise((resolve) => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.catch(resolve)
       bot.on('text', 'foo')
       bot.handleUpdate({ message: { text: 'hello', ...baseMessage } })
@@ -171,7 +172,7 @@ test('should throw error then called with invalid middleware', async t =>
 test('should throw error then "next()" called twice', async t => {
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.catch(resolve)
       bot.use((ctx, next) => {
         next()
@@ -185,7 +186,7 @@ test('should throw error then "next()" called twice', async t => {
 test('should throw error then "next()" called with wrong context', async t =>
   await t.notThrowsAsync(
     new Promise((resolve, reject) => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.catch(resolve)
       bot.use((ctx, next) => next('bad context'))
       // eslint-disable-next-line prefer-promise-reject-errors
@@ -198,7 +199,7 @@ test('should throw error then "next()" called with wrong context', async t =>
 test('should throw error then called with undefined trigger', async t =>
   await t.throwsAsync(
     new Promise(() => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.hears(['foo', null])
     })
   )
@@ -207,7 +208,7 @@ test('should throw error then called with undefined trigger', async t =>
 test('should support Composer instance as middleware', async t =>
   await t.notThrowsAsync(
     new Promise((resolve) => {
-      const bot = new Opengram()
+      const bot = createBot()
       const composer = new Composer()
       composer.on('text', (ctx) => {
         t.is('bar', ctx.state.foo)
@@ -225,7 +226,7 @@ test('should support Composer instance as middleware', async t =>
 test('should support Composer instance as handler', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       const composer = new Composer()
       composer.on('text', resolve)
       bot.on('text', composer)
@@ -237,7 +238,7 @@ test('should support Composer instance as handler', async t =>
 test('should handle text triggers', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.hears('hello world', resolve)
       bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
     })
@@ -247,7 +248,7 @@ test('should handle text triggers', async t =>
 test('should handle fork', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.use(Opengram.fork(resolve))
       bot.handleUpdate({ message: { voice: {}, ...baseMessage } })
     })
@@ -257,7 +258,7 @@ test('should handle fork', async t =>
 test('Composer.branch should work with value', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.use(Composer.branch(true, resolve))
       bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
     })
@@ -267,7 +268,7 @@ test('Composer.branch should work with value', async t =>
 test('Composer.branch should work with fn', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.use(
         Composer.branch(
           () => false,
@@ -283,7 +284,7 @@ test('Composer.branch should work with fn', async t =>
 test('Composer.branch should work with async fn', async t =>
   await t.notThrowsAsync(
     new Promise((resolve, reject) => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.use(
         Composer.branch(
           () => {
@@ -305,7 +306,7 @@ test('Composer.branch should work with async fn', async t =>
 test('Composer.acl should work with user id', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.use(Composer.acl(42, resolve))
       bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
     })
@@ -315,7 +316,7 @@ test('Composer.acl should work with user id', async t =>
 test('Composer.acl should passthru', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.use(Composer.acl(42, Composer.passThru()))
       bot.use(resolve)
       bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
@@ -326,7 +327,7 @@ test('Composer.acl should passthru', async t =>
 test('Composer.acl should not be false positive', async t =>
   await t.notThrowsAsync(
     new Promise((resolve, reject) => {
-      const bot = new Opengram()
+      const bot = createBot()
       // eslint-disable-next-line prefer-promise-reject-errors
       bot.use(Composer.acl(999, reject))
       bot.use(resolve)
@@ -338,7 +339,7 @@ test('Composer.acl should not be false positive', async t =>
 test('Composer.acl should work with user ids', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.use(Composer.acl([42, 43], resolve))
       bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
     })
@@ -348,7 +349,7 @@ test('Composer.acl should work with user ids', async t =>
 test('Composer.acl should work with fn', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.use(
         Composer.acl(
           (ctx) => ctx.from.username === 'opengram',
@@ -363,7 +364,7 @@ test('Composer.acl should work with fn', async t =>
 test('Composer.acl should work with async fn', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.use(
         Composer.acl(
           (ctx) => new Promise(resolve => setTimeout(resolve, 100, true)),
@@ -378,7 +379,7 @@ test('Composer.acl should work with async fn', async t =>
 test('Composer.optional should work with truthy value', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.use(Composer.optional(true, resolve))
       bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
     })
@@ -388,7 +389,7 @@ test('Composer.optional should work with truthy value', async t =>
 test('Composer.optional should work with false value', async t =>
   await t.notThrowsAsync(
     new Promise((resolve, reject) => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.use(
         Composer.optional(false, reject)
       )
@@ -401,7 +402,7 @@ test('Composer.optional should work with false value', async t =>
 test('Composer.optional should work with fn', async t =>
   await t.notThrowsAsync(
     new Promise((resolve, reject) => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.use(
         Composer.optional(
           () => true,
@@ -417,7 +418,7 @@ test('Composer.optional should work with fn', async t =>
 test('Composer.optional should work with async fn', async t =>
   await t.notThrowsAsync(
     new Promise((resolve, reject) => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.use(
         Composer.optional(
           () => {
@@ -439,7 +440,7 @@ test('Composer.optional should work with async fn', async t =>
 test('Composer.filter should work with fn', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.filter(({ message }) => message.text.length < 2)
       bot.use(resolve)
       bot.handleUpdate({ message: { text: '-', ...baseMessage } })
@@ -452,7 +453,7 @@ test('Composer.filter should work with fn', async t =>
 test('Composer.filter should work with async fn', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.filter(({ message }) => {
         return new Promise(resolve => {
           setTimeout(() => {
@@ -470,7 +471,7 @@ test('Composer.filter should work with async fn', async t =>
 test('Composer.drop should work with fn', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.drop(({ message }) => message.text.length > 2)
       bot.use(resolve)
       bot.handleUpdate({ message: { text: '-', ...baseMessage } })
@@ -483,7 +484,7 @@ test('Composer.drop should work with fn', async t =>
 test('Composer.drop should work with async fn', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.drop(({ message }) => {
         return new Promise(resolve => {
           setTimeout(() => {
@@ -501,7 +502,7 @@ test('Composer.drop should work with async fn', async t =>
 test('Composer.lazy should work with fn', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.use(Composer.lazy(() => () => resolve()))
       bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
     })
@@ -511,7 +512,7 @@ test('Composer.lazy should work with fn', async t =>
 test('Composer.lazy should support middlewares', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.use(Composer.lazy(() => (_, next) => next()))
       bot.use(resolve)
       bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
@@ -522,7 +523,7 @@ test('Composer.lazy should support middlewares', async t =>
 test('Composer.dispatch should work with handlers array', async t =>
   await t.notThrowsAsync(
     new Promise((resolve, reject) => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.use(
         Composer.dispatch(() => 1, [
           reject,
@@ -537,7 +538,7 @@ test('Composer.dispatch should work with handlers array', async t =>
 test('Composer.dispatch should work', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.use(
         Composer.dispatch(() => 'b', {
           b: resolve
@@ -551,7 +552,7 @@ test('Composer.dispatch should work', async t =>
 test('Composer.dispatch should work with async fn', async t =>
   await t.notThrowsAsync(
     new Promise((resolve, reject) => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.use(
         Composer.dispatch(
           () => {
@@ -575,7 +576,7 @@ test('Composer.dispatch should work with async fn', async t =>
 test('Composer.log should just work', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.use(Composer.log(resolve))
       bot.handleUpdate({ message: { text: 'hello world', ...baseMessage } })
     })
@@ -585,7 +586,7 @@ test('Composer.log should just work', async t =>
 test('Composer.entity should work', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.use(Composer.entity('hashtag', resolve))
       bot.handleUpdate({
         message: {
@@ -600,7 +601,7 @@ test('Composer.entity should work', async t =>
 test('Composer.entity should not infer', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.use(Composer.entity('command', resolve))
       bot.use(resolve)
       bot.handleUpdate({
@@ -616,7 +617,7 @@ test('Composer.entity should not infer', async t =>
 test('Composer.entity should work with arrays', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.use(Composer.entity(['command', 'hashtag'], resolve))
       bot.handleUpdate({
         message: {
@@ -631,7 +632,7 @@ test('Composer.entity should work with arrays', async t =>
 test('Composer.entity should work with predicate', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.use(
         Composer.entity(
           (entity, value) => entity.type === 'hashtag' && value === '#foo',
@@ -651,7 +652,7 @@ test('Composer.entity should work with predicate', async t =>
 test('Composer.mention should work', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.use(Composer.mention(resolve))
       bot.handleUpdate({
         message: {
@@ -666,7 +667,7 @@ test('Composer.mention should work', async t =>
 test('Composer.mention should work with pattern', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.use(Composer.mention('foo', resolve))
       bot.handleUpdate({
         message: {
@@ -681,7 +682,7 @@ test('Composer.mention should work with pattern', async t =>
 test('Composer.hashtag should work', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.use(Composer.hashtag(resolve))
       bot.handleUpdate({
         message: {
@@ -696,7 +697,7 @@ test('Composer.hashtag should work', async t =>
 test('Composer.hashtag should work with pattern', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.use(Composer.hashtag('foo', resolve))
       bot.handleUpdate({
         message: {
@@ -711,7 +712,7 @@ test('Composer.hashtag should work with pattern', async t =>
 test('Composer.hashtag should work with hash pattern', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.use(Composer.hashtag('#foo', resolve))
       bot.handleUpdate({
         message: {
@@ -726,7 +727,7 @@ test('Composer.hashtag should work with hash pattern', async t =>
 test('Composer.hashtag should work with patterns array', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.use(Composer.hashtag(['news', 'foo'], resolve))
       bot.handleUpdate({
         message: {
@@ -741,7 +742,7 @@ test('Composer.hashtag should work with patterns array', async t =>
 test('should handle text triggers via functions', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.hears(
         (text) => text.startsWith('Hi'),
         resolve
@@ -754,7 +755,7 @@ test('should handle text triggers via functions', async t =>
 test('should handle regex triggers', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.hears(/hello (.+)/, ctx => {
         t.is('world', ctx.match[1])
         resolve()
@@ -768,7 +769,7 @@ test('should handle regex triggers', async t =>
 test('should handle command', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.command('foo', resolve)
       bot.handleUpdate({
         message: {
@@ -784,7 +785,7 @@ test('should handle command', async t =>
 test('should handle start command', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.start(resolve)
       bot.handleUpdate({
         message: {
@@ -800,7 +801,7 @@ test('should handle start command', async t =>
 test('should handle command with payload', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.start(ctx => {
         t.true('startPayload' in ctx)
         t.is('payload', ctx.startPayload)
@@ -820,7 +821,7 @@ test('should handle command with payload', async t =>
 test('should handle help command', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.help(resolve)
       bot.handleUpdate({
         message: {
@@ -836,7 +837,7 @@ test('should handle help command', async t =>
 test('should handle settings command', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.settings(resolve)
       bot.handleUpdate({
         message: {
@@ -852,9 +853,7 @@ test('should handle settings command', async t =>
 test('should handle group command', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram(null, {
-        username: 'bot'
-      })
+      const bot = createBot(null)
       bot.start(resolve)
       bot.handleUpdate({
         message: {
@@ -870,7 +869,7 @@ test('should handle group command', async t =>
 test('should handle game query', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.gameQuery(resolve)
       bot.handleUpdate({ callback_query: { game_short_name: 'foo' } })
     })
@@ -880,7 +879,7 @@ test('should handle game query', async t =>
 test('should handle action', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.action('foo', resolve)
       bot.handleUpdate({ callback_query: { data: 'foo' } })
     })
@@ -890,7 +889,7 @@ test('should handle action', async t =>
 test('should handle regex action', async t =>
   await t.notThrowsAsync(
     new Promise((resolve) => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.action(/foo (\d+)/, (ctx) => {
         t.true('match' in ctx)
         t.is('42', ctx.match[1])
@@ -904,7 +903,7 @@ test('should handle regex action', async t =>
 test('should handle inline query', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.inlineQuery('foo', resolve)
       bot.handleUpdate({ inline_query: { query: 'foo' } })
     })
@@ -914,7 +913,7 @@ test('should handle inline query', async t =>
 test('should handle regex inline query', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.inlineQuery(/foo (\d+)/, (ctx) => {
         t.true('match' in ctx)
         t.is('42', ctx.match[1])
@@ -928,7 +927,7 @@ test('should handle regex inline query', async t =>
 test('should support middlewares', async t =>
   await t.notThrowsAsync(
     new Promise((resolve, reject) => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.action('bar', () => {
         // eslint-disable-next-line prefer-promise-reject-errors
         reject()
@@ -942,7 +941,7 @@ test('should support middlewares', async t =>
 test('should handle short command', async t => {
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram()
+      const bot = createBot()
       bot.start(() => resolve())
       bot.handleUpdate({
         message: { text: '/start', entities: [{ type: 'bot_command', offset: 0, length: 6 }], ...baseMessage }
@@ -954,7 +953,7 @@ test('should handle short command', async t => {
 test('should handle command in group', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram(null, { username: 'bot' })
+      const bot = createBot(null)
       bot.start(resolve)
       bot.handleUpdate({
         message: {
@@ -970,7 +969,7 @@ test('should handle command in group', async t =>
 test('should handle command with payload in group', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram(null, { username: 'bot' })
+      const bot = createBot(null)
       bot.start(ctx => {
         t.true('startPayload' in ctx)
         t.is('payload', ctx.startPayload)
@@ -990,7 +989,7 @@ test('should handle command with payload in group', async t =>
 test('should handle command in supergroup', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram(null, { username: 'bot' })
+      const bot = createBot(null)
       bot.start(resolve)
       bot.handleUpdate({
         message: {
@@ -1006,7 +1005,7 @@ test('should handle command in supergroup', async t =>
 test('should handle command with payload in supergroup', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = new Opengram(null, { username: 'bot' })
+      const bot = createBot(null)
       bot.start(ctx => {
         t.true('startPayload' in ctx)
         t.is('payload', ctx.startPayload)
