@@ -54,8 +54,15 @@ const MessageSubTypes = [
   'voice_chat_scheduled'
 ]
 
-const MessageSubTypesMapping = {
+const MessageSubTypesMappingForChannelMode = {
   forward_date: 'forward'
+}
+
+const MessageSubTypesMapping = {
+  video_chat_scheduled: 'voice_chat_scheduled',
+  video_chat_started: 'voice_chat_started',
+  video_chat_ended: 'voice_chat_ended',
+  video_chat_participants_invited: 'voice_chat_participants_invited'
 }
 
 class OpengramContext {
@@ -68,7 +75,7 @@ class OpengramContext {
     if (this.updateType === 'message' || (this.options.channelMode && this.updateType === 'channel_post')) {
       this.updateSubTypes = MessageSubTypes
         .filter((key) => key in this.update[this.updateType])
-        .map((type) => MessageSubTypesMapping[type] || type)
+        .map((type) => MessageSubTypesMappingForChannelMode[type] || type)
     } else {
       this.updateSubTypes = []
     }
@@ -700,4 +707,4 @@ function getMessageFromAnySource (ctx) {
   )
 }
 
-module.exports = { OpengramContext, MessageSubTypesMapping }
+module.exports = { OpengramContext, MessageSubTypesMappingForChannelMode: MessageSubTypesMappingForChannelMode, MessageSubTypesMapping }

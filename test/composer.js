@@ -91,6 +91,13 @@ const updateTypes = [
   'voice_chat_scheduled'
 ]
 
+const MessageSubTypesMapping = {
+  voice_chat_scheduled: 'video_chat_scheduled',
+  voice_chat_started: 'video_chat_started',
+  voice_chat_ended: 'video_chat_ended',
+  voice_chat_participants_invited: 'video_chat_participants_invited'
+}
+
 updateTypes.forEach(update =>
   test('should route update type: ' + update, async t =>
     await t.notThrowsAsync(
@@ -99,6 +106,20 @@ updateTypes.forEach(update =>
         bot.on(update, resolve)
         const message = { ...baseMessage }
         message[update] = {}
+        bot.handleUpdate({ message })
+      })
+    )
+  )
+)
+
+Object.entries(MessageSubTypesMapping).forEach(([remappedUpdate, update]) =>
+  test(`should route remapped update type: ${update} to ${remappedUpdate}`, async t =>
+    await t.notThrowsAsync(
+      new Promise(resolve => {
+        const bot = createBot()
+        bot.on(update, resolve)
+        const message = { ...baseMessage }
+        message[remappedUpdate] = {}
         bot.handleUpdate({ message })
       })
     )
