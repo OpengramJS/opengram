@@ -197,6 +197,8 @@ test('should provide shortcuts for `callback_query` update', async t => {
     t.true('getChatMembersCount' in ctx)
     t.true('getChatMemberCount' in ctx)
     t.true('setChatStickerSet' in ctx)
+    t.true('setChatMenuButton' in ctx)
+    t.true('getChatMenuButton' in ctx)
     t.true('deleteChatStickerSet' in ctx)
     t.true('deleteMessage' in ctx)
     t.true('uploadStickerFile' in ctx)

@@ -261,6 +261,14 @@ class Telegram extends ApiClient {
     return this.callApi('unpinAllChatMessages', { chat_id: chatId })
   }
 
+  getChatMenuButton (chatId) {
+    return this.callApi('getChatMenuButton', { chat_id: chatId })
+  }
+
+  setChatMenuButton (chatId, menuButton) {
+    return this.callApi('setChatMenuButton', { chat_id: chatId, menu_button: menuButton })
+  }
+
   leaveChat (chatId) {
     return this.callApi('leaveChat', { chat_id: chatId })
   }

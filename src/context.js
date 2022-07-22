@@ -458,6 +458,16 @@ class OpengramContext {
     return this.telegram.getChatMemberCount(this.chat.id, ...args)
   }
 
+  getChatMenuButton () {
+    this.assert(this.chat, 'getChatMenuButton')
+    return this.telegram.getChatMenuButton(this.chat.id)
+  }
+
+  setChatMenuButton (...args) {
+    this.assert(this.chat, 'setChatMenuButton')
+    return this.telegram.setChatMenuButton(this.chat.id, ...args)
+  }
+
   setPassportDataErrors (errors) {
     this.assert(this.chat, 'setPassportDataErrors')
     return this.telegram.setPassportDataErrors(this.from.id, errors)
