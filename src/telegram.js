@@ -269,6 +269,14 @@ class Telegram extends ApiClient {
     return this.callApi('setChatMenuButton', { chat_id: chatId, menu_button: menuButton })
   }
 
+  setMyDefaultAdministratorRights (rights, forChannels) {
+    return this.callApi('setMyDefaultAdministratorRights', { rights, for_channels: forChannels })
+  }
+
+  getMyDefaultAdministratorRights (forChannels) {
+    return this.callApi('getMyDefaultAdministratorRights', { for_channels: forChannels })
+  }
+
   leaveChat (chatId) {
     return this.callApi('leaveChat', { chat_id: chatId })
   }

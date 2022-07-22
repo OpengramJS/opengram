@@ -468,6 +468,14 @@ class OpengramContext {
     return this.telegram.setChatMenuButton(this.chat.id, ...args)
   }
 
+  setMyDefaultAdministratorRights (...args) {
+    return this.telegram.setMyDefaultAdministratorRights(...args)
+  }
+
+  getMyDefaultAdministratorRights (...args) {
+    return this.telegram.getMyDefaultAdministratorRights(...args)
+  }
+
   setPassportDataErrors (errors) {
     this.assert(this.chat, 'setPassportDataErrors')
     return this.telegram.setPassportDataErrors(this.from.id, errors)
