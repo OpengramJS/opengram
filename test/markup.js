@@ -158,6 +158,11 @@ test('should generate hidden game button markup', t => {
   t.deepEqual(markup, { text: 'play again', callback_game: {}, hide: true })
 })
 
+test('should generate webApp button markup', t => {
+  const markup = { ...Markup.webApp('Order food', 'https://example.com') }
+  t.deepEqual(markup, { text: 'Order food', web_app: { url: 'https://example.com' }, hide: false })
+})
+
 test('should generate markup', t => {
   const markup = Markup.formatHTML('strike', [
     {

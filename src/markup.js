@@ -98,6 +98,10 @@ class Markup {
     return Markup.loginButton(text, url, opts, hide)
   }
 
+  webApp (text, url, hide) {
+    return Markup.webApp(text, url, hide)
+  }
+
   static removeKeyboard (value) {
     return new Markup().removeKeyboard(value)
   }
@@ -174,6 +178,14 @@ class Markup {
     return {
       text,
       login_url: { ...opts, url },
+      hide
+    }
+  }
+
+  static webApp (text, url, hide = false) {
+    return {
+      text,
+      web_app: { url },
       hide
     }
   }
