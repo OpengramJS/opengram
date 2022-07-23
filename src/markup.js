@@ -236,7 +236,7 @@ class Markup {
    * @see https://core.telegram.org/bots/api#keyboardbutton
    * @see https://core.telegram.org/bots/api#keyboardbuttonpolltype
    * @param text {string} The text to display
-   * @param [type] {'quiz'|'regular'} The type of permitted polls to create, omit if the user may send a poll of any type
+   * @param {'quiz'|'regular'} [type] The type of permitted polls to create, omit if the user may send a poll of any type
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
    * @return object
    */
@@ -559,8 +559,8 @@ class Markup {
    *
    * @see https://core.telegram.org/bots/api#keyboardbutton
    * @see https://core.telegram.org/bots/api#keyboardbuttonpolltype
-   * @param text {string} The text to display
-   * @param [type] {'quiz'|'regular'} The type of permitted polls to create, omit if the user may send a poll of any type
+   * @param {string} text The text to display
+   * @param {'quiz'|'regular'} [type] The type of permitted polls to create, omit if the user may send a poll of any type
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
    * @return object
    */
