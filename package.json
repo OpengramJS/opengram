@@ -23,7 +23,7 @@
     "test": "ava",
     "precommit": "npm run lint && npm test",
     "remark": "npx remark README.md --use remark-preset-lint-consistent --use remark-preset-lint-recommended",
-    "docs": "jsdoc ."
+    "docs": "jsdoc --configure .jsdoc.json --verbose"
   },
   "type": "commonjs",
   "engines": {

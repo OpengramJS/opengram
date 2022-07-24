@@ -2,6 +2,15 @@
   "source": {
     "include": ["src", "README.md", "package.json"]
   },
+  "templates": {
+    "default": {
+      "outputSourceFiles": true
+    }
+  },
+  "plugins": ["plugins/markdown"],
+  "markdown": {
+    "idInHeadings": true
+  },
   "opts": {
     "encoding": "utf8",
     "readme": "./README.md",
@@ -10,7 +19,13 @@
     "verbose": true,
     "template": "./node_modules/clean-jsdoc-theme",
     "theme_opts": {
-      "theme": "dark"
+      "theme": "dark",
+      "meta" : [
+        {
+          "name": "description",
+          "content": "Telegraf.js fork based on 3.38 with new features and fixes "
+        }
+      ]
     }
   }
 }
