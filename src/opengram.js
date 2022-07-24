@@ -139,7 +139,7 @@ class Opengram extends Composer {
       domain = new URL(domain).host
     }
 
-    const hookPath = config.webhook.hookPath || `/telegraf/${this.secretPathComponent()}`
+    const hookPath = config.webhook.hookPath || `/opengram/${this.secretPathComponent()}`
     const { port, host, tlsOptions, cb } = config.webhook
     this.startWebhook(hookPath, tlsOptions, port, host, cb)
 
