@@ -24,6 +24,10 @@ const DEFAULT_OPTIONS = {
 
 const noop = () => { }
 
+/**
+ * The main class that implements receiving updates and setting up the bot before starting
+ * @extends Composer
+ */
 class Opengram extends Composer {
   constructor (token, options) {
     super()
@@ -46,6 +50,10 @@ class Opengram extends Composer {
     }
   }
 
+  /**
+   * Set bot token
+   * @param {string} token
+   */
   set token (token) {
     this.telegram = new Telegram(token, this.telegram
       ? this.telegram.options
@@ -53,23 +61,101 @@ class Opengram extends Composer {
     )
   }
 
+  /**
+   * Get bot token
+   * @return {string}
+   */
   get token () {
     return this.telegram.token
   }
 
+  /**
+   * Enable / disable for webhook reply. if assigned `true` - webhook reply enabled
+   * @param {boolean} webhookReply
+   */
   set webhookReply (webhookReply) {
     this.telegram.webhookReply = webhookReply
   }
 
+  /**
+   * Returns the status of the webhook reply (enabled / disabled). if `true` is returned, the webhook reply is enabled
+   * @return {boolean}
+   */
   get webhookReply () {
     return this.telegram.webhookReply
-  }/* eslint brace-style: 0 */
+  }
 
+  /**
+   * Sets default error handler for Opengram errors.
+   * For example if you throw synchronous error or `return` / `await` promise was rejected, it calls this handler, if one is set.
+   * If it has not been set - the bot may crash, if some handler like `process.on` does not handle the error.
+   * ```js
+   * const { Opengram } = require('opengram')
+   * const bot = new Opengram('token')
+   *
+   * async function errorFirst() { throw new Error('Some error') }
+   * function second() { return Promise.reject(new Error('Some error')) }
+   *
+   * // Handled with bot.catch()
+   * bot.on('message', ctx => { throw new Error('Some error') })
+   *
+   * // Handled with bot.catch(), because you return promise (async function with await on async ops)
+   * bot.hears('asyncFirst', async ctx => { await errorFirst()  })
+   *
+   * // Handled with bot.catch(), because you return promise (async function with await on async ops)
+   * bot.on('asyncSecond', async ctx => { await second()  })
+   *
+   * // Handled with bot.catch(), because you return promise
+   * bot.on('asyncSecond', ctx => errorFirst())
+   *
+   * // Handled with bot.catch(), because you return promise
+   * bot.on('message', ctx => second())
+   *
+   * // Bot crashed, error not handled
+   * bot.on('asyncSecond', ctx => { errorFirst()  })
+   *
+   * // Bot crashed, error not handled
+   * bot.on('message', async ctx => { second()  })
+   *
+   * bot.catch((err, ctx) => console.log(err, ctx)) // Print error and error context to console, no crash
+   *
+   * bot.launch() // Start the bot
+   * ```
+   *
+   * @return {Opengram}
+   */
   catch (handler) {
     this.handleError = handler
     return this
   }
 
+  /**
+   * Generates webhook handler middleware for specified path for
+   * [Koa](https://koajs.com) / [Express](https://expressjs.com)
+   * / [Fastify](https://www.fastify.io)
+   * / NodeJS [http](https://nodejs.org/api/http.html) or [https](https://nodejs.org/api/https.html) modules
+   *
+   * Using example for [express](https://expressjs.com):
+   * ```js
+   * const { Opengram } = require('opengram')
+   * const express = require('express')
+   * const app = express()
+   * const bot = new Opengram(process.env.BOT_TOKEN)
+   *
+   * // Set the bot response
+   * bot.on('text', ({ replyWithHTML }) => replyWithHTML('<b>Hello</b>'))
+   *
+   * // Set telegram webhook
+   * bot.telegram.setWebhook('https://exmaple.com/secret-path')
+   *
+   * app.get('/', (req, res) => res.send('Hello World!'))
+   * // Set the bot API endpoint
+   * app.use(bot.webhookCallback('/secret-path'))
+   * app.listen(3000, () => console.log('Bot listening on port 3000!'))
+   * ```
+   * @param {string} [path='/']
+   * @return {function}
+   */
   webhookCallback (path = '/') {
     return generateCallback(path, (update, res) => this.handleUpdate(update, res), debug)
   }
@@ -88,10 +174,48 @@ class Opengram extends Composer {
     return this
   }
 
-  startWebhook (hookPath, tlsOptions, port, host, cb) {
+  /**
+   * Start webhook server based on NodeJS
+   * [http](https://nodejs.org/api/http.html) or [https](https://nodejs.org/api/https.html) modules on given host, port
+   * ```js
+   * const { Opengram } = require('opengram')
+   * const fs = require('fs')
+   * const bot = new Opengram(process.env.BOT_TOKEN)
+   *
+   * bot.hears('hello', => ctx.reply('hi'))
+   * bot.catch(console.log) // Setup error handler
+   *
+   * // Start webhook server
+   * bot.startWebhook(
+   *   '/secret-path', // Very secret path
+   *   // TLS options
+   *   {
+   *     key: fs.readFileSync('key.pem'), // Private key file
+   *     cert: fs.readFileSync('cert.pem') // Certificate file
+   *   },
+   *   3000 // Port
+   *   '0.0.0.0', // Host, may use if server have multiple IP adders
+   *   (req, res) => { // Custom next handler
+   *     res.statusCode = 403
+   *     res.end('Not allowed!')
+   *   }
+   * )
+   * bot.telegram.setWebhook('https://example.com:3000/secret-path') // Set url of your server with
+   * ```
+   * @param {string} [hookPath='/'] Path the server should listen to.
+   * @param {object|null} [tlsOptions] - Options for `https` NodeJS module, see official [docs](https://nodejs.org/api/https.html#httpscreateserveroptions-requestlistener)
+   * @param {number} [port] Port to listen. Be careful, Telegram only supports 443, 80, 88, 8443 for now.
+   * @param {string|null} [host] If host is omitted, the server will accept connections on the unspecified IPv6 address (::) when IPv6 is available, or the unspecified IPv4 address (0.0.0.0) otherwise.
+   * @param {function} [nextCb] Next handler function, called when webhook handler not match path string or request method.
+   * May have two arguments - `req`, `res`. If not specified, by default connection being closed with HTTP status `Forbidden 403`
+   * @see https://core.telegram.org/bots/webhooks
+   * @see https://core.telegram.org/bots/api#setwebhook
+   * @return {Opengram}
+   */
+  startWebhook (hookPath, tlsOptions, port, host, nextCb) {
     const webhookCb = this.webhookCallback(hookPath)
-    const callback = cb && typeof cb === 'function'
-      ? (req, res) => webhookCb(req, res, () => cb(req, res))
+    const callback = nextCb && typeof nextCb === 'function'
+      ? (req, res) => webhookCb(req, res, () => nextCb(req, res))
       : webhookCb
     this.webhookServer = tlsOptions != null
       ? require('https').createServer(tlsOptions, callback)
@@ -102,6 +226,12 @@ class Opengram extends Composer {
     return this
   }
 
+  /**
+   * Generate secret token for webhook path
+   *
+   * Returns the same result with the same token and `process.version`
+   * @return {string} - 256bit hex string, not really random, based on bot token and `process.version`.
+   */
   secretPathComponent () {
     return crypto
       .createHash('sha3-256')
@@ -110,6 +240,40 @@ class Opengram extends Composer {
       .digest('hex')
   }
 
+  /**
+   * @typedef {object} pollingConfig
+   * @property {function} [stopCallback] Function called when bot fully stopped. If you call `bot.stop()` it be rewrited with other function and never called, for using with `bot.stop`, you can pass `callback` into `bot.stop` argument, for example `bot.stop(() => console.log('Stopped'))`
+   * @property {string[]} [allowedUpdates] Array of allowed updates. For example, specify ["message", "edited_channel_post", "callback_query"] to only receive updates of these types. Please note that this parameter doesn't affect updates created before the call to the getUpdates, so unwanted updates may be received for a short period of time.
+   * @property {number} [limit=100] Limits the number of updates to be retrieved. Values between 1-100 are accepted. Defaults to 100.
+   * @property {number} [timeout=30] Timeout in seconds for long polling. Defaults to 30
+   */
+
+  /**
+   * @typedef {object} webhookConfig
+   * @property domain Your external server domain For example - `example.com`, `https://exmaple.com`, `http://exmaple.com`.
+   * Used for {@link Opengram.telegram.setWebhook}
+   * @property hookPath URL path. See {@link Opengram.startWebhook} for more information
+   * @property tlsOptions Options for TLS. See {@link Opengram.startWebhook} for more information
+   * @property {function} cb Next handler function, called when webhook handler not match path string or request method. See {@link Opengram.startWebhook} for more information
+   * @property port Port number. See {@link Opengram.startWebhook} for more information
+   * @property host Hostname. See {@link Opengram.startWebhook} for more information
+   * @property {string} [ipAddress] The fixed IP address which will be used to send webhook requests instead of the IP address resolved through DNS
+   * @property {number} [maxConnections=40] The maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery, 1-100. Defaults to 40. Use lower values to limit the load on your bot's server, and higher values to increase your bot's throughput.
+   */
+
+  /**
+   * @typedef {object} launchConfig
+   * @property {boolean} [dropPendingUpdates=false] If sets to true, dropping all pending updates which were sent when bots bot not was started
+   * @property {pollingConfig} [polling] Polling configuration
+   * @property {webhookConfig} [webhook] Webhook configuration
+   * @property {string[]} [allowedUpdates] Array of allowed updates for **webhook**. For example, specify ["message", "edited_channel_post", "callback_query"] to only receive updates of these types. Please note that this parameter doesn't affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time.
+   */
+
+  /**
+   * Launching a bot with a given config
+   * @param {launchConfig} config Launch configuration
+   * @return {Promise<Opengram>}
+   */
   async launch (config = {}) {
     debug('Connecting to Telegram')
 
