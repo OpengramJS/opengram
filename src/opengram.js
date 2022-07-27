@@ -29,6 +29,26 @@ const noop = () => { }
  * @extends Composer
  */
 class Opengram extends Composer {
+  /**
+   * @typedef {object} opengramOptions
+   * @property {string} [username] Bot username, used if you don't call `bot.launch()`
+   * @property {http.Agent} [attachmentAgent] HTTP Agent used for attachments
+   * @property {http.Agent} [agent] HTTP agent used for API calls. By default, it have this configuration:
+   *     `new https.Agent({ keepAlive: true, keepAliveMsecs: 10000 })`
+   * @property {string} [apiRoot] API root URL
+   * @property {string}  [apiPrefix=bot] API prefix before bot token, by default `bot`, but if you use
+   *    [TDLight](https://github.com/tdlight-team/tdlight) you maybe should change `apiPrefix` to `user`
+   * @property {boolean} [testEnv=false] Enable / disable test environment for WebApps,
+   *    see more [here](https://core.telegram.org/bots/webapps#testing-web-apps)
+   * @property {boolean} [webhookReply=true] Enable / disable webhook reply
+   *
+   */
+
+  /**
+   *
+   * @param {string} token Bot token given by [@BotFather](https://t.me/BotFather)
+   * @param {opengramOptions} options Opengram options
+   */
   constructor (token, options) {
     super()
     this.options = {
@@ -51,8 +71,8 @@ class Opengram extends Composer {
   }
 
   /**
-   * Set bot token
-   * @param {string} token
+   * Setter for bot token
+   * @param {string} token Bot token
    */
   set token (token) {
     this.telegram = new Telegram(token, this.telegram
@@ -62,15 +82,15 @@ class Opengram extends Composer {
   }
 
   /**
-   * Get bot token
-   * @return {string}
+   * Getter for bot token
+   * @return {string}  Bot token
    */
   get token () {
     return this.telegram.token
   }
 
   /**
-   * Enable / disable for webhook reply. if assigned `true` - webhook reply enabled
+   * Setter for enabling / disabling for webhook reply. if assigned `true` - webhook reply enabled
    * @param {boolean} webhookReply
    */
   set webhookReply (webhookReply) {
@@ -87,8 +107,9 @@ class Opengram extends Composer {
 
   /**
    * Sets default error handler for Opengram errors.
-   * For example if you throw synchronous error or `return` / `await` promise was rejected, it calls this handler, if one is set.
-   * If it has not been set - the bot may crash, if some handler like `process.on` does not handle the error.
+   * For example if you throw synchronous error or `return` / `await` promise was rejected, it calls this handler,
+   * if one is set. If it has not been set - the bot may crash, if some handler like `process.on`
+   * does not handle the error.
    * ```js
    * const { Opengram } = require('opengram')
    * const bot = new Opengram('token')
@@ -160,6 +181,20 @@ class Opengram extends Composer {
     return generateCallback(path, (update, res) => this.handleUpdate(update, res), debug)
   }
 
+  /**
+   * Starts long polling and updates processing with given configuration
+   * @property {number} [timeout=30] Timeout in seconds for long polling. Defaults to 30
+   * @property {number} [limit=100] Limits the number of updates to be retrieved. Values between 1-100 are accepted.
+   *     Defaults to 100.
+   * @property {array<string>|string} [allowedUpdates] Array of allowed updates or update name
+   *     For example, specify `["message", "edited_channel_post", "callback_query"]` to only receive
+   *     updates of these types. Please note that this parameter doesn't affect updates created before the call
+   *     to the getUpdates, so unwanted updates may be received for a short period of time.
+   * @property {function} [stopCallback] Function called when bot fully stopped.
+   *     If you call `bot.stop()` it be rewritten with other function and never called, for using with `bot.stop`,
+   *     you can pass `callback` into `bot.stop` argument, for example `bot.stop(() => console.log('Stopped'))`
+   * @return {Opengram}
+   */
   startPolling (timeout = 30, limit = 100, allowedUpdates, stopCallback = noop) {
     this.polling.timeout = timeout
     this.polling.limit = limit
@@ -203,11 +238,14 @@ class Opengram extends Composer {
    * bot.telegram.setWebhook('https://example.com:3000/secret-path') // Set url of your server with
    * ```
    * @param {string} [hookPath='/'] Path the server should listen to.
-   * @param {object|null} [tlsOptions] - Options for `https` NodeJS module, see official [docs](https://nodejs.org/api/https.html#httpscreateserveroptions-requestlistener)
+   * @param {object|null} [tlsOptions] - Options for `https` NodeJS module, see official
+   *    [docs](https://nodejs.org/api/https.html#httpscreateserveroptions-requestlistener)
    * @param {number} [port] Port to listen. Be careful, Telegram only supports 443, 80, 88, 8443 for now.
-   * @param {string|null} [host] If host is omitted, the server will accept connections on the unspecified IPv6 address (::) when IPv6 is available, or the unspecified IPv4 address (0.0.0.0) otherwise.
-   * @param {function} [nextCb] Next handler function, called when webhook handler not match path string or request method.
-   * May have two arguments - `req`, `res`. If not specified, by default connection being closed with HTTP status `Forbidden 403`
+   * @param {string|null} [host] If host is omitted, the server will accept connections on the unspecified IPv6
+   *    address (::) when IPv6 is available, or the unspecified IPv4 address (0.0.0.0) otherwise.
+   * @param {function} [nextCb] Next handler function,
+   *    called when webhook handler not match path string or request method. May have two arguments - `req`, `res`.
+   *    If not specified, by default connection being closed with HTTP status `Forbidden 403`
    * @see https://core.telegram.org/bots/webhooks
    * @see https://core.telegram.org/bots/api#setwebhook
    * @return {Opengram}
@@ -242,23 +280,34 @@ class Opengram extends Composer {
 
   /**
    * @typedef {object} pollingConfig
-   * @property {function} [stopCallback] Function called when bot fully stopped. If you call `bot.stop()` it be rewrited with other function and never called, for using with `bot.stop`, you can pass `callback` into `bot.stop` argument, for example `bot.stop(() => console.log('Stopped'))`
-   * @property {string[]} [allowedUpdates] Array of allowed updates. For example, specify ["message", "edited_channel_post", "callback_query"] to only receive updates of these types. Please note that this parameter doesn't affect updates created before the call to the getUpdates, so unwanted updates may be received for a short period of time.
-   * @property {number} [limit=100] Limits the number of updates to be retrieved. Values between 1-100 are accepted. Defaults to 100.
+   * @property {function} [stopCallback] Function called when bot fully stopped.
+   *     If you call `bot.stop()` it be rewritten with other function and never called, for using with `bot.stop`,
+   *     you can pass `callback` into `bot.stop` argument, for example `bot.stop(() => console.log('Stopped'))`
+   * @property {array<string>|string} [allowedUpdates] Array of allowed updates or update name
+   *     For example, specify `["message", "edited_channel_post", "callback_query"]` to only receive
+   *     updates of these types. Please note that this parameter doesn't affect updates created before the call
+   *     to the getUpdates, so unwanted updates may be received for a short period of time.
+   * @property {number} [limit=100] Limits the number of updates to be retrieved. Values between 1-100 are accepted.
+   *     Defaults to 100.
    * @property {number} [timeout=30] Timeout in seconds for long polling. Defaults to 30
    */
 
   /**
    * @typedef {object} webhookConfig
-   * @property domain Your external server domain For example - `example.com`, `https://exmaple.com`, `http://exmaple.com`.
-   * Used for {@link Opengram.telegram.setWebhook}
+   * @property domain Your external server domain For example -
+   *    `example.com`, `https://exmaple.com`, `http://exmaple.com`.
+   *    Used for {@link Opengram.telegram.setWebhook}
    * @property hookPath URL path. See {@link Opengram.startWebhook} for more information
    * @property tlsOptions Options for TLS. See {@link Opengram.startWebhook} for more information
-   * @property {function} cb Next handler function, called when webhook handler not match path string or request method. See {@link Opengram.startWebhook} for more information
+   * @property {function} cb Next handler function, called when webhook handler not match path string or request method.
+   *    See {@link Opengram.startWebhook} for more information
    * @property port Port number. See {@link Opengram.startWebhook} for more information
    * @property host Hostname. See {@link Opengram.startWebhook} for more information
-   * @property {string} [ipAddress] The fixed IP address which will be used to send webhook requests instead of the IP address resolved through DNS
-   * @property {number} [maxConnections=40] The maximum allowed number of simultaneous HTTPS connections to the webhook for update delivery, 1-100. Defaults to 40. Use lower values to limit the load on your bot's server, and higher values to increase your bot's throughput.
+   * @property {string} [ipAddress] The fixed IP address which will be used to send webhook requests instead of the
+   *    IP address resolved through DNS
+   * @property {number} [maxConnections=40] The maximum allowed number of simultaneous HTTPS connections to the webhook
+   *    for update delivery, 1-100. Defaults to 40. Use lower values to limit the load on your bot's server, and higher
+   *    values to increase your bot's throughput.
    */
 
   /**
@@ -271,7 +320,8 @@ class Opengram extends Composer {
 
   /**
    * Launching a bot with a given config
-   * @param {launchConfig} config Launch configuration
+   * @param {launchConfig} [config] Launch configuration
+   * @throws Error
    * @return {Promise<Opengram>}
    */
   async launch (config = {}) {
@@ -325,6 +375,11 @@ class Opengram extends Composer {
     return this
   }
 
+  /**
+   * Stopping the bot. For webhook, it will close the server, for long polling stop getting updates
+   * @param [cb] Callback function, which called when bot fully stopped
+   * @return {Promise<void>}
+   */
   async stop (cb = noop) {
     debug('Stopping bot...')
     await new Promise((resolve, reject) => {
@@ -343,6 +398,12 @@ class Opengram extends Composer {
     })
   }
 
+  /**
+   * Starting processing array of updates
+   * @param {object[]} updates
+   * @throws Error
+   * @return {Promise}
+   */
   handleUpdates (updates) {
     if (!Array.isArray(updates)) {
       throw new Error('Updates must be an array')
@@ -350,6 +411,13 @@ class Opengram extends Composer {
     return Promise.all(updates.map((update) => this.handleUpdate(update)))
   }
 
+  /**
+   * Starting processing one update
+   * @param {object} update Update object
+   * @param [webhookResponse] Response object for send webhook reply
+   * @throws Error
+   * @return {Promise}
+   */
   async handleUpdate (update, webhookResponse) {
     if (this.context.botInfo === undefined) {
       debug('Update %d is waiting for `botInfo` to be initialized', update.update_id)
@@ -378,6 +446,11 @@ class Opengram extends Composer {
     }
   }
 
+  /**
+   * Fetching updates using long polling
+   * @private
+   * @return {Promise<void>}
+   */
   async fetchUpdates () {
     if (!this.polling.started) {
       this.polling.stopCallback && this.polling.stopCallback()
