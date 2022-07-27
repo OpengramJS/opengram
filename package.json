@@ -23,7 +23,8 @@
     "test": "ava",
     "precommit": "npm run lint && npm test && npm run remark",
     "remark": "npx remark README.md --use remark-preset-lint-consistent --use remark-preset-lint-recommended",
-    "docs": "jsdoc --configure .jsdoc.json --verbose"
+    "docs": "jsdoc --configure .jsdoc.json",
+    "json-docs": "jsdoc --template ./node_modules/jsdoc-json --destination docs/docs.json --recurse src"
   },
   "type": "commonjs",
   "engines": {
@@ -42,6 +43,7 @@
     "sandwich-stream": "^2.0.1"
   },
   "devDependencies": {
+    "jsdoc-json": "^2.0.2",
     "ava": "^4.3.0",
     "eslint": "^8.18.0",
     "eslint-config-standard": "^17.0.0",
