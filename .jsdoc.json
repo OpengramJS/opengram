@@ -19,6 +19,7 @@
     "verbose": true,
     "template": "./node_modules/clean-jsdoc-theme",
     "theme_opts": {
+      "title": "Opengram",
       "theme": "dark",
       "meta" : [
         {
