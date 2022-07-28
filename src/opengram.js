@@ -297,12 +297,12 @@ class Opengram extends Composer {
    * @property domain Your external server domain For example -
    *    `example.com`, `https://exmaple.com`, `http://exmaple.com`.
    *    Used for {@link Opengram.telegram.setWebhook}
-   * @property hookPath URL path. See {@link Opengram.startWebhook} for more information
-   * @property tlsOptions Options for TLS. See {@link Opengram.startWebhook} for more information
+   * @property hookPath URL path. See {@link Opengram#startWebhook} for more information
+   * @property tlsOptions Options for TLS. See {@link Opengram#startWebhook} for more information
    * @property {function} cb Next handler function, called when webhook handler not match path string or request method.
-   *    See {@link Opengram.startWebhook} for more information
-   * @property port Port number. See {@link Opengram.startWebhook} for more information
-   * @property host Hostname. See {@link Opengram.startWebhook} for more information
+   *    See {@link Opengram#startWebhook} for more information
+   * @property port Port number. See {@link Opengram#startWebhook} for more information
+   * @property host Hostname. See {@link Opengram#startWebhook} for more information
    * @property {string} [ipAddress] The fixed IP address which will be used to send webhook requests instead of the
    *    IP address resolved through DNS
    * @property {number} [maxConnections=40] The maximum allowed number of simultaneous HTTPS connections to the webhook
