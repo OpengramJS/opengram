@@ -172,7 +172,7 @@ class Extra {
   /**
    * Adding reply to message
    * @see https://core.telegram.org/bots/api#sendmessage
-   * @param {boolean} messageId Message id to reply
+   * @param {number} messageId Message id to reply
    * @return {Extra}
    */
   static inReplyTo (messageId) {
