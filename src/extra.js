@@ -150,7 +150,7 @@ class Extra {
   /**
    * Adds entities for message text
    * @see https://core.telegram.org/bots/api#sendmessage
-   * @param {object[]} entities Array of entities
+   * @param {MessageEntity[]} entities Array of entities
    * @return {Extra}
    */
   entities (entities) {
@@ -161,7 +161,7 @@ class Extra {
   /**
    * Adds caption entities for the animation, audio, document, photo, video or voice
    * @see https://core.telegram.org/bots/api#sendmessage
-   * @param {Object[]} entities Array of entities
+   * @param {MessageEntity[]} entities Array of entities
    * @return {Extra}
    */
   captionEntities (entities) {
@@ -234,7 +234,7 @@ class Extra {
    * ```
    *
    * @see https://core.telegram.org/bots/api#sendmessage
-   * @param {object|markupCallback} markup
+   * @param {object|Markup|markupCallback} markup
    * @return {object}
    */
   static markup (markup) {
@@ -244,7 +244,7 @@ class Extra {
   /**
    * Adds entities for message text
    * @see https://core.telegram.org/bots/api#sendmessage
-   * @param {object[]} entities Array of entities
+   * @param {MessageEntity[]} entities Array of entities
    * @return {Extra}
    */
   static entities (entities) {
@@ -294,7 +294,7 @@ class Extra {
   /**
    * Adds caption entities for the animation, audio, document, photo, video or voice
    * @see https://core.telegram.org/bots/api#sendmessage
-   * @param {Object[]} entities Array of entities
+   * @param {MessageEntity[]} entities Array of entities
    * @return {Extra}
    */
   static captionEntities (entities) {
