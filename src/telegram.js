@@ -7,32 +7,6 @@ const { isAbsolute } = require('path')
  */
 class Telegram extends ApiClient {
   /**
-   * @typedef {object} User
-   * @description This object represents a Telegram user or bot.
-   * @see https://core.telegram.org/bots/api#user
-   * @property {number} id Unique identifier for this user or bot. This number may have more than 32 significant bits
-   *    and some programming languages may have difficulty/silent defects in interpreting it.
-   *    But it has at most 52 significant bits, so a 64-bit integer or double-precision float type are safe
-   *    for storing this identifier.
-   * @property {boolean} is_bot *True*, if this user is a bot
-   * @property {string} first_name User's or bot's first name
-   * @property {string} [last_name] *Optional.* User's or bot's last name
-   * @property {string} [username] *Optional.* User's or bot's username
-   * @property {string} [language_code] *Optional.*
-   *    [IETF language tag](https://en.wikipedia.org/wiki/IETF_language_tag) of the user's language
-   * @property {boolean} [is_premium] *Optional.* *True*, if this user is a Telegram Premium user
-   * @property {boolean} [added_to_attachment_menu] *Optional.* *True*, if this user added the bot
-   *    to the attachment menu
-   * @property {boolean} [can_join_groups] *Optional.* *True*, if the bot can be invited to groups.
-   *    Returned only in {@link getMe}.
-   * @property {boolean} [can_read_all_group_messages] *Optional.* *True*, if
-   *    [privacy mode](https://core.telegram.org/bots#privacy-mode) is disabled for the bot.
-   *    Returned only in {@link getMe}.
-   * @property {boolean} [supports_inline_queries] *Optional.* *True*, if the bot supports inline queries.
-   *    Returned only in {@link getMe}.
-   */
-
-  /**
    * A simple method for testing your bot's authentication token. Requires no parameters.
    * Returns basic information about the bot in form of a {@link User} object.
    * @see https://core.telegram.org/bots/api#getme
@@ -41,23 +15,6 @@ class Telegram extends ApiClient {
   getMe () {
     return this.callApi('getMe')
   }
-
-  /**
-   * @typedef {object} File
-   * This object represents a file ready to be downloaded.
-   * The file can be downloaded via the link `https://api.telegram.org/file/bot<token>/<file_path>`.
-   * It is guaranteed that the link will be valid for at least 1 hour. When the link expires,
-   * a new one can be requested by calling {@link getFile}.
-   * The maximum file size to download is 20 MB
-   * @property {string} file_id Identifier for this file, which can be used to download or reuse the file
-   * @property {string} file_unique_id Unique identifier for this file, which is supposed to be the same over time
-   *    and for different bots. Can't be used to download or reuse the file.
-   * @property {number} [file_size] *Optional.* File size in bytes. It can be bigger than `2^31` and some programming
-   *    languages may have difficulty/silent defects in interpreting it. But it has at most 52 significant bits,
-   *    so a signed 64-bit integer or double-precision float type are safe for storing this value.
-   * @property {string} [file_path] *Optional.* File path. Use `https://api.telegram.org/file/bot<token>/<file_path>`
-   *    to get the file.
-   */
 
   /**
    * Use this method to get basic information about a file and prepare it for downloading.
@@ -106,11 +63,6 @@ class Telegram extends ApiClient {
   }
 
   /**
-   * @typedef {object} Message
-   * @description This object represents a message.
-   */
-
-  /**
    * Use this method to receive incoming updates using long polling
    * ([wiki](https://en.wikipedia.org/wiki/Push_technology#Long_polling)).
    * An Array of [Update](https://core.telegram.org/bots/api#update) objects is returned.
@@ -143,26 +95,6 @@ class Telegram extends ApiClient {
   }
 
   /**
-   * @typedef {object} WebhookInfo
-   * @property {string} url Webhook URL, may be empty if webhook is not set up
-   * @property {boolean} has_custom_certificate *True*, if a custom certificate was provided for webhook
-   *    certificate checks
-   * @property {number} pending_update_count Number of updates awaiting delivery
-   * @property {string} [ip_address] Optional. Currently used webhook IP address
-   * @property {number} [last_error_date] Optional. Unix time of the most recent error that happened when trying to
-   *    synchronize available updates with Telegram datacenters
-   * @property {string} [last_error_message] Optional. The maximum allowed number of simultaneous HTTPS connections
-   *    to the webhook for update delivery
-   * @property {number} [last_synchronization_error_date] Optional. Unix time of the most recent error that happened when
-   *    trying to synchronize available updates with Telegram datacenters
-   * @property {number} [max_connections] Optional. The maximum allowed number of simultaneous HTTPS connections to the
-   *    webhook for update delivery
-   * @property {string[]} [allowed_updates] Optional. A list of update types the bot is subscribed to.
-   *    Defaults to all update types except `chat_member`
-   *
-   */
-
-  /**
    * Use this method to get current webhook status. Requires no parameters.
    * On success, returns a {@link WebhookInfo} object.
    * If the bot is using {@link getUpdates}, will return an object with the *url* field empty.
@@ -172,14 +104,6 @@ class Telegram extends ApiClient {
   getWebhookInfo () {
     return this.callApi('getWebhookInfo')
   }
-
-  /**
-   * @typedef {object} GameHighScore
-   * @description This object represents one row of the high scores table for a game.
-   * @property {number} position Position in high score table for the game
-   * @property {User} user User Object
-   * @property {number} score Score
-   */
 
   /**
    * Use this method to get data for high score tables.
@@ -233,29 +157,6 @@ class Telegram extends ApiClient {
   }
 
   /**
-   * @typedef {object} setWebhookExtra
-   * @description Extra params for {@link setWebhook}
-   * @see https://core.telegram.org/bots/api#setwebhook
-   * @property {Buffer|stream} [certificate] Upload your public key certificate so that the root certificate in use
-   *    can be checked. See our self-signed guide for details.
-   * @property {string} [ip_address] The fixed IP address which will be used to send webhook requests instead of
-   *    the IP address resolved through DNS
-   * @property {number} [max_connections=40] The maximum allowed number of simultaneous HTTPS connections to the webhook
-   *    for update delivery, 1-100. Defaults to 40. Use lower values to limit the load on your bot's server,
-   *    and higher values to increase your bot's throughput.
-   * @param {string[]} [allowedUpdates] - Array of allowed updates or update name
-   *     For example, specify `["message", "edited_channel_post", "callback_query"]` to only receive
-   *     updates of these types. See [Update](https://core.telegram.org/bots/api#update) for a complete list of
-   *     available update types.
-   *     Specify an empty list to receive all update types except `chat_member` (default).
-   *     If not specified, the previous setting will be used.
-   * @property {boolean} [drop_pending_updates] Pass True to drop all pending updates
-   * @property {string} [secret_token] A secret token to be sent in a header `X-Telegram-Bot-Api-Secret-Token`
-   *    in every webhook request, 1-256 characters. Only characters `A-Z`, `a-z`, `0-9`, `_` and `-` are allowed.
-   *    The header is useful to ensure that the request comes from a webhook set by you.
-   */
-
-  /**
    * Use this method to specify a URL and receive incoming updates via an outgoing webhook.
    * Whenever there is an update for the bot, we will send an HTTPS POST request to the specified URL,
    * containing a JSON-serialized [Update](https://core.telegram.org/bots/api#update).
@@ -274,13 +175,6 @@ class Telegram extends ApiClient {
   }
 
   /**
-   * @typedef {object} deleteWebhookExtra
-   * @description Extra params for {@link deleteWebhook}
-   * @see https://core.telegram.org/bots/api#deletewebhook
-   * @property {boolean} [drop_pending_updates] Pass True to drop all pending updates
-   */
-
-  /**
    * Use this method to remove webhook integration if you decide to switch back to {@link Telegram#getUpdates}.
    * Returns True on success.
    * @see https://core.telegram.org/bots/api#deletewebhook
@@ -290,51 +184,6 @@ class Telegram extends ApiClient {
   deleteWebhook (extra) {
     return this.callApi('deleteWebhook', extra)
   }
-
-  /** @typedef {'Markdown'|'MarkdownV2'|'HTML'} parseMode */
-  /** @typedef {
-   'mention'|'hashtag'|'cashtag'|'bot_command'|'url'|'email'|'phone_number'|'bold'|'italic'|'underline'|'strikethrough'
-   |'spoiler'|'code'|'pre'|'text_link'|'text_mention'
-  } entityType */
-
-  /**
-   * @typedef {object} MessageEntity
-   * @description This object represents one special entity in a text message. For example,
-   *    hashtags, usernames, URLs, etc.
-   * @see https://core.telegram.org/bots/api#messageentity
-   * @property {entityType} type Type of the entity. Currently, can be “mention” (`@username`), “hashtag” (`#hashtag`),
-   *    “cashtag” (`$USD`), “bot_command” (`/start@jobs_bot`), “url” (`https://telegram.org`),
-   *    “email” (`do-not-reply@telegram.org`), “phone_number” (`+1-212-555-0123`),
-   *    “bold” (**bold text**), “italic” (_italic text_), “underline” (underlined text),
-   *    “strikethrough” (~~strikethrough text~~), “spoiler” (spoiler message),
-   *    “code” (`monowidth string`), “pre” (`monowidth block`),
-   *    “text_link” (for clickable text URLs), “text_mention”
-   *    (for users [without usernames](https://telegram.org/blog/edit#new-mentions))
-   * @property {number} offset Offset in UTF-16 code units to the start of the entity
-   * @property {number} length Length of the entity in UTF-16 code units
-   * @property {string} [url] Optional. For “text_link” only, URL that will be opened after user taps on the text
-   * @property {User} [user] Optional. For “text_mention” only, the mentioned user
-   * @property {string} [language] Optional. For “pre” only, the programming language of the entity text
-   *
-   */
-
-  /**
-   * @typedef {object} MessageExtraParams
-   * @property {parseMode} [parse_mode] Mode for parsing entities in the message text. See formatting
-   *    options for more details.
-   * @property {MessageEntity} [entities] A JSON-serialized list of special entities that appear in message text,
-   *    which can be specified instead of `parse_mode`
-   * @property {boolean} [disable_web_page_preview] Disables link previews for links in this message
-   * @property {boolean} [disable_notification] Sends the message
-   *    [silently](https://telegram.org/blog/channels-2-0#silent-messages). Users will receive
-   *    a notification with no sound.
-   * @property {boolean} [protect_content] Protects the contents of the sent message from forwarding and saving
-   * @property {number} [reply_to_message_id] If the message is a reply, ID of the original message
-   * @property {boolean} [allow_sending_without_reply] Pass `True`, if the message should be sent even if the specified
-   *    replied-to message is not found
-   * @property {object} [reply_markup] Additional interface options. A JSON-serialized object for an inline keyboard,
-   *    custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
-   */
 
   /**
    * Use this method to send text messages. On success, the sent {@link Message} is returned.
@@ -348,14 +197,6 @@ class Telegram extends ApiClient {
   sendMessage (chatId, text, extra) {
     return this.callApi('sendMessage', { chat_id: chatId, text, ...extra })
   }
-
-  /**
-   * @typedef {object} forwardExtraParams
-   * @property {boolean} [disable_notification] Sends the message
-   *    [silently](https://telegram.org/blog/channels-2-0#silent-messages). Users will receive
-   *    a notification with no sound.
-   * @property {boolean} [protect_content] Protects the contents of the forwarded message from forwarding and saving
-   */
 
   /**
    * Use this method to forward messages of any kind. Service messages can't be forwarded. On success, the sent
@@ -406,22 +247,6 @@ class Telegram extends ApiClient {
   sendChatAction (chatId, action) {
     return this.callApi('sendChatAction', { chat_id: chatId, action })
   }
-
-  /**
-   * @typedef {object} PhotoSize
-   * @property {string} file_id Identifier for this file, which can be used to download or reuse the file
-   * @property {string} file_unique_id Unique identifier for this file, which is supposed to be the same over time and
-   *    for different bots. Can't be used to download or reuse the file.
-   * @property {number} width Photo width
-   * @property {number} height Photo height
-   * @property {number} file_size Optional. File size in bytes
-   */
-
-  /**
-   * @typedef {object} UserProfilePhotos
-   * @property {number} total_count Total number of profile pictures the target user has
-   * @property {array<PhotoSize[]>} photos Requested profile pictures (in up to 4 sizes each)
-   */
 
   /**
    * Use this method to get a list of profile pictures for a user. Returns a {@link UserProfilePhotos} object.
@@ -504,8 +329,6 @@ class Telegram extends ApiClient {
     return this.callApi('sendContact', { chat_id: chatId, phone_number: phoneNumber, first_name: firstName, ...extra })
   }
 
-  /** @typedef {Buffer|stream|string} attachmentFile **/
-
   /**
    * Use this method to send photos. On success, the sent
    * [Message](https://core.telegram.org/bots/api#message) is returned.
@@ -538,21 +361,6 @@ class Telegram extends ApiClient {
   sendDice (chatId, extra) {
     return this.callApi('sendDice', { chat_id: chatId, ...extra })
   }
-
-  /**
-   * @typedef {object} Document
-   * @description This object represents a general file (as opposed to photos, voice messages and audio files).
-   * @property {string} file_id Identifier for this file, which can be used to download or reuse the file
-   * @property {string} file_unique_id Unique identifier for this file, which is supposed to be the same over time
-   *    and for different bots. Can't be used to download or reuse the file.
-   * @property {string} [thumb] Optional. Document thumbnail as defined by sender
-   * @property {string} [file_name] Optional. Original filename as defined by sender
-   * @property {string} [mime_type] Optional. MIME type of the file as defined by sender
-   * @property {number} [file_size] Optional. File size in bytes.
-   *    It can be bigger than 2^31 and some programming languages may have difficulty/silent defects in
-   *    interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer or double-precision
-   *    float type are safe for storing this value.
-   */
 
   /**
    * Use this method to send general files. On success, the sent
