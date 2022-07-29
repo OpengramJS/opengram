@@ -71,26 +71,6 @@ class Markup {
   }
 
   /**
-   * Keyboard Builder wrapping function used to divide the keyboard into columns.
-   * @name keyboardWrap
-   * @function
-   * @param {string} btn Current button object
-   * @param {number} index Current button index
-   * @param {number} currentRow Current row
-   *
-   * @example
-   * Markup.keyboard(['one', 'two', 'three', 'four'], {
-   *   wrap: (btn, index, currentRow) => index % 2 !== 0
-   * })
-   */
-
-  /**
-   * @typedef {object} keyboardOptions
-   * @property {number} [columns=1] Count of keyboard columns
-   * @property {keyboardWrap} [wrap] Warp function
-   */
-
-  /**
    * Build keyboard with given buttons
    *
    * ```js
@@ -118,12 +98,6 @@ class Markup {
     }
     return this
   }
-
-  /**
-   * @typedef {object} inlineKeyboardOptions
-   * @property {number} [columns] Count of keyboard columns, by default equals to `buttons.length`
-   * @property {keyboardWrap} [wrap] Warp function
-   */
 
   /**
    * Build inline keyboard with given buttons
@@ -346,13 +320,6 @@ class Markup {
   payButton (text, hide) {
     return Markup.payButton(text, hide)
   }
-
-  /**
-   * @typedef {object} loginButtonOptions
-   * @property {string} [forward_text] New text of the button in forwarded messages.
-   * @property {string} [bot_username] Username of a bot, which will be used for user authorization.
-   * @property {boolean} [request_write_access] Pass True to request the permission for your bot to send messages to the user.
-   */
 
   /**
    * Adds a new login button. This can be used as a replacement for the
