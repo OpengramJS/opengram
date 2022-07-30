@@ -1,13 +1,19 @@
 {
   "source": {
-    "include": ["src", "README.md", "package.json"]
+    "include": [
+      "src",
+      "README.md",
+      "package.json"
+    ]
   },
   "templates": {
     "default": {
       "outputSourceFiles": true
     }
   },
-  "plugins": ["plugins/markdown"],
+  "plugins": [
+    "plugins/markdown"
+  ],
   "markdown": {
     "idInHeadings": true
   },
@@ -20,12 +26,23 @@
     "template": "./node_modules/clean-jsdoc-theme",
     "theme_opts": {
       "title": "<div style=\"display: inline-flex;justify-content: center;align-items: center;user-select: none\"> <img alt=\"Opengram\" src=\"https://raw.githubusercontent.com/OpengramJS/opengram/master/docs/media/Logo.svg\" height=\"80\"> <h3>Opengram</h3> </div>",
-
       "theme": "dark",
-      "meta" : [
+      "meta": [
         {
           "name": "description",
           "content": "Telegraf.js fork based on 3.38 with new features and fixes "
+        }
+      ],
+      "menu": [
+        {
+          "title": "<b>Github</b>",
+          "id": "github",
+          "link": "https://github.com/OpengramJS/opengram"
+        },
+        {
+          "title": "<img src=\"https://upload.wikimedia.org/wikipedia/commons/d/db/Npm-logo.svg\" style=\"margin-top: 0.3rem;max-height: 1.2rem;\">",
+          "id": "npm",
+          "link": "https://npmjs.org/package/opengram"
         }
       ]
     }
