@@ -52,7 +52,7 @@
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-standard": "^5.0.0",
     "eslint-plugin-import": "^2.26.0",
-    "husky": "^4.3.8",
+    "husky": "^8.0.1",
     "prettier": "^2.7.1",
     "remark-cli": "^10.0.1",
     "eslint-plugin-n": "^15.2.4",
