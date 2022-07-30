@@ -135,7 +135,7 @@
  * @typedef {object} MessageExtraParams
  * @property {parseMode} [parse_mode] Mode for parsing entities in the message text. See formatting
  *    options for more details.
- * @property {MessageEntity} [entities] A JSON-serialized list of special entities that appear in message text,
+ * @property {MessageEntity} [entities] List of special entities that appear in message text,
  *    which can be specified instead of `parse_mode`
  * @property {boolean} [disable_web_page_preview] Disables link previews for links in this message
  * @property {boolean} [disable_notification] Sends the message
@@ -145,7 +145,7 @@
  * @property {number} [reply_to_message_id] If the message is a reply, ID of the original message
  * @property {boolean} [allow_sending_without_reply] Pass `True`, if the message should be sent even if the specified
  *    replied-to message is not found
- * @property {object} [reply_markup] Additional interface options. A JSON-serialized object for an inline keyboard,
+ * @property {object} [reply_markup] Additional interface options. A object for an inline keyboard,
  *    custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
  */
 
@@ -407,4 +407,123 @@
  * @property {boolean} can_add_web_page_previews True, if the user is allowed to add web page previews to their messages
  * @property {number} until_date Date when restrictions will be lifted for this user; unix time. If 0, then the
  *    user is restricted forever
+ */
+
+/**
+ * @typedef {InlineQueryResultCachedAudio|InlineQueryResultCachedDocument|InlineQueryResultCachedGif} InlineQueryResult
+ */
+
+/**
+ * @typedef {object} InputTextMessageContent
+ */
+
+/**
+ * @typedef {object} InlineQueryResultCachedAudio
+ * @description Represents a link to an MP3 audio file stored on the Telegram servers. By default, this audio file will
+ *    be sent by the user. Alternatively, you can use input_message_content to send a message with the
+ *    specified content instead of the audio.
+ * @property {'audio'} type Type of the result, must be audio
+ * @property {string} id Unique identifier for this result, 1-64 bytes
+ * @property {string} audio_file_id A valid file identifier for the audio file
+ * @property {string} caption Optional. Caption, 0-1024 characters after entities parsing
+ * @property {parseMode} parse_mode *Optional.* Mode for parsing entities in the audio caption.
+ *    See [formatting options](https://core.telegram.org/bots/api#formatting-options) for more details.
+ * @property {MessageEntity[]} caption_entities *Optional.* List of special entities that appear in the caption, which
+ *    can be specified instead of parse_mode
+ * @property {object} reply_markup *Optional.*
+ *    [Inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating) attached to the message
+ * @property {InputTextMessageContent} input_message_content *Optional.* Content of the message to be sent instead of the audio
+ */
+
+/**
+ * @typedef {object} InlineQueryResultCachedDocument
+ * @description Represents a link to a file stored on the Telegram servers. By default, this file will be sent
+ *    by the user with an optional caption. Alternatively, you can use `input_message_content` to send a message with
+ *    the specified content instead of the file.
+ * @property {'document'} type Type of the result, must be `document`
+ * @property {string} id Unique identifier for this result, 1-64 bytes
+ * @property {string} title Title for the result
+ * @property {string} document_file_id A valid file identifier for the file
+ * @property {string} [description] *Optional.* Short description of the result
+ * @property {string} [caption] Optional. Caption, 0-1024 characters after entities parsing
+ * @property {parseMode} [parse_mode] *Optional.* Mode for parsing entities in the audio caption.
+ *    See [formatting options](https://core.telegram.org/bots/api#formatting-options) for more details.
+ * @property {MessageEntity[]} [caption_entities] *Optional.* List of special entities that appear in the caption, which
+ *    can be specified instead of parse_mode
+ * @property {object} [reply_markup] *Optional.*
+ *    [Inline keyboard](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating) attached to the message
+ * @property {InputTextMessageContent} [input_message_content] *Optional.* Content of the message to be sent instead of the audio
+ */
+
+/**
+ * @typedef {object} InlineQueryResultCachedGif
+ * @description Represents a link to an animated GIF file stored on the Telegram servers. By default,
+ *    this animated GIF file will be sent by the user with an optional caption. Alternatively, you can use
+ *    `input_message_content` to send a message with specified content instead of the animation.
+ * @property {'gif'} type Type of the result, must be `gif`
+ * @property {string} id Unique identifier for this result, 1-64 bytes
+ * @property {string} gif_file_id A valid file identifier for the GIF file
+ * @property {string} title *Optional.* Title for the result
+ * @property {string} caption Optional. Caption of the GIF file to be sent, 0-1024 characters after entities parsing
+ * @property {parseMode} parse_mode *Optional.* Mode for parsing entities in the caption. See formatting
+ *    options for more details.
+ * @property {MessageEntity[]} caption_entities Optional. List of special entities that appear in the caption,
+ *    which can be specified instead of `parse_mode`
+ * @property {object} reply_markup Optional. Inline keyboard attached to the message
+ * @property {InputTextMessageContent} input_message_content
+ */
+
+/**
+ * @typedef {object} ChatPermissions
+ * @description Describes actions that a non-administrator user is allowed to take in a chat.
+ * @property {boolean} can_send_messages Optional. `True`, if the user is allowed to send text messages, contacts,
+ *    locations and venues
+ * @property {boolean} can_send_media_messages *Optional.* `True`, if the user is allowed to send audios, documents,
+ *    photos, videos, video notes and voice notes, implies can_send_messages
+ * @property {boolean} can_send_polls *Optional.* `True`, if the user is allowed to send polls,
+ *    implies can_send_messages
+ * @property {boolean} can_send_other_messages *Optional.* `True`, if the user is allowed to send animations, games,
+ *    stickers and use inline bots, implies can_send_media_messages
+ * @property {boolean} can_add_web_page_previews *Optional.* `True`, if the user is allowed to add web page previews
+ *    to their messages, implies can_send_media_messages
+ * @property {boolean} can_change_info *Optional.* `True`, if the user is allowed to change the chat title, photo
+ *    and other settings. Ignored in public supergroups
+ * @property {boolean} can_invite_users *Optional.* `True`, if the user is allowed to invite new users to the chat
+ * @property {boolean} can_pin_messages *Optional.* `True`, if the user is allowed to pin messages.
+ *    Ignored in public supergroups
+ */
+
+/**
+ * @typedef {object} ChatInviteLink
+ * @description Represents an invite link for a chat.
+ * @see https://core.telegram.org/bots/api#chatinvitelink
+ * @property {string} invite_link The invite link. If the link was created by another chat administrator,
+ *    then the second part of the link will be replaced with “…”.
+ * @property {User} creator Creator of the link
+ * @property {boolean} creates_join_request `True`, if users joining the chat via the link need to be approved
+ *    by chat administrators
+ * @property {boolean} is_primary `True`, if the link is primary
+ * @property {boolean} is_revoked `True`, if the link is revoked
+ * @property {string} name *Optional.* Invite link name
+ * @property {number} expire_date *Optional.* Point in time (Unix timestamp) when the link will expire or has been expired
+ * @property {number} member_limit *Optional.* The maximum number of users that can be members of the chat simultaneously
+ *    after joining the chat via this invite link; 1-99999
+ * @property {number} pending_join_request_count *Optional.* Number of pending join requests created using this link
+ */
+
+/**
+ * @typedef {object} MessageId
+ * @property {number} message_id Unique message identifier
+ */
+
+/**
+ * @typedef {object} PassportElementError
+ */
+
+/**
+ * @typedef {object} BotCommand
+ * @description This object represents a bot command.
+ * @property {string} command Text of the command; 1-32 characters. Can contain only lowercase English letters,
+ *    digits and underscores.
+ * @property {string} description Description of the command; 1-256 characters.
  */
