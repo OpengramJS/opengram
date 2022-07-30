@@ -24,7 +24,8 @@
     "precommit": "npm run lint && npm test && npm run remark",
     "remark": "npx remark README.md --use remark-preset-lint-consistent --use remark-preset-lint-recommended",
     "docs": "jsdoc --configure .jsdoc.json",
-    "json-docs": "jsdoc --template ./node_modules/jsdoc-json --destination docs/docs.json --recurse src"
+    "json-docs": "jsdoc --template ./node_modules/jsdoc-json --destination docs/docs.json --recurse src",
+    "prepare": "husky install"
   },
   "type": "commonjs",
   "engines": {
@@ -38,30 +39,32 @@
   },
   "dependencies": {
     "debug": "^4.0.1",
-    "p-timeout": "^4.1.0",
     "node-fetch": "^2.2.0",
+    "p-timeout": "^4.1.0",
     "sandwich-stream": "^2.0.1"
   },
   "devDependencies": {
-    "jsdoc-json": "^2.0.2",
+    "@commitlint/cli": "^17.0.3",
+    "@commitlint/config-conventional": "^17.0.3",
+    "@jsdoc/eslint-config": "^1.1.6",
     "ava": "^4.3.0",
+    "clean-jsdoc-theme": "^4.0.7",
     "eslint": "^8.18.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-ava": "^13.2.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsdoc": "^39.3.3",
+    "eslint-plugin-n": "^15.2.4",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-standard": "^5.0.0",
-    "eslint-plugin-import": "^2.26.0",
     "husky": "^8.0.1",
+    "jsdoc": "^3.6.10",
+    "jsdoc-json": "^2.0.2",
     "prettier": "^2.7.1",
     "remark-cli": "^10.0.1",
-    "eslint-plugin-n": "^15.2.4",
     "remark-preset-lint-consistent": "^5.1.1",
-    "remark-preset-lint-recommended": "^6.1.2",
-    "jsdoc": "^3.6.10",
-    "eslint-plugin-jsdoc": "^39.3.3",
-    "@jsdoc/eslint-config": "^1.1.6",
-    "clean-jsdoc-theme": "^4.0.7"
+    "remark-preset-lint-recommended": "^6.1.2"
   },
   "keywords": [
     "opengram",
