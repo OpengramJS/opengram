@@ -25,7 +25,7 @@
     "verbose": true,
     "template": "./node_modules/clean-jsdoc-theme",
     "theme_opts": {
-      "title": "<div style=\"display: inline-flex;justify-content: center;align-items: center;user-select: none\"> <img alt=\"Opengram\" src=\"https://raw.githubusercontent.com/OpengramJS/opengram/master/docs/media/Logo.svg\" height=\"80\"> <h3>Opengram</h3> </div>",
+      "title": "<div onclick=\"location.href = baseURL\" style=\"cursor:pointer;display: inline-flex;justify-content: center;align-items: center;user-select: none\"> <img alt=\"Opengram\" src=\"https://raw.githubusercontent.com/OpengramJS/opengram/master/docs/media/Logo.svg\" height=\"80\"> <h3>Opengram</h3> </div>",
       "theme": "dark",
       "meta": [
         {
