@@ -40,5 +40,6 @@ jobs:
       - run: npm run cover
       - uses: codecov/codecov-action@v3
         with:
-          files: ./coverage.xml
+          files: coverage/lcov.info
+          token: ${{ secrets.CODECOV_TOKEN }}
           name: ${{ matrix.os }}/${{ matrix.node-version }}

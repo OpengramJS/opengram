@@ -1,0 +1,10 @@
+{
+  "all": true,
+  "exclude": [
+    "{coverage,docs,test,src/types}/**"
+  ],
+  "reporter": [
+    "html",
+    "lcov"
+  ]
+}
