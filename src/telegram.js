@@ -8,6 +8,7 @@ const { isAbsolute } = require('path')
 class Telegram extends ApiClient {
   /**
    * A simple method for testing your bot's authentication token. Requires no parameters.
+   *
    * Returns basic information about the bot in form of a {@link User} object.
    * @see https://core.telegram.org/bots/api#getme
    * @throws {TelegramError}
@@ -19,8 +20,9 @@ class Telegram extends ApiClient {
 
   /**
    * Use this method to get basic information about a file and prepare it for downloading.
-   * For the moment, bots can download files of up to 20MB in size. On success, a
-   * {@link File} object is returned.
+   * For the moment, bots can download files of up to 20MB in size.
+   *
+   * On success, a {@link File} object is returned.
    * The file can then be downloaded via the link `https://api.telegram.org/file/bot<token>/<file_path>`,
    * where `<file_path>` is taken from the response. It is guaranteed that the link will be valid for at least 1 hour.
    * When the link expires, a new one can be requested by calling {@link getFile}
@@ -100,6 +102,7 @@ class Telegram extends ApiClient {
 
   /**
    * Use this method to get current webhook status. Requires no parameters.
+   *
    * On success, returns a {@link WebhookInfo} object.
    * If the bot is using {@link getUpdates}, will return an object with the *url* field empty.
    * @see https://core.telegram.org/bots/api#getwebhookinfo
@@ -113,6 +116,7 @@ class Telegram extends ApiClient {
   /**
    * Use this method to get data for high score tables.
    * Will return the score of the specified user and several of their neighbors in a game.
+   *
    * On success, returns an Array of {@link GameHighScore} objects.
    * @see https://core.telegram.org/bots/api#getgamehighscores
    * @param {number} userId Target user id
@@ -133,9 +137,10 @@ class Telegram extends ApiClient {
   }
 
   /**
-   * Use this method to set the score of the specified user in a game message. On success,
-   * if the message is not an inline message, the {@link Message} is returned,
-   * otherwise `True` is returned.
+   * Use this method to set the score of the specified user in a game message.
+   *
+   * On success, if the message is not an inline message, the {@link Message} is returned, otherwise `True` is returned.
+   *
    * Returns an error, if the new score is not greater than the user's current score in the chat and `force` is False.
    * @see https://core.telegram.org/bots/api#setgamescore
    * @param {number} userId User identifier
@@ -168,6 +173,7 @@ class Telegram extends ApiClient {
    * Whenever there is an update for the bot, we will send an HTTPS POST request to the specified URL,
    * containing a JSON-serialized {@link Update}.
    * In case of an unsuccessful request, we will give up after a reasonable amount of attempts.
+   *
    * Returns `True` on success.
    *
    * If you'd like to make sure that the webhook was set by you, you can specify secret data in the parameter
@@ -185,7 +191,8 @@ class Telegram extends ApiClient {
 
   /**
    * Use this method to remove webhook integration if you decide to switch back to {@link Telegram#getUpdates}.
-   * Returns True on success.
+   *
+   * Returns `True` on success.
    * @see https://core.telegram.org/bots/api#deletewebhook
    * @param {deleteWebhookExtra} [extra] Other parameters
    * @throws {TelegramError}
@@ -196,7 +203,9 @@ class Telegram extends ApiClient {
   }
 
   /**
-   * Use this method to send text messages. On success, the sent {@link Message} is returned.
+   * Use this method to send text messages.
+   *
+   * On success, the sent {@link Message} is returned.
    * @see https://core.telegram.org/bots/api#sendmessage
    * @param {string|number} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
@@ -210,8 +219,9 @@ class Telegram extends ApiClient {
   }
 
   /**
-   * Use this method to forward messages of any kind. Service messages can't be forwarded. On success, the sent
-   * {@link Message} is returned.
+   * Use this method to forward messages of any kind. Service messages can't be forwarded.
+   *
+   * On success, the sent {@link Message} is returned.
    * @see https://core.telegram.org/bots/api#forwardmessage
    * @param {string|number} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
@@ -234,7 +244,9 @@ class Telegram extends ApiClient {
   /**
    * Use this method when you need to tell the user that something is happening on the bot's side.
    * The status is set for 5 seconds or less (when a message arrives from your bot,
-   * Telegram clients clear its typing status). Returns `True` on success.
+   * Telegram clients clear its typing status).
+   *
+   * Returns `True` on success.
    *
    * Example: The [ImageBot](https://t.me/imagebot) needs some time to process a request and upload the image.
    * Instead of sending a text message along the lines of “Retrieving image, please wait…”,
@@ -262,7 +274,9 @@ class Telegram extends ApiClient {
   }
 
   /**
-   * Use this method to get a list of profile pictures for a user. Returns a {@link UserProfilePhotos} object.
+   * Use this method to get a list of profile pictures for a user.
+   *
+   * Returns a {@link UserProfilePhotos} object.
    * @see https://core.telegram.org/bots/api#getuserprofilephotos
    * @param {number} userId Unique identifier of the target user
    * @param {number} [offset] Sequential number of the first photo to be returned. By default, all photos are returned.
@@ -276,8 +290,9 @@ class Telegram extends ApiClient {
   }
 
   /**
-   * Use this method to send point on the map. On success, the sent
-   * {@link Message} is returned.
+   * Use this method to send point on the map.
+   *
+   * On success, the sent {@link Message} is returned.
    * @settps://core.telegram.org/bots/api#sendlocation
       *@param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)Unique identifier for the target chat or username of the target channel
@@ -293,8 +308,9 @@ class Telegram extends ApiClient {
   }
 
   /**
-   * Use this method to send information about a venue. On success, the sent
-   * {@link Message} is returned.
+   * Use this method to send information about a venue.
+   *
+   * On success, the sent {@link Message} is returned.
    * @settps://core.telegram.org/bots/api#sendvenue
       *@param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)Unique identifier for the target chat or username of the target channel
@@ -319,8 +335,9 @@ class Telegram extends ApiClient {
   }
 
   /**
-   * Use this method to send invoices. On success, the sent
-   * {@link Message} is returned.
+   * Use this method to send invoices.
+   *
+   * On success, the sent {@link Message} is returned.
    * @see https://core.telegram.org/bots/api#sendinvoice
    * @param {string|number} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
@@ -334,8 +351,9 @@ class Telegram extends ApiClient {
   }
 
   /**
-   * Use this method to send phone contacts. On success, the sent
-   * {@link Message} is returned.
+   * Use this method to send phone contacts.
+   *
+   * On success, the sent {@link Message} is returned.
    * @see https://core.telegram.org/bots/api#sendcontact
    * @param {string|number} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
@@ -350,8 +368,9 @@ class Telegram extends ApiClient {
   }
 
   /**
-   * Use this method to send photos. On success, the sent
-   * {@link Message} is returned.
+   * Use this method to send photos.
+   *
+   * On success, the sent {@link Message} is returned.
    * @see https://core.telegram.org/bots/api#sendphoto
    * @param {string|number} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
@@ -371,8 +390,9 @@ class Telegram extends ApiClient {
   }
 
   /**
-   * Use this method to send an animated emoji that will display a random value. On success, the sent
-   * {@link Message} is returned.
+   * Use this method to send an animated emoji that will display a random value.
+   *
+   * On success, the sent {@link Message} is returned.
    * @see https://core.telegram.org/bots/api#sendphoto
    * @param {string|number} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
@@ -385,8 +405,9 @@ class Telegram extends ApiClient {
   }
 
   /**
-   * Use this method to send general files. On success, the sent
-   * {@link Message} is returned.
+   * Use this method to send general files.
+   *
+   * On success, the sent {@link Message} is returned.
    * Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
    * @see https://core.telegram.org/bots/api#senddocument
    * @param {string|number} chatId Unique identifier for the target chat or username of the target channel
@@ -405,8 +426,9 @@ class Telegram extends ApiClient {
 
   /**
    * Use this method to send audio files, if you want Telegram clients to display them in the music player.
-   * Your audio must be in the `.MP3` or `.M4A` format. On success, the sent
-   * {@link Message} is returned.
+   * Your audio must be in the `.MP3` or `.M4A` format.
+   *
+   * On success, the sent {@link Message} is returned.
    * Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
    *
    * For sending voice messages, use the {@link Telegram#sendVoice} method instead.
@@ -426,7 +448,9 @@ class Telegram extends ApiClient {
   }
 
   /**
-   * Use this method to send static `.WEBP`, animated `.TGS`, or video `.WEBM` stickers. On success, the sent {@link Message} is returned.
+   * Use this method to send static `.WEBP`, animated `.TGS`, or video `.WEBM` stickers.
+   *
+   * On success, the sent {@link Message} is returned.
    * @see https://core.telegram.org/bots/api#sendsticker
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
@@ -444,8 +468,11 @@ class Telegram extends ApiClient {
 
   /**
    * Use this method to send video files, Telegram clients support MPEG4 videos (other formats may
-   * be sent as {@link Document}). On success, the sent {@link Message} is returned. Bots can currently send video
-   * files of up to 50 MB in size, this limit may be changed in the future.
+   * be sent as {@link Document}).
+   *
+   * On success, the sent {@link Message} is returned.
+   *
+   * Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
    * @see https://core.telegram.org/bots/api#sendvideo
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
@@ -462,9 +489,11 @@ class Telegram extends ApiClient {
   }
 
   /**
-   * Use this method to send animation files (GIF or H.264/MPEG-4 AVC video without sound). On success,
-   * the sent {@link Message} is returned. Bots can currently send animation files of up to 50 MB in size,
-   * this limit may be changed in the future.
+   * Use this method to send animation files (GIF or H.264/MPEG-4 AVC video without sound).
+   *
+   * On success, the sent {@link Message} is returned.
+   *
+   * Bots can currently send animation files of up to 50 MB in size, this limit may be changed in the future.
    * @see https://core.telegram.org/bots/api#sendanimation
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
@@ -483,7 +512,9 @@ class Telegram extends ApiClient {
   /**
    * As of [v.4.0](https://telegram.org/blog/video-messages-and-telescope), Telegram clients support rounded square
    * MPEG4 videos of up to 1 minute long.
-   * Use this method to send video messages. On success, the sent Message is returned.
+   * Use this method to send video messages.
+   *
+   * On success, the sent {@link Message} is returned.
    * @see https://core.telegram.org/bots/api#sendvideonote
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
@@ -502,8 +533,9 @@ class Telegram extends ApiClient {
   /**
    * Use this method to send audio files, if you want Telegram clients to display the file as a playable voice message.
    * For this to work, your audio must be in an .OGG file encoded
-   * with OPUS (other formats may be sent as {@link Audio} or {@link Document}). On success, the sent {@link Message}
-   * is returned.
+   * with OPUS (other formats may be sent as {@link Audio} or {@link Document}).
+   *
+   * On success, the sent {@link Message} is returned.
    * Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.
    * @see https://core.telegram.org/bots/api#sendvoice
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
@@ -520,7 +552,9 @@ class Telegram extends ApiClient {
   }
 
   /**
-   * Use this method to send a game. On success, the sent {@link Message} is returned.
+   * Use this method to send a game.
+   *
+   * On success, the sent {@link Message} is returned.
    * @see https://core.telegram.org/bots/api#sendgame
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
@@ -536,7 +570,9 @@ class Telegram extends ApiClient {
 
   /**
    * Use this method to send a group of photos, videos, documents or audios as an album. Documents and audio files
-   * can be only grouped in an album with messages of the same type. On success, an array of {@link Message Messages}
+   * can be only grouped in an album with messages of the same type.
+   *
+   * On success, an array of {@link Message Messages}
    * that were sent is returned.
    * @see https://core.telegram.org/bots/api#sendmediagroup
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
@@ -552,7 +588,9 @@ class Telegram extends ApiClient {
   }
 
   /**
-   * Use this method to send a native poll with type `regular`. On success, the sent {@link Message} is returned.
+   * Use this method to send a native poll with type `regular`.
+   *
+   * On success, the sent {@link Message} is returned.
    * @see https://core.telegram.org/bots/api#sendpoll
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
@@ -567,7 +605,9 @@ class Telegram extends ApiClient {
   }
 
   /**
-   * Use this method to send a native poll with type `quiz`. On success, the sent {@link Message} is returned.
+   * Use this method to send a native poll with type `quiz`.
+   *
+   * On success, the sent {@link Message} is returned.
    * @see https://core.telegram.org/bots/api#sendpoll
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
@@ -582,7 +622,9 @@ class Telegram extends ApiClient {
   }
 
   /**
-   * Use this method to stop a poll which was sent by the bot. On success, the stopped {@link Poll} is returned.
+   * Use this method to stop a poll which was sent by the bot.
+   *
+   * On success, the stopped {@link Poll} is returned.
    * @see https://core.telegram.org/bots/api#stoppoll
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
@@ -597,7 +639,9 @@ class Telegram extends ApiClient {
 
   /**
    * Use this method to get up to date information about the chat (current name of the user for one-on-one
-   * conversations, current username of a user, group or channel, etc.). Returns a {@link Chat} object on success.
+   * conversations, current username of a user, group or channel, etc.).
+   *
+   * Returns a {@link Chat} object on success.
    * @see https://core.telegram.org/bots/api#getchat
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
@@ -609,7 +653,9 @@ class Telegram extends ApiClient {
   }
 
   /**
-   * Use this method to get a list of administrators in a chat. On success, returns an Array of {@link ChatMember}
+   * Use this method to get a list of administrators in a chat.
+   *
+   * On success, returns an Array of {@link ChatMember}
    * objects that contains information about all chat administrators except other bots. If the chat is a group
    * or a supergroup and no administrators were appointed, only the creator will be returned.
    * @see https://core.telegram.org/bots/api#getchatadministrators
@@ -623,7 +669,9 @@ class Telegram extends ApiClient {
   }
 
   /**
-   * Use this method to get information about a member of a chat. Returns a {@link ChatMember} object on success.
+   * Use this method to get information about a member of a chat.
+   *
+   * Returns a {@link ChatMember} object on success.
    * @see https://core.telegram.org/bots/api#getchatmember
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
@@ -636,7 +684,9 @@ class Telegram extends ApiClient {
   }
 
   /**
-   * Use this method to get the number of members in a chat. Returns `Int` on success.
+   * Use this method to get the number of members in a chat.
+   *
+   * Returns `Int` on success.
    * @see https://core.telegram.org/bots/api#getchatmembercount
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
@@ -649,7 +699,9 @@ class Telegram extends ApiClient {
   }
 
   /**
-   * Use this method to get the number of members in a chat. Returns `Int` on success.
+   * Use this method to get the number of members in a chat.
+   *
+   * Returns `Int` on success.
    * @see https://core.telegram.org/bots/api#getchatmembercount
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
@@ -661,7 +713,9 @@ class Telegram extends ApiClient {
   }
 
   /**
-   * Use this method to send answers to an inline query. On success, `True` is returned.
+   * Use this method to send answers to an inline query.
+   *
+   * On success, `True` is returned.
    * No more than **50** results per query are allowed.
    * @see https://core.telegram.org/bots/api#answerinlinequery
    * @param {string} inlineQueryId Unique identifier for the answered query
@@ -677,6 +731,7 @@ class Telegram extends ApiClient {
   /**
    * Use this method to set default chat permissions for all members. The bot must be an administrator in the group
    * or a supergroup for this to work and must have the `can_restrict_members` administrator rights.
+   *
    * Returns `True` on success.
    * @see https://core.telegram.org/bots/api#setchatpermissions
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
@@ -694,6 +749,7 @@ class Telegram extends ApiClient {
    * the user will not be able to return to the chat on their own using invite links, etc.,
    * unless {@link unbanChatMember unbanned} first.
    * The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights.
+   *
    * Returns `True` on success.
    * @see https://core.telegram.org/bots/api#banchatmember
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
@@ -727,7 +783,9 @@ class Telegram extends ApiClient {
   /**
    * Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator
    * in the chat for this to work and must have the appropriate administrator rights. Pass `False` for all boolean
-   * parameters to demote a user. Returns `True` on success.
+   * parameters to demote a user.
+   *
+   * Returns `True` on success.
    * @see https://core.telegram.org/bots/api#promotechatmember
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
@@ -743,7 +801,9 @@ class Telegram extends ApiClient {
   /**
    * Use this method to restrict a user in a supergroup. The bot must be an administrator in the supergroup
    * for this to work and must have the appropriate administrator rights. Pass True for all permissions to lift
-   * restrictions from a user. Returns `True` on success.
+   * restrictions from a user.
+   *
+   * Returns `True` on success.
    * @see https://core.telegram.org/bots/api#restrictchatmember
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
@@ -761,6 +821,7 @@ class Telegram extends ApiClient {
    * {@link unbanChatMember unbanned}, the owner of the banned chat won't be able to send messages on behalf
    * of **any of their channels**. The bot must be an administrator in the supergroup or channel for this
    * to work and must have the appropriate administrator rights.
+   *
    * Returns `True` on success.
    * @see https://core.telegram.org/bots/api#banchatsenderchat
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
@@ -776,6 +837,7 @@ class Telegram extends ApiClient {
   /**
    * Use this method to unban a previously banned channel chat in a supergroup or channel.
    * The bot must be an administrator for this to work and must have the appropriate administrator rights.
+   *
    * Returns `True` on success.
    * @see https://core.telegram.org/bots/api#unbanchatsenderchat
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
@@ -790,6 +852,7 @@ class Telegram extends ApiClient {
 
   /**
    * Use this method to set a custom title for an administrator in a supergroup promoted by the bot.
+   *
    * Returns `True` on success.
    * @see https://core.telegram.org/bots/api#setchatadministratorcustomtitle
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
@@ -807,6 +870,7 @@ class Telegram extends ApiClient {
    * Use this method to generate a new primary invite link for a chat; any previously generated primary link
    * is revoked. The bot must be an administrator in the chat for this to work and must have the appropriate
    * administrator rights.
+   *
    * Returns the new invite link as `String` on success.
    *
    * **Note:** Each administrator in a chat generates their own invite links. Bots can't use invite links generated by
@@ -826,6 +890,7 @@ class Telegram extends ApiClient {
   /**
    * Use this method to set a new profile photo for the chat. Photos can't be changed for private chats.
    * The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights.
+   *
    * Returns `True` on success.
    * @see https://core.telegram.org/bots/api#setchatphoto
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
@@ -841,6 +906,7 @@ class Telegram extends ApiClient {
   /**
    * Use this method to delete a chat photo. Photos can't be changed for private chats. The bot must be an
    * administrator in the chat for this to work and must have the appropriate administrator rights.
+   *
    * Returns `True` on success.
    * @see https://core.telegram.org/bots/api#deletechatphoto
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
@@ -855,6 +921,7 @@ class Telegram extends ApiClient {
   /**
    * Use this method to change the title of a chat. Titles can't be changed for private chats.
    * The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights.
+   *
    * Returns `True` on success.
    * @see https://core.telegram.org/bots/api#setchattitle
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
@@ -870,6 +937,7 @@ class Telegram extends ApiClient {
   /**
    * Use this method to change the description of a group, a supergroup or a channel.
    * The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights.
+   *
    * Returns `True` on success.
    * https://core.telegram.org/bots/api#setchatdescription
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
@@ -886,6 +954,7 @@ class Telegram extends ApiClient {
    * Use this method to add a message to the list of pinned messages in a chat. If the chat is not a private chat,
    * the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' administrator
    * right in a supergroup or 'can_edit_messages' administrator right in a channel.
+   *
    * Returns `True` on success.
    * @see https://core.telegram.org/bots/api#pinchatmessage
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
@@ -904,6 +973,7 @@ class Telegram extends ApiClient {
    * If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must have
    * the 'can_pin_messages' administrator right in a supergroup or 'can_edit_messages' administrator
    * right in a channel.
+   *
    * Returns `True` on success.
    * @see https://core.telegram.org/bots/api#unpinchatmessage
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
@@ -921,6 +991,7 @@ class Telegram extends ApiClient {
    * If the chat is not a private chat, the bot must be an administrator in the chat for this to work and must
    * have the 'can_pin_messages' administrator right in a supergroup or 'can_edit_messages' administrator
    * right in a channel.
+   *
    * Returns `True` on success.
    * @see https://core.telegram.org/bots/api#unpinallchatmessages
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
@@ -934,7 +1005,9 @@ class Telegram extends ApiClient {
 
   /**
    * Use this method to get the current value of the bot's menu button in a private chat,
-   * or the default menu button. Returns {@link MenuButton} on success.
+   * or the default menu button.
+   *
+   * Returns {@link MenuButton} on success.
    * @see https://core.telegram.org/bots/api#getchatmenubutton
    * @param {number|string} [chatId] Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
@@ -947,6 +1020,7 @@ class Telegram extends ApiClient {
 
   /**
    * Use this method to change the bot's menu button in a private chat, or the default menu button.
+   *
    * Returns `True` on success.
    * @see https://core.telegram.org/bots/api#setchatmenubutton
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
@@ -964,6 +1038,7 @@ class Telegram extends ApiClient {
    * Use this method to change the default administrator rights requested by the bot when it's added as
    * an administrator to groups or channels. These rights will be suggested to users, but they are free to modify
    * the list before adding the bot.
+   *
    * Returns `True` on success.
    * https://core.telegram.org/bots/api#setmydefaultadministratorrights
    * @param {ChatAdministratorRights} [rights] Object describing new default administrator rights.
@@ -979,6 +1054,7 @@ class Telegram extends ApiClient {
 
   /**
    * Use this method to get the current default administrator rights of the bot.
+   *
    * Returns {@link ChatAdministratorRights} on success.
    * @see https://core.telegram.org/bots/api#getmydefaultadministratorrights
    * @param {boolean} [forChannels] Pass True to get default administrator rights of the bot in channels.
@@ -991,7 +1067,9 @@ class Telegram extends ApiClient {
   }
 
   /**
-   * Use this method for your bot to leave a group, supergroup or channel. Returns `True` on success.
+   * Use this method for your bot to leave a group, supergroup or channel.
+   *
+   * Returns `True` on success.
    * @see https://core.telegram.org/bots/api#leavechat
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
@@ -1008,6 +1086,7 @@ class Telegram extends ApiClient {
    * for this to work. By default, this method guarantees that after the call the user is not a member of the chat,
    * but will be able to join it. So if the user is a member of the chat they will also be **removed** from the chat.
    * If you don't want this, use the parameter `only_if_banned`.
+   *
    * Returns `True` on success.
    * @see https://core.telegram.org/bots/api#unbanchatmember
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
@@ -1025,6 +1104,7 @@ class Telegram extends ApiClient {
    * Use this method to send answers to callback queries sent from
    * [inline keyboards](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating).
    * The answer will be displayed to the user as a notification at the top of the chat screen or as an alert.
+   *
    * On success, `True` is returned.
    *
    * Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first
@@ -1068,7 +1148,9 @@ class Telegram extends ApiClient {
   /**
    * If you sent an invoice requesting a shipping address and the parameter `is_flexible` was specified,
    * the Bot API will send an Update with a `shipping_query` field to the bot. Use this method to reply to shipping
-   * queries. On success, `True` is returned.
+   * queries.
+   *
+   * On success, `True` is returned.
    * @see https://core.telegram.org/bots/api#answershippingquery
    * @param {string} shippingQueryId Unique identifier for the query to be answered
    * @param {boolean} ok Specify True if delivery to the specified address is possible and False if there are any problems
@@ -1093,7 +1175,10 @@ class Telegram extends ApiClient {
    * Once the user has confirmed their payment and shipping details, the Bot API sends the final confirmation in the
    * form of an {@link Update} with the field `pre_checkout_query`.
    * Use this method to respond to such pre-checkout queries.
-   * On success, `True` is returned. **Note:** The Bot API must receive an answer within 10 seconds after
+   *
+   * On success, `True` is returned.
+   *
+   * **Note:** The Bot API must receive an answer within 10 seconds after
    * the pre-checkout query was sent.
    * @see https://core.telegram.org/bots/api#answerprecheckoutquery
    * @param {string} preCheckoutQueryId Unique identifier for the query to be answered
@@ -1116,6 +1201,7 @@ class Telegram extends ApiClient {
 
   /**
    * Use this method to edit text and game messages.
+   *
    * On success, if the edited message is not an inline message, the edited {@link Message} is returned,
    * otherwise `True` is returned.
    * @see https://core.telegram.org/bots/api#editmessagetext
@@ -1139,8 +1225,10 @@ class Telegram extends ApiClient {
   }
 
   /**
-   * Use this method to edit captions of messages. On success, if the edited message is not an inline message,
-   * the edited {@link Message} is returned, otherwise `True` is returned.
+   * Use this method to edit captions of messages.
+   *
+   * On success, if the edited message is not an inline message, the edited {@link Message} is returned,
+   * otherwise `True` is returned.
    * @see https://core.telegram.org/bots/api#editmessagecaption
    * @param {number|string} [chatId] Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
@@ -1167,6 +1255,7 @@ class Telegram extends ApiClient {
    * If a message is part of a message album, then it can be edited only to an audio for audio albums,
    * only to a document for document albums and to a photo or a video otherwise. When an inline message is edited,
    * a new file can't be uploaded; use a previously uploaded file via its `file_id` or specify a URL.
+   *
    * On success, if the edited message is not an inline message, the edited {@link Message} is returned,
    * otherwise `True` is returned.
    * @see https://core.telegram.org/bots/api#editmessagemedia
@@ -1196,6 +1285,7 @@ class Telegram extends ApiClient {
 
   /**
    * Use this method to edit only the reply markup of messages.
+   *
    * On success, if the edited message is not an inline message, the edited {@link Message} is
    * returned, otherwise `True` is returned.
    * @see https://core.telegram.org/bots/api#editmessagereplymarkup
@@ -1219,8 +1309,9 @@ class Telegram extends ApiClient {
   /**
    * Use this method to edit live location messages. A location can be edited until its `live_period` expires or editing
    * is explicitly disabled by a call to {@link stopMessageLiveLocation}.
-   * On success, if the edited message is not an inline message, the edited
-   * {@link Message} is returned, otherwise `True` is returned.
+   *
+   * On success, if the edited message is not an inline message, the edited {@link Message} is returned,
+   * otherwise `True` is returned.
    * @see https://core.telegram.org/bots/api#editmessagelivelocation
    * @param {number|string} [chatId] Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
@@ -1246,8 +1337,10 @@ class Telegram extends ApiClient {
 
   /**
    * Use this method to edit live location messages. A location can be edited until its `live_period` expires or
-   * editing is explicitly disabled by a call to {@link stopMessageLiveLocation}. On success, if the edited message
-   * is not an inline message, the edited {@link Message} is returned, otherwise `True` is returned.
+   * editing is explicitly disabled by a call to {@link stopMessageLiveLocation}.
+   *
+   * On success, if the edited message is not an inline message, the edited {@link Message} is returned,
+   * otherwise `True` is returned.
    * @see https://core.telegram.org/bots/api#stopmessagelivelocation
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
@@ -1276,6 +1369,7 @@ class Telegram extends ApiClient {
    * - Bots granted can_post_messages permissions can delete outgoing messages in channels.
    * - If the bot is an administrator of a group, it can delete any message there.
    * - If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.
+   *
    * Returns `True` on success.
    * @see https://core.telegram.org/bots/api#deletemessage
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
@@ -1295,7 +1389,9 @@ class Telegram extends ApiClient {
    * Use this method to set a new group sticker set for a supergroup. The bot must be an administrator in the chat
    * for this to work and must have the appropriate administrator rights.
    * Use the field `can_set_sticker_set` optionally returned in {@link getChat} requests to check if the
-   * bot can use this method. Returns `True` on success.
+   * bot can use this method.
+   *
+   * Returns `True` on success.
    * @see https://core.telegram.org/bots/api#setchatstickerset
    * @param {string|number} chatId Unique identifier for the target chat or username of the target supergroup
    *    (in the format `@supergroupusername`)
@@ -1313,7 +1409,9 @@ class Telegram extends ApiClient {
   /**
    * Use this method to delete a group sticker set from a supergroup. The bot must be an administrator in the chat for
    * this to work and must have the appropriate administrator rights. Use the field `can_set_sticker_set` optionally
-   * returned in {@link getChat} requests to check if the bot can use this method. Returns `True` on success.
+   * returned in {@link getChat} requests to check if the bot can use this method.
+   *
+   * Returns `True` on success.
    * @see https://core.telegram.org/bots/api#deletechatstickerset
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
@@ -1325,7 +1423,9 @@ class Telegram extends ApiClient {
   }
 
   /**
-   * Use this method to get a sticker set. On success, a {@link StickerSet} object is returned.
+   * Use this method to get a sticker set.
+   *
+   * On success, a {@link StickerSet} object is returned.
    * @see https://core.telegram.org/bots/api#getstickerset
    * @param {string} name Name of the sticker set
    * @throws {TelegramError}
@@ -1339,6 +1439,7 @@ class Telegram extends ApiClient {
    * Use this method to upload a .PNG file with a sticker for later use in
    * {@link Telegram.createNewStickerSet createNewStickerSet} and {@link Telegram.addStickerToSet addStickerToSet}
    * methods (can be used multiple times).
+   *
    * Returns the uploaded {@link File} on success.
    * @see https://core.telegram.org/bots/api#uploadstickerfile
    * @param {number} ownerId User identifier of sticker file owner
@@ -1358,6 +1459,7 @@ class Telegram extends ApiClient {
   /**
    * Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set
    * thus created. You must use exactly one of the fields `png_sticker`, `tgs_sticker`, or `webm_sticker`.
+   *
    * Returns `True` on success.
    * @see https://core.telegram.org/bots/api#createnewstickerset
    * @param {number} ownerId User identifier of created sticker set owner
@@ -1384,6 +1486,7 @@ class Telegram extends ApiClient {
    * You **must** use exactly one of the fields `png_sticker`, `tgs_sticker`, or `webm_sticker`.
    * Animated stickers can be added to animated sticker sets and only to them.
    * Animated sticker sets can have up to 50 stickers. Static sticker sets can have up to 120 stickers.
+   *
    * Returns `True` on success.
    * @see https://core.telegram.org/bots/api#addstickertoset
    * @param {number} ownerId User identifier of sticker set owner
@@ -1401,7 +1504,9 @@ class Telegram extends ApiClient {
   }
 
   /**
-   * Use this method to move a sticker in a set created by the bot to a specific position. Returns `True` on success.
+   * Use this method to move a sticker in a set created by the bot to a specific position.
+   *
+   * Returns `True` on success.
    * @see https://core.telegram.org/bots/api#setstickerpositioninset
    * @param {string} sticker File identifier of the sticker
    * @param {number} position New sticker position in the set, zero-based
@@ -1417,7 +1522,9 @@ class Telegram extends ApiClient {
 
   /**
    * Use this method to set the thumbnail of a sticker set. Animated thumbnails can be set for animated sticker
-   * sets only. Video thumbnails can be set only for video sticker sets only. Returns `True` on success.
+   * sets only. Video thumbnails can be set only for video sticker sets only.
+   *
+   * Returns `True` on success.
    * @see https://core.telegram.org/bots/api#setstickersetthumb
    * @param {string} name Sticker set name
    * @param {number} userId User identifier of the sticker set owner
@@ -1439,7 +1546,9 @@ class Telegram extends ApiClient {
   }
 
   /**
-   * Use this method to delete a sticker from a set created by the bot. Returns `True` on success.
+   * Use this method to delete a sticker from a set created by the bot.
+   *
+   * Returns `True` on success.
    * @see https://core.telegram.org/bots/api#deletestickerfromset
    * @param {string} sticker File identifier of the sticker
    * @throws {TelegramError}
@@ -1451,6 +1560,7 @@ class Telegram extends ApiClient {
 
   /**
    * Use this method to get the current list of the bot's commands for the given scope and user language.
+   *
    * Returns Array of {@link BotCommand} on success. If commands aren't set, an empty list is returned.
    * @see https://core.telegram.org/bots/api#getmycommands
    * @param {object|Extra} [extra] Other parameters
@@ -1465,6 +1575,7 @@ class Telegram extends ApiClient {
    * Use this method to change the list of the bot's commands. See
    * [https://core.telegram.org/bots#commands](https://core.telegram.org/bots#commands) for more details
    * about bot commands.
+   *
    * Returns `True` on success.
    * @see https://core.telegram.org/bots/api#setmycommands
    * @param {BotCommand[]} commands List of bot commands to be set as the list of the bot's commands.
@@ -1480,6 +1591,7 @@ class Telegram extends ApiClient {
   /**
    * Use this method to delete the list of the bot's commands for the given scope and user language.
    * After deletion, higher level commands will be shown to affected users.
+   *
    * Returns `True` on success.
    * @see https://core.telegram.org/bots/api#deletemycommands
    * @param {object|Extra} [extra] Other parameters
@@ -1493,7 +1605,9 @@ class Telegram extends ApiClient {
   /**
    * Informs a user that some of the Telegram Passport elements they provided contains errors.
    * The user will not be able to re-submit their Passport to you until the errors are fixed
-   * (the contents of the field for which you returned the error must change). Returns True on success.
+   * (the contents of the field for which you returned the error must change).
+   *
+   * Returns `True` on success.
    *
    * Use this if the data submitted by the user doesn't satisfy the standards your service requires for any reason.
    * For example, if a birthday date seems invalid, a submitted document is blurry, a scan shows evidence of tampering,
@@ -1543,6 +1657,7 @@ class Telegram extends ApiClient {
    * Use this method to copy messages of any kind. Service messages and invoice messages can't be copied.
    * The method is analogous to the method {@link forwardMessage}, but the copied message doesn't have a link to the
    * original message.
+   *
    * Returns the {@link MessageId} of the sent message on success.
    * @see https://core.telegram.org/bots/api#copymessage
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
@@ -1566,8 +1681,9 @@ class Telegram extends ApiClient {
   /**
    * Use this method to create an additional invite link for a chat. The bot must be an administrator in the chat for
    * this to work and must have the appropriate administrator rights. The link can be revoked using the method
-   * {@link Telegram.revokeChatInviteLink revokeChatInviteLink}. Returns the new invite
-   * link as {@link ChatInviteLink} object.
+   * {@link Telegram.revokeChatInviteLink revokeChatInviteLink}.
+   *
+   * Returns the new invite link as {@link ChatInviteLink} object.
    * @see https://core.telegram.org/bots/api#createchatinvitelink
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
@@ -1584,7 +1700,9 @@ class Telegram extends ApiClient {
 
   /**
    * Use this method to edit a non-primary invite link created by the bot. The bot must be an administrator in the chat
-   * for this to work and must have the appropriate administrator rights. Returns the edited invite link
+   * for this to work and must have the appropriate administrator rights.
+   *
+   * Returns the edited invite link
    * as a {@link ChatInviteLink} object.
    * @see https://core.telegram.org/bots/api#editchatinvitelink
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
@@ -1605,7 +1723,9 @@ class Telegram extends ApiClient {
   /**
    * Use this method to revoke an invite link created by the bot. If the primary link is revoked, a new link is
    * automatically generated. The bot must be an administrator in the chat for this to work and must have the
-   * appropriate administrator rights. Returns the revoked invite link as {@link ChatInviteLink} object.
+   * appropriate administrator rights.
+   *
+   * Returns the revoked invite link as {@link ChatInviteLink} object.
    * @see https://core.telegram.org/bots/api#revokechatinvitelink
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
@@ -1623,6 +1743,7 @@ class Telegram extends ApiClient {
   /**
    * Use this method to approve a chat join request. The bot must be an administrator in the chat for this to work
    * and must have the `can_invite_users` administrator right.
+   *
    * Returns `True` on success.
    * @see https://core.telegram.org/bots/api#approvechatjoinrequest
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
@@ -1640,7 +1761,9 @@ class Telegram extends ApiClient {
 
   /**
    * Use this method to decline a chat join request. The bot must be an administrator in the chat for this to work
-   * and must have the `can_invite_users` administrator right. Returns `True` on success.
+   * and must have the `can_invite_users` administrator right.
+   *
+   * Returns `True` on success.
    * @see https://core.telegram.org/bots/api#declinechatjoinrequest
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
