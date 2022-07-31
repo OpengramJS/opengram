@@ -37,3 +37,8 @@ jobs:
       - run: npm test
       - run: npm run lint
       - run: npm run remark
+      - run: npm run cover
+      - uses: codecov/codecov-action@v3
+        with:
+          files: ./coverage.xml
+          name: ${{ matrix.os }}/${{ matrix.node-version }}
