@@ -154,7 +154,7 @@ class Telegram extends ApiClient {
    * @param {boolean} [force] Pass True, if the high score is allowed to decrease.
    *    This can be useful when fixing mistakes or banning cheaters
    * @throws {TelegramError}
-   * @return {Promise<Message>}
+   * @return {Promise<boolean|Message>}
    */
   setGameScore (userId, score, inlineMessageId, chatId, messageId, editMessage = true, force) {
     return this.callApi('setGameScore', {
