@@ -16,7 +16,7 @@ class Stage extends Composer {
   register (...scenes) {
     scenes.forEach((scene) => {
       if (!scene || !scene.id || typeof scene.middleware !== 'function') {
-        throw new Error('opengram: Unsupported scene')
+        throw new TypeError('opengram: Unsupported scene')
       }
       this.scenes.set(scene.id, scene)
     })
