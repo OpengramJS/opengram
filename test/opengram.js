@@ -6,6 +6,7 @@ const { session } = Opengram
 class MockResponse {
   constructor () {
     this.writableEnded = false
+    this.statusCode = 200
   }
 
   setHeader () {}
@@ -13,6 +14,31 @@ class MockResponse {
     this.writableEnded = true
     this.body = body
     cb && cb()
+  }
+}
+
+class MockRequest {
+  constructor (path, method, headers, data) {
+    this._path = path
+    this._method = method
+    this._headers = headers
+    this._data = data
+  }
+
+  get url () {
+    return this._path
+  }
+
+  get headers () {
+    return this._headers
+  }
+
+  get body () {
+    return this._data
+  }
+
+  get method () {
+    return this._method
   }
 }
 
@@ -435,4 +461,78 @@ test('should redact secret part of token when throw api calling error when using
   const error = await t.throwsAsync(bot.telegram.callApi('test'))
   t.regex(error.message, /http:\/\/notexists\/someprefix\/123456789:\[REDACTED\]\/test/)
   t.notRegex(error.message, new RegExp(token))
+})
+
+test('should restrict access with wrong path', async t => {
+  const bot = createBot()
+  return new Promise((resolve, reject) => {
+    bot.start(reject)
+    const callback = bot.webhookCallback({ path: '/anime' })
+    const res = new MockResponse()
+    const req = new MockRequest('/anime1', 'POST', {}, {
+      message: {
+        text: '/start payload',
+        entities: [{ type: 'bot_command', offset: 0, length: 6 }]
+      }
+    })
+
+    callback(req, res)
+      .then(() => t.is(res.statusCode, 403) && resolve())
+  })
+})
+
+test('should restrict access with wrong secret', async t => {
+  const bot = createBot()
+  return new Promise((resolve, reject) => {
+    bot.start(reject)
+    const callback = bot.webhookCallback({ path: '/anime', secret: 'wrong' })
+    const res = new MockResponse()
+    const req = new MockRequest('/anime', 'POST', { 'x-telegram-bot-api-secret-token': '1234567890' }, {
+      message: {
+        text: '/start payload',
+        entities: [{ type: 'bot_command', offset: 0, length: 6 }]
+      }
+    })
+
+    callback(req, res)
+      .then(() => t.is(res.statusCode, 403) && resolve())
+  })
+})
+
+test('should handle webhook update with secret', async t => {
+  const bot = createBot()
+  t.plan(2)
+  return new Promise((resolve, reject) => {
+    bot.on('message', ctx => t.is(ctx.message.text, '/start'))
+    const callback = bot.webhookCallback({ path: '/anime', secret: '1234567890' })
+    const res = new MockResponse()
+    const req = new MockRequest('/anime', 'POST', { 'x-telegram-bot-api-secret-token': '1234567890' }, {
+      message: {
+        text: '/start',
+        entities: [{ type: 'bot_command', offset: 0, length: 6 }]
+      }
+    })
+
+    callback(req, res)
+      .then(() => t.is(res.statusCode, 200) && resolve())
+  })
+})
+
+test('should handle webhook update with path', async t => {
+  const bot = createBot()
+  t.plan(2)
+  return new Promise((resolve, reject) => {
+    bot.on('message', ctx => t.is(ctx.message.text, '/start'))
+    const callback = bot.webhookCallback({ path: '/anime' })
+    const res = new MockResponse()
+    const req = new MockRequest('/anime', 'POST', {}, {
+      message: {
+        text: '/start',
+        entities: [{ type: 'bot_command', offset: 0, length: 6 }]
+      }
+    })
+
+    callback(req, res)
+      .then(() => t.is(res.statusCode, 200) && resolve())
+  })
 })
