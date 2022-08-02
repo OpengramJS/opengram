@@ -30,10 +30,17 @@ function timingSafeEqual (a, b) {
   return crypto.timingSafeEqual(bufA, bufB) && aLen === bLen
 }
 
-module.exports = function (hookPath, updateHandler, errorHandler) {
+module.exports = function (config, updateHandler, errorHandler) {
   return async (req, res, next) => {
     debug('Incoming request', req.method, req.url)
-    if (req.method !== 'POST' || !timingSafeEqual(hookPath, req.url)) {
+    const secretHeader = req.headers['x-telegram-bot-api-secret-token']
+
+    if (
+      req.method !== 'POST' || (
+        (config.secret !== undefined && config.path === req.url && !timingSafeEqual(config.secret, secretHeader)) ||
+        !timingSafeEqual(config.path, req.url)
+      )
+    ) {
       if (typeof next === 'function') {
         return next()
       }

@@ -151,6 +151,14 @@ class Opengram extends Composer {
   }
 
   /**
+   * @typedef {object} webhookCallbackOptions
+   * @property {string} [path='/'] Path the server should listen to.
+   * @property {string} [secret] A secret token to be sent in a header “X-Telegram-Bot-Api-Secret-Token”
+   *    in every webhook request, 1-256 characters. Only characters A-Z, a-z, 0-9, _ and - are allowed.
+   *    The header is useful to ensure that the request comes from a webhook set by you.
+   */
+
+  /**
    * Generates webhook handler middleware for specified path for
    * [Koa](https://koajs.com) / [Express](https://expressjs.com)
    * / [Fastify](https://www.fastify.io)
@@ -174,11 +182,12 @@ class Opengram extends Composer {
    * app.use(bot.webhookCallback('/secret-path'))
    * app.listen(3000, () => console.log('Bot listening on port 3000!'))
    * ```
-   * @param {string} [path='/']
+   * @param {webhookCallbackOptions} config Options
    * @return {function}
    */
-  webhookCallback (path = '/') {
-    return generateCallback(path, (update, res) => this.handleUpdate(update, res), debug)
+  webhookCallback (config = {}) {
+    if (config.path === undefined) config.path = '/'
+    return generateCallback(config, (update, res) => this.handleUpdate(update, res), debug)
   }
 
   /**
@@ -210,6 +219,14 @@ class Opengram extends Composer {
   }
 
   /**
+   * @typedef {object} startWebhookOptions
+   * @property {string} path Path the server should listen to.
+   * @property {string} [secret] A secret token to be sent in a header “X-Telegram-Bot-Api-Secret-Token”
+   *    in every webhook request, 1-256 characters. Only characters A-Z, a-z, 0-9, _ and - are allowed.
+   *    The header is useful to ensure that the request comes from a webhook set by you.
+   */
+
+  /**
    * Start webhook server based on NodeJS
    * [http](https://nodejs.org/api/http.html) or [https](https://nodejs.org/api/https.html) modules on given host, port
    * ```js
@@ -222,7 +239,10 @@ class Opengram extends Composer {
    *
    * // Start webhook server
    * bot.startWebhook(
-   *   '/secret-path', // Very secret path
+   *   {
+   *     path: '/bot',
+   *     secret: '1234567890'
+   *   },
    *   // TLS options
    *   {
    *     key: fs.readFileSync('key.pem'), // Private key file
@@ -235,9 +255,9 @@ class Opengram extends Composer {
    *     res.end('Not allowed!')
    *   }
    * )
-   * bot.telegram.setWebhook('https://example.com:3000/secret-path') // Set url of your server with
+   * bot.telegram.setWebhook('https://example.com:3000/bot') // Set url of your server with
    * ```
-   * @param {string} [hookPath='/'] Path the server should listen to.
+   * @param {startWebhookOptions} [options] Webhook options
    * @param {object|null} [tlsOptions] - Options for `https` NodeJS module, see official
    *    [docs](https://nodejs.org/api/https.html#httpscreateserveroptions-requestlistener)
    * @param {number} [port] Port to listen. Be careful, Telegram only supports 443, 80, 88, 8443 for now.
@@ -250,8 +270,8 @@ class Opengram extends Composer {
    * @see https://core.telegram.org/bots/api#setwebhook
    * @return {Opengram}
    */
-  startWebhook (hookPath, tlsOptions, port, host, nextCb) {
-    const webhookCb = this.webhookCallback(hookPath)
+  startWebhook (options, tlsOptions, port, host, nextCb) {
+    const webhookCb = this.webhookCallback(options)
     const callback = nextCb && typeof nextCb === 'function'
       ? (req, res) => webhookCb(req, res, () => nextCb(req, res))
       : webhookCb
@@ -293,16 +313,29 @@ class Opengram extends Composer {
    */
 
   /**
+   * @typedef {object} launchWebhookOptions
+   * @property {string} [path='/opengram'] Path the server should listen to.
+   *    By default - `/opengram` or with enabled {@link webhookConfig#useSecretPath useSecretPath} - `/opengram/<secret>`
+   * @property {string} secret A secret token to be sent in a header “X-Telegram-Bot-Api-Secret-Token”
+   *    in every webhook request, 1-256 characters. Only characters A-Z, a-z, 0-9, _ and - are allowed.
+   *    The header is useful to ensure that the request comes from a webhook set by you.
+   *
+   *    If not specified, generates an automatic
+   */
+
+  /**
    * @typedef {object} webhookConfig
-   * @property domain Your external server domain For example -
+   * @property {boolean} [useSecretPath=true] Enable legacy mode by using the secret in the URL instead of the
+   *    secret header.
+   * @property {string} domain Your external server domain For example -
    *    `example.com`, `https://exmaple.com`, `http://exmaple.com`.
    *    Used for {@link Opengram.telegram.setWebhook}
-   * @property hookPath URL path. See {@link Opengram#startWebhook} for more information
-   * @property tlsOptions Options for TLS. See {@link Opengram#startWebhook} for more information
+   * @property {launchWebhookOptions} options Webhook options object. See {@link Opengram#startWebhook} for more information
+   * @property {object} tlsOptions Options for TLS. See {@link Opengram#startWebhook} for more information
    * @property {function} cb Next handler function, called when webhook handler not match path string or request method.
    *    See {@link Opengram#startWebhook} for more information
-   * @property port Port number. See {@link Opengram#startWebhook} for more information
-   * @property host Hostname. See {@link Opengram#startWebhook} for more information
+   * @property {number} port Port number. See {@link Opengram#startWebhook} for more information
+   * @property {string} host Hostname. See {@link Opengram#startWebhook} for more information
    * @property {string} [ipAddress] The fixed IP address which will be used to send webhook requests instead of the
    *    IP address resolved through DNS
    * @property {number} [maxConnections=40] The maximum allowed number of simultaneous HTTPS connections to the webhook
@@ -342,7 +375,7 @@ class Opengram extends Composer {
 
     if (
       typeof config.webhook.domain !== 'string' &&
-      typeof config.webhook.hookPath !== 'string'
+      typeof config.webhook.path !== 'string'
     ) {
       throw new Error('Webhook domain or webhook path is required')
     }
@@ -353,9 +386,18 @@ class Opengram extends Composer {
       domain = new URL(domain).host
     }
 
-    const hookPath = config.webhook.hookPath || `/opengram/${this.secretPathComponent()}`
+    const hookOptions = {}
+    if (!config.webhook.path) {
+      const secret = this.secretPathComponent()
+      hookOptions.path = config.webhook.useSecretPath ? `/opengram/${secret}` : '/opengram'
+      if (!config.webhook.useSecretPath) {
+        hookOptions.secret = config.webhook.secret || secret
+      }
+    } else {
+      hookOptions.path = config.webhook.path
+    }
     const { port, host, tlsOptions, cb } = config.webhook
-    this.startWebhook(hookPath, tlsOptions, port, host, cb)
+    this.startWebhook(hookOptions, tlsOptions, port, host, cb)
 
     if (!domain) {
       debug('Bot started with webhook')
@@ -366,10 +408,11 @@ class Opengram extends Composer {
       drop_pending_updates: config.dropPendingUpdates,
       allowed_updates: config.allowedUpdates,
       ip_address: config.webhook.ipAddress,
-      max_connections: config.webhook.maxConnections
+      max_connections: config.webhook.maxConnections,
+      secret_token: hookOptions.secret
     }
 
-    await this.telegram.setWebhook(`https://${domain}${hookPath}`, webHookExtra)
+    await this.telegram.setWebhook(`https://${domain}${hookOptions.path}`, webHookExtra)
     debug(`Bot started with webhook @ https://${domain}`)
 
     return this
