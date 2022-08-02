@@ -30,6 +30,7 @@
  * The file can be downloaded via the link `https://api.telegram.org/file/bot<token>/<file_path>`.
  * It is guaranteed that the link will be valid for at least 1 hour. When the link expires,
  * a new one can be requested by calling {@link Telegram.getFile getFile}.
+ *
  * The maximum file size to download is 20 MB
  * @property {string} file_id Identifier for this file, which can be used to download or reuse the file
  * @property {string} file_unique_id Unique identifier for this file, which is supposed to be the same over time
@@ -39,11 +40,6 @@
  *    so a signed 64-bit integer or double-precision float type are safe for storing this value.
  * @property {string} [file_path] **Optional.** File path. Use `https://api.telegram.org/file/bot<token>/<file_path>`
  *    to get the file.
- */
-
-/**
- * @typedef {object} Message
- * @description This object represents a message.
  */
 
 /**
@@ -414,10 +410,6 @@
  */
 
 /**
- * @typedef {object} InputTextMessageContent
- */
-
-/**
  * @typedef {object} InlineQueryResultCachedAudio
  * @description Represents a link to an MP3 audio file stored on the Telegram servers. By default, this audio file will
  *    be sent by the user. Alternatively, you can use input_message_content to send a message with the
@@ -517,15 +509,24 @@
  */
 
 /**
- * @typedef {object} PassportElementError
- */
-
-/**
  * @typedef {object} BotCommand
  * @description This object represents a bot command.
  * @property {string} command Text of the command; 1-32 characters. Can contain only lowercase English letters,
  *    digits and underscores.
  * @property {string} description Description of the command; 1-256 characters.
+ */
+
+/**
+ * @typedef {object} InputTextMessageContent
+ */
+
+/**
+ * @typedef {object} PassportElementError
+ */
+
+/**
+ * @typedef {object} Message
+ * @description This object represents a message.
  */
 
 /**

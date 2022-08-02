@@ -345,10 +345,14 @@ class Opengram extends Composer {
 
   /**
    * @typedef {object} launchConfig
-   * @property {boolean} [dropPendingUpdates=false] If sets to true, dropping all pending updates which were sent when bots bot not was started
+   * @property {boolean} [dropPendingUpdates=false] If sets to true, dropping all pending updates which were sent
+   *    when bots bot not was started
    * @property {pollingConfig} [polling] Polling configuration
    * @property {webhookConfig} [webhook] Webhook configuration
-   * @property {string[]} [allowedUpdates] Array of allowed updates for **webhook**. For example, specify ["message", "edited_channel_post", "callback_query"] to only receive updates of these types. Please note that this parameter doesn't affect updates created before the call to the setWebhook, so unwanted updates may be received for a short period of time.
+   * @property {string[]} [allowedUpdates] Array of allowed updates for **webhook**.
+   *    For example, specify ["message", "edited_channel_post", "callback_query"] to only receive
+   *    updates of these types. Please note that this parameter doesn't affect updates created before the call
+   *    to the setWebhook, so unwanted updates may be received for a short period of time.
    */
 
   /**
