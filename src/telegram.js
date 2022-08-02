@@ -734,8 +734,8 @@ class Telegram extends ApiClient {
    *
    * Returns `True` on success.
    * @see https://core.telegram.org/bots/api#setchatpermissions
-   * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
-   *    (in the format `@channelusername`)
+   * @param {number|string} chatId Unique identifier for the target chat or username of the target supergroup
+   *    (in the format `@supergroupusername`)
    * @param {ChatPermissions} permissions A object for new default chat permissions
    * @throws {TelegramError}
    * @return {Promise<boolean>}
@@ -805,8 +805,8 @@ class Telegram extends ApiClient {
    *
    * Returns `True` on success.
    * @see https://core.telegram.org/bots/api#restrictchatmember
-   * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
-   *    (in the format `@channelusername`)
+   * @param {number|string} chatId Unique identifier for the target chat or username of the target supergroup
+   *    (in the format `@supergroupusername`)
    * @param {number} userId Unique identifier of the target user
    * @param {object} [extra] Other parameters
    * @throws {TelegramError}
@@ -855,8 +855,8 @@ class Telegram extends ApiClient {
    *
    * Returns `True` on success.
    * @see https://core.telegram.org/bots/api#setchatadministratorcustomtitle
-   * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
-   *    (in the format `@channelusername`)
+   * @param {number|string} chatId Unique identifier for the target chat or username of the target supergroup
+   *    (in the format `@supergroupusername`)
    * @param {number} userId Unique identifier of the target user
    * @param {string} title New custom title for the administrator; 0-16 characters, emoji are not allowed
    * @throws {TelegramError}
@@ -1413,8 +1413,8 @@ class Telegram extends ApiClient {
    *
    * Returns `True` on success.
    * @see https://core.telegram.org/bots/api#deletechatstickerset
-   * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
-   *    (in the format `@channelusername`)
+   * @param {number|string} chatId Unique identifier for the target chat or username of the target supergroup
+   *    (in the format `@supergroupusername`)
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
