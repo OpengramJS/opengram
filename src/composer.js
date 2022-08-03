@@ -34,7 +34,7 @@ class Composer {
    *
    * This method returns a new instance of {@link Composer}.
    *
-   * @param {function} fns The middleware(s) to register
+   * @param {MiddlewareFn} fns The middleware(s) to register
    * @return {Composer}
    */
   use (...fns) {
