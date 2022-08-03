@@ -16,6 +16,11 @@ class TelegramError extends Error {
   }
 }
 
+/**
+ * Checks if the error is a {@link TelegramError}
+ * @param {object} err Error object
+ * @return {boolean}
+ */
 function isTelegramError (err) {
   return err instanceof TelegramError
 }
