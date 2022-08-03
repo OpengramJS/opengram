@@ -5,6 +5,38 @@ class Composer {
     this.handler = Composer.compose(fns)
   }
 
+  /**
+   * Registers some middleware(s) that receives all updates. It is installed by
+   * concatenating it to the end of all previously installed middleware.
+   *
+   * Often, this method is used to install middleware(s) that behaves like a
+   * plugin, for example session middleware.
+   * ```js
+   * bot.use(session())
+   * ```
+   *
+   * You can pass middleware separated by commas as arguments or as a chain of calls:
+   * ```js
+   * const { Opengram, Stage, session } = require('opengram')
+   * const bot = require('opengram')
+   * const stage = new Stage([...])
+   * bot.use(session(), stage) // As arguments
+   * ```
+   * or
+   * ```js
+   * const { Opengram, Stage, session } = require('opengram')
+   * const bot = require('opengram')
+   * const stage = new Stage([...])
+   * bot // As chain of calls
+   *   .use(session())
+   *   .use(stage)
+   * ```
+   *
+   * This method returns a new instance of {@link Composer}.
+   *
+   * @param {function} fns The middleware(s) to register
+   * @return {Composer}
+   */
   use (...fns) {
     this.handler = Composer.compose([this.handler, ...fns])
     return this
