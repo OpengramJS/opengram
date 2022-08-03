@@ -16,4 +16,8 @@ class TelegramError extends Error {
   }
 }
 
-module.exports = { TelegramError }
+function isTelegramError (err) {
+  return err instanceof TelegramError
+}
+
+module.exports = { TelegramError, isTelegramError }

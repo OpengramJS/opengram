@@ -11,7 +11,7 @@ const { OpengramContext: Context } = require('./context')
 const generateCallback = require('./core/network/webhook')
 const crypto = require('crypto')
 const { URL } = require('url')
-const { TelegramError } = require('./core/network/error')
+const { TelegramError, isTelegramError } = require('./core/network/error')
 const pTimeout = require('p-timeout')
 const { compactOptions } = require('./core/helpers/compact')
 const WizardScene = require('./scenes/wizard')
@@ -539,6 +539,7 @@ class Opengram extends Composer {
 module.exports = Object.assign(Opengram, {
   Context,
   TelegramError,
+  isTelegramError,
   Composer,
   default: Opengram,
   Extra,
