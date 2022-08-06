@@ -34,7 +34,7 @@ class Composer {
    *
    * This method returns a new instance of {@link Composer}.
    *
-   * @param {MiddlewareFn} fns The middleware(s) to register
+   * @param {MiddlewareFn} fns The middleware(s) to register as arguments
    * @return {Composer}
    */
   use (...fns) {
@@ -108,7 +108,7 @@ class Composer {
    * ```
    *
    * @param {string|RegExp|array<RegExp|string>} triggers The text / array of texts or regex to look for
-   * @param {MiddlewareFn} fns The middleware(s) to register
+   * @param {MiddlewareFn} fns The middleware(s) to register as argument(s)
    */
   hears (triggers, ...fns) {
     return this.use(Composer.hears(triggers, ...fns))
