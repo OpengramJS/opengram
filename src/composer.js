@@ -79,6 +79,37 @@ class Composer {
     return this.use(Composer.mount(updateTypes, ...fns))
   }
 
+  /**
+   * Registers some middleware that will only be executed when the message / channel post
+   * contains some text (in media caption too). Is it possible to pass a regular expression to match:
+   * ```js
+   * // Match some text (exact match)
+   * bot.hears('I love anime', ctx => ctx.reply('I love too'))
+   *
+   * // Match a regular expression
+   * bot.hears(/\/echo (.+)/, ctx => ctx.reply(ctx.match[1]))
+   * ```
+   * > Note how `ctx.match` will contain the result of the regular expression.
+   * > So `ctx.match[1]` refers to the part of the regex that was matched by `(.+)`,
+   * > i.e. the text that comes after "/echo".
+   *
+   * You can pass an array of triggers. Your middleware will be executed if at
+   * least one of them matches.
+   *
+   * Both text and captions of the received messages will be scanned. For
+   * example, when a photo is sent to the chat and its caption matches the
+   * trigger, your middleware will be executed.
+   *
+   * If you only want to match text messages and not captions, you can do
+   * this:
+   * ```js
+   * // Only matches text messages for the regex
+   * bot.on('text').hears(/\/echo (.+)/, ctx => { ... })
+   * ```
+   *
+   * @param {string|RegExp|array<RegExp|string>} triggers The text / array of texts or regex to look for
+   * @param {MiddlewareFn} fns The middleware(s) to register
+   */
   hears (triggers, ...fns) {
     return this.use(Composer.hears(triggers, ...fns))
   }
