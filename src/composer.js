@@ -42,6 +42,39 @@ class Composer {
     return this
   }
 
+  /**
+   * Registers some middleware(s) that will only be executed for some specific
+   * updates, namely those matching the provided filter query. Filter queries
+   * are a concise way to specify which updates you are interested in.
+   *
+   * Here are some examples of valid filter queries:
+   * ```js
+   * // All kinds of message updates
+   * bot.on('message', ctx => { ... })
+   *
+   * // Text messages
+   * bot.on('text', ctx => { ... })
+   *
+   * // Messages with document
+   * bot.on('document', ctx => { ... })
+   * ```
+   *
+   * It is possible to pass multiple filter queries in an array, i.e.
+   * ```js
+   * // Matches all messages that contain a video or audio
+   * bot.on(['audio', 'video'], ctx => { ... })
+   * ```
+   *
+   * Your middleware will be executed if _any of the provided filter queries_
+   * matches (logical OR).
+   *
+   * This method returns same as {@link Composer#use}.
+   *
+   * @param {updateType|updateType[]} updateTypes The update type or array of update types to use,
+   *    may also be an array or string
+   * @param {MiddlewareFn} fns The middleware(s) to register with the given types as argument(s)
+   * @return {Composer}
+   */
   on (updateTypes, ...fns) {
     return this.use(Composer.mount(updateTypes, ...fns))
   }
