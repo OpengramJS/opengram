@@ -300,6 +300,7 @@ class Composer {
    *
    * @param {string|RegExp|array<RegExp|string>} triggers The inline query text or array of text to match
    * @param {MiddlewareFn} fns The middleware(s) to register
+   * @return {Composer}
    */
   inlineQuery (triggers, ...fns) {
     return this.use(Composer.inlineQuery(triggers, ...fns))
@@ -320,6 +321,7 @@ class Composer {
    * ```
    *
    * @param {MiddlewareFn} fns The middleware to register as arguments
+   * @return {Composer}
    */
   gameQuery (...fns) {
     return this.use(Composer.gameQuery(...fns))
