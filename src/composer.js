@@ -1,6 +1,21 @@
 const { OpengramContext: Context, MessageSubTypesMapping } = require('./context')
 
+/**
+ * The composer is the heart of the middleware system in Opengram. It is also the
+ * super class of `Opengram`.
+ *
+ * Whenever you call `use` or `on` or some of the other
+ * methods on your bot, you are in fact using the underlying composer instance
+ * to register your middleware.
+ */
 class Composer {
+  /**
+   * Constructs a new composer based on the provided middleware. If no
+   * middleware is given, the composer instance will simply make all context
+   * objects pass through without touching them.
+   *
+   * @param {MiddlewareFn} fns The middlewares to compose as arguments
+   */
   constructor (...fns) {
     this.handler = Composer.compose(fns)
   }
