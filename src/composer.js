@@ -103,8 +103,9 @@ class Composer {
    * If you only want to match text messages and not captions, you can do
    * this:
    * ```js
+   * const { Composer: { hears } } = require('opengram')
    * // Only matches text messages for the regex
-   * bot.on('text').hears(/\/echo (.+)/, ctx => { ... })
+   * bot.on('text', hears(/\/echo (.+)/, ctx => { ... }))
    * ```
    *
    * > _**Be careful, the example above may not work as expected if `channelMode` is enabled.**_
