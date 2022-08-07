@@ -327,6 +327,31 @@ class Composer {
     return this.use(Composer.gameQuery(...fns))
   }
 
+  /**
+   * > ❗️ **This is an advanced method of Opengram.**
+   *
+   * Registers middleware behind a custom filter function that operates on the
+   * context object and decides whether to execute the middleware.
+   *
+   * In other words, the middleware(s) after that middleware will only be executed if the given predicate
+   * returns `false` for the given context object. Note that the predicate
+   * may be asynchronous, i.e. it can return a Promise of a boolean.
+   *
+   * This method is the same using `filter` (normal usage) with a negated
+   * predicate.
+   *
+   * ```js
+   * // Drop all message updates sent more than 6 hr in all middlewares / handlers registered after bot.drop(...)
+   * bot.drop(ctx => {
+   *   if(!ctx.message) return false // Drop only messages
+   *   return (Date.now() / 1000) - ctx.message.date < 60 * 60 * 6
+   * })
+   * // Called only for messages with date < 6 hr after send
+   * bot.on('message', () => ctx.reply('Good, update date less then 6 hours!'))
+   * ```
+   * @param {PredicateFn} predicate The predicate to check. Can be async, returns boolean or Promise with boolean
+   * @return {Composer}
+   */
   drop (predicate) {
     return this.use(Composer.drop(predicate))
   }

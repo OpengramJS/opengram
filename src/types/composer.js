@@ -18,3 +18,9 @@
     "video_chat_ended" | "video_chat_participants_invited"
  } updateType
  */
+
+/**
+ * @typedef {function} PredicateFn
+ * @param {OpengramContext} context Update context
+ * @return {boolean|Promise<boolean>}
+ */
