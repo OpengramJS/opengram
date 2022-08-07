@@ -250,6 +250,57 @@ class Composer {
     return this.use(Composer.action(triggers, ...fns))
   }
 
+  /**
+   * Registers middleware for inline queries. Telegram sends an inline query
+   * to your bot whenever a user types `@your_bot_name ...` into a text field
+   * in Telegram.
+   *
+   *
+   * [![Inline query](https://raw.githubusercontent.com/OpengramJS/opengram/master/docs/media/interactive-examples/inlineQuery.png)](https://raw.githubusercontent.com/OpengramJS/opengram/master/docs/media/interactive-examples/inlineQuery.png)
+   *
+   *
+   * Your bot will then receive the entered search query and can
+   * respond with a number of results (text, images, etc.) that the user can
+   * pick from to send a message _via_ your bot to the respective chat.
+   * Check [here](https://core.telegram.org/bots/inline) to read more about inline bots.
+   *
+   * > Note that you have to enable inline mode for you bot by contacting
+   * > [@BotFather](https://t.me/BotFather) first.
+   *
+   * ```js
+   * // Listen for users typing `@your_bot_name query`
+   * bot.inlineQuery('query', async ctx => {
+   *   // Answer the inline query, confer https://core.telegram.org/bots/api#answerinlinequery
+   *   await ctx.answerInlineQuery( ... )
+   * })
+   * ```
+   *
+   * You can pass one or an array of triggers (Regexp / strings). Your middleware(s) will be executed if at
+   * least one of them matches.
+   *
+   * > Note how `ctx.match` will contain the result of the regular expression.
+   * > So `ctx.match[1]` refers to the part of the regexp that was matched by `([0-9]+)`,
+   * > i.e. the text that comes after "query:".
+   * ```js
+   * // Listen for users typing `@your_bot_name query`
+   * bot.inlineQuery(/query:([0-9]+)/, async ctx => {
+   *   // Answer the inline query, confer https://core.telegram.org/bots/api#answerinlinequery
+   *   await ctx.answerInlineQuery([{
+   *     type: 'article',
+   *     id: Math.random(),
+   *     title: 'Regex test',
+   *     cache_time: 1,
+   *     description: `Query Regex result: ${ctx.match[1]}`,
+   *     input_message_content: {
+   *       message_text: `Query Regex result: ${ctx.match[1]}`,
+   *     }
+   *   }])
+   * })
+   * ```
+   *
+   * @param {string|RegExp|array<RegExp|string>} triggers The inline query text or array of text to match
+   * @param {MiddlewareFn} fns The middleware(s) to register
+   */
   inlineQuery (triggers, ...fns) {
     return this.use(Composer.inlineQuery(triggers, ...fns))
   }
