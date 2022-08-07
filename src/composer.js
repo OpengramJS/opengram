@@ -107,6 +107,12 @@ class Composer {
    * bot.on('text').hears(/\/echo (.+)/, ctx => { ... })
    * ```
    *
+   * > _**Be careful, the example above may not work as expected if `channelMode` is enabled.**_
+   * >
+   * > By default `text` type not match channel posts, but `channel_post` matched as `text` type and
+   * > `ctx.message` potentially `undefined`
+   * > when `channelMode` enabled. You can add additional chat type check for this case
+   *
    * @param {string|RegExp|array<RegExp|string>} triggers The text / array of texts or regex to look for
    * @param {MiddlewareFn} fns The middleware(s) to register as argument(s)
    */
@@ -172,8 +178,9 @@ class Composer {
    *
    * > _**Be careful, the example above may not work as expected if `channelMode` is enabled.**_
    * >
-   * > By default `text` type not match channel posts, but `channel_post` matched as `text`
-   * type when `channelMode` enabled. You can add additional chat type check for this case
+   * > By default `text` type not match channel posts, but `channel_post` matched as `text` type and
+   * > `ctx.message` potentially `undefined`
+   * > when `channelMode` enabled. You can add additional chat type check for this case
    *
    * @param {string|string[]|'start'|'settings'|'help'} commands The command or array of commands to look for
    * @param {MiddlewareFn} fns The middleware(s) to register as arguments
