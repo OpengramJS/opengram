@@ -356,6 +356,26 @@ class Composer {
     return this.use(Composer.drop(predicate))
   }
 
+  /**
+   * > ❗️ **This is an advanced method of Opengram.**
+   *
+   * Registers middleware(s) behind a custom filter function that operates on the
+   * context object and decides whether to execute the middleware. In
+   * other words, the middleware will only be executed if the given predicate
+   * returns `true` for the given context object. Otherwise, it will be
+   * skipped and the next middleware will be executed.
+   *
+   * In other words, the middleware after that middleware will only be executed if the given predicate
+   * returns `true` for the given context object. Note that the predicate
+   * may be asynchronous, i.e. it can return a Promise of a boolean.
+   * ```js
+   * // Only process every second update
+   * bot.filter(ctx => ctx.update.update_id % 2 === 0)
+   * bot.on('message', ctx => ctx.reply('Update id of this message is divided by two without a remainder'))
+   * ```
+   * @param {PredicateFn} predicate The predicate to check. Can be async, returns boolean or Promise with boolean
+   * @return {Composer}
+   */
   filter (predicate) {
     return this.use(Composer.filter(predicate))
   }
