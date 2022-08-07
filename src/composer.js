@@ -122,7 +122,7 @@ class Composer {
   }
 
   /**
-   * Registers some middleware that will only be executed when a certain
+   * Registers some middleware(s) that will only be executed when a certain
    * command is found.
    * ```js
    * // Reacts to /start commands
@@ -190,6 +190,62 @@ class Composer {
     return this.use(Composer.command(commands, ...fns))
   }
 
+  /**
+   * Registers some middleware(s) for callback queries, i.e. the updates that
+   * Telegram delivers to your bot when a user clicks an inline button (that
+   * is a button under a message).
+   *
+   * This method is essentially the same as calling
+   * ```ts
+   * bot.on('callback_query', ctx => { ... })
+   * ```
+   * but it also allows you to match the query data against a given text or
+   * regular expression.
+   *
+   * ```js
+   * // Create an inline keyboard
+   * const keyboard = Markup.inlineKeyboard([
+   *   Markup.callbackButton('Go!', 'button-payload')
+   * ])
+   * // Send a message with the keyboard
+   * await bot.telegram.sendMessage(chat_id, 'Press a button!', keyboard.extra())
+   * // Listen to users pressing buttons with that specific payload
+   * bot.action('button-payload', ctx => { ... })
+   *
+   * // Listen to users pressing any button your bot ever sent
+   * bot.on('callback_query', ctx => { ... })
+   * ```
+   *
+   * Always remember to call
+   * {@link Telegram#answerCbQuery} or {@link OpengramContext#answerCbQuery}
+   * — even if you don't perform any action: {@linkplain https://core.telegram.org/bots/api#answercallbackquery}
+   * ```js
+   * bot.on('callback_query', async ctx => {
+   *   await ctx.answerCbQuery()
+   * })
+   * ```
+   *
+   * You can pass one or an array of triggers (Regexp / strings). Your middleware(s) will be executed if at
+   * least one of them matches.
+   *
+   * > Note how `ctx.match` will contain the result of the regular expression.
+   * > So `ctx.match[1]` refers to the part of the regexp that was matched by `([0-9]+)`,
+   * > i.e. the text that comes after "button:".
+   * > ```
+   * > bot.action(/button:([0-9]+)/, ctx => ctx.reply(`You choose button with number ${ctx.match[1]} in payload`))
+   * > const keyboard = Markup.inlineKeyboard([
+   * >  Markup.callbackButton('Button 1', 'button:1'),
+   * >  Markup.callbackButton('Button 2', 'button:2')
+   * >  Markup.callbackButton('Button 3', 'button:3')
+   * > ])
+   * > await bot.telegram.sendMessage(chat_id, 'Press a button!', keyboard.extra())
+   * > ```
+   *
+   * @param {string|RegExp|array<RegExp|string>} triggers One or an array of regular expressions / strings
+   *   to search in the payload
+   * @param {MiddlewareFn} fns The middleware(s) to register as arguments
+   * @return {Composer}
+   */
   action (triggers, ...fns) {
     return this.use(Composer.action(triggers, ...fns))
   }
