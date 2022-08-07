@@ -375,7 +375,7 @@ class Composer {
       return Composer.entity('bot_command', command)
     }
     const commands = normalizeTextArguments(command, '/')
-    return Composer.mount('text', Composer.lazy((ctx) => {
+    return Composer.mount(['message', 'channel_post'], Composer.lazy((ctx) => {
       const groupCommands = ctx.me && (ctx.chat.type === 'group' || ctx.chat.type === 'supergroup')
         ? commands.map((command) => `${command}@${ctx.me}`)
         : []
