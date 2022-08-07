@@ -305,6 +305,22 @@ class Composer {
     return this.use(Composer.inlineQuery(triggers, ...fns))
   }
 
+  /**
+   * Registers some middleware for game queries, i.e. the updates that
+   * Telegram delivers to your bot when a user clicks an inline button for the
+   * HTML5 games platform on Telegram.
+   *
+   * This method is essentially the same as calling
+   * ```js
+   * bot.on('callback_query', ctx => {
+   *  if (ctx.callbackQuery.game_short_name) {
+   *    ...
+   *  }
+   * })
+   * ```
+   *
+   * @param {MiddlewareFn} fns The middleware to register as arguments
+   */
   gameQuery (...fns) {
     return this.use(Composer.gameQuery(...fns))
   }
