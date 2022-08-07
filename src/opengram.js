@@ -47,7 +47,7 @@ class Opengram extends Composer {
   /**
    *
    * @param {string} token Bot token given by [@BotFather](https://t.me/BotFather)
-   * @param {opengramOptions} options Opengram options
+   * @param {opengramOptions} [options] Opengram options
    */
   constructor (token, options) {
     super()
