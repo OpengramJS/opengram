@@ -395,6 +395,14 @@ class Composer {
     return this.use(Composer.filter(predicate))
   }
 
+  /**
+   * Registers some middleware(s) that will only be executed if a certain entity is present in the update
+   *
+   * This method matches entity in channel post, message and media caption
+   *
+   * @param {MiddlewareFn} args The middleware(s) to register
+   * @return {Composer}
+   */
   entity (...args) {
     return this.use(Composer.entity(...args))
   }
