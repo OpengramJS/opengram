@@ -407,6 +407,16 @@ class Composer {
     return this.use(Composer.entity(...args))
   }
 
+  /**
+   * Registers some middleware(s) that will only be executed if `email` entity is present in the update
+   *
+   * Shortcut to `Composer.entity('email', ...)`
+   *
+   * This method matches entity in channel post, message and media caption
+   *
+   * @param {MiddlewareFn} args The middleware(s) to register
+   * @return {Composer}
+   */
   email (...args) {
     return this.use(Composer.email(...args))
   }
