@@ -449,6 +449,16 @@ class Composer {
     return this.use(Composer.url(...args))
   }
 
+  /**
+   * Registers some middleware(s) that will only be executed if `text_link` entity is present in the update
+   *
+   * Shortcut to `Composer.entity('text_link', ...)`
+   *
+   * This method matches entity in channel post, message and media caption
+   *
+   * @param {MiddlewareFn} args The middleware(s) to register
+   * @return {Composer}
+   */
   textLink (...args) {
     return this.use(Composer.textLink(...args))
   }
