@@ -435,6 +435,16 @@ class Composer {
     return this.use(Composer.phone(...args))
   }
 
+  /**
+   * Registers some middleware(s) that will only be executed if `url` entity is present in the update
+   *
+   * Shortcut to `Composer.entity('url', ...)`
+   *
+   * This method matches entity in channel post, message and media caption
+   *
+   * @param {MiddlewareFn} args The middleware(s) to register
+   * @return {Composer}
+   */
   url (...args) {
     return this.use(Composer.url(...args))
   }
