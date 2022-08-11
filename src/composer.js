@@ -519,6 +519,16 @@ class Composer {
     return this.use(Composer.cashtag(...args))
   }
 
+  /**
+   * Registers some middleware(s) that will only be executed if `spoiler` entity is present in the update
+   *
+   * Shortcut to `Composer.entity('spoiler', ...)`
+   *
+   * This method matches entity in channel post, message and media caption
+   *
+   * @param {MiddlewareFn} args The middleware(s) to register
+   * @return {Composer}
+   */
   spoiler (...args) {
     return this.use(Composer.spoiler(...args))
   }
