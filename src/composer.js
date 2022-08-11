@@ -477,6 +477,16 @@ class Composer {
     return this.use(Composer.textMention(...args))
   }
 
+  /**
+   * Registers some middleware(s) that will only be executed if `mention` entity is present in the update
+   *
+   * Shortcut to `Composer.entity('mention', ...)`
+   *
+   * This method matches entity in channel post, message and media caption
+   *
+   * @param {MiddlewareFn} args The middleware(s) to register
+   * @return {Composer}
+   */
   mention (...args) {
     return this.use(Composer.mention(...args))
   }
