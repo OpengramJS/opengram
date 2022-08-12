@@ -631,6 +631,30 @@ class Composer {
     return Composer.fork((ctx) => logFn(JSON.stringify(ctx.update, null, 2)))
   }
 
+  /**
+   * > ❗️ **This is an advanced method of Opengram.**
+   *
+   * Allows you to branch between two cases for a given context object.
+   *
+   * This method takes a predicate function that is tested once per context
+   * object. If it returns `true`, the first supplied middleware is executed.
+   * If it returns `false`, the second supplied middleware is executed. Note
+   * that the predicate may be asynchronous, i.e. it can return a Promise of a boolean.
+   *
+   * ```js
+   * bot.use(
+   *   Composer.branch(
+   *     (ctx) => ctx.from.is_premium,
+   *     (ctx) => ctx.reply('This mw executed only for premium users')
+   *     (ctx) => ctx.reply('Buy premium :(')
+   *   )
+   * )
+   * ```
+   * @param {PredicateFn} predicate The predicate to check. Can be async, returns boolean or Promise with boolean
+   * @param {MiddlewareFn} trueMiddleware The middleware for the `true` case
+   * @param {MiddlewareFn} falseMiddleware The middleware for the `false` case
+   * @return {MiddlewareFn}
+   */
   static branch (predicate, trueMiddleware, falseMiddleware) {
     if (typeof predicate !== 'function') {
       return predicate ? trueMiddleware : falseMiddleware
