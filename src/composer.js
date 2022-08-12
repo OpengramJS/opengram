@@ -552,6 +552,20 @@ class Composer {
     return this.handler
   }
 
+  /**
+   * Generates and return middleware for reply with given arguments, has same arguments like in Opengram,
+   * context method `reply`
+   *
+   * Usage example:
+   * ```js
+   * // Send message with text "I'm not support group chats" when receive update from group chat
+   * bot.use(
+   *   Composer.groupChat(Composer.reply('I not support group chats'))
+   * )
+   * ```
+   * @param args
+   * @return {function(*): *}
+   */
   static reply (...args) {
     return (ctx) => ctx.reply(...args)
   }
