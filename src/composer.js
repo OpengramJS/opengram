@@ -613,6 +613,20 @@ class Composer {
       .then((middleware) => Composer.unwrap(middleware)(ctx, next))
   }
 
+  /**
+   * Method that generates a middleware to output the content of the context with indented beautiful in
+   * console using serialization
+   *
+   * The default for logs is `console.log`, you can pass your own log function in argument:
+   *
+   * ```js
+   * const myOwnLogFn = (data) => console.log('[Logs]', data)
+   * bot.use(Composer.log(myOwnLogFn))
+   * ```
+   *
+   * @param {function} logFn Custom log function
+   * @return {MiddlewareFn}
+   */
   static log (logFn = console.log) {
     return Composer.fork((ctx) => logFn(JSON.stringify(ctx.update, null, 2)))
   }
