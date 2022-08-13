@@ -928,6 +928,25 @@ function getEntities (updateData) {
   return []
 }
 
+/**
+ * Return text of media caption / message / channel post / callback query / short name of the game or `undefined`
+ * if not provided
+ *
+ * Usage example:
+ * ```js
+ * // Returns text of channel post
+ * getText(ctx.channelPost)
+ *
+ * // Returns text of message or media caption
+ * getText(ctx.message)
+ *
+ * // Returns data of callback query
+ * getText(ctx.callbackQuery)
+ * ```
+ * @private
+ * @param {object} updateData
+ * @return {string|undefined}
+ */
 function getText (
   updateData
 ) {
