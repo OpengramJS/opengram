@@ -921,6 +921,21 @@ function remapMessageSubtypes (subTypes) {
     .map((type) => MessageSubTypesMapping[type] || type)
 }
 
+/**
+ * Return text of media caption / message / channel post or `undefined` if not provided
+ *
+ * Usage example:
+ * ```js
+ * // Returns entities of channel post
+ * getEntities(ctx.channelPost)
+ *
+ * // Returns entities of message or media caption
+ * getEntities(ctx.message)
+ * ```
+ * @private
+ * @param {object} updateData
+ * @return {string|array}
+ */
 function getEntities (updateData) {
   if (updateData == null) return []
   if ('caption_entities' in updateData) return updateData.caption_entities ?? []
