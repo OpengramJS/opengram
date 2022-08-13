@@ -921,21 +921,21 @@ function remapMessageSubtypes (subTypes) {
     .map((type) => MessageSubTypesMapping[type] || type)
 }
 
-function getEntities (msg) {
-  if (msg == null) return []
-  if ('caption_entities' in msg) return msg.caption_entities ?? []
-  if ('entities' in msg) return msg.entities ?? []
+function getEntities (updateData) {
+  if (updateData == null) return []
+  if ('caption_entities' in updateData) return updateData.caption_entities ?? []
+  if ('entities' in updateData) return updateData.entities ?? []
   return []
 }
 
 function getText (
-  msg
+  updateData
 ) {
-  if (msg == null) return undefined
-  if ('caption' in msg) return msg.caption
-  if ('text' in msg) return msg.text
-  if ('data' in msg) return msg.data
-  if ('game_short_name' in msg) return msg.game_short_name
+  if (updateData == null) return undefined
+  if ('caption' in updateData) return updateData.caption
+  if ('text' in updateData) return updateData.text
+  if ('data' in updateData) return updateData.data
+  if ('game_short_name' in updateData) return updateData.game_short_name
   return undefined
 }
 
