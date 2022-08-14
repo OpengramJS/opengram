@@ -845,6 +845,19 @@ class Composer {
     return Composer.mount('callback_query', Composer.optional((ctx) => ctx.callbackQuery.game_short_name, ...fns))
   }
 
+  /**
+   * > ❗️ **This is an advanced method of Opengram.**
+   *
+   * Method used for unwrapping middleware, when middleware has method with name `middleware` (middleware factory)
+   * {@link Composer.unwrap} calls him and return result
+   *
+   * This method used in some other {@link Composer} methods, like {@link Composer.compose}, {@link Composer.lazy} and other
+   *
+   * @param handler
+   *
+   * @throws {Error}
+   * @return {MiddlewareFn}
+   */
   static unwrap (handler) {
     if (!handler) {
       throw new Error('Handler is undefined')
