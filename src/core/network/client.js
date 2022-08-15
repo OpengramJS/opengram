@@ -259,6 +259,9 @@ async function answerToWebhook (response, payload = {}, options) {
   return WEBHOOK_REPLY_STUB
 }
 
+/**
+ * The API client class implements a raw api call via http requests & webhook reply
+ */
 class ApiClient {
   constructor (token, options, webhookResponse) {
     this.token = token
