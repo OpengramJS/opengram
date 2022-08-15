@@ -45,6 +45,12 @@ const WEBHOOK_REPLY_STUB = {
   details: 'https://core.telegram.org/bots/api#making-requests-when-getting-updates'
 }
 
+/**
+ * Hides bot token in request errors
+ * @private
+ * @return {object}
+ * @param {object} error JSON to parse
+ */
 function redactToken (error) {
   error.message = error.message.replace(
     /(\d+):[^/]+\//,
@@ -53,6 +59,12 @@ function redactToken (error) {
   throw error
 }
 
+/**
+ * Parsing JSON without error throw if invalid
+ * @private
+ * @return {object}
+ * @param text JSON to parse
+ */
 function safeJSONParse (text) {
   try {
     return JSON.parse(text)
@@ -192,6 +204,12 @@ async function attachFormMedia (form, media, id, agent) {
   }
 }
 
+/**
+ * Checking if response object belongs to KoaJs
+ * @private
+ * @param response Response object
+ * @return {boolean}
+ */
 function isKoaResponse (response) {
   return typeof response.set === 'function' && typeof response.header === 'object'
 }
