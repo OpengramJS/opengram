@@ -280,7 +280,7 @@ class ApiClient {
     return this.options.webhookReply
   }
 
-  async callApi (method, data = {}, { signal } = {}) {
+  async callApi (method, data = {}, extra = {}) {
     const { token, options, response, responseEnd } = this
 
     const payload = Object.keys(data)
@@ -307,7 +307,7 @@ class ApiClient {
       options.apiRoot
     )
     config.agent = options.agent
-    config.signal = signal
+    config.signal = extra.signal
     const res = await fetch(apiUrl, config).catch(redactToken)
 
     if (res.status >= 500) {
