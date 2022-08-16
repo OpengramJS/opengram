@@ -63,7 +63,7 @@ function redactToken (error) {
  * Parsing JSON without error throw if invalid
  * @private
  * @return {object}
- * @param text JSON to parse
+ * @param {string} text JSON to parse
  */
 function safeJSONParse (text) {
   try {
@@ -207,7 +207,7 @@ async function attachFormMedia (form, media, id, agent) {
 /**
  * Checking if response object belongs to KoaJs
  * @private
- * @param response Response object
+ * @param {object} response Response object
  * @return {boolean}
  */
 function isKoaResponse (response) {
