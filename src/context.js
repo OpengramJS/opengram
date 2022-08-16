@@ -149,6 +149,11 @@ class OpengramContext {
     return this.update.edited_message
   }
 
+  /**
+   * Returns {@link InlineQuery} object for current update
+   * Shortcut to `context.update.inline_query`
+   * @return {InlineQuery}
+   */
   get inlineQuery () {
     return this.update.inline_query
   }
