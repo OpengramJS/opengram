@@ -176,6 +176,11 @@ class OpengramContext {
     return this.update.pre_checkout_query
   }
 
+  /**
+   * Returns {@link ChosenInlineResult} object for current update
+   * Shortcut to `context.update.chosen_inline_result`
+   * @return {ChosenInlineResult}
+   */
   get chosenInlineResult () {
     return this.update.chosen_inline_result
   }
