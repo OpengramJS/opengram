@@ -123,6 +123,10 @@ class OpengramContext {
     return this.botInfo && this.botInfo.username
   }
 
+  /**
+   * Returns instance of {@link Telegram}
+   * @return {Telegram}
+   */
   get telegram () {
     return this.tg
   }
