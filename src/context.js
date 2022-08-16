@@ -167,6 +167,11 @@ class OpengramContext {
     return this.update.shipping_query
   }
 
+  /**
+   * Returns {@link PreCheckoutQuery} object for current update
+   * Shortcut to `context.update.pre_checkout_query`
+   * @return {PreCheckoutQuery}
+   */
   get preCheckoutQuery () {
     return this.update.pre_checkout_query
   }
