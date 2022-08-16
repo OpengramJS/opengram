@@ -203,6 +203,11 @@ class OpengramContext {
     return this.update.edited_channel_post
   }
 
+  /**
+   * Returns {@link CallbackQuery} object for current update
+   * Shortcut to `context.update.callback_query`
+   * @return {CallbackQuery}
+   */
   get callbackQuery () {
     return this.update.callback_query
   }
