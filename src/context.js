@@ -194,6 +194,11 @@ class OpengramContext {
     return this.update.channel_post
   }
 
+  /**
+   * Returns {@link Message edited channel post} object for current update
+   * Shortcut to `context.update.edited_channel_post`
+   * @return {Message}
+   */
   get editedChannelPost () {
     return this.update.edited_channel_post
   }
