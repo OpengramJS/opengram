@@ -283,6 +283,36 @@ class ApiClient {
     return this.options.webhookReply
   }
 
+  /**
+   * @typedef {object} callApiExtra
+   * @property {object} signal Optional `AbortSignal` to cancel the request
+   */
+
+  /**
+   * Method for direct call telegram bots api methods
+   *
+   * Takes an optional `AbortSignal` object that allows to cancel the API call if desired.
+   *
+   * For example:
+   * ```js
+   * const controller = new AbortController();
+   * const signal = controller.signal;
+   * ctx.telegram.callApi ('getMe', {}, { signal })
+   *   .then(console.log)
+   *   .catch(err => {
+   *     if (err instanceof AbortError) {
+   *       console.log('API call aborted')
+   *     } else throw err
+   *   })
+   *
+   * controller.abort(); // Abort request
+   * ```
+   * [Read more about request aborts](https://developer.mozilla.org/en-US/docs/Web/API/AbortController/signal)
+   * @param {string} method Telegram API method name
+   * @param {object} data Object with method parameters
+   * @param {callApiExtra} [extra] Extra parameters
+   * @return {Promise<object|boolean|number>}
+   */
   async callApi (method, data = {}, extra = {}) {
     const { token, options, response, responseEnd } = this
 
