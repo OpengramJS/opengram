@@ -65,6 +65,37 @@ const MessageSubTypesMapping = {
   video_chat_participants_invited: 'voice_chat_participants_invited'
 }
 
+/**
+ * When your bot receives a message, Telegram sends an update object to your
+ * bot. The update contains information about the chat, the user, and of course
+ * the message itself. There are numerous other updates, too:
+ * https://core.telegram.org/bots/api#update
+ *
+ * When Opengram receives an update, it wraps this update into a context object
+ * for you. Context objects are commonly named `ctx`. A context object does two
+ * things:
+ * 1. **`ctx.update`** holds the update object that you can use to process the
+ *    message. This includes providing useful shortcuts for the update, for
+ *    instance, `ctx.message` is a shortcut that gives you the message object from
+ *    the update.
+ * 2. **`ctx.telegram`** gives you access to the full Telegram Bot API so that you
+ *    can directly call any method, such as responding via
+ *    `ctx.telegram.sendMessage`. Also, here, the context objects has some useful
+ *    shortcuts for you. For instance, if you want to send a message to the same
+ *    chat that a message comes from (i.e. just respond to a user) you can call
+ *    `ctx.reply`. This is nothing but a wrapper for `ctx.telegram.sendMessage` with
+ *    the right `chat_id` pre-filled for you. Almost all methods of the Telegram
+ *    Bot API have their own shortcut directly on the context object, so you
+ *    probably never really have to use `ctx.telegram` at all.
+ *
+ * This context object is then passed to all the listeners (called
+ * middleware) that you register on your bot. Because this is so useful, the
+ * context object is often used to hold more information. One example are
+ * sessions (a chat-specific data storage that is stored in some store - RAM for in
+ * memory sessions / database / file system), and another example is `ctx.match` that
+ * is used by `bot.action` and other methods to keep information about how
+ * a regular expression was matched.
+ */
 class OpengramContext {
   constructor (update, telegram, options) {
     this.tg = telegram
