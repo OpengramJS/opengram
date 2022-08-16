@@ -158,6 +158,11 @@ class OpengramContext {
     return this.update.inline_query
   }
 
+  /**
+   * Returns {@link ShippingQuery} object for current update
+   * Shortcut to `context.update.shipping_query`
+   * @return {ShippingQuery}
+   */
   get shippingQuery () {
     return this.update.shipping_query
   }
