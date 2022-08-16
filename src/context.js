@@ -131,6 +131,11 @@ class OpengramContext {
     return this.tg
   }
 
+  /**
+   * Returns {@link Message} object for current update
+   * Shortcut to `context.update.message`
+   * @return {Message}
+   */
   get message () {
     return this.update.message
   }
