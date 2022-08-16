@@ -140,6 +140,11 @@ class OpengramContext {
     return this.update.message
   }
 
+  /**
+   * Returns {@link Message edited message} object for current update
+   * Shortcut to `context.update.edited_message`
+   * @return {Message}
+   */
   get editedMessage () {
     return this.update.edited_message
   }
