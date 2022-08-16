@@ -185,6 +185,11 @@ class OpengramContext {
     return this.update.chosen_inline_result
   }
 
+  /**
+   * Returns {@link Message channel post} object for current update
+   * Shortcut to `context.update.channel_post`
+   * @return {Message}
+   */
   get channelPost () {
     return this.update.channel_post
   }
