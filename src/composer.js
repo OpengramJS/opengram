@@ -95,7 +95,7 @@ class Composer {
   }
 
   /**
-   * Registers some middleware that will only be executed when the message / channel post
+   * Registers some middleware(s) that will only be executed when the message / channel post
    * contains some text (in media caption too). Is it possible to pass a regular expression to match:
    * ```js
    * // Match some text (exact match)
@@ -211,7 +211,7 @@ class Composer {
    * is a button under a message).
    *
    * This method is essentially the same as calling
-   * ```ts
+   * ```js
    * bot.on('callback_query', ctx => { ... })
    * ```
    * but it also allows you to match the query data against a given text or
@@ -322,7 +322,7 @@ class Composer {
   }
 
   /**
-   * Registers some middleware for game queries, i.e. the updates that
+   * Registers some middleware(s) for game queries, i.e. the updates that
    * Telegram delivers to your bot when a user clicks an inline button for the
    * HTML5 games platform on Telegram.
    *
