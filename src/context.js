@@ -115,6 +115,10 @@ class OpengramContext {
       .forEach((key) => (this[key] = this[key].bind(this)))
   }
 
+  /**
+   * Getter for getting bot username from bot info object
+   * @return {string}
+   */
   get me () {
     return this.botInfo && this.botInfo.username
   }
