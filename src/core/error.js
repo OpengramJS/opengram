@@ -3,6 +3,8 @@
  * Instances of this class hold the information that the Telegram backend returned.
  * If this error is thrown, Opengram could successfully communicate with the Telegram Bot API servers,
  * however, an error code was returned for the respective method call.
+ *
+ * You can check is error belongs to {@link TelegramError} by using {@link isTelegramError}
  * @extends Error
  */
 class TelegramError extends Error {
