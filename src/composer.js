@@ -408,6 +408,20 @@ class Composer {
   }
 
   /**
+   * Registers some middleware(s) that will only be executed if `custom_emoji` entity is present in the update
+   *
+   * Shortcut to `Composer.entity('custom_emoji', ...)`
+   *
+   * This method matches entity in channel post, message and media caption
+   *
+   * @param {MiddlewareFn} args The middleware(s) to register
+   * @return {Composer}
+   */
+  customEmoji (...args) {
+    return this.use(Composer.customEmoji(...args))
+  }
+
+  /**
    * Registers some middleware(s) that will only be executed if `email` entity is present in the update
    *
    * Shortcut to `Composer.entity('email', ...)`
@@ -720,6 +734,10 @@ class Composer {
         }
       }
     }, ...fns)
+  }
+
+  static customEmoji (customEmoji, ...fns) {
+    return Composer.entityText('custom_emoji', customEmoji, ...fns)
   }
 
   static email (email, ...fns) {
