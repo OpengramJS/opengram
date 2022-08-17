@@ -34,6 +34,15 @@ const { compose, lazy, passThru } = require('./composer')
  * ```
  */
 class Router {
+  /**
+   * Constructs a router with a routing function and optionally some
+   * preinstalled middlewares.
+   *
+   * Note that you can always install more middlewares on the router by calling {@link Router#on}.
+   *
+   * @param {function} routeFn A routing function that decides which middleware to run
+   * @param {Map<MiddlewareFn>} [routeHandlers] A number of middlewares
+   */
   constructor (routeFn, routeHandlers = new Map()) {
     if (typeof routeFn !== 'function') {
       throw new Error('Missing routing function')
