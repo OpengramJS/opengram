@@ -275,10 +275,23 @@ class ApiClient {
     this.response = webhookResponse
   }
 
+  /**
+   * Setter for webhookReply
+   *
+   * Use this property to control reply via webhook feature.
+   * @param {boolean} enable
+   * @return {void}
+   */
   set webhookReply (enable) {
     this.options.webhookReply = enable
   }
 
+  /**
+   * Getter for webhookReply
+   *
+   * Use this property to control reply via webhook feature.
+   * @return {boolean}
+   */
   get webhookReply () {
     return this.options.webhookReply
   }
