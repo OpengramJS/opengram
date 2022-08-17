@@ -52,6 +52,15 @@ class Router {
     this.otherwiseHandler = passThru()
   }
 
+  /**
+   * Registers new middleware for a given route. The initially supplied routing
+   * function may return this route as a string to select the respective
+   * middleware for execution for an incoming update.
+   *
+   * @param {string} route The route for which to register the middleware
+   * @param {MiddlewareFn} fns Middleware(s) to register
+   * @return {Router}
+   */
   on (route, ...fns) {
     if (fns.length === 0) {
       throw new TypeError('At least one handler must be provided')
