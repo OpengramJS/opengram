@@ -607,7 +607,7 @@ class Composer {
 
   static lazy (factoryFn) {
     if (typeof factoryFn !== 'function') {
-      throw new Error('Argument must be a function')
+      throw new TypeError('Argument must be a function')
     }
     return (ctx, next) => Promise.resolve(factoryFn(ctx))
       .then((middleware) => Composer.unwrap(middleware)(ctx, next))
