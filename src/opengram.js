@@ -26,6 +26,32 @@ const noop = () => { }
 
 /**
  * The main class that implements receiving updates and setting up the bot before starting
+ *
+ * A Opengram bot is an object containing an array of middlewares which are composed and executed in a stack-like
+ * manner upon request. Is similar to many other middleware systems that you may have encountered such as Koa,
+ * Ruby's Rack, Connect.
+ *
+ * Middleware is an essential part of any modern framework. It allows you to modify requests and responses as they pass between the Telegram and your bot.
+ *
+ * You can imagine middleware as a chain of logic connection your bot to the Telegram request.
+ *
+ * Middleware normally takes two parameters (ctx, next), ctx is the context for one Telegram update, next is a function
+ * that is invoked to execute the downstream middleware. It returns a Promise with a then function for running code
+ * after completion.
+ *
+ * ```js
+ * const bot = new Opengram(process.env.BOT_TOKEN)
+ *
+ * bot.use(async (ctx, next) => {
+ *   const start = new Date()
+ *   await next()
+ *   const ms = new Date() - start
+ *   console.log('Response time: %sms', ms)
+ * })
+ *
+ * bot.on('text', (ctx) => ctx.reply('Hello World'))
+ * bot.launch()
+ * ```
  * @extends Composer
  */
 class Opengram extends Composer {
