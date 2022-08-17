@@ -1,5 +1,38 @@
 const { compose, lazy, passThru } = require('./composer')
 
+/**
+ * {@link Router} is used to direct the flow of update. It accepts as arguments a routing function and, optionally,
+ * a [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)
+ * with predefined routes and handlers. Routing function accepts {@link OpengramContext context}
+ * and return object with route property set to String value. Handler for a specific route is just another middleware.
+ *
+ * As `Router` object is itself a middleware, routers can be nested, e.g., `router1.on('yo', router2)`.
+ * Thus, they allow for very deep, well-structured and flexible logic of updates processing.
+ * Possible use-cases include multilevel menus, setting different levels of access for bot users and much, much more
+ *
+ * ```js
+ * const { Router } = require('opengram')
+ *
+ * // Can be any function that returns { route: String }
+ * function routeFn(ctx) {
+ *   return { route: ctx.updateType }
+ * }
+ *
+ * const router = new Router(routeFn)
+ *
+ * // Registering 'callback_query' route
+ * const middlewareCb = function (ctx, next) { ... }
+ * router.on('callback_query', middlewareCb)
+ *
+ * // Registering 'message' route
+ * const middlewareMessage = new Composer(...)
+ * router.on('message', middlewareMessage)
+ *
+ * // Setting handler for routes that are not registered
+ * const middlewareDefault = someOtherRouter
+ * router.otherwise(middlewareDefault).
+ * ```
+ */
 class Router {
   constructor (routeFn, handlers = new Map()) {
     if (typeof routeFn !== 'function') {
