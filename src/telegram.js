@@ -1777,6 +1777,19 @@ class Telegram extends ApiClient {
       user_id: userId
     })
   }
+
+  /**
+   * Use this method to get information about custom emoji stickers by their identifiers.
+   *
+   * Returns an Array of {@link Sticker} objects.
+   * @param {string[]} customEmojiIds List of custom emoji identifiers. At most 200 custom emoji identifiers can be specified.
+   * @return {Promise<Sticker[]>}
+   */
+  getCustomEmojiStickers (customEmojiIds) {
+    return this.callApi('getCustomEmojiStickers', {
+      custom_emoji_ids: customEmojiIds
+    })
+  }
 }
 
 module.exports = Telegram

@@ -788,6 +788,10 @@ class OpengramContext {
     this.assert(this.chat, 'declineChatJoinRequest')
     return this.telegram.declineChatJoinRequest(this.chat.id, ...args)
   }
+
+  getCustomEmojiStickers (...args) {
+    return this.telegram.getCustomEmojiStickers(...args)
+  }
 }
 
 function getMessageFromAnySource (ctx) {

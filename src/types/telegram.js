@@ -536,6 +536,10 @@
  */
 
 /**
+ * @typedef {object} Sticker
+ */
+
+/**
  * @typedef {object} Update
  */
 
