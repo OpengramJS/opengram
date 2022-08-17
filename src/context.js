@@ -133,6 +133,7 @@ class OpengramContext {
 
   /**
    * Returns {@link Message} object for current update
+   *
    * Shortcut to `context.update.message`
    * @return {Message}
    */
@@ -142,6 +143,7 @@ class OpengramContext {
 
   /**
    * Returns {@link Message edited message} object for current update
+   *
    * Shortcut to `context.update.edited_message`
    * @return {Message}
    */
@@ -151,6 +153,7 @@ class OpengramContext {
 
   /**
    * Returns {@link InlineQuery} object for current update
+   *
    * Shortcut to `context.update.inline_query`
    * @return {InlineQuery}
    */
@@ -160,6 +163,7 @@ class OpengramContext {
 
   /**
    * Returns {@link ShippingQuery} object for current update
+   *
    * Shortcut to `context.update.shipping_query`
    * @return {ShippingQuery}
    */
@@ -169,6 +173,7 @@ class OpengramContext {
 
   /**
    * Returns {@link PreCheckoutQuery} object for current update
+   *
    * Shortcut to `context.update.pre_checkout_query`
    * @return {PreCheckoutQuery}
    */
@@ -178,6 +183,7 @@ class OpengramContext {
 
   /**
    * Returns {@link ChosenInlineResult} object for current update
+   *
    * Shortcut to `context.update.chosen_inline_result`
    * @return {ChosenInlineResult}
    */
@@ -187,6 +193,7 @@ class OpengramContext {
 
   /**
    * Returns {@link Message channel post} object for current update
+   *
    * Shortcut to `context.update.channel_post`
    * @return {Message}
    */
@@ -196,6 +203,7 @@ class OpengramContext {
 
   /**
    * Returns {@link Message edited channel post} object for current update
+   *
    * Shortcut to `context.update.edited_channel_post`
    * @return {Message}
    */
@@ -205,6 +213,7 @@ class OpengramContext {
 
   /**
    * Returns {@link CallbackQuery} object for current update
+   *
    * Shortcut to `context.update.callback_query`
    * @return {CallbackQuery}
    */
