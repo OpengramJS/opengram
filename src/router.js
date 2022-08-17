@@ -69,6 +69,14 @@ class Router {
     return this
   }
 
+  /**
+   * Allows to register middleware that is executed when no route matches, or
+   * when the routing function returns `undefined`. If this method is not
+   * called, then the router will simply pass through all requests to the
+   * downstream middleware.
+   *
+   * @param {MiddlewareFn} fns Middleware(s) to run if no route matches
+   */
   otherwise (...fns) {
     if (fns.length === 0) {
       throw new TypeError('At least one otherwise handler must be provided')
