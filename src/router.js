@@ -34,12 +34,12 @@ const { compose, lazy, passThru } = require('./composer')
  * ```
  */
 class Router {
-  constructor (routeFn, handlers = new Map()) {
+  constructor (routeFn, routeHandlers = new Map()) {
     if (typeof routeFn !== 'function') {
       throw new Error('Missing routing function')
     }
     this.routeFn = routeFn
-    this.handlers = handlers
+    this.handlers = routeHandlers
     this.otherwiseHandler = passThru()
   }
 
