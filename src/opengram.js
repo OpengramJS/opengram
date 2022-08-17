@@ -264,17 +264,23 @@ class Opengram extends Composer {
    * bot.hears('hello', => ctx.reply('hi'))
    * bot.catch(console.log) // Setup error handler
    *
+   * // TLS options
+   * const tlsOptions = {
+   *     key: fs.readFileSync('server-key.pem'), // Private key file
+   *     cert: fs.readFileSync('server-cert.pem') // Certificate file,
+   *     ca: [
+   *       // This is necessary only if the client uses a self-signed certificate.
+   *       fs.readFileSync('client-cert.pem')
+   *     ]
+   * }
+   *
    * // Start webhook server
    * bot.startWebhook(
    *   {
    *     path: '/bot',
    *     secret: '1234567890'
    *   },
-   *   // TLS options
-   *   {
-   *     key: fs.readFileSync('key.pem'), // Private key file
-   *     cert: fs.readFileSync('cert.pem') // Certificate file
-   *   },
+   *   tlsOptions,
    *   3000 // Port
    *   '0.0.0.0', // Host, may use if server have multiple IP adders
    *   (req, res) => { // Custom next handler
@@ -282,7 +288,13 @@ class Opengram extends Composer {
    *     res.end('Not allowed!')
    *   }
    * )
-   * bot.telegram.setWebhook('https://example.com:3000/bot') // Set url of your server with
+   *
+   * // Set telegram webhook
+   * // The second argument is necessary only if the client uses a self-signed
+   * // certificate. Including it for a verified certificate may cause things to break.
+   * bot.telegram.setWebhook('https://example.com:3000/bot', {
+   *   source: 'server-cert.pem'
+   * })
    * ```
    * @param {startWebhookOptions} [options] Webhook options
    * @param {object|null} [tlsOptions] - Options for `https` NodeJS module, see official
