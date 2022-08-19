@@ -97,6 +97,12 @@ const MessageSubTypesMapping = {
  * a regular expression was matched.
  */
 class OpengramContext {
+  /**
+   * Constructor of Opengram context object
+   * @param {object} update Raw update object from telegram
+   * @param {Telegram} telegram Instance of {@link Telegram}
+   * @param {ContextOptions} options Extra options
+   */
   constructor (update, telegram, options) {
     this.tg = telegram
     this.update = update
