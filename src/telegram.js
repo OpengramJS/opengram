@@ -1782,7 +1782,10 @@ class Telegram extends ApiClient {
    * Use this method to get information about custom emoji stickers by their identifiers.
    *
    * Returns an Array of {@link Sticker} objects.
-   * @param {string[]} customEmojiIds List of custom emoji identifiers. At most 200 custom emoji identifiers can be specified.
+   * @see https://core.telegram.org/bots/api#getcustomemojistickers
+   * @param {string[]} customEmojiIds List of custom emoji identifiers. At most 200 custom emoji identifiers can be
+   *    specified.
+   * @throws {TelegramError}
    * @return {Promise<Sticker[]>}
    */
   getCustomEmojiStickers (customEmojiIds) {
