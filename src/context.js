@@ -798,6 +798,10 @@ class OpengramContext {
   getCustomEmojiStickers (...args) {
     return this.telegram.getCustomEmojiStickers(...args)
   }
+
+  createInvoiceLink (...args) {
+    return this.telegram.createInvoiceLink(...args)
+  }
 }
 
 function getMessageFromAnySource (ctx) {

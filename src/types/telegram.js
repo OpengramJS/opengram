@@ -565,3 +565,7 @@
 /**
  * @typedef {object} InputMedia
  */
+
+/**
+ * @typedef {object} Invoice
+ */

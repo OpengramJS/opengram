@@ -1793,6 +1793,21 @@ class Telegram extends ApiClient {
       custom_emoji_ids: customEmojiIds
     })
   }
+
+  /**
+   * Use this method to create a link for an invoice.
+   *
+   * Returns the created invoice link as `String` on success.
+   * @see https://core.telegram.org/bots/api#createinvoicelink
+   * @param {Invoice} invoice Object with invoice properties
+   * @throws {TelegramError}
+   * @return {Promise<string>}
+   */
+  createInvoiceLink (invoice) {
+    return this.callApi('createInvoiceLink', {
+      ...invoice
+    })
+  }
 }
 
 module.exports = Telegram
