@@ -342,6 +342,7 @@ class Markup {
    *  `web_app_data` service message. Available in private chats only.
    * @see https://core.telegram.org/bots/webapps
    * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
+   * @see https://core.telegram.org/bots/api#keyboardbutton
    * @param {string} text text to display
    * @param {string} url An HTTPS URL of a Web App to be opened with additional data
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
@@ -663,6 +664,7 @@ class Markup {
    *  `web_app_data` service message. Available in private chats only.
    * @see https://core.telegram.org/bots/webapps
    * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
+   * @see https://core.telegram.org/bots/api#keyboardbutton
    * @param {string} text Text to display
    * @param {string} url An HTTPS URL of a Web App to be opened with additional data
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
