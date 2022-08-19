@@ -51,7 +51,8 @@ const MessageSubTypes = [
   'voice_chat_started',
   'voice_chat_ended',
   'voice_chat_participants_invited',
-  'voice_chat_scheduled'
+  'voice_chat_scheduled',
+  'web_app_data'
 ]
 
 const MessageSubTypesMappingForChannelMode = {
@@ -797,6 +798,10 @@ class OpengramContext {
 
   getCustomEmojiStickers (...args) {
     return this.telegram.getCustomEmojiStickers(...args)
+  }
+
+  answerWebAppQuery (...args) {
+    return this.telegram.answerWebAppQuery(...args)
   }
 
   createInvoiceLink (...args) {

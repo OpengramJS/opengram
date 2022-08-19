@@ -88,7 +88,8 @@ const updateTypes = [
   'voice_chat_started',
   'voice_chat_ended',
   'voice_chat_participants_invited',
-  'voice_chat_scheduled'
+  'voice_chat_scheduled',
+  'web_app_data'
 ]
 
 const MessageSubTypesMapping = {

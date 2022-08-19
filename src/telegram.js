@@ -1779,6 +1779,22 @@ class Telegram extends ApiClient {
   }
 
   /**
+   * Use this method to set the result of an interaction with a Web App and send a corresponding message on behalf
+   * of the user to the chat from which the query originated.
+   *
+   * On success, a {@link SentWebAppMessage} object is returned.
+   * @param {string} webAppQueryId Unique identifier for the query to be answered
+   * @param {InlineQueryResult} result A JSON-serialized object describing the message to be sent
+   * @return {Promise<SentWebAppMessage>}
+   */
+  answerWebAppQuery (webAppQueryId, result) {
+    return this.callApi('answerWebAppQuery', {
+      web_app_query_id: webAppQueryId,
+      result
+    })
+  }
+
+  /**
    * Use this method to get information about custom emoji stickers by their identifiers.
    *
    * Returns an Array of {@link Sticker} objects.

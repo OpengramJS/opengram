@@ -569,3 +569,11 @@
 /**
  * @typedef {object} Invoice
  */
+
+/**
+ * @typedef {object} SentWebAppMessage
+ */
+
+/**
+ * @typedef {object} InlineQueryResult
+ */

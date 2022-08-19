@@ -15,7 +15,7 @@
     "animation" | "document" | "audio" | "contact" | "dice" | "game" | "location" | "photo" | "sticker" |
     "venue" | "video" | "video_note" | "voice" | "voice_chat_started" | "voice_chat_ended" |
     "voice_chat_participants_invited" | "voice_chat_scheduled" | video_chat_scheduled | "video_chat_started" |
-    "video_chat_ended" | "video_chat_participants_invited"
+    "video_chat_ended" | "web_app_data"
  } updateType
  */
 
