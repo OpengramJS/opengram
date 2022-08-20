@@ -151,16 +151,16 @@ class Opengram extends Composer {
    * bot.hears('asyncFirst', async ctx => { await errorFirst()  })
    *
    * // Handled with bot.catch(), because you return promise (async function with await on async ops)
-   * bot.on('asyncSecond', async ctx => { await second()  })
+   * bot.action('asyncSecond', async ctx => { await second()  })
    *
    * // Handled with bot.catch(), because you return promise
-   * bot.on('asyncSecond', ctx => errorFirst())
+   * bot.action('asyncSecond', ctx => errorFirst())
    *
    * // Handled with bot.catch(), because you return promise
    * bot.on('message', ctx => second())
    *
    * // Bot crashed, error not handled
-   * bot.on('asyncSecond', ctx => { errorFirst()  })
+   * bot.action('asyncSecond', ctx => { errorFirst()  })
    *
    * // Bot crashed, error not handled
    * bot.on('message', async ctx => { second()  })
