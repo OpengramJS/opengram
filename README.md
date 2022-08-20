@@ -13,7 +13,7 @@ Telegram Bot API framework for Node.js based on **Telegraf 3.38**
 [license-url]: https://opensource.org/licenses/MIT
 [codacy-image]: https://app.codacy.com/project/badge/Grade/0ba3bf1b270946918b13e2730d190156
 [codacy-url]: https://www.codacy.com/gh/OpengramJS/opengram/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=OpengramJS/opengram&amp;utm_campaign=Badge_Grade
-[bots-api-image]: https://img.shields.io/badge/Bots%20API-v5.8-ff69b4
+[bots-api-image]: https://img.shields.io/badge/Bots%20API-v6.2-ff69b4
 [bots-api-url]: https://core.telegram.org/bots/api
 [ci-image]: https://github.com/OpengramJS/opengram/actions/workflows/ci.yml/badge.svg?branch=master
 [ci-url]: https://github.com/OpengramJS/opengram/actions/workflows/actions/workflows/ci.yml
