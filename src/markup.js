@@ -416,7 +416,7 @@ class Markup {
    *
    * @see https://core.telegram.org/bots/api#inlinekeyboardmarkup
    * @param {object} buttons Array of buttons
-   * @param {inlineKeyboardOptions} options You can pass here columns count or wrap function for slice buttons to columns
+   * @param {inlineKeyboardOptions} [options] You can pass here columns count or wrap function for slice buttons to columns
    * @return {Markup}
    */
   static inlineKeyboard (buttons, options) {
