@@ -1,5 +1,5 @@
 /**
- * @typedef {function} MiddlewareFn
+ * @typedef {function|object} MiddlewareFn
  */
 
 /**
