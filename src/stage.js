@@ -38,8 +38,8 @@ class Stage extends Composer {
   /**
    * @constructor
    * @param {array<BaseScene|WizardScene>} [scenes] Array of scenes objects
+   * @param {stageOptions} [options] Options
    * @throws {TypeError}
-   * @param {stageOptions} options
    */
   constructor (scenes = [], options) {
     super()
