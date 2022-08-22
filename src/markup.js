@@ -60,7 +60,7 @@ class Markup {
    *   Markup.callbackButton('No', 'no')
    * ]).extra({ parse_mode: 'HTML' }))
    * ```
-   * @param {object} options Additional options which should be passed into extra
+   * @param {object} [options] Additional options which should be passed into extra
    * @return {object}
    */
   extra (options) {
@@ -88,7 +88,7 @@ class Markup {
    *
    * @see https://core.telegram.org/bots/api#replykeyboardmarkup
    * @param {object} buttons Array of buttons
-   * @param {keyboardOptions} options You can pass here columns count or wrap function for slice buttons to columns
+   * @param {keyboardOptions} [options] You can pass here columns count or wrap function for slice buttons to columns
    * @return {Markup}
    */
   keyboard (buttons, options) {
@@ -391,7 +391,7 @@ class Markup {
    *
    * @see https://core.telegram.org/bots/api#replykeyboardmarkup
    * @param {object} buttons Array of buttons
-   * @param {keyboardOptions} options You can pass here columns count or wrap function for slice buttons to columns
+   * @param {keyboardOptions} [options] You can pass here columns count or wrap function for slice buttons to columns
    * @return {Markup}
    */
   static keyboard (buttons, options) {
@@ -777,7 +777,7 @@ class Markup {
 /**
  * Keyboard build method used by `Markup.inlineKeyboard` / `Markup.keyboard`
  * @param buttons
- * @param {keyboardOptions|inlineKeyboardOptions} options
+ * @param {keyboardOptions|inlineKeyboardOptions} [options]
  * @return {array<object[]>}
  */
 
