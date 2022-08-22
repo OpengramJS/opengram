@@ -21,6 +21,7 @@ bot.catch((error, ctx) => {
 
 // Start bot using long-polling
 bot.launch()
+  .then(() => console.log(`Bot ${bot.context.botInfo.username} started`))
 
 // Enable graceful stop
 process.once('SIGINT', () => bot.stop())
