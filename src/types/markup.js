@@ -6,6 +6,7 @@
  * @param {number} index Current button index
  * @param {number} currentRow Current row
  *
+ * @return {boolean}
  * @example
  * Markup.keyboard(['one', 'two', 'three', 'four'], {
  *   wrap: (btn, index, currentRow) => index % 2 !== 0
