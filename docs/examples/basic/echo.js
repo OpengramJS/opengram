@@ -1,6 +1,6 @@
 'use strict'
 
-const { Opengram } = require('../../../')
+const { Opengram } = require('opengram')
 
 if (process.env.BOT_TOKEN === undefined) {
   throw new TypeError('BOT_TOKEN must be provided!')
