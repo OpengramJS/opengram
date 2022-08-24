@@ -308,29 +308,29 @@ class OpengramContext {
     }
   }
 
-  answerInlineQuery (...args) {
+  answerInlineQuery (results, extra) {
     this.assert(this.inlineQuery, 'answerInlineQuery')
-    return this.telegram.answerInlineQuery(this.inlineQuery.id, ...args)
+    return this.telegram.answerInlineQuery(this.inlineQuery.id, results, extra)
   }
 
-  answerCbQuery (...args) {
+  answerCbQuery (text, showAlert, extra) {
     this.assert(this.callbackQuery, 'answerCbQuery')
-    return this.telegram.answerCbQuery(this.callbackQuery.id, ...args)
+    return this.telegram.answerCbQuery(this.callbackQuery.id, text, showAlert, extra)
   }
 
-  answerGameQuery (...args) {
+  answerGameQuery (url) {
     this.assert(this.callbackQuery, 'answerGameQuery')
-    return this.telegram.answerGameQuery(this.callbackQuery.id, ...args)
+    return this.telegram.answerGameQuery(this.callbackQuery.id, url)
   }
 
-  answerShippingQuery (...args) {
+  answerShippingQuery (ok, shippingOptions, errorMessage) {
     this.assert(this.shippingQuery, 'answerShippingQuery')
-    return this.telegram.answerShippingQuery(this.shippingQuery.id, ...args)
+    return this.telegram.answerShippingQuery(this.shippingQuery.id, ok, shippingOptions, errorMessage)
   }
 
-  answerPreCheckoutQuery (...args) {
+  answerPreCheckoutQuery (ok, errorMessage) {
     this.assert(this.preCheckoutQuery, 'answerPreCheckoutQuery')
-    return this.telegram.answerPreCheckoutQuery(this.preCheckoutQuery.id, ...args)
+    return this.telegram.answerPreCheckoutQuery(this.preCheckoutQuery.id, ok, errorMessage)
   }
 
   editMessageText (text, extra) {
@@ -445,89 +445,89 @@ class OpengramContext {
       )
   }
 
-  reply (...args) {
+  reply (text, extra) {
     this.assert(this.chat, 'reply')
-    return this.telegram.sendMessage(this.chat.id, ...args)
+    return this.telegram.sendMessage(this.chat.id, text, extra)
   }
 
-  getChat (...args) {
+  getChat () {
     this.assert(this.chat, 'getChat')
-    return this.telegram.getChat(this.chat.id, ...args)
+    return this.telegram.getChat(this.chat.id)
   }
 
-  exportChatInviteLink (...args) {
+  exportChatInviteLink () {
     this.assert(this.chat, 'exportChatInviteLink')
-    return this.telegram.exportChatInviteLink(this.chat.id, ...args)
+    return this.telegram.exportChatInviteLink(this.chat.id)
   }
 
-  banChatMember (...args) {
+  banChatMember (userId, extra) {
     this.assert(this.chat, 'banChatMember')
-    return this.telegram.banChatMember(this.chat.id, ...args)
+    return this.telegram.banChatMember(this.chat.id, userId, extra)
   }
 
-  kickChatMember (...args) {
+  kickChatMember (userId, untilDate, extra) {
     this.assert(this.chat, 'kickChatMember')
-    return this.telegram.kickChatMember(this.chat.id, ...args)
+    return this.telegram.kickChatMember(this.chat.id, userId, untilDate, extra)
   }
 
-  unbanChatMember (...args) {
+  unbanChatMember (userId, extra) {
     this.assert(this.chat, 'unbanChatMember')
-    return this.telegram.unbanChatMember(this.chat.id, ...args)
+    return this.telegram.unbanChatMember(this.chat.id, userId, extra)
   }
 
-  restrictChatMember (...args) {
+  restrictChatMember (userId, extra) {
     this.assert(this.chat, 'restrictChatMember')
-    return this.telegram.restrictChatMember(this.chat.id, ...args)
+    return this.telegram.restrictChatMember(this.chat.id, userId, extra)
   }
 
-  promoteChatMember (...args) {
+  promoteChatMember (userId, extra) {
     this.assert(this.chat, 'promoteChatMember')
-    return this.telegram.promoteChatMember(this.chat.id, ...args)
+    return this.telegram.promoteChatMember(this.chat.id, userId, extra)
   }
 
-  banChatSenderChat (...args) {
+  banChatSenderChat (senderChatId) {
     this.assert(this.chat, 'banChatSenderChat')
-    return this.telegram.banChatSenderChat(this.chat.id, ...args)
+    return this.telegram.banChatSenderChat(this.chat.id, senderChatId)
   }
 
-  unbanChatSenderChat (...args) {
+  unbanChatSenderChat (senderChatId) {
     this.assert(this.chat, 'unbanChatSenderChat')
-    return this.telegram.unbanChatSenderChat(this.chat.id, ...args)
+    return this.telegram.unbanChatSenderChat(this.chat.id, senderChatId)
   }
 
-  setChatAdministratorCustomTitle (...args) {
+  setChatAdministratorCustomTitle (userId, title) {
     this.assert(this.chat, 'setChatAdministratorCustomTitle')
-    return this.telegram.setChatAdministratorCustomTitle(this.chat.id, ...args)
+    return this.telegram.setChatAdministratorCustomTitle(this.chat.id, userId, title)
   }
 
-  setChatPhoto (...args) {
+  setChatPhoto (photo) {
     this.assert(this.chat, 'setChatPhoto')
-    return this.telegram.setChatPhoto(this.chat.id, ...args)
+    return this.telegram.setChatPhoto(this.chat.id, photo)
   }
 
-  deleteChatPhoto (...args) {
+  deleteChatPhoto () {
     this.assert(this.chat, 'deleteChatPhoto')
-    return this.telegram.deleteChatPhoto(this.chat.id, ...args)
+    return this.telegram.deleteChatPhoto(this.chat.id)
   }
 
-  setChatTitle (...args) {
+  setChatTitle (title) {
     this.assert(this.chat, 'setChatTitle')
-    return this.telegram.setChatTitle(this.chat.id, ...args)
+    return this.telegram.setChatTitle(this.chat.id, title)
   }
 
-  setChatDescription (...args) {
+  setChatDescription (description) {
     this.assert(this.chat, 'setChatDescription')
-    return this.telegram.setChatDescription(this.chat.id, ...args)
+    return this.telegram.setChatDescription(this.chat.id, description)
   }
 
-  pinChatMessage (...args) {
+  pinChatMessage (messageId, extra) {
     this.assert(this.chat, 'pinChatMessage')
-    return this.telegram.pinChatMessage(this.chat.id, ...args)
+    return this.telegram.pinChatMessage(this.chat.id, messageId, extra)
   }
 
-  unpinChatMessage (...args) {
+  unpinChatMessage (extra) {
     this.assert(this.chat, 'unpinChatMessage')
-    return this.telegram.unpinChatMessage(this.chat.id, ...args)
+    return this.telegram.unpinChatMessage(this.chat.id, extra)
   }
 
   unpinAllChatMessages () {
@@ -535,34 +535,34 @@ class OpengramContext {
     return this.telegram.unpinAllChatMessages(this.chat.id)
   }
 
-  leaveChat (...args) {
+  leaveChat () {
     this.assert(this.chat, 'leaveChat')
-    return this.telegram.leaveChat(this.chat.id, ...args)
+    return this.telegram.leaveChat(this.chat.id)
   }
 
-  setChatPermissions (...args) {
+  setChatPermissions (permissions) {
     this.assert(this.chat, 'setChatPermissions')
-    return this.telegram.setChatPermissions(this.chat.id, ...args)
+    return this.telegram.setChatPermissions(this.chat.id, permissions)
   }
 
-  getChatAdministrators (...args) {
+  getChatAdministrators () {
     this.assert(this.chat, 'getChatAdministrators')
-    return this.telegram.getChatAdministrators(this.chat.id, ...args)
+    return this.telegram.getChatAdministrators(this.chat.id)
   }
 
-  getChatMember (...args) {
+  getChatMember (userId) {
     this.assert(this.chat, 'getChatMember')
-    return this.telegram.getChatMember(this.chat.id, ...args)
+    return this.telegram.getChatMember(this.chat.id, userId)
   }
 
-  getChatMembersCount (...args) {
+  getChatMembersCount () {
     this.assert(this.chat, 'getChatMembersCount')
-    return this.telegram.getChatMemberCount(this.chat.id, ...args)
+    return this.telegram.getChatMemberCount(this.chat.id)
   }
 
-  getChatMemberCount (...args) {
+  getChatMemberCount () {
     this.assert(this.chat, 'getChatMemberCount')
-    return this.telegram.getChatMemberCount(this.chat.id, ...args)
+    return this.telegram.getChatMemberCount(this.chat.id)
   }
 
   getChatMenuButton () {
@@ -570,17 +570,17 @@ class OpengramContext {
     return this.telegram.getChatMenuButton(this.chat.id)
   }
 
-  setChatMenuButton (...args) {
+  setChatMenuButton (menuButton) {
     this.assert(this.chat, 'setChatMenuButton')
-    return this.telegram.setChatMenuButton(this.chat.id, ...args)
+    return this.telegram.setChatMenuButton(this.chat.id, menuButton)
   }
 
-  setMyDefaultAdministratorRights (...args) {
-    return this.telegram.setMyDefaultAdministratorRights(...args)
+  setMyDefaultAdministratorRights (rights, forChannels) {
+    return this.telegram.setMyDefaultAdministratorRights(rights, forChannels)
   }
 
-  getMyDefaultAdministratorRights (...args) {
-    return this.telegram.getMyDefaultAdministratorRights(...args)
+  getMyDefaultAdministratorRights (forChannels) {
+    return this.telegram.getMyDefaultAdministratorRights(forChannels)
   }
 
   setPassportDataErrors (errors) {
@@ -588,103 +588,103 @@ class OpengramContext {
     return this.telegram.setPassportDataErrors(this.from.id, errors)
   }
 
-  replyWithPhoto (...args) {
+  replyWithPhoto (photo, extra) {
     this.assert(this.chat, 'replyWithPhoto')
-    return this.telegram.sendPhoto(this.chat.id, ...args)
+    return this.telegram.sendPhoto(this.chat.id, photo, extra)
   }
 
-  replyWithMediaGroup (...args) {
+  replyWithMediaGroup (media, extra) {
     this.assert(this.chat, 'replyWithMediaGroup')
-    return this.telegram.sendMediaGroup(this.chat.id, ...args)
+    return this.telegram.sendMediaGroup(this.chat.id, media, extra)
   }
 
-  replyWithAudio (...args) {
+  replyWithAudio (audio, extra) {
     this.assert(this.chat, 'replyWithAudio')
-    return this.telegram.sendAudio(this.chat.id, ...args)
+    return this.telegram.sendAudio(this.chat.id, audio, extra)
   }
 
-  replyWithDice (...args) {
+  replyWithDice (extra) {
     this.assert(this.chat, 'replyWithDice')
-    return this.telegram.sendDice(this.chat.id, ...args)
+    return this.telegram.sendDice(this.chat.id, extra)
   }
 
-  replyWithDocument (...args) {
+  replyWithDocument (document, extra) {
     this.assert(this.chat, 'replyWithDocument')
-    return this.telegram.sendDocument(this.chat.id, ...args)
+    return this.telegram.sendDocument(this.chat.id, document, extra)
   }
 
-  replyWithSticker (...args) {
+  replyWithSticker (sticker, extra) {
     this.assert(this.chat, 'replyWithSticker')
-    return this.telegram.sendSticker(this.chat.id, ...args)
+    return this.telegram.sendSticker(this.chat.id, sticker, extra)
   }
 
-  replyWithVideo (...args) {
+  replyWithVideo (video, extra) {
     this.assert(this.chat, 'replyWithVideo')
-    return this.telegram.sendVideo(this.chat.id, ...args)
+    return this.telegram.sendVideo(this.chat.id, video, extra)
   }
 
-  replyWithAnimation (...args) {
+  replyWithAnimation (animation, extra) {
     this.assert(this.chat, 'replyWithAnimation')
-    return this.telegram.sendAnimation(this.chat.id, ...args)
+    return this.telegram.sendAnimation(this.chat.id, animation, extra)
   }
 
-  replyWithVideoNote (...args) {
+  replyWithVideoNote (videoNote, extra) {
     this.assert(this.chat, 'replyWithVideoNote')
-    return this.telegram.sendVideoNote(this.chat.id, ...args)
+    return this.telegram.sendVideoNote(this.chat.id, videoNote, extra)
   }
 
-  replyWithInvoice (...args) {
+  replyWithInvoice (invoice, extra) {
     this.assert(this.chat, 'replyWithInvoice')
-    return this.telegram.sendInvoice(this.chat.id, ...args)
+    return this.telegram.sendInvoice(this.chat.id, invoice, extra)
   }
 
-  replyWithGame (...args) {
+  replyWithGame (gameName, extra) {
     this.assert(this.chat, 'replyWithGame')
-    return this.telegram.sendGame(this.chat.id, ...args)
+    return this.telegram.sendGame(this.chat.id, gameName, extra)
   }
 
-  replyWithVoice (...args) {
+  replyWithVoice (voice, extra) {
     this.assert(this.chat, 'replyWithVoice')
-    return this.telegram.sendVoice(this.chat.id, ...args)
+    return this.telegram.sendVoice(this.chat.id, voice, extra)
   }
 
-  replyWithPoll (...args) {
+  replyWithPoll (question, options, extra) {
     this.assert(this.chat, 'replyWithPoll')
-    return this.telegram.sendPoll(this.chat.id, ...args)
+    return this.telegram.sendPoll(this.chat.id, question, options, extra)
   }
 
-  replyWithQuiz (...args) {
+  replyWithQuiz (question, options, extra) {
     this.assert(this.chat, 'replyWithQuiz')
-    return this.telegram.sendQuiz(this.chat.id, ...args)
+    return this.telegram.sendQuiz(this.chat.id, question, options, extra)
   }
 
-  stopPoll (...args) {
+  stopPoll (messageId, extra) {
     this.assert(this.chat, 'stopPoll')
-    return this.telegram.stopPoll(this.chat.id, ...args)
+    return this.telegram.stopPoll(this.chat.id, messageId, extra)
   }
 
-  replyWithChatAction (...args) {
+  replyWithChatAction (action) {
     this.assert(this.chat, 'replyWithChatAction')
-    return this.telegram.sendChatAction(this.chat.id, ...args)
+    return this.telegram.sendChatAction(this.chat.id, action)
   }
 
-  replyWithLocation (...args) {
+  replyWithLocation (latitude, longitude, extra) {
     this.assert(this.chat, 'replyWithLocation')
-    return this.telegram.sendLocation(this.chat.id, ...args)
+    return this.telegram.sendLocation(this.chat.id, latitude, longitude, extra)
   }
 
-  replyWithVenue (...args) {
+  replyWithVenue (latitude, longitude, title, address, extra) {
     this.assert(this.chat, 'replyWithVenue')
-    return this.telegram.sendVenue(this.chat.id, ...args)
+    return this.telegram.sendVenue(this.chat.id, latitude, longitude, title, address, extra)
   }
 
-  replyWithContact (...args) {
+  replyWithContact (phoneNumber, firstName, extra) {
     this.assert(this.from, 'replyWithContact')
-    return this.telegram.sendContact(this.chat.id, ...args)
+    return this.telegram.sendContact(this.chat.id, phoneNumber, firstName, extra)
   }
 
-  getStickerSet (setName) {
-    return this.telegram.getStickerSet(setName)
+  getStickerSet (name) {
+    return this.telegram.getStickerSet(name)
   }
 
   setChatStickerSet (setName) {
@@ -701,39 +701,39 @@ class OpengramContext {
     return this.telegram.setStickerPositionInSet(sticker, position)
   }
 
-  setStickerSetThumb (...args) {
-    return this.telegram.setStickerSetThumb(...args)
+  setStickerSetThumb (name, userId, thumb) {
+    return this.telegram.setStickerSetThumb(name, userId, thumb)
   }
 
   deleteStickerFromSet (sticker) {
     return this.telegram.deleteStickerFromSet(sticker)
   }
 
-  uploadStickerFile (...args) {
+  uploadStickerFile (stickerFile) {
     this.assert(this.from, 'uploadStickerFile')
-    return this.telegram.uploadStickerFile(this.from.id, ...args)
+    return this.telegram.uploadStickerFile(this.from.id, stickerFile)
   }
 
-  createNewStickerSet (...args) {
+  createNewStickerSet (name, title, stickerData) {
     this.assert(this.from, 'createNewStickerSet')
-    return this.telegram.createNewStickerSet(this.from.id, ...args)
+    return this.telegram.createNewStickerSet(this.from.id, name, title, stickerData)
   }
 
-  addStickerToSet (...args) {
+  addStickerToSet (name, stickerData) {
     this.assert(this.from, 'addStickerToSet')
-    return this.telegram.addStickerToSet(this.from.id, ...args)
+    return this.telegram.addStickerToSet(this.from.id, name, stickerData)
   }
 
-  getMyCommands (...args) {
-    return this.telegram.getMyCommands(...args)
+  getMyCommands (extra) {
+    return this.telegram.getMyCommands(extra)
   }
 
-  setMyCommands (...args) {
-    return this.telegram.setMyCommands(...args)
+  setMyCommands (commands, extra) {
+    return this.telegram.setMyCommands(commands, extra)
   }
 
-  deleteMyCommands (...args) {
-    return this.telegram.deleteMyCommands(...args)
+  deleteMyCommands (extra) {
+    return this.telegram.deleteMyCommands(extra)
   }
 
   replyWithMarkdown (markdown, extra) {
@@ -771,41 +771,37 @@ class OpengramContext {
     return this.telegram.copyMessage(chatId, message.chat.id, message.message_id, extra)
   }
 
-  createChatInviteLink (...args) {
+  createChatInviteLink (extra) {
     this.assert(this.chat, 'createChatInviteLink')
-    return this.telegram.createChatInviteLink(this.chat.id, ...args)
+    return this.telegram.createChatInviteLink(this.chat.id, extra)
   }
 
-  editChatInviteLink (...args) {
+  editChatInviteLink (inviteLink, extra) {
     this.assert(this.chat, 'editChatInviteLink')
-    return this.telegram.editChatInviteLink(this.chat.id, ...args)
+    return this.telegram.editChatInviteLink(this.chat.id, inviteLink, extra)
   }
 
-  revokeChatInviteLink (...args) {
+  revokeChatInviteLink (inviteLink) {
     this.assert(this.chat, 'revokeChatInviteLink')
-    return this.telegram.revokeChatInviteLink(this.chat.id, ...args)
+    return this.telegram.revokeChatInviteLink(this.chat.id, inviteLink)
   }
 
-  approveChatJoinRequest (...args) {
+  approveChatJoinRequest (userId) {
     this.assert(this.chat, 'approveChatJoinRequest')
-    return this.telegram.approveChatJoinRequest(this.chat.id, ...args)
+    return this.telegram.approveChatJoinRequest(this.chat.id, userId)
   }
 
-  declineChatJoinRequest (...args) {
+  declineChatJoinRequest (userId) {
     this.assert(this.chat, 'declineChatJoinRequest')
-    return this.telegram.declineChatJoinRequest(this.chat.id, ...args)
+    return this.telegram.declineChatJoinRequest(this.chat.id, userId)
   }
 
-  getCustomEmojiStickers (...args) {
-    return this.telegram.getCustomEmojiStickers(...args)
+  getCustomEmojiStickers (customEmojiIds) {
+    return this.telegram.getCustomEmojiStickers(customEmojiIds)
   }
 
-  answerWebAppQuery (...args) {
-    return this.telegram.answerWebAppQuery(...args)
-  }
-
-  createInvoiceLink (...args) {
-    return this.telegram.createInvoiceLink(...args)
+  createInvoiceLink (invoice) {
+    return this.telegram.createInvoiceLink(invoice)
   }
 }
 
