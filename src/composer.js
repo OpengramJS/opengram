@@ -619,6 +619,25 @@ class Composer {
     return (ctx, next) => typeof next === 'function' ? next(ctx) : Promise.resolve()
   }
 
+  /**
+   * > ❗️ **This is an advanced method of Opengram.**
+   * Lazily asynchronously returns some middleware that can be generated on the fly for each context.
+   * Pass a factory function that creates some middleware
+   *
+   * The factory function will be called once per context, and its result will be executed with the context object.
+   * ```js
+   * // The middleware returned by `createMyMiddleware` will be used only once
+   * bot.use(
+   *   Composer.lazy(ctx => createMyMiddleware(ctx))
+   * )
+   * ```
+   *
+   * You may generate this middleware in an `async` fashion.
+   *
+   * @param {function} factoryFn The factory function creating the middleware
+   * @throws {TypeError}
+   * @return {MiddlewareFn<Promise>}
+   */
   static lazy (factoryFn) {
     if (typeof factoryFn !== 'function') {
       throw new TypeError('Argument must be a function')
