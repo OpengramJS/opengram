@@ -598,6 +598,20 @@ class Composer {
       .catch((err) => errorHandler(err, ctx))
   }
 
+  /**
+   * > ❗️ **This is an advanced method of Opengram.**
+   *
+   * Registers some middleware that runs concurrently to the executing middleware stack.
+   * Runs the middleware at the next event loop using
+   * [setImmediate](https://nodejs.dev/en/learn/understanding-setimmediate) and force call `next()`
+   *
+   * For example, you can use that method for saving metrics and other non-priority or optional features in background
+   *
+   * > ❗️ If you call next in this middleware, then nothing will happen, it will be ignored
+   *
+   * @param {MiddlewareFn} middleware The middleware to run concurrently
+   * @return {MiddlewareFn}
+   */
   static fork (middleware) {
     const handler = Composer.unwrap(middleware)
     return (ctx, next) => {
