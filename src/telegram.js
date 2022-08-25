@@ -293,8 +293,8 @@ class Telegram extends ApiClient {
    * Use this method to send point on the map.
    *
    * On success, the sent {@link Message} is returned.
-   * @settps://core.telegram.org/bots/api#sendlocation
-      *@param {number|string} chatId Unique identifier for the target chat or username of the target channel
+   * @see https://core.telegram.org/bots/api#sendlocation
+   * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {number} latitude Latitude of the location
@@ -311,8 +311,8 @@ class Telegram extends ApiClient {
    * Use this method to send information about a venue.
    *
    * On success, the sent {@link Message} is returned.
-   * @settps://core.telegram.org/bots/api#sendvenue
-      *@param {number|string} chatId Unique identifier for the target chat or username of the target channel
+   * @see https://core.telegram.org/bots/api#sendvenue
+   * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {number} latitude Latitude of the venue
@@ -628,7 +628,7 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#stoppoll
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
-   * @param messageId Identifier of the original message with the poll
+   * @param {number} messageId Identifier of the original message with the poll
    * @param {object|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Poll>}
@@ -789,7 +789,7 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#promotechatmember
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
-   * @param userId Unique identifier of the target user
+   * @param {number} userId Unique identifier of the target user
    * @param {object} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
@@ -1131,7 +1131,7 @@ class Telegram extends ApiClient {
   /**
    * Alias to {@link answerCbQuery} for game query
    * @see https://core.telegram.org/bots/api#answercallbackquery
-   * @param callbackQueryId
+   * @param {string} callbackQueryId Unique identifier for the query to be answered
    * @param [url] URL that will be opened by the user's client. If you have created a Game and accepted the conditions
    *    via [@BotFather](https://t.me/BotFather), specify the URL that opens your game - note that this will only work
    *    if the query comes from a `callback_game` button.
@@ -1156,8 +1156,8 @@ class Telegram extends ApiClient {
    * @param {boolean} ok Specify True if delivery to the specified address is possible and False if there are any problems
    *    (for example, if delivery to the specified address is not possible)
    * @param {ShippingOption[]} [shippingOptions] Required if ok is True. Array of available shipping options.
-   * @param {string} [errorMessage] Required if ok is False. Error message in human readable form that explains why it
-   *    is impossible to complete the order (e.g. "Sorry, delivery to your desired address is unavailable').
+   * @param {string} [errorMessage] Required if ok is False. Error message in human-readable form that explains why it
+   *    is impossible to complete the order (e.g. "Sorry, delivery to your desired address is unavailable").
    *    Telegram will display this message to the user.
    * @throws {TelegramError}
    * @return {Promise<boolean>}
