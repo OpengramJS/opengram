@@ -263,6 +263,11 @@ async function answerToWebhook (response, payload = {}, options) {
  * The API client class implements a raw api call via http requests & webhook reply
  */
 class ApiClient {
+  /**
+   * @param {string} token Bot token
+   * @param {TelegramOptions} [options] Options
+   * @param {object} [webhookResponse] Response object from HTTP server for reply via webhook if enabled
+   */
   constructor (token, options, webhookResponse) {
     this.token = token
     this.options = {
