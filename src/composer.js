@@ -578,7 +578,7 @@ class Composer {
    * )
    * ```
    * @param args
-   * @return {function(*): *}
+   * @return {MiddlewareFn}
    */
   static reply (...args) {
     return (ctx) => ctx.reply(...args)
