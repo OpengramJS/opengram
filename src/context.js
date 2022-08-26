@@ -419,6 +419,12 @@ class OpengramContext {
     this.tg.webhookReply = enable
   }
 
+  /**
+   * Method used for checking is method available for current update
+   * @private
+   * @param value Value to check
+   * @param method Method name
+   */
   assert (value, method) {
     if (!value) {
       throw new TypeError(`Opengram: "${method}" isn't available for "${this.updateType}::${this.updateSubTypes}"`)
