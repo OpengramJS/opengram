@@ -280,6 +280,21 @@ class OpengramContext {
     return this.update.chat_join_request
   }
 
+  /**
+   * Returns {@link Chat} object for current update
+   *
+   * Shortcut to
+   * - `context.myChatMember.chat`
+   * - `context.chatMember.chat`
+   * - `context.chatJoinRequest.chat`
+   * - `context.chatJoinRequest.chat`
+   * - `context.message.chat`
+   * - `context.editedMessage.chat`
+   * - `context.callbackQuery.message.chat`
+   * - `context.channelPost.chat`
+   * - `context.editedChannelPost.chat`
+   * @return {Chat}
+   */
   get chat () {
     const message = this.myChatMember ||
       this.chatMember ||
