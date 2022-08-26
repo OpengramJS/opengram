@@ -303,6 +303,18 @@ class OpengramContext {
     return message && message.chat
   }
 
+  /**
+   * Returns {@link Chat} object for current update
+   *
+   * Shortcut to
+   * - `context.message.sender_chat`
+   * - `context.editedMessage.sender_chat`
+   * - `context.callbackQuery.message.sender_chat`
+   * - `context.channelPost.sender_chat`
+   * - `context.editedChannelPost.sender_chat`
+   *
+   * @return {Chat}
+   */
   get senderChat () {
     const message = getMessageFromAnySource(this)
     return message && message.sender_chat
