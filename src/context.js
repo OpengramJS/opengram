@@ -131,7 +131,9 @@ class OpengramContext {
   }
 
   /**
-   * Returns instance of {@link Telegram}
+   * Returns instance of {@link Telegram} for api calls
+   *
+   * Alias for `context.tg`
    * @return {Telegram}
    */
   get telegram () {
