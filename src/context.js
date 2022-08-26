@@ -270,6 +270,12 @@ class OpengramContext {
     return this.update.chat_member
   }
 
+  /**
+   * Returns {@link ChatJoinRequest} object for current update
+   *
+   * Shortcut to `context.update.chat_join_request`
+   * @return {ChatJoinRequest}
+   */
   get chatJoinRequest () {
     return this.update.chat_join_request
   }
