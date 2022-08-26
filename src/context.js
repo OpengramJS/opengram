@@ -374,6 +374,12 @@ class OpengramContext {
     return this.message && this.message.passport_data
   }
 
+  /**
+   * Getter returns state object, available only in current update which be destroyed after update processed
+   * > You can store some temporary data for sharing with other middlewares in chain
+   *
+   * @return {object}
+   */
   get state () {
     if (!this.contextState) {
       this.contextState = {}
