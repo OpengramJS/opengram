@@ -230,6 +230,12 @@ class OpengramContext {
     return this.update.callback_query
   }
 
+  /**
+   * Returns {@link Poll} object for current update
+   *
+   * Shortcut to `context.update.poll`
+   * @return {Poll}
+   */
   get poll () {
     return this.update.poll
   }
