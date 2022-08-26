@@ -408,6 +408,13 @@ class OpengramContext {
     return this.tg.webhookReply
   }
 
+  /**
+   * Setter for webhookReply
+   *
+   * Use this property to control reply via webhook feature for current context.
+   * @param {boolean} enable
+   * @return {void}
+   */
   set webhookReply (enable) {
     this.tg.webhookReply = enable
   }
