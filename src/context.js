@@ -240,6 +240,12 @@ class OpengramContext {
     return this.update.poll
   }
 
+  /**
+   * Returns {@link PollAnswer} object for current update
+   *
+   * Shortcut to `context.update.poll_answer`
+   * @return {PollAnswer}
+   */
   get pollAnswer () {
     return this.update.poll_answer
   }
