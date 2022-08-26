@@ -387,6 +387,13 @@ class OpengramContext {
     return this.contextState
   }
 
+  /**
+   * Setter for state object, available only in current update which be destroyed after update processed
+   * > You can store some temporary data for sharing with other middlewares in chain
+   * @param {object} value New state object
+   *
+   * @return {void}
+   */
   set state (value) {
     this.contextState = { ...value }
   }
