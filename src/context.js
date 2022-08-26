@@ -320,6 +320,24 @@ class OpengramContext {
     return message && message.sender_chat
   }
 
+  /**
+   * Returns {@link User} object for current update
+   *
+   * Shortcut to
+   * - `context.inlineQuery.from`
+   * - `context.shippingQuery.from`
+   * - `context.preCheckoutQuery.from`
+   * - `context.chosenInlineResult.from`
+   * - `context.myChatMember.from`
+   * - `context.chatJoinRequest.from`
+   * - `context.message.from`
+   * - `context.editedMessage.from`
+   * - `context.callbackQuery.message.from`
+   * - `context.channelPost.from`
+   * - `context.editedChannelPost.from`
+   *
+   * @return {User}
+   */
   get from () {
     const message = this.callbackQuery ||
       this.inlineQuery ||
