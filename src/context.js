@@ -431,6 +431,17 @@ class OpengramContext {
     }
   }
 
+  /**
+   * Use this method to send answers to current inline query.
+   *
+   * On success, `True` is returned.
+   * No more than **50** results per query are allowed.
+   * @see https://core.telegram.org/bots/api#answerinlinequery
+   * @param {InlineQueryResult[]} results A array of results for the inline query
+   * @param {object|Extra} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
   answerInlineQuery (results, extra) {
     this.assert(this.inlineQuery, 'answerInlineQuery')
     return this.telegram.answerInlineQuery(this.inlineQuery.id, results, extra)
