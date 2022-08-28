@@ -470,6 +470,15 @@ class OpengramContext {
     return this.telegram.answerCbQuery(this.callbackQuery.id, text, showAlert, extra)
   }
 
+  /**
+   * Alias to {@link answerCbQuery} for game query
+   * @see https://core.telegram.org/bots/api#answercallbackquery
+   * @param [url] URL that will be opened by the user's client. If you have created a Game and accepted the conditions
+   *    via [@BotFather](https://t.me/BotFather), specify the URL that opens your game - note that this will only work
+   *    if the query comes from a `callback_game` button.
+   * @throws {TelegramError}
+   * @return {Promise}
+   */
   answerGameQuery (url) {
     this.assert(this.callbackQuery, 'answerGameQuery')
     return this.telegram.answerGameQuery(this.callbackQuery.id, url)
