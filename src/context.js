@@ -529,6 +529,17 @@ class OpengramContext {
     return this.telegram.answerPreCheckoutQuery(this.preCheckoutQuery.id, ok, errorMessage)
   }
 
+  /**
+   * Use this method to edit text and game inline messages for current from current update.
+   *
+   * On success, if the edited message is not an inline message, the edited {@link Message} is returned,
+   * otherwise `True` is returned.
+   * @see https://core.telegram.org/bots/api#editmessagetext
+   * @param {string} text New text of the message, 1-4096 characters after entities parsing
+   * @param {object|Extra} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<boolean|Message>}
+   */
   editMessageText (text, extra) {
     this.assert(this.callbackQuery || this.inlineMessageId, 'editMessageText')
     return this.inlineMessageId
