@@ -913,6 +913,15 @@ class OpengramContext {
     return this.telegram.setChatPhoto(this.chat.id, photo)
   }
 
+  /**
+   * Use this method to delete current chat photo. Photos can't be changed for private chats. The bot must be an
+   * administrator in the chat for this to work and must have the appropriate administrator rights.
+   *
+   * Returns `True` on success.
+   * @see https://core.telegram.org/bots/api#deletechatphoto
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
   deleteChatPhoto () {
     this.assert(this.chat, 'deleteChatPhoto')
     return this.telegram.deleteChatPhoto(this.chat.id)
