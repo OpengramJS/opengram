@@ -649,6 +649,20 @@ class OpengramContext {
       )
   }
 
+  /**
+   * Use this method to edit live location inline message / message from current update.
+   * A location can be edited until its `live_period` expires or editing
+   * is explicitly disabled by a call to {@link stopMessageLiveLocation}.
+   *
+   * On success, if the edited message is not an inline message, the edited {@link Message} is returned,
+   * otherwise `True` is returned.
+   * @see https://core.telegram.org/bots/api#editmessagelivelocation
+   * @param {number} latitude Latitude of new location
+   * @param {number} longitude Longitude of new location
+   * @param {object|Extra} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<boolean|Message>}
+   */
   editMessageLiveLocation (latitude, longitude, extra) {
     this.assert(this.callbackQuery || this.inlineMessageId, 'editMessageLiveLocation')
     return this.inlineMessageId
