@@ -883,6 +883,16 @@ class OpengramContext {
     return this.telegram.unbanChatSenderChat(this.chat.id, senderChatId)
   }
 
+  /**
+   * Use this method to set a custom title for an administrator in current supergroup promoted by the bot.
+   *
+   * Returns `True` on success.
+   * @see https://core.telegram.org/bots/api#setchatadministratorcustomtitle
+   * @param {number} userId Unique identifier of the target user
+   * @param {string} title New custom title for the administrator; 0-16 characters, emoji are not allowed
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
   setChatAdministratorCustomTitle (userId, title) {
     this.assert(this.chat, 'setChatAdministratorCustomTitle')
     return this.telegram.setChatAdministratorCustomTitle(this.chat.id, userId, title)
