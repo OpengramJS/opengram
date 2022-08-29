@@ -762,6 +762,19 @@ class OpengramContext {
     return this.telegram.exportChatInviteLink(this.chat.id)
   }
 
+  /**
+   * Use this method to ban a user in current group, a supergroup or a channel. In the case of supergroups and channels,
+   * the user will not be able to return to the chat on their own using invite links, etc.,
+   * unless {@link unbanChatMember unbanned} first.
+   * The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights.
+   *
+   * Returns `True` on success.
+   * @see https://core.telegram.org/bots/api#banchatmember
+   * @param userId Unique identifier of the target user
+   * @param {object|Extra} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
   banChatMember (userId, extra) {
     this.assert(this.chat, 'banChatMember')
     return this.telegram.banChatMember(this.chat.id, userId, extra)
