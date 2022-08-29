@@ -713,6 +713,16 @@ class OpengramContext {
       )
   }
 
+  /**
+   * Use this method to send text messages to current chat.
+   *
+   * On success, the sent {@link Message} is returned.
+   * @see https://core.telegram.org/bots/api#sendmessage
+   * @param {string} text Text of the message to be sent, 1-4096 characters after entities parsing
+   * @param {MessageExtraParams|Extra} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<Message>}
+   */
   reply (text, extra) {
     this.assert(this.chat, 'reply')
     return this.telegram.sendMessage(this.chat.id, text, extra)
