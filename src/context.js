@@ -817,6 +817,18 @@ class OpengramContext {
     return this.telegram.unbanChatMember(this.chat.id, userId, extra)
   }
 
+  /**
+   * Use this method to restrict a user in current supergroup. The bot must be an administrator in the supergroup
+   * for this to work and must have the appropriate administrator rights. Pass True for all permissions to lift
+   * restrictions from a user.
+   *
+   * Returns `True` on success.
+   * @see https://core.telegram.org/bots/api#restrictchatmember
+   * @param {number} userId Unique identifier of the target user
+   * @param {object} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
   restrictChatMember (userId, extra) {
     this.assert(this.chat, 'restrictChatMember')
     return this.telegram.restrictChatMember(this.chat.id, userId, extra)
