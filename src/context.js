@@ -798,6 +798,20 @@ class OpengramContext {
     return this.telegram.kickChatMember(this.chat.id, userId, untilDate, extra)
   }
 
+  /**
+   * Use this method to unban a previously banned user in current supergroup or channel. The user will **not** return
+   * to the group or channel automatically, but will be able to join via link, etc. The bot must be an administrator
+   * for this to work. By default, this method guarantees that after the call the user is not a member of the chat,
+   * but will be able to join it. So if the user is a member of the chat they will also be **removed** from the chat.
+   * If you don't want this, use the parameter `only_if_banned`.
+   *
+   * Returns `True` on success.
+   * @see https://core.telegram.org/bots/api#unbanchatmember
+   * @param {number} userId Unique identifier of the target user
+   * @param {object|Extra} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
   unbanChatMember (userId, extra) {
     this.assert(this.chat, 'unbanChatMember')
     return this.telegram.unbanChatMember(this.chat.id, userId, extra)
