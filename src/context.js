@@ -622,6 +622,16 @@ class OpengramContext {
       )
   }
 
+  /**
+   * Use this method to edit only the reply markup of inline message / message from current update.
+   *
+   * On success, if the edited message is not an inline message, the edited {@link Message} is
+   * returned, otherwise `True` is returned.
+   * @see https://core.telegram.org/bots/api#editmessagereplymarkup
+   * @param {object|Extra} [markup] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<boolean|Message>}
+   */
   editMessageReplyMarkup (markup) {
     this.assert(this.callbackQuery || this.inlineMessageId, 'editMessageReplyMarkup')
     return this.inlineMessageId
