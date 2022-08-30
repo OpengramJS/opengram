@@ -1213,6 +1213,24 @@ class OpengramContext {
     return this.telegram.sendMediaGroup(this.chat.id, media, extra)
   }
 
+  /**
+   * Use this method to send audio files to chat from current update,
+   * if you want Telegram clients to display them in the music player.
+   * Your audio must be in the `.MP3` or `.M4A` format.
+   *
+   * On success, the sent {@link Message} is returned.
+   * Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
+   *
+   * For sending voice messages, use the {@link OpengramContext#replyWithVoice} method instead.
+   * @see https://core.telegram.org/bots/api#sendaudio
+   * @param {attachmentFile} audio Audio file to send. Pass a `file_id` as String to send an audio file that exists on the Telegram
+   *    servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet,
+   *    or upload a new one using multipart/form-data.
+   *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
+   * @param {object|Extra} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<Message>}
+   */
   replyWithAudio (audio, extra) {
     this.assert(this.chat, 'replyWithAudio')
     return this.telegram.sendAudio(this.chat.id, audio, extra)
