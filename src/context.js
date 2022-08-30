@@ -1020,6 +1020,17 @@ class OpengramContext {
     return this.telegram.leaveChat(this.chat.id)
   }
 
+  /**
+   * Use this method to set default chat permissions for all members in chat from current update.
+   * The bot must be an administrator in the group
+   * or a supergroup for this to work and must have the `can_restrict_members` administrator rights.
+   *
+   * Returns `True` on success.
+   * @see https://core.telegram.org/bots/api#setchatpermissions
+   * @param {ChatPermissions} permissions A object for new default chat permissions
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
   setChatPermissions (permissions) {
     this.assert(this.chat, 'setChatPermissions')
     return this.telegram.setChatPermissions(this.chat.id, permissions)
