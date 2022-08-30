@@ -1107,6 +1107,16 @@ class OpengramContext {
     return this.telegram.getChatMenuButton(this.chat.id)
   }
 
+  /**
+   * Use this method to change the bot's menu button in private chat from current update, or the default menu button.
+   *
+   * Returns `True` on success.
+   * @see https://core.telegram.org/bots/api#setchatmenubutton
+   * @param {MenuButton} [menuButton] Unique identifier for the target private chat.
+   *    If not specified, default bot's menu button will be changed
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
   setChatMenuButton (menuButton) {
     this.assert(this.chat, 'setChatMenuButton')
     return this.telegram.setChatMenuButton(this.chat.id, menuButton)
