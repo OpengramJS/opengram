@@ -1036,6 +1036,16 @@ class OpengramContext {
     return this.telegram.setChatPermissions(this.chat.id, permissions)
   }
 
+  /**
+   * Use this method to get a list of administrators in chat from current update.
+   *
+   * On success, returns an Array of {@link ChatMember}
+   * objects that contains information about all chat administrators except other bots. If the chat is a group
+   * or a supergroup and no administrators were appointed, only the creator will be returned.
+   * @see https://core.telegram.org/bots/api#getchatadministrators
+   * @throws {TelegramError}
+   * @return {Promise<ChatMember[]>}
+   */
   getChatAdministrators () {
     this.assert(this.chat, 'getChatAdministrators')
     return this.telegram.getChatAdministrators(this.chat.id)
