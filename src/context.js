@@ -1195,6 +1195,19 @@ class OpengramContext {
     return this.telegram.sendPhoto(this.chat.id, photo, extra)
   }
 
+  /**
+   * Use this method to send a group of photos, videos, documents or audios as an album to chat from current update.
+   * Documents and audio files can be only grouped on an album with messages of the same type.
+   *
+   * On success, an array of {@link Message Messages}
+   * that were sent is returned.
+   * @see https://core.telegram.org/bots/api#sendmediagroup
+   * @param {array<InputMediaPhoto|InputMediaAudio|InputMediaVideo|InputMediaDocument>} media A array describing
+   *    messages to be sent, must include 2-10 items
+   * @param {object|Extra} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<Message[]>}
+   */
   replyWithMediaGroup (media, extra) {
     this.assert(this.chat, 'replyWithMediaGroup')
     return this.telegram.sendMediaGroup(this.chat.id, media, extra)
