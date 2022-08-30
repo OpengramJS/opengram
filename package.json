@@ -16,7 +16,9 @@
   "files": [
     "src/core/**/*.js",
     "src/scenes/**/*.js",
-    "*.js"
+    "src/types/*.js",
+    "src/*.js",
+    "*.json"
   ],
   "scripts": {
     "lint": "eslint .",
