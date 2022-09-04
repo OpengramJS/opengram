@@ -1882,6 +1882,17 @@ class OpengramContext {
     return this.telegram.revokeChatInviteLink(this.chat.id, inviteLink)
   }
 
+  /**
+   * Use this method to approve join request for chat from current update.
+   * The bot must be an administrator in the chat for this to work and must have
+   * the `can_invite_users` administrator right.
+   *
+   * Returns `True` on success.
+   * @see https://core.telegram.org/bots/api#approvechatjoinrequest
+   * @param {number} userId Unique identifier of the target user
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
   approveChatJoinRequest (userId) {
     this.assert(this.chat, 'approveChatJoinRequest')
     return this.telegram.approveChatJoinRequest(this.chat.id, userId)
