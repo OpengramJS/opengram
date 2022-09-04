@@ -1541,6 +1541,18 @@ class OpengramContext {
     return this.telegram.getStickerSet(name)
   }
 
+  /**
+   * Use this method to set a new group sticker set for supergroup from current update.
+   * The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights.
+   * Use the field `can_set_sticker_set` optionally returned in {@link getChat} requests to check if the
+   * bot can use this method.
+   *
+   * Returns `True` on success.
+   * @see https://core.telegram.org/bots/api#setchatstickerset
+   * @param {string} setName Name of the sticker set to be set as the group sticker set
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
   setChatStickerSet (setName) {
     this.assert(this.chat, 'setChatStickerSet')
     return this.telegram.setChatStickerSet(this.chat.id, setName)
