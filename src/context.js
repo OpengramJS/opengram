@@ -1681,6 +1681,15 @@ class OpengramContext {
     return this.telegram.addStickerToSet(this.from.id, name, stickerData)
   }
 
+  /**
+   * Use this method to get the current list of the bot's commands for the given scope and user language.
+   *
+   * Returns Array of {@link BotCommand} on success. If commands aren't set, an empty list is returned.
+   * @see https://core.telegram.org/bots/api#getmycommands
+   * @param {object|Extra} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<BotCommand[]>}
+   */
   getMyCommands (extra) {
     return this.telegram.getMyCommands(extra)
   }
