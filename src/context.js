@@ -1767,6 +1767,23 @@ class OpengramContext {
     return this.reply(html, { parse_mode: 'HTML', ...extra })
   }
 
+  /**
+   * Use this method to delete message from current update or message with id specified in arguments,
+   * including service messages, with the following limitations:
+   * - A message can only be deleted if it was sent less than 48 hours ago.
+   * - A dice message in a private chat can only be deleted if it was sent more than 24 hours ago.
+   * - Bots can delete outgoing messages in private chats, groups, and supergroups.
+   * - Bots can delete incoming messages in private chats.
+   * - Bots granted can_post_messages permissions can delete outgoing messages in channels.
+   * - If the bot is an administrator of a group, it can delete any message there.
+   * - If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.
+   *
+   * Returns `True` on success.
+   * @see https://core.telegram.org/bots/api#deletemessage
+   * @param {number} messageId Identifier of the message to delete
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
   deleteMessage (messageId) {
     this.assert(this.chat, 'deleteMessage')
     if (typeof messageId !== 'undefined') {
