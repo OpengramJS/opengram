@@ -1348,6 +1348,16 @@ class OpengramContext {
     return this.telegram.sendVideoNote(this.chat.id, videoNote, extra)
   }
 
+  /**
+   * Use this method to send invoice to current chat.
+   *
+   * On success, the sent {@link Message} is returned.
+   * @see https://core.telegram.org/bots/api#sendinvoice
+   * @param {object} invoice Other invoice parameters
+   * @param {object|Extra} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<Message>}
+   */
   replyWithInvoice (invoice, extra) {
     this.assert(this.chat, 'replyWithInvoice')
     return this.telegram.sendInvoice(this.chat.id, invoice, extra)
