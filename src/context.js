@@ -1512,6 +1512,17 @@ class OpengramContext {
     return this.telegram.sendVenue(this.chat.id, latitude, longitude, title, address, extra)
   }
 
+  /**
+   * Use this method to send phone contacts to chat from current update.
+   *
+   * On success, the sent {@link Message} is returned.
+   * @see https://core.telegram.org/bots/api#sendcontact
+   * @param {string} phoneNumber Contact's phone number
+   * @param {string} firstName Contact's first name
+   * @param {object|Extra} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<Message>}
+   */
   replyWithContact (phoneNumber, firstName, extra) {
     this.assert(this.from, 'replyWithContact')
     return this.telegram.sendContact(this.chat.id, phoneNumber, firstName, extra)
