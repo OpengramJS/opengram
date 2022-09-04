@@ -1753,6 +1753,16 @@ class OpengramContext {
     return this.reply(markdown, { parse_mode: 'MarkdownV2', ...extra })
   }
 
+  /**
+   * Use this method to send text messages with HTML (`parse_mode: 'HTML'`) to chat from current update.
+   *
+   * On success, the sent {@link Message} is returned.
+   * @see https://core.telegram.org/bots/api#sendmessage
+   * @param {string} html Text with HTML of the message to be sent, 1-4096 characters after entities parsing
+   * @param {MessageExtraParams|Extra} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<Message>}
+   */
   replyWithHTML (html, extra) {
     return this.reply(html, { parse_mode: 'HTML', ...extra })
   }
