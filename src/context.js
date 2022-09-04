@@ -1831,6 +1831,18 @@ class OpengramContext {
     return this.telegram.copyMessage(chatId, message.chat.id, message.message_id, extra)
   }
 
+  /**
+   * Use this method to create an additional invite link for chat from current update.
+   * The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights.
+   * The link can be revoked using the method
+   * {@link Telegram.revokeChatInviteLink revokeChatInviteLink}.
+   *
+   * Returns the new invite link as {@link ChatInviteLink} object.
+   * @see https://core.telegram.org/bots/api#createchatinvitelink
+   * @param {object|Extra} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<ChatInviteLink>}
+   */
   createChatInviteLink (extra) {
     this.assert(this.chat, 'createChatInviteLink')
     return this.telegram.createChatInviteLink(this.chat.id, extra)
