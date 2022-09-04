@@ -1663,6 +1663,19 @@ class OpengramContext {
     return this.telegram.createNewStickerSet(this.from.id, name, title, stickerData)
   }
 
+  /**
+   * Use this method to add a new sticker to a set created by the bot for user from current update.
+   * You **must** use exactly one of the fields `png_sticker`, `tgs_sticker`, or `webm_sticker`.
+   * Animated stickers can be added to animated sticker sets and only to them.
+   * Animated sticker sets can have up to 50 stickers. Static sticker sets can have up to 120 stickers.
+   *
+   * Returns `True` on success.
+   * @see https://core.telegram.org/bots/api#addstickertoset
+   * @param {string} name Sticker set name
+   * @param {object} stickerData Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
   addStickerToSet (name, stickerData) {
     this.assert(this.from, 'addStickerToSet')
     return this.telegram.addStickerToSet(this.from.id, name, stickerData)
