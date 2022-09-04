@@ -1528,6 +1528,15 @@ class OpengramContext {
     return this.telegram.sendContact(this.chat.id, phoneNumber, firstName, extra)
   }
 
+  /**
+   * Use this method to get a sticker set.
+   *
+   * On success, a {@link StickerSet} object is returned.
+   * @see https://core.telegram.org/bots/api#getstickerset
+   * @param {string} name Name of the sticker set
+   * @throws {TelegramError}
+   * @return {Promise<StickerSet>}
+   */
   getStickerSet (name) {
     return this.telegram.getStickerSet(name)
   }
