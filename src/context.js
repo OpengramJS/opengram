@@ -1625,6 +1625,19 @@ class OpengramContext {
     return this.telegram.deleteStickerFromSet(sticker)
   }
 
+  /**
+   * Use this method to upload a .PNG file with a sticker owned by current user for later use in
+   * {@link Telegram.createNewStickerSet createNewStickerSet} and {@link Telegram.addStickerToSet addStickerToSet}
+   * methods (can be used multiple times).
+   *
+   * Returns the uploaded {@link File} on success.
+   * @see https://core.telegram.org/bots/api#uploadstickerfile
+   * @param {attachmentFile} stickerFile **PNG** image with the sticker, must be up to 512 kilobytes in size,
+   *    dimensions must not exceed 512px, and either width or height must be exactly 512px.
+   *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files).
+   * @throws {TelegramError}
+   * @return {Promise<File>}
+   */
   uploadStickerFile (stickerFile) {
     this.assert(this.from, 'uploadStickerFile')
     return this.telegram.uploadStickerFile(this.from.id, stickerFile)
