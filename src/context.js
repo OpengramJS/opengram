@@ -1400,6 +1400,17 @@ class OpengramContext {
     return this.telegram.sendVoice(this.chat.id, voice, extra)
   }
 
+  /**
+   * Use this method to send a native poll with type `regular` to chat from current update.
+   *
+   * On success, the sent {@link Message} is returned.
+   * @see https://core.telegram.org/bots/api#sendpoll
+   * @param {string} question Poll question, 1-300 characters
+   * @param {string[]} options List of answer options, 2-10 strings 1-100 characters each
+   * @param {object|Extra} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<Message>}
+   */
   replyWithPoll (question, options, extra) {
     this.assert(this.chat, 'replyWithPoll')
     return this.telegram.sendPoll(this.chat.id, question, options, extra)
