@@ -1812,6 +1812,19 @@ class OpengramContext {
     return this.telegram.forwardMessage(chatId, this.chat.id, message.message_id, extra)
   }
 
+  /**
+   * Use this method to copy messages of any kind from current chat. Service messages and invoice messages can't be copied.
+   * The method is analogous to the method {@link forwardMessage}, but the copied message doesn't have a link to the
+   * original message.
+   *
+   * Returns the {@link MessageId} of the sent message on success.
+   * @see https://core.telegram.org/bots/api#copymessage
+   * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
+   *    (in the format `@channelusername`)
+   * @param {object|Extra} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<MessageId>}
+   */
   copyMessage (chatId, extra) {
     const message = getMessageFromAnySource(this)
     this.assert(message, 'copyMessage')
