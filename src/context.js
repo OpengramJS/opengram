@@ -1865,6 +1865,18 @@ class OpengramContext {
     return this.telegram.editChatInviteLink(this.chat.id, inviteLink, extra)
   }
 
+  /**
+   * Use this method to revoke an invite link created by the bot for chat from current update.
+   * If the primary link is revoked, a new link is automatically generated.
+   * The bot must be an administrator in the chat for this to work and must
+   * have the appropriate administrator rights.
+   *
+   * Returns the revoked invite link as {@link ChatInviteLink} object.
+   * @see https://core.telegram.org/bots/api#revokechatinvitelink
+   * @param {string} inviteLink The invite link to revoke
+   * @throws {TelegramError}
+   * @return {Promise<ChatInviteLink>}
+   */
   revokeChatInviteLink (inviteLink) {
     this.assert(this.chat, 'revokeChatInviteLink')
     return this.telegram.revokeChatInviteLink(this.chat.id, inviteLink)
