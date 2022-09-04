@@ -1694,6 +1694,19 @@ class OpengramContext {
     return this.telegram.getMyCommands(extra)
   }
 
+  /**
+   * Use this method to change the list of the bot's commands. See
+   * [https://core.telegram.org/bots#commands](https://core.telegram.org/bots#commands) for more details
+   * about bot commands.
+   *
+   * Returns `True` on success.
+   * @see https://core.telegram.org/bots/api#setmycommands
+   * @param {BotCommand[]} commands List of bot commands to be set as the list of the bot's commands.
+   *    At most 100 commands can be specified.
+   * @param {object|Extra} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
   setMyCommands (commands, extra) {
     return this.telegram.setMyCommands(commands, extra)
   }
