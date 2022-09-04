@@ -1725,6 +1725,16 @@ class OpengramContext {
     return this.telegram.deleteMyCommands(extra)
   }
 
+  /**
+   * Use this method to send text messages with Markdown (`parse_mode: 'Markdown'`) to chat from current update.
+   *
+   * On success, the sent {@link Message} is returned.
+   * @see https://core.telegram.org/bots/api#sendmessage
+   * @param {string} markdown Text with Markdown of the message to be sent, 1-4096 characters after entities parsing
+   * @param {MessageExtraParams|Extra} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<Message>}
+   */
   replyWithMarkdown (markdown, extra) {
     return this.reply(markdown, { parse_mode: 'Markdown', ...extra })
   }
