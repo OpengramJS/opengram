@@ -1711,6 +1711,16 @@ class OpengramContext {
     return this.telegram.setMyCommands(commands, extra)
   }
 
+  /**
+   * Use this method to delete the list of the bot's commands for the given scope and user language.
+   * After deletion, higher level commands will be shown to affected users.
+   *
+   * Returns `True` on success.
+   * @see https://core.telegram.org/bots/api#deletemycommands
+   * @param {object|Extra} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
   deleteMyCommands (extra) {
     return this.telegram.deleteMyCommands(extra)
   }
