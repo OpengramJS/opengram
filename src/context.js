@@ -1363,6 +1363,17 @@ class OpengramContext {
     return this.telegram.sendInvoice(this.chat.id, invoice, extra)
   }
 
+  /**
+   * Use this method to send a game to chat from current update.
+   *
+   * On success, the sent {@link Message} is returned.
+   * @see https://core.telegram.org/bots/api#sendgame
+   * @param {string} gameName Short name of the game, serves as the unique identifier for the game.
+   *    Set up your games via [@BotFather](https://t.me/BotFather).
+   * @param {object|Extra} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<Message>}
+   */
   replyWithGame (gameName, extra) {
     this.assert(this.chat, 'replyWithGame')
     return this.telegram.sendGame(this.chat.id, gameName, extra)
