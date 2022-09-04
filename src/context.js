@@ -1612,6 +1612,15 @@ class OpengramContext {
     return this.telegram.setStickerSetThumb(name, userId, thumb)
   }
 
+  /**
+   * Use this method to delete a sticker from a set created by the bot.
+   *
+   * Returns `True` on success.
+   * @see https://core.telegram.org/bots/api#deletestickerfromset
+   * @param {string} sticker File identifier of the sticker
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
   deleteStickerFromSet (sticker) {
     return this.telegram.deleteStickerFromSet(sticker)
   }
