@@ -1739,6 +1739,16 @@ class OpengramContext {
     return this.reply(markdown, { parse_mode: 'Markdown', ...extra })
   }
 
+  /**
+   * Use this method to send text messages with MarkdownV2 (`parse_mode: 'MarkdownV2'`) to chat from current update.
+   *
+   * On success, the sent {@link Message} is returned.
+   * @see https://core.telegram.org/bots/api#sendmessage
+   * @param {string} markdown Text with MarkdownV2 of the message to be sent, 1-4096 characters after entities parsing
+   * @param {MessageExtraParams|Extra} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<Message>}
+   */
   replyWithMarkdownV2 (markdown, extra) {
     return this.reply(markdown, { parse_mode: 'MarkdownV2', ...extra })
   }
