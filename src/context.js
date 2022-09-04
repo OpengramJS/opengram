@@ -1308,6 +1308,21 @@ class OpengramContext {
     return this.telegram.sendVideo(this.chat.id, video, extra)
   }
 
+  /**
+   * Use this method to send animation files to chat from current update (GIF or H.264/MPEG-4 AVC video without sound).
+   *
+   * On success, the sent {@link Message} is returned.
+   *
+   * Bots can currently send animation files of up to 50 MB in size, this limit may be changed in the future.
+   * @see https://core.telegram.org/bots/api#sendanimation
+   * @param {attachmentFile} animation Animation to send. Pass a `file_id` as String to send an animation that exists
+   *    on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an animation from
+   *    the Internet, or upload a new animation using multipart/form-data.
+   *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
+   * @param {object|Extra} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<Message>}
+   */
   replyWithAnimation (animation, extra) {
     this.assert(this.chat, 'replyWithAnimation')
     return this.telegram.sendAnimation(this.chat.id, animation, extra)
