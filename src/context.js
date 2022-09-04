@@ -1643,6 +1643,21 @@ class OpengramContext {
     return this.telegram.uploadStickerFile(this.from.id, stickerFile)
   }
 
+  /**
+   * Use this method to create a new sticker set owned by current user. The bot will be able to edit the sticker set
+   * thus created. You must use exactly one of the fields `png_sticker`, `tgs_sticker`, or `webm_sticker`.
+   *
+   * Returns `True` on success.
+   * @see https://core.telegram.org/bots/api#createnewstickerset
+   * @param {string} name Short name of sticker set, to be used in `t.me/addstickers/` URLs (e.g., *animals*).
+   *    Can contain only English letters, digits and underscores. Must begin with a letter,
+   *    can't contain consecutive underscores and must end in `"_by_<bot_username>"`. `<bot_username>`
+   *    is case insensitive. 1-64 characters.
+   * @param {string} title Sticker set title, 1-64 characters
+   * @param {object} stickerData Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
   createNewStickerSet (name, title, stickerData) {
     this.assert(this.from, 'createNewStickerSet')
     return this.telegram.createNewStickerSet(this.from.id, name, title, stickerData)
