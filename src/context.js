@@ -1848,6 +1848,18 @@ class OpengramContext {
     return this.telegram.createChatInviteLink(this.chat.id, extra)
   }
 
+  /**
+   * Use this method to edit a non-primary invite link created by the bot for chat from current update.
+   * The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights.
+   *
+   * Returns the edited invite link
+   * as a {@link ChatInviteLink} object.
+   * @see https://core.telegram.org/bots/api#editchatinvitelink
+   * @param {string} inviteLink The invite link to edit
+   * @param {object|Extra} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<ChatInviteLink>}
+   */
   editChatInviteLink (inviteLink, extra) {
     this.assert(this.chat, 'editChatInviteLink')
     return this.telegram.editChatInviteLink(this.chat.id, inviteLink, extra)
