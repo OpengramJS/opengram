@@ -1794,6 +1794,17 @@ class OpengramContext {
     return this.telegram.deleteMessage(this.chat.id, message.message_id)
   }
 
+  /**
+   * Use this method to forward messages of any kind from current chat. Service messages can't be forwarded.
+   *
+   * On success, the sent {@link Message} is returned.
+   * @see https://core.telegram.org/bots/api#forwardmessage
+   * @param {string|number} chatId Unique identifier for the target chat or username of the target channel
+   *    (in the format `@channelusername`)
+   * @param {forwardExtraParams|Extra} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<Message>}
+   */
   forwardMessage (chatId, extra) {
     this.assert(this.chat, 'forwardMessage')
     const message = getMessageFromAnySource(this)
