@@ -1379,6 +1379,22 @@ class OpengramContext {
     return this.telegram.sendGame(this.chat.id, gameName, extra)
   }
 
+  /**
+   * Use this method to send audio files to chat from current update,
+   * if you want Telegram clients to display the file as a playable voice message.
+   * For this to work, your audio must be in an .OGG file encoded
+   * with OPUS (other formats may be sent as {@link Audio} or {@link Document}).
+   *
+   * On success, the sent {@link Message} is returned.
+   * Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.
+   * @see https://core.telegram.org/bots/api#sendvoice
+   * @param {attachmentFile} voice Audio file to send. Pass a file_id as String to send a file that exists on the
+   *    Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet,
+   *    or upload a new one using multipart/form-data.
+   * @param {object|Extra} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<Message>}
+   */
   replyWithVoice (voice, extra) {
     this.assert(this.chat, 'replyWithVoice')
     return this.telegram.sendVoice(this.chat.id, voice, extra)
