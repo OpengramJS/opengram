@@ -1432,6 +1432,16 @@ class OpengramContext {
     return this.telegram.sendQuiz(this.chat.id, question, options, extra)
   }
 
+  /**
+   * Use this method to stop a poll in chat from current update. which was sent by the bot.
+   *
+   * On success, the stopped {@link Poll} is returned.
+   * @see https://core.telegram.org/bots/api#stoppoll
+   * @param {number} messageId Identifier of the original message with the poll
+   * @param {object|Extra} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<Poll>}
+   */
   stopPoll (messageId, extra) {
     this.assert(this.chat, 'stopPoll')
     return this.telegram.stopPoll(this.chat.id, messageId, extra)
