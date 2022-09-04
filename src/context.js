@@ -1328,6 +1328,21 @@ class OpengramContext {
     return this.telegram.sendAnimation(this.chat.id, animation, extra)
   }
 
+  /**
+   * As of [v.4.0](https://telegram.org/blog/video-messages-and-telescope), Telegram clients support rounded square
+   * MPEG4 videos of up to 1 minute long.
+   * Use this method to send video messages to chat from current update.
+   *
+   * On success, the sent {@link Message} is returned.
+   * @see https://core.telegram.org/bots/api#sendvideonote
+   * @param {attachmentFile} videoNote Video note to send. Pass a `file_id` as String to send a video note that exists on
+   *    the Telegram servers (recommended) or upload a new video using multipart/form-data.
+   *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files).
+   *    Sending video notes by a URL is currently unsupported
+   * @param {object|Extra} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<Message>}
+   */
   replyWithVideoNote (videoNote, extra) {
     this.assert(this.chat, 'replyWithVideoNote')
     return this.telegram.sendVideoNote(this.chat.id, videoNote, extra)
