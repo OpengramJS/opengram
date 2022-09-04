@@ -1573,6 +1573,16 @@ class OpengramContext {
     return this.telegram.deleteChatStickerSet(this.chat.id)
   }
 
+  /**
+   * Use this method to move a sticker in a set created by the bot to a specific position.
+   *
+   * Returns `True` on success.
+   * @see https://core.telegram.org/bots/api#setstickerpositioninset
+   * @param {string} sticker File identifier of the sticker
+   * @param {number} position New sticker position in the set, zero-based
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
   setStickerPositionInSet (sticker, position) {
     return this.telegram.setStickerPositionInSet(sticker, position)
   }
