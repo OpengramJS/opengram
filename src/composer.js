@@ -578,7 +578,7 @@ class Composer {
    * )
    * ```
    * @param args
-   * @return {function(*): *}
+   * @return {MiddlewareFn}
    */
   static reply (...args) {
     return (ctx) => ctx.reply(...args)
@@ -598,6 +598,20 @@ class Composer {
       .catch((err) => errorHandler(err, ctx))
   }
 
+  /**
+   * > ❗️ **This is an advanced method of Opengram.**
+   *
+   * Registers some middleware that runs concurrently to the executing middleware stack.
+   * Runs the middleware at the next event loop using
+   * [setImmediate](https://nodejs.dev/en/learn/understanding-setimmediate) and force call `next()`
+   *
+   * For example, you can use that method for saving metrics and other non-priority or optional features in background
+   *
+   * > ❗️ If you call next in this middleware, then nothing will happen, it will be ignored
+   *
+   * @param {MiddlewareFn} middleware The middleware to run concurrently
+   * @return {MiddlewareFn}
+   */
   static fork (middleware) {
     const handler = Composer.unwrap(middleware)
     return (ctx, next) => {
@@ -619,6 +633,25 @@ class Composer {
     return (ctx, next) => typeof next === 'function' ? next(ctx) : Promise.resolve()
   }
 
+  /**
+   * > ❗️ **This is an advanced method of Opengram.**
+   * Lazily asynchronously returns some middleware that can be generated on the fly for each context.
+   * Pass a factory function that creates some middleware
+   *
+   * The factory function will be called once per context, and its result will be executed with the context object.
+   * ```js
+   * // The middleware returned by `createMyMiddleware` will be used only once
+   * bot.use(
+   *   Composer.lazy(ctx => createMyMiddleware(ctx))
+   * )
+   * ```
+   *
+   * You may generate this middleware in an `async` fashion.
+   *
+   * @param {function} factoryFn The factory function creating the middleware
+   * @throws {TypeError}
+   * @return {MiddlewareFn<Promise>}
+   */
   static lazy (factoryFn) {
     if (typeof factoryFn !== 'function') {
       throw new TypeError('Argument must be a function')
