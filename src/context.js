@@ -1478,6 +1478,17 @@ class OpengramContext {
     return this.telegram.sendChatAction(this.chat.id, action)
   }
 
+  /**
+   * Use this method to send point on the map to chat from current update.
+   *
+   * On success, the sent {@link Message} is returned.
+   * @see https://core.telegram.org/bots/api#sendlocation
+   * @param {number} latitude Latitude of the location
+   * @param {number} longitude Longitude of the location
+   * @param {object|Extra} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise}
+   */
   replyWithLocation (latitude, longitude, extra) {
     this.assert(this.chat, 'replyWithLocation')
     return this.telegram.sendLocation(this.chat.id, latitude, longitude, extra)
