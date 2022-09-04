@@ -1494,6 +1494,19 @@ class OpengramContext {
     return this.telegram.sendLocation(this.chat.id, latitude, longitude, extra)
   }
 
+  /**
+   * Use this method to send information about a venue to chat from current update.
+   *
+   * On success, the sent {@link Message} is returned.
+   * @see https://core.telegram.org/bots/api#sendvenue
+   * @param {number} latitude Latitude of the venue
+   * @param {number} longitude Longitude of the venue
+   * @param {string} title Name of the venue
+   * @param {string} address Address of the venue
+   * @param {object|Extra} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<Message>}
+   */
   replyWithVenue (latitude, longitude, title, address, extra) {
     this.assert(this.chat, 'replyWithVenue')
     return this.telegram.sendVenue(this.chat.id, latitude, longitude, title, address, extra)
