@@ -352,6 +352,13 @@ class OpengramContext {
     return message && message.from
   }
 
+  /**
+   * Returns inline message id string for current update
+   *
+   * Shortcut to `context.callbackQuery.inline_message_id`, `context.chosenInlineResult.inline_message_id`
+   *
+   * @return {string}
+   */
   get inlineMessageId () {
     return (this.callbackQuery && this.callbackQuery.inline_message_id) || (this.chosenInlineResult && this.chosenInlineResult.inline_message_id)
   }
