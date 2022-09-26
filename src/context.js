@@ -260,6 +260,12 @@ class OpengramContext {
     return this.update.my_chat_member
   }
 
+  /**
+   * Returns {@link ChatMemberUpdated} object for current update
+   *
+   * Shortcut to `context.update.chat_member`
+   * @return {ChatMemberUpdated}
+   */
   get chatMember () {
     return this.update.chat_member
   }
