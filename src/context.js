@@ -363,6 +363,13 @@ class OpengramContext {
     return (this.callbackQuery && this.callbackQuery.inline_message_id) || (this.chosenInlineResult && this.chosenInlineResult.inline_message_id)
   }
 
+  /**
+   * Returns {@link PassportData} object for current update
+   *
+   * Shortcut to `context.message.passport_data`
+   *
+   * @return {PassportData}
+   */
   get passportData () {
     return this.message && this.message.passport_data
   }
