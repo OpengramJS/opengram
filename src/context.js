@@ -398,6 +398,12 @@ class OpengramContext {
     this.contextState = { ...value }
   }
 
+  /**
+   * Getter for webhookReply
+   *
+   * Use this property to control reply via webhook feature for current context.
+   * @return {boolean}
+   */
   get webhookReply () {
     return this.tg.webhookReply
   }
