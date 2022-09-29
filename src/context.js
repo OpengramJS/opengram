@@ -927,6 +927,16 @@ class OpengramContext {
     return this.telegram.deleteChatPhoto(this.chat.id)
   }
 
+  /**
+   * Use this method to change the title of a chat. Titles can't be changed for current private chats.
+   * The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights.
+   *
+   * Returns `True` on success.
+   * @see https://core.telegram.org/bots/api#setchattitle
+   * @param {string} title New chat title, 1-255 characters
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
   setChatTitle (title) {
     this.assert(this.chat, 'setChatTitle')
     return this.telegram.setChatTitle(this.chat.id, title)
