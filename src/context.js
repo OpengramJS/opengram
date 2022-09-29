@@ -868,6 +868,16 @@ class OpengramContext {
     return this.telegram.banChatSenderChat(this.chat.id, senderChatId)
   }
 
+  /**
+   * Use this method to unban a previously banned channel chat in current supergroup or channel.
+   * The bot must be an administrator for this to work and must have the appropriate administrator rights.
+   *
+   * Returns `True` on success.
+   * @see https://core.telegram.org/bots/api#unbanchatsenderchat
+   * @param {number} senderChatId Unique identifier of the target sender chat
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
   unbanChatSenderChat (senderChatId) {
     this.assert(this.chat, 'unbanChatSenderChat')
     return this.telegram.unbanChatSenderChat(this.chat.id, senderChatId)
