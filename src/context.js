@@ -851,6 +851,18 @@ class OpengramContext {
     return this.telegram.promoteChatMember(this.chat.id, userId, extra)
   }
 
+  /**
+   * Use this method to ban a channel chat in current supergroup or a channel. Until the chat is
+   * {@link unbanChatMember unbanned}, the owner of the banned chat won't be able to send messages on behalf
+   * of **any of their channels**. The bot must be an administrator in the supergroup or channel for this
+   * to work and must have the appropriate administrator rights.
+   *
+   * Returns `True` on success.
+   * @see https://core.telegram.org/bots/api#banchatsenderchat
+   * @param {number} senderChatId Unique identifier of the target sender chat
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
   banChatSenderChat (senderChatId) {
     this.assert(this.chat, 'banChatSenderChat')
     return this.telegram.banChatSenderChat(this.chat.id, senderChatId)
