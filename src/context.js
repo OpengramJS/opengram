@@ -898,6 +898,16 @@ class OpengramContext {
     return this.telegram.setChatAdministratorCustomTitle(this.chat.id, userId, title)
   }
 
+  /**
+   * Use this method to set a new profile photo for current chat. Photos can't be changed for private chats.
+   * The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights.
+   *
+   * Returns `True` on success.
+   * @see https://core.telegram.org/bots/api#setchatphoto
+   * @param {attachmentFile} photo New chat photo, uploaded using multipart/form-data
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
   setChatPhoto (photo) {
     this.assert(this.chat, 'setChatPhoto')
     return this.telegram.setChatPhoto(this.chat.id, photo)
