@@ -728,6 +728,15 @@ class OpengramContext {
     return this.telegram.sendMessage(this.chat.id, text, extra)
   }
 
+  /**
+   * Use this method to get up-to-date information about current chat (current name of the user for one-on-one
+   * conversations, current username of a user, group or channel, etc.).
+   *
+   * Returns a {@link Chat} object on success.
+   * @see https://core.telegram.org/bots/api#getchat
+   * @throws {TelegramError}
+   * @return {Promise<Chat>}
+   */
   getChat () {
     this.assert(this.chat, 'getChat')
     return this.telegram.getChat(this.chat.id)
