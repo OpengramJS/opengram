@@ -834,6 +834,18 @@ class OpengramContext {
     return this.telegram.restrictChatMember(this.chat.id, userId, extra)
   }
 
+  /**
+   * Use this method to promote or demote a user in a supergroup or a channel. The bot must be an administrator
+   * in the chat for this to work and must have the appropriate administrator rights. Pass `False` for all boolean
+   * parameters to demote a user.
+   *
+   * Returns `True` on success.
+   * @see https://core.telegram.org/bots/api#promotechatmember
+   * @param {number} userId Unique identifier of the target user
+   * @param {object} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
   promoteChatMember (userId, extra) {
     this.assert(this.chat, 'promoteChatMember')
     return this.telegram.promoteChatMember(this.chat.id, userId, extra)
