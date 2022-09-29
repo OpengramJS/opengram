@@ -684,6 +684,18 @@ class OpengramContext {
       )
   }
 
+  /**
+   * Use this method to edit live location inline message / message from current update.
+   * A location can be edited until its `live_period` expires or
+   * editing is explicitly disabled by a call to {@link stopMessageLiveLocation}.
+   *
+   * On success, if the edited message is not an inline message, the edited {@link Message} is returned,
+   * otherwise `True` is returned.
+   * @see https://core.telegram.org/bots/api#stopmessagelivelocation
+   * @param {object|Markup} [markup] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<boolean|Message>}
+   */
   stopMessageLiveLocation (markup) {
     this.assert(this.callbackQuery || this.inlineMessageId, 'stopMessageLiveLocation')
     return this.inlineMessageId
