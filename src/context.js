@@ -559,6 +559,17 @@ class OpengramContext {
       )
   }
 
+  /**
+   * Use this method to edit captions of inline messages / messages from current update.
+   *
+   * On success, if the edited message is not an inline message, the edited {@link Message} is returned,
+   * otherwise `True` is returned.
+   * @see https://core.telegram.org/bots/api#editmessagecaption
+   * @param {string} [caption] New caption of the message, 0-1024 characters after entities parsing
+   * @param {object|Extra} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<boolean|Message>}
+   */
   editMessageCaption (caption, extra) {
     this.assert(this.callbackQuery || this.inlineMessageId, 'editMessageCaption')
     return this.inlineMessageId
