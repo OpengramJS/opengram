@@ -1079,6 +1079,15 @@ class OpengramContext {
     return this.telegram.getChatMemberCount(this.chat.id)
   }
 
+  /**
+   * Use this method to get the number of members in chat from current update.
+   *
+   * Returns `Int` on success.
+   * @see https://core.telegram.org/bots/api#getchatmembercount
+   * @deprecated Use {@link getChatMemberCount}
+   * @throws {TelegramError}
+   * @return {Promise<number>}
+   */
   getChatMemberCount () {
     this.assert(this.chat, 'getChatMemberCount')
     return this.telegram.getChatMemberCount(this.chat.id)
