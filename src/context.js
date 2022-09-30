@@ -1007,6 +1007,14 @@ class OpengramContext {
     return this.telegram.unpinAllChatMessages(this.chat.id)
   }
 
+  /**
+   * Use this method for your bot to leave from group, supergroup or channel from current update.
+   *
+   * Returns `True` on success.
+   * @see https://core.telegram.org/bots/api#leavechat
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
   leaveChat () {
     this.assert(this.chat, 'leaveChat')
     return this.telegram.leaveChat(this.chat.id)
