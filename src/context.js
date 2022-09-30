@@ -1250,6 +1250,20 @@ class OpengramContext {
     return this.telegram.sendDice(this.chat.id, extra)
   }
 
+  /**
+   * Use this method to send general files to chat from current update.
+   *
+   * On success, the sent {@link Message} is returned.
+   * Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
+   * @see https://core.telegram.org/bots/api#senddocument
+   * @param {attachmentFile} document Document to send. Pass a `file_id` as String to send a document that exists
+   *    on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet,
+   *    or upload a new photo using multipart/form-data.
+   *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
+   * @param {object|Extra} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<Message>}
+   */
   replyWithDocument (document, extra) {
     this.assert(this.chat, 'replyWithDocument')
     return this.telegram.sendDocument(this.chat.id, document, extra)
