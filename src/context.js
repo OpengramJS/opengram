@@ -1093,6 +1093,15 @@ class OpengramContext {
     return this.telegram.getChatMemberCount(this.chat.id)
   }
 
+  /**
+   * Use this method to get the current value of the bot's menu button in private chat from current update,
+   * or the default menu button.
+   *
+   * Returns {@link MenuButton} on success.
+   * @see https://core.telegram.org/bots/api#getchatmenubutton
+   * @throws {TelegramError}
+   * @return {Promise<MenuButton>}
+   */
   getChatMenuButton () {
     this.assert(this.chat, 'getChatMenuButton')
     return this.telegram.getChatMenuButton(this.chat.id)
