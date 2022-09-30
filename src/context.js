@@ -1269,6 +1269,19 @@ class OpengramContext {
     return this.telegram.sendDocument(this.chat.id, document, extra)
   }
 
+  /**
+   * Use this method to send static `.WEBP`, animated `.TGS`, or video `.WEBM` stickers to chat from current update.
+   *
+   * On success, the sent {@link Message} is returned.
+   * @see https://core.telegram.org/bots/api#sendsticker
+   * @param {attachmentFile} sticker Sticker to send. Pass a `file_id` as String to send a file that exists on
+   *    the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP file from the
+   *    Internet, or upload a new one using multipart/form-data.
+   *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
+   * @param {stickerExtraParams|Extra} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<Message>}
+   */
   replyWithSticker (sticker, extra) {
     this.assert(this.chat, 'replyWithSticker')
     return this.telegram.sendSticker(this.chat.id, sticker, extra)
