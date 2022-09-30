@@ -1140,6 +1140,16 @@ class OpengramContext {
     return this.telegram.setMyDefaultAdministratorRights(rights, forChannels)
   }
 
+  /**
+   * Use this method to get the current default administrator rights of the bot.
+   *
+   * Returns {@link ChatAdministratorRights} on success.
+   * @see https://core.telegram.org/bots/api#getmydefaultadministratorrights
+   * @param {boolean} [forChannels] Pass True to get default administrator rights of the bot in channels.
+   *    Otherwise, default administrator rights of the bot for groups and supergroups will be returned.
+   * @throws {TelegramError}
+   * @return {Promise<ChatAdministratorRights>}
+   */
   getMyDefaultAdministratorRights (forChannels) {
     return this.telegram.getMyDefaultAdministratorRights(forChannels)
   }
