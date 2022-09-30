@@ -1287,6 +1287,22 @@ class OpengramContext {
     return this.telegram.sendSticker(this.chat.id, sticker, extra)
   }
 
+  /**
+   * Use this method to send video files to chat from current update,
+   * Telegram clients support MPEG4 videos (other formats may be sent as {@link Document}).
+   *
+   * On success, the sent {@link Message} is returned.
+   *
+   * Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
+   * @see https://core.telegram.org/bots/api#sendvideo
+   * @param {attachmentFile} video Video to send. Pass a `file_id` as String to send a video that
+   *    exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get
+   *    a video from the Internet, or upload a new video using multipart/form-data.
+   *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
+   * @param {object|Extra} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<Message>}
+   */
   replyWithVideo (video, extra) {
     this.assert(this.chat, 'replyWithVideo')
     return this.telegram.sendVideo(this.chat.id, video, extra)
