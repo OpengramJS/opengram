@@ -942,6 +942,16 @@ class OpengramContext {
     return this.telegram.setChatTitle(this.chat.id, title)
   }
 
+  /**
+   * Use this method to change the description of current group, a supergroup or a channel.
+   * The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights.
+   *
+   * Returns `True` on success.
+   * https://core.telegram.org/bots/api#setchatdescription
+   * @param {string} [description] New chat description, 0-255 characters
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
   setChatDescription (description) {
     this.assert(this.chat, 'setChatDescription')
     return this.telegram.setChatDescription(this.chat.id, description)
