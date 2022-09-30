@@ -1051,6 +1051,15 @@ class OpengramContext {
     return this.telegram.getChatAdministrators(this.chat.id)
   }
 
+  /**
+   * Use this method to get information about a member of chat from current update.
+   *
+   * Returns a {@link ChatMember} object on success.
+   * @see https://core.telegram.org/bots/api#getchatmember
+   * @param userId Unique identifier of the target user
+   * @throws {TelegramError}
+   * @return {Promise<ChatMember>}
+   */
   getChatMember (userId) {
     this.assert(this.chat, 'getChatMember')
     return this.telegram.getChatMember(this.chat.id, userId)
