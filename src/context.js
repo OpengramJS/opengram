@@ -1236,6 +1236,15 @@ class OpengramContext {
     return this.telegram.sendAudio(this.chat.id, audio, extra)
   }
 
+  /**
+   * Use this method to send an animated emoji that will display a random value to chat from current update.
+   *
+   * On success, the sent {@link Message} is returned.
+   * @see https://core.telegram.org/bots/api#sendphoto
+   * @param {object|Extra} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {Promise<Message>}
+   */
   replyWithDice (extra) {
     this.assert(this.chat, 'replyWithDice')
     return this.telegram.sendDice(this.chat.id, extra)
