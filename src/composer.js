@@ -620,15 +620,45 @@ class Composer {
     }
   }
 
+  /**
+   * > ❗️ **This is an advanced method of Opengram.**
+   * Middleware that calls a middleware or chain of middleware and calls the `next`, whether it called `next` or not.
+   * Allows you to execute some code and continue execution regardless of its result.
+   *
+   * @param {MiddlewareFn} middleware The middleware to run without access to next
+   * @return {MiddlewareFn}
+   */
   static tap (middleware) {
     const handler = Composer.unwrap(middleware)
-    return (ctx, next) => Promise.resolve(handler(ctx, Composer.safePassThru())).then(() => next(ctx))
+    return (ctx, next) => {
+      return Promise.resolve(
+        handler(ctx, Composer.safePassThru())
+      ).then(() => next(ctx))
+    }
   }
 
+  /**
+   * > ❗️ **This is an advanced method of Opengram.**
+   *
+   * Generates middleware which call next middleware
+   *
+   * For example, you can use it with {@link Composer.branch} or other to skip middleware (make middleware optional)
+   *
+   * @return {MiddlewareFn}
+   */
   static passThru () {
     return (ctx, next) => next(ctx)
   }
 
+  /**
+   * > ❗️ **This is an advanced method of Opengram.**
+   *
+   * Generates middleware which call next middleware if `next` function exists or returns empty resolved promise
+   *
+   * This method is similar to `Composer.passThru()`, but calls `next` if exists, otherwise returns resolved promise
+   *
+   * @return {MiddlewareFn}
+   */
   static safePassThru () {
     return (ctx, next) => typeof next === 'function' ? next(ctx) : Promise.resolve()
   }
