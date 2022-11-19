@@ -547,6 +547,23 @@ class Composer {
     return this.use(Composer.spoiler(...args))
   }
 
+  /**
+   * Registers some middleware that will only be executed when `/start` command is found.
+   *
+   * Shortcut to `Composer.command('start', ...)`, but with additional functionally, when you use this and
+   * deep linking, you can get start payload from `ctx.startPayload`
+   *
+   * For example if user start the bot from link like this: `http://t.me/examplebot?start=1234`
+   *
+   * With this code, bot reply user with text of start payload:
+   *
+   * ```js
+   * bot.start(ctx => ctx.reply(`Start payload: ${ctx.startPayload}`)) // Reply with "Start payload: 1234"
+   * ```
+   *
+   * @param {MiddlewareFn} fns The middleware(s) to register
+   * @return {MiddlewareFn}
+   */
   start (...fns) {
     return this.command('start', Composer.tap((ctx) => {
       const entity = ctx.message.entities[0]
@@ -554,10 +571,26 @@ class Composer {
     }), ...fns)
   }
 
+  /**
+   * Registers some middleware that will only be executed when `/help` command is found.
+   *
+   * Shortcut to `Composer.command('help', ...)`
+   *
+   * @param {MiddlewareFn} fns The middleware(s) to register
+   * @return {MiddlewareFn}
+   */
   help (...fns) {
     return this.command('help', ...fns)
   }
 
+  /**
+   * Registers some middleware that will only be executed when `/settings` command is found.
+   *
+   * Shortcut to `Composer.command('settings', ...)`
+   *
+   * @param {MiddlewareFn} fns The middleware(s) to register
+   * @return {MiddlewareFn}
+   */
   settings (...fns) {
     return this.command('settings', ...fns)
   }
