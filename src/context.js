@@ -52,7 +52,10 @@ const MessageSubTypes = [
   'voice_chat_ended',
   'voice_chat_participants_invited',
   'voice_chat_scheduled',
-  'web_app_data'
+  'web_app_data',
+  'forum_topic_created',
+  'forum_topic_closed',
+  'forum_topic_reopened'
 ]
 
 const MessageSubTypesMappingForChannelMode = {
@@ -1574,12 +1577,119 @@ class OpengramContext {
   }
 
   /**
+   * Use this method to create a topic in a forum supergroup chat. The bot must be an administrator in the chat for this
+   * to work and must have the can_manage_topics administrator rights.
+   *
+   * Returns information about the created topic as a {@link ForumTopic} object.
+   *
+   * @see https://core.telegram.org/bots/api#createforumtopic
+   *
+   * @param {string} name Topic name, 1-128 characters
+   * @param {object} [extra] Other parameters
+   *
+   * @throws {TelegramError}
+   * @return {Promise<ForumTopic>}
+   */
+  createForumTopic (name, extra) {
+    this.assert(this.chat, 'createForumTopic')
+    return this.telegram.createForumTopic(this.chat.id, name, extra)
+  }
+
+  /**
+   * Use this method to edit name and icon of a topic in a forum supergroup chat. The bot must be an administrator in
+   * the chat for this to work and must have can_manage_topics administrator rights, unless it is the creator of the
+   * topic.
+   *
+   * Returns `True` on success.
+   *
+   * @see https://core.telegram.org/bots/api#editforumtopic
+   * @param {string} name Topic name, 1-128 characters
+   * @param {string} iconCustomEmojiId New unique identifier of the custom emoji shown as the topic icon.
+   *   Use {@link getForumTopicIconStickers} to get all allowed custom emoji identifiers.
+   *
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
+  editForumTopic (name, iconCustomEmojiId) {
+    this.assert(this.chat, 'editForumTopic')
+    this.assert(this.message?.message_thread_id, 'editForumTopic')
+    return this.telegram.editForumTopic(this.chat.id, this.message.message_thread_id, {
+      name,
+      icon_custom_emoji_id: iconCustomEmojiId
+    })
+  }
+
+  /**
+   * Use this method to close an open topic in a forum supergroup chat. The bot must be an administrator in the chat
+   * for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic.
+   * Returns `True` on success.
+   *
+   * @see https://core.telegram.org/bots/api#closeforumtopic
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
+  closeForumTopic () {
+    this.assert(this.chat, 'closeForumTopic')
+    this.assert(this.message?.message_thread_id, 'closeForumTopic')
+    return this.telegram.closeForumTopic(this.chat.id, this.message.message_thread_id)
+  }
+
+  /**
+   * Use this method to reopen a closed topic in a forum supergroup chat. The bot must be an administrator in the chat
+   * for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic.
+   * Returns `True` on success.
+   *
+   * @see https://core.telegram.org/bots/api#reopenforumtopic
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
+  reopenForumTopic () {
+    this.assert(this.chat, 'reopenForumTopic')
+    this.assert(this.message?.message_thread_id, 'reopenForumTopic')
+
+    return this.telegram.reopenForumTopic(this.chat.id, this.message.message_thread_id)
+  }
+
+  /**
+   * Use this method to delete a forum topic along with all its messages in a forum supergroup chat. The bot must be an
+   * administrator in the chat for this to work and must have the can_delete_messages administrator rights.
+   * Returns `True` on success.
+   *
+   * @see https://core.telegram.org/bots/api#deleteforumtopic
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
+  deleteForumTopic () {
+    this.assert(this.chat, 'deleteForumTopic')
+    this.assert(this.message?.message_thread_id, 'deleteForumTopic')
+
+    return this.telegram.deleteForumTopic(this.chat.id, this.message.message_thread_id)
+  }
+
+  /**
+   * Use this method to clear the list of pinned messages in a forum topic. The bot must be an administrator in the chat
+   * for this to work and must have the can_pin_messages administrator right in the supergroup. Returns True on success.
+   *
+   * @see https://core.telegram.org/bots/api#unpinallforumtopicmessages
+   *
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
+  unpinAllForumTopicMessages () {
+    this.assert(this.chat, 'unpinAllForumTopicMessages')
+    this.assert(this.message?.message_thread_id, 'unpinAllForumTopicMessages')
+
+    return this.telegram.unpinAllForumTopicMessages(this.chat.id, this.message.message_thread_id)
+  }
+
+  /**
    * Use this method to move a sticker in a set created by the bot to a specific position.
    *
    * Returns `True` on success.
    * @see https://core.telegram.org/bots/api#setstickerpositioninset
    * @param {string} sticker File identifier of the sticker
    * @param {number} position New sticker position in the set, zero-based
+   *
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */

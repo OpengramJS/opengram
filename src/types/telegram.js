@@ -355,12 +355,21 @@
  * @property {string} [username] *Optional.* Username, for private chats, supergroups and channels if available
  * @property {string} [first_name] *Optional.* First name of the other party in a private chat
  * @property {string} [last_name] *Optional.* Last name of the other party in a private chat
+ * @property {boolean} [is_forum] *Optional.* True, if the supergroup chat is a forum (has topics enabled)
  * @property {ChatPhoto} [photo] *Optional.* Chat photo. Returned only in getChat.
+ * @property {string[]} [active_usernames] *Optional.* If non-empty, the list of
+ *   [all active chat usernames](https://telegram.org/blog/topics-in-groups-collectible-usernames#collectible-usernames);
+ *   for private chats, supergroups and channels. Returned only in {@link Telegram.getChat getChat}
+ * @property {string} bio *Optional.* Bio of the other party in a private chat. Returned only in
+ *   {@link Telegram.getChat getChat}.
+ * @property {string} [emoji_status_custom_emoji_id] *Optional.* Custom emoji identifier of emoji status of the other
+ *   party in a private chat. Returned only in {@link Telegram.getChat getChat}.
  */
 
 /**
  * @typedef {ChatMemberOwner|ChatMemberAdministrator|ChatMemberMember|ChatMemberRestricted} ChatMember
  */
+
 /**
  * @typedef {object} ChatMemberOwner
  * @description Represents a chat member that owns the chat and has all administrator privileges.
@@ -388,10 +397,11 @@
  *    that were appointed by the user)
  * @property {boolean} can_change_info `True`, if the user is allowed to change the chat title, photo and other settings
  * @property {boolean} can_invite_users `True`, if the user is allowed to invite new users to the chat
- * @property {boolean} [can_post_messages] *Optional.* True, if the administrator can post in the channel; channels only
- * @property {boolean} [can_edit_messages] *Optional.* True, if the administrator can edit messages of other
+ * @property {boolean} [can_post_messages] *Optional.* `True`, if the administrator can post in the channel; channels only
+ * @property {boolean} [can_edit_messages] *Optional.* `True`, if the administrator can edit messages of other
  *    users and can pin messages; channels only
- * @property {boolean} [can_pin_messages] *Optional.* True, if the user is allowed to pin messages; groups and supergroups only
+ * @property {boolean} [can_pin_messages] *Optional.* `True`, if the user is allowed to pin messages; groups and supergroups only
+ * @property {boolean} [can_manage_topics] *Optional.* `True`, if the user is allowed to create, rename, close, and reopen forum topics; supergroups only
  * @property {boolean} [custom_title] *Optional.* Custom title for this user
  */
 
@@ -408,17 +418,18 @@
  * @property {'restricted'} status The member's status in the chat, always “restricted”
  * @property {User} user Information about the user
  * @property {boolean} is_member `True`, if the user is a member of the chat at the moment of the request
- * @property {boolean} can_change_info True, if the user is allowed to change the chat title, photo and other settings
- * @property {boolean} can_invite_users True, if the user is allowed to invite new users to the chat
- * @property {boolean} can_pin_messages True, if the user is allowed to pin messages
- * @property {boolean} can_send_messages True, if the user is allowed to send text messages, contacts, locations
+ * @property {boolean} can_change_info `True`, if the user is allowed to change the chat title, photo and other settings
+ * @property {boolean} can_invite_users `True`, if the user is allowed to invite new users to the chat
+ * @property {boolean} can_pin_messages `True`, if the user is allowed to pin messages
+ * @property {boolean} can_send_messages `True`, if the user is allowed to send text messages, contacts, locations
  *    and venues
- * @property {boolean} can_send_media_messages True, if the user is allowed to send audios, documents,
+ * @property {boolean} can_send_media_messages `True`, if the user is allowed to send audios, documents,
  *    photos, videos, video notes and voice notes
- * @property {boolean} can_send_polls True, if the user is allowed to send polls
- * @property {boolean} can_send_other_messages True, if the user is allowed to send animations, games,
+ * @property {boolean} can_send_polls `True`, if the user is allowed to send polls
+ * @property {boolean} can_send_other_messages `True`, if the user is allowed to send animations, games,
  *    stickers and use inline bots
- * @property {boolean} can_add_web_page_previews True, if the user is allowed to add web page previews to their messages
+ * @property {boolean} can_add_web_page_previews `True`, if the user is allowed to add web page previews to their messages
+ * @property {boolean} can_manage_topics `True`, if the user is allowed to create forum topics
  * @property {number} until_date Date when restrictions will be lifted for this user; unix time. If 0, then the
  *    user is restricted forever
  */
@@ -501,6 +512,8 @@
  * @property {boolean} can_invite_users *Optional.* `True`, if the user is allowed to invite new users to the chat
  * @property {boolean} can_pin_messages *Optional.* `True`, if the user is allowed to pin messages.
  *    Ignored in public supergroups
+ * @property {boolean} can_manage_topics *Optional.* `True`, if the user is allowed to create forum topics.
+ *   If omitted defaults to the value of can_pin_messages
  */
 
 /**
@@ -592,4 +605,12 @@
 
 /**
  * @typedef {object} InlineQueryResult
+ */
+
+/**
+ * @typedef {object} ForumTopic
+ * @property {number|string} message_thread_id Unique identifier of the forum topic
+ * @property {string} name Name of the topic
+ * @property {number|string} icon_color Color of the topic icon in RGB format
+ * @property {string} [icon_custom_emoji_id] *Optional.* Unique identifier of the custom emoji shown as the topic icon
  */
