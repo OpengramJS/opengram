@@ -52,7 +52,10 @@ const MessageSubTypes = [
   'voice_chat_ended',
   'voice_chat_participants_invited',
   'voice_chat_scheduled',
-  'web_app_data'
+  'web_app_data',
+  'forum_topic_created',
+  'forum_topic_closed',
+  'forum_topic_reopened'
 ]
 
 const MessageSubTypesMappingForChannelMode = {
