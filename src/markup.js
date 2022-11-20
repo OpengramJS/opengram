@@ -82,7 +82,7 @@ class Markup {
    *   wrap: (btn, index, currentRow) => index % 2 !== 0
    * }).resize()
    *
-   * // Make fixed two columns keyboard with custom function
+   * // Make fixed two columns keyboard with columns option
    * Markup.keyboard(['one', 'two', 'three', 'four'], { columns: 2 }).resize()
    * ```
    *
@@ -111,7 +111,7 @@ class Markup {
    *   wrap: (btn, index, currentRow) => index % 2 !== 0
    * })
    *
-   * // Make fixed two columns inline keyboard with custom function
+   * // Make fixed two columns inline keyboard with columns option
    * Markup.inlineKeyboard(['one', 'two', 'three', 'four'], { columns: 2 })
    * ```
    *
@@ -385,7 +385,7 @@ class Markup {
    *   wrap: (btn, index, currentRow) => index % 2 !== 0
    * }).resize()
    *
-   * // Make fixed two columns keyboard with custom function
+   * // Make fixed two columns keyboard with columns option
    * Markup.keyboard(['one', 'two', 'three', 'four'], { columns: 2 }).resize()
    * ```
    *
@@ -410,7 +410,7 @@ class Markup {
    *   wrap: (btn, index, currentRow) => index % 2 !== 0
    * })
    *
-   * // Make fixed two columns inline keyboard with custom function
+   * // Make fixed two columns inline keyboard with columns option
    * Markup.inlineKeyboard(['one', 'two', 'three', 'four'], { columns: 2 })
    * ```
    *
