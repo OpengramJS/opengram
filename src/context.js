@@ -290,7 +290,6 @@ class OpengramContext {
    * - `context.myChatMember.chat`
    * - `context.chatMember.chat`
    * - `context.chatJoinRequest.chat`
-   * - `context.chatJoinRequest.chat`
    * - `context.message.chat`
    * - `context.editedMessage.chat`
    * - `context.callbackQuery.message.chat`
