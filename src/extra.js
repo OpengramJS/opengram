@@ -1,5 +1,18 @@
 const Markup = require('./markup')
 
+const symbols = {
+  reply_to_message_id: Symbol('reply_to_message_id'),
+  disable_notification: Symbol('disable_notification'),
+  disable_web_page_preview: Symbol('disable_web_page_preview'),
+  reply_markup: Symbol('reply_markup'),
+  parse_mode: Symbol('parse_mode'),
+  caption: Symbol('caption'),
+  entities: Symbol('entities'),
+  caption_entities: Symbol('caption_entities')
+}
+
+const otherOptsSymbol = Symbol('otherOpts')
+
 /** Class for building extra parameters of messages */
 class Extra {
   /**
@@ -11,6 +24,7 @@ class Extra {
    * ```
    */
   constructor (opts) {
+    this[otherOptsSymbol] = {}
     this.load(opts)
   }
 
@@ -26,7 +40,27 @@ class Extra {
    * @return {Extra}
    */
   load (opts = {}) {
-    return Object.assign(this, opts)
+    const symbolsNames = Object.keys(symbols)
+    for (const [key, value] of Object.entries(opts)) {
+      if (symbolsNames.includes(key)) {
+        this[symbols[key]] = value
+      } else {
+        this[otherOptsSymbol][key] = value
+      }
+    }
+  }
+
+  toObject () {
+    const result = {}
+    const symbolsNames = Object.keys(symbols)
+    for (const sym of symbolsNames) {
+      const value = this[symbols[sym]]
+      if (value !== undefined) {
+        result[sym] = value
+      }
+    }
+
+    return Object.assign(result, this[otherOptsSymbol])
   }
 
   /**
@@ -36,7 +70,7 @@ class Extra {
    * @return {Extra}
    */
   inReplyTo (messageId) {
-    this.reply_to_message_id = messageId
+    this[symbols.reply_to_message_id] = messageId
     return this
   }
 
@@ -47,7 +81,7 @@ class Extra {
    * @return {Extra}
    */
   notifications (value = true) {
-    this.disable_notification = !value
+    this[symbols.disable_notification] = !value
     return this
   }
 
@@ -58,7 +92,7 @@ class Extra {
    * @return {Extra}
    */
   webPreview (value = true) {
-    this.disable_web_page_preview = !value
+    this[symbols.disable_web_page_preview] = !value
     return this
   }
 
@@ -99,7 +133,7 @@ class Extra {
     if (typeof markup === 'function') {
       markup = markup(new Markup())
     }
-    this.reply_markup = { ...markup }
+    this[symbols.reply_markup] = { ...markup }
     return this
   }
 
@@ -110,7 +144,7 @@ class Extra {
    * @return {Extra}
    */
   HTML (value = true) {
-    this.parse_mode = value ? 'HTML' : undefined
+    this[symbols.parse_mode] = value ? 'HTML' : undefined
     return this
   }
 
@@ -121,7 +155,7 @@ class Extra {
    * @return {Extra}
    */
   markdown (value = true) {
-    this.parse_mode = value ? 'Markdown' : undefined
+    this[symbols.parse_mode] = value ? 'Markdown' : undefined
     return this
   }
 
@@ -132,7 +166,7 @@ class Extra {
    * @return {Extra}
    */
   markdownV2 (value = true) {
-    this.parse_mode = value ? 'MarkdownV2' : undefined
+    this[symbols.parse_mode] = value ? 'MarkdownV2' : undefined
     return this
   }
 
@@ -143,7 +177,7 @@ class Extra {
    * @return {Extra}
    */
   caption (caption = '') {
-    this.caption = caption
+    this[symbols.caption] = caption
     return this
   }
 
@@ -154,7 +188,7 @@ class Extra {
    * @return {Extra}
    */
   entities (entities) {
-    this.entities = entities
+    this[symbols.entities] = entities
     return this
   }
 
@@ -165,7 +199,7 @@ class Extra {
    * @return {Extra}
    */
   captionEntities (entities) {
-    this.caption_entities = entities
+    this[symbols.caption_entities] = entities
     return this
   }
 
@@ -299,6 +333,19 @@ class Extra {
    */
   static captionEntities (entities) {
     return new Extra().captionEntities(entities)
+  }
+
+  * [Symbol.iterator] () {
+    const entries = Object.entries(
+      this
+        .toObject()
+    )
+    console.log(entries)
+    let index = 0
+    while (index < entries.length) {
+      yield entries[index]
+      index++
+    }
   }
 }
 

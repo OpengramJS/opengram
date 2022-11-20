@@ -8,6 +8,7 @@ const util = require('util')
 const { TelegramError } = require('../error')
 const MultipartStream = require('./multipart-stream')
 const { compactOptions } = require('../helpers/compact')
+const Extra = require('../../extra')
 const { isStream } = MultipartStream
 
 const WEBHOOK_REPLY_METHOD_ALLOWLIST = new Set([
@@ -336,7 +337,10 @@ class ApiClient {
 
     const payload = Object.keys(data)
       .filter((key) => typeof data[key] !== 'undefined' && data[key] !== null)
-      .reduce((acc, key) => ({ ...acc, [key]: data[key] }), {})
+      .reduce((acc, key) => {
+        const value = data[key] instanceof Extra ? data[key].toObject() : data[key]
+        return { ...acc, [key]: value }
+      }, {})
 
     if (options.webhookReply && response && !responseEnd && WEBHOOK_REPLY_METHOD_ALLOWLIST.has(method)) {
       debug('Call via webhook', method, payload)

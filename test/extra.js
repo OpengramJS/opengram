@@ -3,71 +3,83 @@ const Opengram = require('../')
 const { Extra, Markup } = Opengram
 
 test('should generate default options from contructor', t => {
-  const extra = { ...new Extra({ parse_mode: 'LaTeX' }) }
+  const extra = { ...new Extra({ parse_mode: 'LaTeX' }).toObject() }
   t.deepEqual(extra, { parse_mode: 'LaTeX' })
 })
 
 test('should generate default options', t => {
-  const extra = { ...Extra.load({ parse_mode: 'LaTeX' }) }
+  const extra = { ...Extra.load({ parse_mode: 'LaTeX' }).toObject() }
   t.deepEqual(extra, { parse_mode: 'LaTeX' })
 })
 
+test('should allow pass any option with load method', t => {
+  const extra = { ...Extra.load({ aaa: ' One Piece', bbb: 'The Quintessential Quintuplets' }).toObject() }
+  t.deepEqual(extra, { aaa: ' One Piece', bbb: 'The Quintessential Quintuplets' })
+})
+
 test('should generate inReplyTo options', t => {
-  const extra = { ...Extra.inReplyTo(42) }
+  const extra = { ...Extra.inReplyTo(42).toObject() }
   t.deepEqual(extra, { reply_to_message_id: 42 })
 })
 
 test('should generate HTML options', t => {
-  const extra = { ...Extra.HTML() }
+  const extra = { ...Extra.HTML().toObject() }
   t.deepEqual(extra, { parse_mode: 'HTML' })
 })
 
 test('should generate Markdown options', t => {
-  const extra = { ...Extra.markdown() }
+  const extra = { ...Extra.markdown().toObject() }
   t.deepEqual(extra, { parse_mode: 'Markdown' })
 })
 
 test('should generate MarkdownV2 options', t => {
-  const extra = { ...Extra.markdownV2() }
+  const extra = { ...Extra.markdownV2().toObject() }
   t.deepEqual(extra, { parse_mode: 'MarkdownV2' })
 })
 
 test('should generate notifications options', t => {
-  const extra = { ...Extra.notifications(false) }
+  const extra = { ...Extra.notifications(false).toObject() }
   t.deepEqual(extra, { disable_notification: true })
 })
 
 test('should generate web preview options', t => {
-  const extra = { ...Extra.webPreview(false) }
+  const extra = { ...Extra.webPreview(false).toObject() }
   t.deepEqual(extra, { disable_web_page_preview: true })
 })
 
 test('should generate markup options', t => {
-  const extra = { ...Extra.markup(Markup.removeKeyboard()) }
+  const extra = { ...Extra.markup(Markup.removeKeyboard()).toObject() }
   t.deepEqual(extra, { reply_markup: { remove_keyboard: true } })
 })
 
 test('should generate markup options in functional style', t => {
-  const extra = { ...Extra.markdown().markup((markup) => markup.removeKeyboard()) }
+  const extra = { ...Extra.markdown().markup((markup) => markup.removeKeyboard()).toObject() }
   t.deepEqual(extra, { parse_mode: 'Markdown', reply_markup: { remove_keyboard: true } })
 })
 
 test('should generate caption options', t => {
-  const extra = { ...Extra.markdown().caption('text') }
+  const extra = { ...Extra.markdown().caption('text').toObject() }
   t.deepEqual(extra, { parse_mode: 'Markdown', caption: 'text' })
 })
 
 test('should generate caption options from static method', t => {
-  const extra = { ...Extra.caption('text') }
+  const extra = { ...Extra.caption('text').toObject() }
   t.deepEqual(extra, { caption: 'text' })
 })
 
 test('should generate entities from static method', t => {
-  const extra = { ...Extra.entities([{ offset: 0, length: 4, type: 'code' }]) }
+  const extra = { ...Extra.entities([{ offset: 0, length: 4, type: 'code' }]).toObject() }
   t.deepEqual(extra, { entities: [{ offset: 0, length: 4, type: 'code' }] })
 })
 
 test('should generate caption entities from static method', t => {
-  const extra = { ...Extra.captionEntities([{ offset: 0, length: 4, type: 'code' }]) }
+  const extra = { ...Extra.captionEntities([{ offset: 0, length: 4, type: 'code' }]).toObject() }
   t.deepEqual(extra, { caption_entities: [{ offset: 0, length: 4, type: 'code' }] })
+})
+
+test('should be iterable', t => {
+  const res = new Extra({ aaa: ' One Piece', bbb: 'The Quintessential Quintuplets' })
+    .captionEntities([{ offset: 0, length: 4, type: 'code' }])
+
+  t.is(typeof res[Symbol.iterator], 'function')
 })
