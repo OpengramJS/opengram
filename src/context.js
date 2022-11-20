@@ -156,6 +156,63 @@ class OpengramContext {
   }
 
   /**
+   * Returns {@link Message} object for current update.
+   *
+   * Shortcut to
+   * - `context.message`
+   * - `context.editedMessage`
+   * - `context.callbackQuery.message`
+   * - `context.channelPost`
+   * - `context.editedChannelPost`
+   * @return {Message|undefined}
+   */
+  get anyMessage () {
+    return getMessageFromAnySource(this)
+  }
+
+  /**
+   * Returns {@link Message} object for current update.
+   *
+   * Shortcut to
+   * - `context.message.caption`
+   * - `context.editedMessage.caption`
+   * - `context.callbackQuery.message.caption`
+   * - `context.ctx.channelPost.caption`
+   * - `context.editedChannelPost.caption`
+   * - `context.message.text`
+   * - `context.editedMessage.text`
+   * - `context.callbackQuery.message.text`
+   * - `context.ctx.channelPost.text`
+   * - `context.editedChannelPost.text`
+   * @return {string|undefined}
+   */
+  get anyText () {
+    const message = getMessageFromAnySource(this)
+    return message && getText(message)
+  }
+
+  /**
+   * Returns {@link Message} object for current update.
+   *
+   * Shortcut to
+   * - `context.message.entities`
+   * - `context.editedMessage.entities`
+   * - `context.callbackQuery.message.entities`
+   * - `context.channelPost.entities`
+   * - `context.editedChannelPost.entities`
+   * - `context.message.caption_entities`
+   * - `context.editedMessage.caption_entities`
+   * - `context.callbackQuery.message.caption_entities`
+   * - `context.channelPost.caption_entities`
+   * - `context.editedChannelPost.caption_entities`
+   * @return {MessageEntity[]}
+   */
+  get anyEntities () {
+    const message = getMessageFromAnySource(this)
+    return message && getEntities(message)
+  }
+
+  /**
    * Returns {@link Message edited message} object for current update
    *
    * Shortcut to `context.update.edited_message`
