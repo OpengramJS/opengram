@@ -1,3 +1,5 @@
+const { getMessageFromAnySource, getText, getEntities } = require('./core/helpers/utils')
+
 const UpdateTypes = [
   'callback_query',
   'channel_post',
@@ -2049,16 +2051,6 @@ class OpengramContext {
   createInvoiceLink (invoice) {
     return this.telegram.createInvoiceLink(invoice)
   }
-}
-
-function getMessageFromAnySource (ctx) {
-  return (
-    ctx.message ||
-    ctx.editedMessage ||
-    (ctx.callbackQuery && ctx.callbackQuery.message) ||
-    ctx.channelPost ||
-    ctx.editedChannelPost
-  )
 }
 
 module.exports = { OpengramContext, MessageSubTypesMappingForChannelMode, MessageSubTypesMapping }
