@@ -97,6 +97,9 @@ test('should provide update payload for text', async t => {
 test('should provide shortcuts for `message` update', async t => {
   const bot = createBot()
   bot.on('message', (ctx) => {
+    t.true('anyMessage' in ctx)
+    t.true('anyText' in ctx)
+    t.true('anyEntities' in ctx)
     t.true('reply' in ctx)
     t.true('setPassportDataErrors' in ctx)
     t.true('replyWithPhoto' in ctx)
@@ -178,6 +181,9 @@ test('should provide shortcuts for `message` update', async t => {
 test('should provide shortcuts for `callback_query` update', async t => {
   const bot = createBot()
   bot.on('callback_query', (ctx) => {
+    t.true('anyMessage' in ctx)
+    t.true('anyText' in ctx)
+    t.true('anyEntities' in ctx)
     t.true('answerCbQuery' in ctx)
     t.true('answerGameQuery' in ctx)
     t.true('reply' in ctx)
