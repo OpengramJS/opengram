@@ -251,7 +251,7 @@ class Composer {
    * > bot.action(/button:([0-9]+)/, ctx => ctx.reply(`You choose button with number ${ctx.match[1]} in payload`))
    * > const keyboard = Markup.inlineKeyboard([
    * >  Markup.callbackButton('Button 1', 'button:1'),
-   * >  Markup.callbackButton('Button 2', 'button:2')
+   * >  Markup.callbackButton('Button 2', 'button:2'),
    * >  Markup.callbackButton('Button 3', 'button:3')
    * > ])
    * > await bot.telegram.sendMessage(chat_id, 'Press a button!', keyboard.extra())
@@ -756,7 +756,7 @@ class Composer {
    * bot.use(
    *   Composer.branch(
    *     (ctx) => ctx.from.is_premium,
-   *     (ctx) => ctx.reply('This mw executed only for premium users')
+   *     (ctx) => ctx.reply('This mw executed only for premium users'),
    *     (ctx) => ctx.reply('Buy premium :(')
    *   )
    * )
