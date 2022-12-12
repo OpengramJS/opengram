@@ -187,7 +187,7 @@ class Composer {
    * ```js
    * const { Opengram, Composer: { command } } = require('opengram')
    * // ...
-   * bot.on('text', command('start', ctx => ctx => ctx.reply('Math commands only text, not media captions')))))
+   * bot.on('text', command('start', ctx => ctx.reply('Math commands only text, not media captions')))
    * ```
    *
    * for match only text message, not media caption
