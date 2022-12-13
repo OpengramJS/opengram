@@ -681,7 +681,7 @@ class Markup {
   /**
    * Returns build HTML given text and entities object
    * @param {string} text Message text
-   * @param {Object[]} entities Array of message entities
+   * @param {object[]} entities Array of message entities
    * @deprecated Prefer to pass entities direct when send / edit message, it is available after Bot API 5.0
    * @return {string}
    */
@@ -778,7 +778,7 @@ class Markup {
  * Keyboard build method used by `Markup.inlineKeyboard` / `Markup.keyboard`
  * @param buttons
  * @param {keyboardOptions|inlineKeyboardOptions} [options]
- * @return {array<object[]>}
+ * @return {Array<object[]>}
  */
 
 function buildKeyboard (buttons, options) {

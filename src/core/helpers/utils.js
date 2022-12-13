@@ -11,7 +11,7 @@
  * ```
  * @private
  * @param {object} updateData
- * @return {string|array}
+ * @return {string|Array}
  */
 function getEntities (updateData) {
   if (updateData == null) return []

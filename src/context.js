@@ -1261,7 +1261,7 @@ class OpengramContext {
    * On success, an array of {@link Message Messages}
    * that were sent is returned.
    * @see https://core.telegram.org/bots/api#sendmediagroup
-   * @param {array<InputMediaPhoto|InputMediaAudio|InputMediaVideo|InputMediaDocument>} media A array describing
+   * @param {Array<InputMediaPhoto|InputMediaAudio|InputMediaVideo|InputMediaDocument>} media A array describing
    *    messages to be sent, must include 2-10 items
    * @param {object|Extra} [extra] Other parameters
    * @throws {TelegramError}

@@ -577,7 +577,7 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#sendmediagroup
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
-   * @param {array<InputMediaPhoto|InputMediaAudio|InputMediaVideo|InputMediaDocument>} media A array describing
+   * @param {Array<InputMediaPhoto|InputMediaAudio|InputMediaVideo|InputMediaDocument>} media A array describing
    *    messages to be sent, must include 2-10 items
    * @param {object|Extra} [extra] Other parameters
    * @throws {TelegramError}

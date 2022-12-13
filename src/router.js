@@ -40,7 +40,7 @@ class Router {
    *
    * Note that you can always install more middlewares on the router by calling {@link Router#on}.
    *
-   * @param {function} routeFn A routing function that decides which middleware to run
+   * @param {Function} routeFn A routing function that decides which middleware to run
    * @param {Map<MiddlewareFn>} [routeHandlers] A number of middlewares
    */
   constructor (routeFn, routeHandlers = new Map()) {

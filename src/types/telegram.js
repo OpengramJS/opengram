@@ -186,7 +186,7 @@
  * @description This object represent a user's profile pictures.
  * @see https://core.telegram.org/bots/api#userprofilephotos
  * @property {number} total_count Total number of profile pictures the target user has
- * @property {array<PhotoSize[]>} photos Requested profile pictures (in up to 4 sizes each)
+ * @property {Array<PhotoSize[]>} photos Requested profile pictures (in up to 4 sizes each)
  */
 
 /** @typedef {Buffer|stream|string} attachmentFile **/

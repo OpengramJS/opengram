@@ -130,7 +130,7 @@ class Composer {
    * > `ctx.message` potentially `undefined`
    * > when `channelMode` enabled. You can add additional chat type check for this case
    *
-   * @param {string|RegExp|array<RegExp|string>} triggers The text / array of texts or regex to look for
+   * @param {string|RegExp|Array<RegExp|string>} triggers The text / array of texts or regex to look for
    * @param {MiddlewareFn} fns The middleware(s) to register as argument(s)
    */
   hears (triggers, ...fns) {
@@ -257,7 +257,7 @@ class Composer {
    * > await bot.telegram.sendMessage(chat_id, 'Press a button!', keyboard.extra())
    * > ```
    *
-   * @param {string|RegExp|array<RegExp|string>} triggers One or an array of regular expressions / strings
+   * @param {string|RegExp|Array<RegExp|string>} triggers One or an array of regular expressions / strings
    *   to search in the payload
    * @param {MiddlewareFn} fns The middleware(s) to register as arguments
    * @return {Composer}
@@ -314,7 +314,7 @@ class Composer {
    * })
    * ```
    *
-   * @param {string|RegExp|array<RegExp|string>} triggers The inline query text or array of text to match
+   * @param {string|RegExp|Array<RegExp|string>} triggers The inline query text or array of text to match
    * @param {MiddlewareFn} fns The middleware(s) to register
    * @return {Composer}
    */
@@ -712,7 +712,7 @@ class Composer {
    *
    * You may generate this middleware in an `async` fashion.
    *
-   * @param {function} factoryFn The factory function creating the middleware
+   * @param {Function} factoryFn The factory function creating the middleware
    * @throws {TypeError}
    * @return {MiddlewareFn<Promise>}
    */
@@ -735,7 +735,7 @@ class Composer {
    * bot.use(Composer.log(myOwnLogFn))
    * ```
    *
-   * @param {function} logFn Custom log function
+   * @param {Function} logFn Custom log function
    * @return {MiddlewareFn}
    */
   static log (logFn = console.log) {

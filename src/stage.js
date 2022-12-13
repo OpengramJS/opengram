@@ -37,7 +37,7 @@ const { compose, optional, lazy, safePassThru } = Composer
 class Stage extends Composer {
   /**
    * @constructor
-   * @param {array<BaseScene|WizardScene>} [scenes] Array of scenes objects
+   * @param {Array<BaseScene|WizardScene>} [scenes] Array of scenes objects
    * @param {stageOptions} [options] Options
    * @throws {TypeError}
    */

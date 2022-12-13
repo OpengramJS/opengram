@@ -201,7 +201,7 @@ class Opengram extends Composer {
    * app.listen(3000, () => console.log('Bot listening on port 3000!'))
    * ```
    * @param {webhookCallbackOptions} config Options
-   * @return {function}
+   * @return {Function}
    */
   webhookCallback (config = {}) {
     if (config.path === undefined) config.path = '/'
@@ -213,11 +213,11 @@ class Opengram extends Composer {
    * @property {number} [timeout=30] Timeout in seconds for long polling. Defaults to 30
    * @property {number} [limit=100] Limits the number of updates to be retrieved. Values between 1-100 are accepted.
    *     Defaults to 100.
-   * @property {array<string>|string} [allowedUpdates] Array of allowed updates or update name
+   * @property {Array<string>|string} [allowedUpdates] Array of allowed updates or update name
    *     For example, specify `["message", "edited_channel_post", "callback_query"]` to only receive
    *     updates of these types. Please note that this parameter doesn't affect updates created before the call
    *     to the getUpdates, so unwanted updates may be received for a short period of time.
-   * @property {function} [stopCallback] Function called when bot fully stopped.
+   * @property {Function} [stopCallback] Function called when bot fully stopped.
    *     If you call `bot.stop()` it be rewritten with other function and never called, for using with `bot.stop`,
    *     you can pass `callback` into `bot.stop` argument, for example `bot.stop(() => console.log('Stopped'))`
    * @return {Opengram}
@@ -293,7 +293,7 @@ class Opengram extends Composer {
    * @param {number} [port] Port to listen. Be careful, Telegram only supports 443, 80, 88, 8443 for now.
    * @param {string|null} [host] If host is omitted, the server will accept connections on the unspecified IPv6
    *    address (::) when IPv6 is available, or the unspecified IPv4 address (0.0.0.0) otherwise.
-   * @param {function} [nextCb] Next handler function,
+   * @param {Function} [nextCb] Next handler function,
    *    called when webhook handler not match path string or request method. May have two arguments - `req`, `res`.
    *    If not specified, by default connection being closed with HTTP status `Forbidden 403`
    * @see https://core.telegram.org/bots/webhooks
@@ -330,10 +330,10 @@ class Opengram extends Composer {
 
   /**
    * @typedef {object} pollingConfig
-   * @property {function} [stopCallback] Function called when bot fully stopped.
+   * @property {Function} [stopCallback] Function called when bot fully stopped.
    *     If you call `bot.stop()` it be rewritten with other function and never called, for using with `bot.stop`,
    *     you can pass `callback` into `bot.stop` argument, for example `bot.stop(() => console.log('Stopped'))`
-   * @property {array<string>|string} [allowedUpdates] Array of allowed updates or update name
+   * @property {Array<string>|string} [allowedUpdates] Array of allowed updates or update name
    *     For example, specify `["message", "edited_channel_post", "callback_query"]` to only receive
    *     updates of these types. Please note that this parameter doesn't affect updates created before the call
    *     to the getUpdates, so unwanted updates may be received for a short period of time.
@@ -362,7 +362,7 @@ class Opengram extends Composer {
    *    Used for {@link Opengram.telegram.setWebhook}
    * @property {launchWebhookOptions} options Webhook options object. See {@link Opengram#startWebhook} for more information
    * @property {object} tlsOptions Options for TLS. See {@link Opengram#startWebhook} for more information
-   * @property {function} cb Next handler function, called when webhook handler not match path string or request method.
+   * @property {Function} cb Next handler function, called when webhook handler not match path string or request method.
    *    See {@link Opengram#startWebhook} for more information
    * @property {number} port Port number. See {@link Opengram#startWebhook} for more information
    * @property {string} host Hostname. See {@link Opengram#startWebhook} for more information

@@ -1,5 +1,5 @@
 /**
- * @typedef {function|object} MiddlewareFn
+ * @typedef {Function|object} MiddlewareFn
  */
 
 /**
@@ -20,7 +20,7 @@
  */
 
 /**
- * @typedef {function} PredicateFn
+ * @typedef {Function} PredicateFn
  * @param {OpengramContext} context Update context
  * @return {boolean|Promise<boolean>}
  */
