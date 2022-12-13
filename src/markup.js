@@ -6,7 +6,7 @@ class Markup {
    * Adding force reply option to markup
    *
    * @see https://core.telegram.org/bots/api#forcereply
-   * @param {boolean} [value=true]
+   * @param {boolean} [value=true] Value
    * @return {Markup}
    */
   forceReply (value = true) {
@@ -18,7 +18,7 @@ class Markup {
    * Enable / Disable keyboard removing
    *
    * @see https://core.telegram.org/bots/api#replykeyboardremove
-   * @param {boolean} [value=true]
+   * @param {boolean} [value=true] Value
    * @return {Markup}
    */
   removeKeyboard (value = true) {
@@ -47,7 +47,7 @@ class Markup {
    *
    * @see https://core.telegram.org/bots/api#forcereply
    * @see https://core.telegram.org/bots/api#replykeyboardremove
-   * @param {boolean} [value=true]
+   * @param {boolean} [value=true] Value
    * @return {Markup}
    */
   selective (value = true) {
@@ -141,7 +141,7 @@ class Markup {
    * keyboard to be non-resized.
    *
    * @see https://core.telegram.org/bots/api#replykeyboardmarkup
-   * @param {boolean} [value=true]
+   * @param {boolean} [value=true] Value
    * @return {Markup}
    */
   resize (value = true) {
@@ -153,7 +153,7 @@ class Markup {
    * Enable / Disable hiding keyboard after click
    *
    * @see https://core.telegram.org/bots/api#replykeyboardmarkup
-   * @param {boolean} [value=true]
+   * @param {boolean} [value=true] Value
    * @return {Markup}
    */
   oneTime (value = true) {
@@ -374,7 +374,7 @@ class Markup {
    * Enable / Disable keyboard removing
    *
    * @see https://core.telegram.org/bots/api#replykeyboardremove
-   * @param {boolean} [value=true]
+   * @param {boolean} [value=true] Value
    * @return {Markup}
    */
   static removeKeyboard (value) {
@@ -385,7 +385,7 @@ class Markup {
    * Adding force reply option to markup
    *
    * @see https://core.telegram.org/bots/api#forcereply
-   * @param {boolean} [value=true]
+   * @param {boolean} [value=true] Value
    * @return {Markup}
    */
   static forceReply (value) {
@@ -451,7 +451,7 @@ class Markup {
    * keyboard to be non-resized.
    *
    * @see https://core.telegram.org/bots/api#replykeyboardmarkup
-   * @param {boolean} [value=true]
+   * @param {boolean} [value=true] Value
    * @return {Markup}
    */
   static resize (value = true) {
@@ -462,7 +462,7 @@ class Markup {
    * Changing input field placeholder when reply is active, used with forceReply
    *
    * @see https://core.telegram.org/bots/api#forcereply
-   * @param {string} placeholder
+   * @param {string} placeholder Placeholder text
    * @return {Markup}
    */
   static inputFieldPlaceholder (placeholder) {
@@ -478,7 +478,7 @@ class Markup {
    *
    * @see https://core.telegram.org/bots/api#forcereply
    * @see https://core.telegram.org/bots/api#replykeyboardremove
-   * @param {boolean} [value=true]
+   * @param {boolean} [value=true] Value
    * @return {Markup}
    */
   static selective (value = true) {
@@ -489,7 +489,7 @@ class Markup {
    * Enable / Disable hiding keyboard after click
    *
    * @see https://core.telegram.org/bots/api#replykeyboardmarkup
-   * @param {boolean} [value=true]
+   * @param {boolean} [value=true] Value
    * @return {Markup}
    */
   static oneTime (value = true) {
@@ -678,9 +678,9 @@ class Markup {
    * automatically authorize the user.
    *
    * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
-   * @param {string} text
+   * @param {string} text Button text
    * @param {string} url An HTTPS URL to be opened with user authorization data added to the query string when the button is pressed. If the user refuses to provide authorization data, the original URL without information about the user will be opened. The data added is the same as described in Receiving authorization data.
-   * @param {loginButtonOptions} [opts]
+   * @param {loginButtonOptions} [opts] Options
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
    * @return object
    */

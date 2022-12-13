@@ -972,7 +972,7 @@ class Composer {
    *
    * This method used in some other {@link Composer} methods, like {@link Composer.compose}, {@link Composer.lazy} and other
    *
-   * @param handler
+   * @param {MiddlewareFn} handler The middleware for unwrap
    *
    * @throws {Error}
    * @return {MiddlewareFn}

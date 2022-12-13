@@ -46,7 +46,7 @@ class Extra {
    * Enable / Disable notification for message
    *
    * @see https://core.telegram.org/bots/api#sendmessage
-   * @param {boolean} [value=true]
+   * @param {boolean} [value=true] Value
    * @return {Extra}
    */
   notifications (value = true) {
@@ -58,7 +58,7 @@ class Extra {
    * Enable / Disable web preview for links in message
    *
    * @see https://core.telegram.org/bots/api#sendmessage
-   * @param {boolean} [value=true]
+   * @param {boolean} [value=true] Value
    * @return {Extra}
    */
   webPreview (value = true) {
@@ -97,7 +97,7 @@ class Extra {
    * ```
    *
    * @see https://core.telegram.org/bots/api#sendmessage
-   * @param {object|markupCallback} markup
+   * @param {object|markupCallback} markup Callback returning markup / Markup object
    * @return {Extra}
    */
   markup (markup) {
@@ -112,7 +112,7 @@ class Extra {
    * Enable / Disable `parse_mode: 'HTML'` for message
    *
    * @see https://core.telegram.org/bots/api#formatting-options
-   * @param {boolean} [value=true]
+   * @param {boolean} [value=true] Value
    * @return {Extra}
    */
   HTML (value = true) {
@@ -124,7 +124,7 @@ class Extra {
    * Enable / Disable `parse_mode: 'Markdown'` for message
    *
    * @see https://core.telegram.org/bots/api#formatting-options
-   * @param {boolean} [value=true]
+   * @param {boolean} [value=true] Value
    * @return {Extra}
    */
   markdown (value = true) {
@@ -136,7 +136,7 @@ class Extra {
    * Enable / Disable `parse_mode: 'MarkdownV2'` for message
    *
    * @see https://core.telegram.org/bots/api#formatting-options
-   * @param {boolean} [value=true]
+   * @param {boolean} [value=true] value
    * @return {Extra}
    */
   markdownV2 (value = true) {
@@ -195,7 +195,7 @@ class Extra {
    * Enable / Disable notification for message
    *
    * @see https://core.telegram.org/bots/api#sendmessage
-   * @param {boolean} [value=true]
+   * @param {boolean} [value=true] Value
    * @return {Extra}
    */
   static notifications (value) {
@@ -206,7 +206,7 @@ class Extra {
    * Enable / Disable web preview for links in message
    *
    * @see https://core.telegram.org/bots/api#sendmessage
-   * @param {boolean} [value=true]
+   * @param {boolean} [value=true] Value
    * @return {Extra}
    */
   static webPreview (value) {
@@ -249,7 +249,7 @@ class Extra {
    * ```
    *
    * @see https://core.telegram.org/bots/api#sendmessage
-   * @param {object|Markup|markupCallback} markup
+   * @param {object|Markup|markupCallback} markup Markup object
    * @return {object}
    */
   static markup (markup) {
@@ -271,7 +271,7 @@ class Extra {
    * Enable / Disable `parse_mode: 'HTML'` for message
    *
    * @see https://core.telegram.org/bots/api#formatting-options
-   * @param {boolean} [value=true]
+   * @param {boolean} [value=true] Value
    * @return {Extra}
    */
   static HTML (value) {
@@ -282,7 +282,7 @@ class Extra {
    * Enable / Disable `parse_mode: 'Markdown'` for message
    *
    * @see https://core.telegram.org/bots/api#formatting-options
-   * @param {boolean} [value=true]
+   * @param {boolean} [value=true] Value
    * @return {Extra}
    */
   static markdown (value) {
@@ -293,7 +293,7 @@ class Extra {
    * Enable / Disable `parse_mode: 'MarkdownV2'` for message
    *
    * @see https://core.telegram.org/bots/api#formatting-options
-   * @param {boolean} [value=true]
+   * @param {boolean} [value=true] Value
    * @return {Extra}
    */
   static markdownV2 (value) {

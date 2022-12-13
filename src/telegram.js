@@ -1847,8 +1847,8 @@ class Telegram extends ApiClient {
    *
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
-   * @param message
-   * @param {object|Extra} [extra]
+   * @param {Message} message Message object
+   * @param {object|Extra} [extra] Extra parameters
    * @throws {TelegramError}
    * @return {Promise}
    */

@@ -497,7 +497,7 @@ class OpengramContext {
    *
    * Use this property to control reply via webhook feature for current context.
    *
-   * @param {boolean} enable
+   * @param {boolean} enable Value
    * @return {void}
    */
   set webhookReply (enable) {

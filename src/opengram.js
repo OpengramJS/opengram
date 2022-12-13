@@ -113,7 +113,7 @@ class Opengram extends Composer {
   /**
    * Setter for enabling / disabling for webhook reply. if assigned `true` - webhook reply enabled
    *
-   * @param {boolean} webhookReply
+   * @param {boolean} webhookReply Value
    */
   set webhookReply (webhookReply) {
     this.telegram.webhookReply = webhookReply
@@ -166,6 +166,7 @@ class Opengram extends Composer {
    * bot.launch() // Start the bot
    * ```
    *
+   * @param {Function} handler Error handler accepting error and context
    * @return {Opengram}
    */
   catch (handler) {
@@ -489,7 +490,7 @@ class Opengram extends Composer {
   /**
    * Starting processing array of updates
    *
-   * @param {object[]} updates
+   * @param {object[]} updates Array of updates
    * @throws Error
    * @return {Promise}
    */

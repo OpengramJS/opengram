@@ -288,7 +288,7 @@ class ApiClient {
    *
    * Use this property to control reply via webhook feature.
    *
-   * @param {boolean} enable
+   * @param {boolean} enable Value
    * @return {void}
    */
   set webhookReply (enable) {

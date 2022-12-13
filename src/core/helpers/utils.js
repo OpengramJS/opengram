@@ -61,6 +61,8 @@ function getText (
  * - `context.channelPost`
  * - `context.editedChannelPost`
  *
+ * @param {OpengramContext} ctx Update context for extracting {@link Message} object
+ *
  * @return {Message|undefined}
  */
 function getMessageFromAnySource (ctx) {
