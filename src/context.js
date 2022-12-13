@@ -844,8 +844,6 @@ class OpengramContext {
   /**
    * Alias to {@link banChatMember}, but have different arguments
    * @see https://core.telegram.org/bots/api#banchatmember
-   * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
-   *    (in the format `@channelusername`)
    * @param {number} userId Unique identifier of the target user
    * @param {number} [untilDate] Date when the user will be unbanned, unix time. If user is banned for more than 366 days or less
    *    than 30 seconds from the current time they are considered to be banned forever.
