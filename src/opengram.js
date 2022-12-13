@@ -101,7 +101,7 @@ class Opengram extends Composer {
 
   /**
    * Getter for bot token
-   * @return {string}  Bot token
+   * @return {string} Bot token
    */
   get token () {
     return this.telegram.token

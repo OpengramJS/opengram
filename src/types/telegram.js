@@ -6,7 +6,7 @@
  *     `new https.Agent({ keepAlive: true, keepAliveMsecs: 10000 })`
  * @property {string} [apiRoot] API root URL
  * @property {boolean} [channelMode=false] If `true`, channel posts can be matched as `text` update type
- * @property {string}  [apiPrefix=bot] API prefix before bot token, by default `bot`, but if you use
+ * @property {string} [apiPrefix=bot] API prefix before bot token, by default `bot`, but if you use
  *    [TDLight](https://github.com/tdlight-team/tdlight) you maybe should change `apiPrefix` to `user`
  * @property {boolean} [testEnv=false] Enable / disable test environment for WebApps,
  *    see more [here](https://core.telegram.org/bots/webapps#testing-web-apps)

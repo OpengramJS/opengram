@@ -433,7 +433,7 @@ class Telegram extends ApiClient {
    *
    * For sending voice messages, use the {@link Telegram#sendVoice} method instead.
    * @see https://core.telegram.org/bots/api#sendaudio
-   * @param  {string|number} chatId Unique identifier for the target chat or username of the target channel
+   * @param {string|number} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {attachmentFile} audio Audio file to send. Pass a `file_id` as String to send an audio file that exists on the Telegram
    *    servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet,
