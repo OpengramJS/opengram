@@ -45,6 +45,7 @@ const WEBHOOK_REPLY_STUB = {
   details: 'https://core.telegram.org/bots/api#making-requests-when-getting-updates'
 }
 
+// eslint-disable-next-line jsdoc/require-throws
 /**
  * Hides bot token in request errors
  *
