@@ -59,6 +59,7 @@ class Router {
    *
    * @param {string} route The route for which to register the middleware
    * @param {MiddlewareFn} fns Middleware(s) to register
+   * @throws {TypeError}
    * @return {Router}
    */
   on (route, ...fns) {
@@ -76,6 +77,7 @@ class Router {
    * downstream middleware.
    *
    * @param {MiddlewareFn} fns Middleware(s) to run if no route matches
+   * @throws {TypeError}
    */
   otherwise (...fns) {
     if (fns.length === 0) {

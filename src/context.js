@@ -510,6 +510,7 @@ class OpengramContext {
    * @private
    * @param {*} value Value to check
    * @param {string} method Method name
+   * @throws {TypeError}
    */
   assert (value, method) {
     if (!value) {
