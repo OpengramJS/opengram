@@ -1,5 +1,6 @@
 /**
  * Keyboard Builder wrapping function used to divide the keyboard into columns.
+ *
  * @name keyboardWrap
  * @function
  * @param {string} btn Current button object

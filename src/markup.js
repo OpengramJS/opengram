@@ -4,6 +4,7 @@ const { escapeHTML } = require('./core/helpers/escape')
 class Markup {
   /**
    * Adding force reply option to markup
+   *
    * @see https://core.telegram.org/bots/api#forcereply
    * @param {boolean} [value=true]
    * @return {Markup}
@@ -15,6 +16,7 @@ class Markup {
 
   /**
    * Enable / Disable keyboard removing
+   *
    * @see https://core.telegram.org/bots/api#replykeyboardremove
    * @param {boolean} [value=true]
    * @return {Markup}
@@ -26,6 +28,7 @@ class Markup {
 
   /**
    * Changing input field placeholder when reply is active (used with forceReply)
+   *
    * @see https://core.telegram.org/bots/api#forcereply
    * @param {string} placeholder Placeholder text
    * @return {Markup}
@@ -41,6 +44,7 @@ class Markup {
    * Keyboards are non-selective by default, use this function to enable it
    * (without any parameters or pass `true`). Pass `false` to force the
    * keyboard to be non-selective.
+   *
    * @see https://core.telegram.org/bots/api#forcereply
    * @see https://core.telegram.org/bots/api#replykeyboardremove
    * @param {boolean} [value=true]
@@ -60,6 +64,7 @@ class Markup {
    *   Markup.callbackButton('No', 'no')
    * ]).extra({ parse_mode: 'HTML' }))
    * ```
+   *
    * @param {object} [options] Additional options which should be passed into extra
    * @return {object}
    */
@@ -134,6 +139,7 @@ class Markup {
    * Keyboards are non-resized by default, use this function to enable it
    * (without any parameters or pass `true`). Pass `false` to force the
    * keyboard to be non-resized.
+   *
    * @see https://core.telegram.org/bots/api#replykeyboardmarkup
    * @param {boolean} [value=true]
    * @return {Markup}
@@ -145,6 +151,7 @@ class Markup {
 
   /**
    * Enable / Disable hiding keyboard after click
+   *
    * @see https://core.telegram.org/bots/api#replykeyboardmarkup
    * @param {boolean} [value=true]
    * @return {Markup}
@@ -157,6 +164,7 @@ class Markup {
   /**
    * Adds a new text button. This button will simply send the given text as a
    * text message back to your bot if a user clicks on it. Available for non-inline keyboard only.
+   *
    * @see https://core.telegram.org/bots/api#keyboardbutton
    * @param text {string} The text to display and send
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
@@ -175,6 +183,7 @@ class Markup {
    * ```js
    * bot.on('contact', ctx => { ... })
    * ```
+   *
    * @see https://core.telegram.org/bots/api#keyboardbutton
    * @param text {string} The text to display
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
@@ -193,6 +202,7 @@ class Markup {
    * ```js
    * bot.on('location', ctx => { ... })
    * ```
+   *
    * @see https://core.telegram.org/bots/api#keyboardbutton
    * @param text {string} The text to display
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
@@ -221,6 +231,7 @@ class Markup {
   /**
    * Adds a new URL button. Telegram clients will open the provided URL when
    * the button is pressed.
+   *
    * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
    * @param text {string} The text to display
    * @param url HTTP or `tg://` URL to be opened when the button is pressed. Links `tg://user?id=<user_id>` can be used to mention a user by their ID without using a username, if this is allowed by their privacy settings.
@@ -246,6 +257,7 @@ class Markup {
    * // Any button of any inline keyboard:
    * bot.on('callback_query', ctx => { ... })
    * ```
+   *
    * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
    * @param text {string} The text to display
    * @param data {string} Data to be sent in a callback query to the bot when button is pressed, 1-64 bytes
@@ -267,6 +279,7 @@ class Markup {
    * ```js
    * bot.on('inline_query', ctx => { ... })
    * ```
+   *
    * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
    * @param text {string} The text to display
    * @param value {string}
@@ -287,6 +300,7 @@ class Markup {
    * ```js
    * bot.on('inline_query', ctx => { ... })
    * ```
+   *
    * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
    * @param text {string} The text to display
    * @param value {string}
@@ -299,6 +313,7 @@ class Markup {
 
   /**
    * Adds a new game query button
+   *
    * @see https://core.telegram.org/bots/api#games
    * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
    * @param text {string} The text to display
@@ -311,6 +326,7 @@ class Markup {
 
   /**
    * Adds a new payment button
+   *
    * @see https://core.telegram.org/bots/api#payments
    * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
    * @param text {string} The text to display
@@ -325,6 +341,7 @@ class Markup {
    * Adds a new login button. This can be used as a replacement for the
    * Telegram Login Widget. You must specify an HTTPS URL used to
    * automatically authorize the user.
+   *
    * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
    * @param {string} text Message text
    * @param {string} url An HTTPS URL to be opened with user authorization data added to the query string when the button is pressed. If the user refuses to provide authorization data, the original URL without information about the user will be opened. The data added is the same as described in Receiving authorization data.
@@ -340,6 +357,7 @@ class Markup {
    *  Adds a new web app button. The Web App that will be launched when the
    *  user presses the button. The Web App will be able to send a
    *  `web_app_data` service message. Available in private chats only.
+   *
    * @see https://core.telegram.org/bots/webapps
    * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
    * @see https://core.telegram.org/bots/api#keyboardbutton
@@ -354,6 +372,7 @@ class Markup {
 
   /**
    * Enable / Disable keyboard removing
+   *
    * @see https://core.telegram.org/bots/api#replykeyboardremove
    * @param {boolean} [value=true]
    * @return {Markup}
@@ -364,6 +383,7 @@ class Markup {
 
   /**
    * Adding force reply option to markup
+   *
    * @see https://core.telegram.org/bots/api#forcereply
    * @param {boolean} [value=true]
    * @return {Markup}
@@ -429,6 +449,7 @@ class Markup {
    * Keyboards are non-resized by default, use this function to enable it
    * (without any parameters or pass `true`). Pass `false` to force the
    * keyboard to be non-resized.
+   *
    * @see https://core.telegram.org/bots/api#replykeyboardmarkup
    * @param {boolean} [value=true]
    * @return {Markup}
@@ -439,6 +460,7 @@ class Markup {
 
   /**
    * Changing input field placeholder when reply is active, used with forceReply
+   *
    * @see https://core.telegram.org/bots/api#forcereply
    * @param {string} placeholder
    * @return {Markup}
@@ -453,6 +475,7 @@ class Markup {
    * Keyboards are non-selective by default, use this function to enable it
    * (without any parameters or pass `true`). Pass `false` to force the
    * keyboard to be non-selective.
+   *
    * @see https://core.telegram.org/bots/api#forcereply
    * @see https://core.telegram.org/bots/api#replykeyboardremove
    * @param {boolean} [value=true]
@@ -464,6 +487,7 @@ class Markup {
 
   /**
    * Enable / Disable hiding keyboard after click
+   *
    * @see https://core.telegram.org/bots/api#replykeyboardmarkup
    * @param {boolean} [value=true]
    * @return {Markup}
@@ -475,6 +499,7 @@ class Markup {
   /**
    * Adds a new text button. This button will simply send the given text as a
    * text message back to your bot if a user clicks on it. Available for non-inline keyboard only.
+   *
    * @see https://core.telegram.org/bots/api#keyboardbutton
    * @param text {string} The text to display and send
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
@@ -493,6 +518,7 @@ class Markup {
    * ```js
    * bot.on('contact', ctx => { ... })
    * ```
+   *
    * @see https://core.telegram.org/bots/api#keyboardbutton
    * @param text {string} The text to display
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
@@ -511,6 +537,7 @@ class Markup {
    * ```js
    * bot.on('location', ctx => { ... })
    * ```
+   *
    * @see https://core.telegram.org/bots/api#keyboardbutton
    * @param text {string} The text to display
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
@@ -539,6 +566,7 @@ class Markup {
   /**
    * Adds a new URL button. Telegram clients will open the provided URL when
    * the button is pressed.
+   *
    * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
    * @param text {string} The text to display
    * @param url HTTP or `tg://` URL to be opened when the button is pressed. Links `tg://user?id=<user_id>` can be used to mention a user by their ID without using a username, if this is allowed by their privacy settings.
@@ -564,6 +592,7 @@ class Markup {
    * // Any button of any inline keyboard:
    * bot.on('callback_query', ctx => { ... })
    * ```
+   *
    * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
    * @param text {string} The text to display
    * @param data {string} Data to be sent in a callback query to the bot when button is pressed, 1-64 bytes
@@ -585,6 +614,7 @@ class Markup {
    * ```js
    * bot.on('inline_query', ctx => { ... })
    * ```
+   *
    * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
    * @param text {string} The text to display
    * @param value {string}
@@ -605,6 +635,7 @@ class Markup {
    * ```js
    * bot.on('inline_query', ctx => { ... })
    * ```
+   *
    * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
    * @param text {string} The text to display
    * @param value {string}
@@ -617,6 +648,7 @@ class Markup {
 
   /**
    * Adds a new game query button
+   *
    * @see https://core.telegram.org/bots/api#games
    * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
    * @param text {string} The text to display
@@ -629,6 +661,7 @@ class Markup {
 
   /**
    * Adds a new payment button
+   *
    * @see https://core.telegram.org/bots/api#payments
    * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
    * @param text {string} The text to display
@@ -643,6 +676,7 @@ class Markup {
    * Adds a new login button. This can be used as a replacement for the
    * Telegram Login Widget. You must specify an HTTPS URL used to
    * automatically authorize the user.
+   *
    * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
    * @param {string} text
    * @param {string} url An HTTPS URL to be opened with user authorization data added to the query string when the button is pressed. If the user refuses to provide authorization data, the original URL without information about the user will be opened. The data added is the same as described in Receiving authorization data.
@@ -662,6 +696,7 @@ class Markup {
    *  Adds a new web app button. The Web App that will be launched when the
    *  user presses the button. The Web App will be able to send a
    *  `web_app_data` service message. Available in private chats only.
+   *
    * @see https://core.telegram.org/bots/webapps
    * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
    * @see https://core.telegram.org/bots/api#keyboardbutton
@@ -680,6 +715,7 @@ class Markup {
 
   /**
    * Returns build HTML given text and entities object
+   *
    * @param {string} text Message text
    * @param {object[]} entities Array of message entities
    * @deprecated Prefer to pass entities direct when send / edit message, it is available after Bot API 5.0
@@ -776,6 +812,7 @@ class Markup {
 
 /**
  * Keyboard build method used by `Markup.inlineKeyboard` / `Markup.keyboard`
+ *
  * @param buttons
  * @param {keyboardOptions|inlineKeyboardOptions} [options]
  * @return {Array<object[]>}

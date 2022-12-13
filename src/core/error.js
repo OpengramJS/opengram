@@ -5,6 +5,7 @@
  * however, an error code was returned for the respective method call.
  *
  * You can check is error belongs to {@link TelegramError} by using {@link isTelegramError}
+ *
  * @extends Error
  */
 class TelegramError extends Error {
@@ -20,6 +21,7 @@ class TelegramError extends Error {
 
 /**
  * Checks if the error is a {@link TelegramError}
+ *
  * @param {object} err Error object
  * @return {boolean}
  */

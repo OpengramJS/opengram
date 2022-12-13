@@ -22,6 +22,7 @@ class Extra {
    * // Loads `reply_to_message_id: 1` parameter to exists instance
    * new Extra().load({ reply_to_message_id: 1 })
    * ```
+   *
    * @param {object} opts Extra parameters object
    * @return {Extra}
    */
@@ -31,6 +32,7 @@ class Extra {
 
   /**
    * Adding reply to message
+   *
    * @see https://core.telegram.org/bots/api#sendmessage
    * @param {number} messageId Message id to reply
    * @return {Extra}
@@ -42,6 +44,7 @@ class Extra {
 
   /**
    * Enable / Disable notification for message
+   *
    * @see https://core.telegram.org/bots/api#sendmessage
    * @param {boolean} [value=true]
    * @return {Extra}
@@ -53,6 +56,7 @@ class Extra {
 
   /**
    * Enable / Disable web preview for links in message
+   *
    * @see https://core.telegram.org/bots/api#sendmessage
    * @param {boolean} [value=true]
    * @return {Extra}
@@ -64,6 +68,7 @@ class Extra {
 
   /**
    * Markup factory function
+   *
    * @name markupCallback
    * @function
    * @param {Markup} markup Empty created Markup instance
@@ -105,6 +110,7 @@ class Extra {
 
   /**
    * Enable / Disable `parse_mode: 'HTML'` for message
+   *
    * @see https://core.telegram.org/bots/api#formatting-options
    * @param {boolean} [value=true]
    * @return {Extra}
@@ -116,6 +122,7 @@ class Extra {
 
   /**
    * Enable / Disable `parse_mode: 'Markdown'` for message
+   *
    * @see https://core.telegram.org/bots/api#formatting-options
    * @param {boolean} [value=true]
    * @return {Extra}
@@ -127,6 +134,7 @@ class Extra {
 
   /**
    * Enable / Disable `parse_mode: 'MarkdownV2'` for message
+   *
    * @see https://core.telegram.org/bots/api#formatting-options
    * @param {boolean} [value=true]
    * @return {Extra}
@@ -138,6 +146,7 @@ class Extra {
 
   /**
    * Adds caption for the animation, audio, document, photo, video or voice
+   *
    * @see https://core.telegram.org/bots/api#sendmessage
    * @param {string} [caption] The text of caption
    * @return {Extra}
@@ -149,6 +158,7 @@ class Extra {
 
   /**
    * Adds entities for message text
+   *
    * @see https://core.telegram.org/bots/api#sendmessage
    * @param {MessageEntity[]} entities Array of entities
    * @return {Extra}
@@ -160,6 +170,7 @@ class Extra {
 
   /**
    * Adds caption entities for the animation, audio, document, photo, video or voice
+   *
    * @see https://core.telegram.org/bots/api#sendmessage
    * @param {MessageEntity[]} entities Array of entities
    * @return {Extra}
@@ -171,6 +182,7 @@ class Extra {
 
   /**
    * Adding reply to message
+   *
    * @see https://core.telegram.org/bots/api#sendmessage
    * @param {number} messageId Message id to reply
    * @return {Extra}
@@ -181,6 +193,7 @@ class Extra {
 
   /**
    * Enable / Disable notification for message
+   *
    * @see https://core.telegram.org/bots/api#sendmessage
    * @param {boolean} [value=true]
    * @return {Extra}
@@ -191,6 +204,7 @@ class Extra {
 
   /**
    * Enable / Disable web preview for links in message
+   *
    * @see https://core.telegram.org/bots/api#sendmessage
    * @param {boolean} [value=true]
    * @return {Extra}
@@ -207,6 +221,7 @@ class Extra {
    * // Loads `reply_to_message_id: 1` parameter to exists instance
    * new Extra().load({ reply_to_message_id: 1 })
    * ```
+   *
    * @param {object} opts Extra parameters object
    * @return {Extra}
    */
@@ -243,6 +258,7 @@ class Extra {
 
   /**
    * Adds entities for message text
+   *
    * @see https://core.telegram.org/bots/api#sendmessage
    * @param {MessageEntity[]} entities Array of entities
    * @return {Extra}
@@ -253,6 +269,7 @@ class Extra {
 
   /**
    * Enable / Disable `parse_mode: 'HTML'` for message
+   *
    * @see https://core.telegram.org/bots/api#formatting-options
    * @param {boolean} [value=true]
    * @return {Extra}
@@ -263,6 +280,7 @@ class Extra {
 
   /**
    * Enable / Disable `parse_mode: 'Markdown'` for message
+   *
    * @see https://core.telegram.org/bots/api#formatting-options
    * @param {boolean} [value=true]
    * @return {Extra}
@@ -273,6 +291,7 @@ class Extra {
 
   /**
    * Enable / Disable `parse_mode: 'MarkdownV2'` for message
+   *
    * @see https://core.telegram.org/bots/api#formatting-options
    * @param {boolean} [value=true]
    * @return {Extra}
@@ -283,6 +302,7 @@ class Extra {
 
   /**
    * Adds caption for the animation, audio, document, photo, video or voice
+   *
    * @see https://core.telegram.org/bots/api#sendmessage
    * @param {string} [caption] The text of caption
    * @return {Extra}
@@ -293,6 +313,7 @@ class Extra {
 
   /**
    * Adds caption entities for the animation, audio, document, photo, video or voice
+   *
    * @see https://core.telegram.org/bots/api#sendmessage
    * @param {MessageEntity[]} entities Array of entities
    * @return {Extra}
@@ -307,6 +328,7 @@ class Extra {
  * ```js
  * const { Extra: { Markup } } = require('opengram')
  * ```
+ *
  * @type {Markup}
  */
 Extra.Markup = Markup

@@ -9,6 +9,7 @@
  * // Returns entities of message or media caption
  * getEntities(ctx.message)
  * ```
+ *
  * @private
  * @param {object} updateData
  * @return {string|Array}
@@ -35,6 +36,7 @@ function getEntities (updateData) {
  * // Returns data of callback query
  * getText(ctx.callbackQuery)
  * ```
+ *
  * @private
  * @param {object} updateData
  * @return {string|undefined}
@@ -58,6 +60,7 @@ function getText (
  * - `context.callbackQuery.message`
  * - `context.channelPost`
  * - `context.editedChannelPost`
+ *
  * @return {Message|undefined}
  */
 function getMessageFromAnySource (ctx) {

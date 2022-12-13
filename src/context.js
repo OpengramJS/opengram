@@ -105,6 +105,7 @@ const MessageSubTypesMapping = {
 class OpengramContext {
   /**
    * Constructor of Opengram context object
+   *
    * @param {object} update Raw update object from telegram
    * @param {Telegram} telegram Instance of {@link Telegram}
    * @param {ContextOptions} options Extra options
@@ -129,6 +130,7 @@ class OpengramContext {
 
   /**
    * Getter for getting bot username from bot info object
+   *
    * @return {string}
    */
   get me () {
@@ -139,6 +141,7 @@ class OpengramContext {
    * Returns instance of {@link Telegram} for api calls
    *
    * Alias for `context.tg`
+   *
    * @return {Telegram}
    */
   get telegram () {
@@ -149,6 +152,7 @@ class OpengramContext {
    * Returns {@link Message} object for current update
    *
    * Shortcut to `context.update.message`
+   *
    * @return {Message}
    */
   get message () {
@@ -164,6 +168,7 @@ class OpengramContext {
    * - `context.callbackQuery.message`
    * - `context.channelPost`
    * - `context.editedChannelPost`
+   *
    * @return {Message|undefined}
    */
   get anyMessage () {
@@ -184,6 +189,7 @@ class OpengramContext {
    * - `context.callbackQuery.message.text`
    * - `context.ctx.channelPost.text`
    * - `context.editedChannelPost.text`
+   *
    * @return {string|undefined}
    */
   get anyText () {
@@ -205,6 +211,7 @@ class OpengramContext {
    * - `context.callbackQuery.message.caption_entities`
    * - `context.channelPost.caption_entities`
    * - `context.editedChannelPost.caption_entities`
+   *
    * @return {MessageEntity[]}
    */
   get anyEntities () {
@@ -216,6 +223,7 @@ class OpengramContext {
    * Returns {@link Message edited message} object for current update
    *
    * Shortcut to `context.update.edited_message`
+   *
    * @return {Message}
    */
   get editedMessage () {
@@ -226,6 +234,7 @@ class OpengramContext {
    * Returns {@link InlineQuery} object for current update
    *
    * Shortcut to `context.update.inline_query`
+   *
    * @return {InlineQuery}
    */
   get inlineQuery () {
@@ -236,6 +245,7 @@ class OpengramContext {
    * Returns {@link ShippingQuery} object for current update
    *
    * Shortcut to `context.update.shipping_query`
+   *
    * @return {ShippingQuery}
    */
   get shippingQuery () {
@@ -246,6 +256,7 @@ class OpengramContext {
    * Returns {@link PreCheckoutQuery} object for current update
    *
    * Shortcut to `context.update.pre_checkout_query`
+   *
    * @return {PreCheckoutQuery}
    */
   get preCheckoutQuery () {
@@ -256,6 +267,7 @@ class OpengramContext {
    * Returns {@link ChosenInlineResult} object for current update
    *
    * Shortcut to `context.update.chosen_inline_result`
+   *
    * @return {ChosenInlineResult}
    */
   get chosenInlineResult () {
@@ -266,6 +278,7 @@ class OpengramContext {
    * Returns {@link Message channel post} object for current update
    *
    * Shortcut to `context.update.channel_post`
+   *
    * @return {Message}
    */
   get channelPost () {
@@ -276,6 +289,7 @@ class OpengramContext {
    * Returns {@link Message edited channel post} object for current update
    *
    * Shortcut to `context.update.edited_channel_post`
+   *
    * @return {Message}
    */
   get editedChannelPost () {
@@ -286,6 +300,7 @@ class OpengramContext {
    * Returns {@link CallbackQuery} object for current update
    *
    * Shortcut to `context.update.callback_query`
+   *
    * @return {CallbackQuery}
    */
   get callbackQuery () {
@@ -296,6 +311,7 @@ class OpengramContext {
    * Returns {@link Poll} object for current update
    *
    * Shortcut to `context.update.poll`
+   *
    * @return {Poll}
    */
   get poll () {
@@ -306,6 +322,7 @@ class OpengramContext {
    * Returns {@link PollAnswer} object for current update
    *
    * Shortcut to `context.update.poll_answer`
+   *
    * @return {PollAnswer}
    */
   get pollAnswer () {
@@ -316,6 +333,7 @@ class OpengramContext {
    * Returns {@link ChatMemberUpdated} object for current update
    *
    * Shortcut to `context.update.my_chat_member`
+   *
    * @return {ChatMemberUpdated}
    */
   get myChatMember () {
@@ -326,6 +344,7 @@ class OpengramContext {
    * Returns {@link ChatMemberUpdated} object for current update
    *
    * Shortcut to `context.update.chat_member`
+   *
    * @return {ChatMemberUpdated}
    */
   get chatMember () {
@@ -336,6 +355,7 @@ class OpengramContext {
    * Returns {@link ChatJoinRequest} object for current update
    *
    * Shortcut to `context.update.chat_join_request`
+   *
    * @return {ChatJoinRequest}
    */
   get chatJoinRequest () {
@@ -354,6 +374,7 @@ class OpengramContext {
    * - `context.callbackQuery.message.chat`
    * - `context.channelPost.chat`
    * - `context.editedChannelPost.chat`
+   *
    * @return {Chat}
    */
   get chat () {
@@ -451,6 +472,7 @@ class OpengramContext {
   /**
    * Setter for state object, available only in current update which be destroyed after update processed
    * > You can store some temporary data for sharing with other middlewares in chain
+   *
    * @param {object} value New state object
    *
    * @return {void}
@@ -463,6 +485,7 @@ class OpengramContext {
    * Getter for webhookReply
    *
    * Use this property to control reply via webhook feature for current context.
+   *
    * @return {boolean}
    */
   get webhookReply () {
@@ -473,6 +496,7 @@ class OpengramContext {
    * Setter for webhookReply
    *
    * Use this property to control reply via webhook feature for current context.
+   *
    * @param {boolean} enable
    * @return {void}
    */
@@ -482,6 +506,7 @@ class OpengramContext {
 
   /**
    * Method used for checking is method available for current update
+   *
    * @private
    * @param value Value to check
    * @param method Method name
@@ -497,6 +522,7 @@ class OpengramContext {
    *
    * On success, `True` is returned.
    * No more than **50** results per query are allowed.
+   *
    * @see https://core.telegram.org/bots/api#answerinlinequery
    * @param {InlineQueryResult[]} results A array of results for the inline query
    * @param {object|Extra} [extra] Other parameters
@@ -518,6 +544,7 @@ class OpengramContext {
    * Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first
    * create a game for your bot via [@BotFather](https://t.me/BotFather) and accept the terms.
    * Otherwise, you may use links like `t.me/your_bot?start=XXXX` that open your bot with a parameter.
+   *
    * @see https://core.telegram.org/bots/api#answercallbackquery
    * @param {string} text Text of the notification. If not specified, nothing will be shown to the user, 0-200 characters
    * @param {boolean} [showAlert] If True, an alert will be shown by the client instead of a notification at the top of the
@@ -533,6 +560,7 @@ class OpengramContext {
 
   /**
    * Alias to {@link answerCbQuery} for game query
+   *
    * @see https://core.telegram.org/bots/api#answercallbackquery
    * @param [url] URL that will be opened by the user's client. If you have created a Game and accepted the conditions
    *    via [@BotFather](https://t.me/BotFather), specify the URL that opens your game - note that this will only work
@@ -551,6 +579,7 @@ class OpengramContext {
    * shipping queries.
    *
    * On success, `True` is returned.
+   *
    * @see https://core.telegram.org/bots/api#answershippingquery
    * @param {boolean} ok Specify True if delivery to the specified address is possible and False if there are any problems
    *    (for example, if delivery to the specified address is not possible)
@@ -575,6 +604,7 @@ class OpengramContext {
    *
    * **Note:** The Bot API must receive an answer within 10 seconds after
    * the pre-checkout query was sent.
+   *
    * @see https://core.telegram.org/bots/api#answerprecheckoutquery
    * @param {boolean} ok Specify True if everything is alright (goods are available, etc.) and the bot is ready to proceed
    *    with the order. Use False if there are any problems.
@@ -595,6 +625,7 @@ class OpengramContext {
    *
    * On success, if the edited message is not an inline message, the edited {@link Message} is returned,
    * otherwise `True` is returned.
+   *
    * @see https://core.telegram.org/bots/api#editmessagetext
    * @param {string} text New text of the message, 1-4096 characters after entities parsing
    * @param {object|Extra} [extra] Other parameters
@@ -625,6 +656,7 @@ class OpengramContext {
    *
    * On success, if the edited message is not an inline message, the edited {@link Message} is returned,
    * otherwise `True` is returned.
+   *
    * @see https://core.telegram.org/bots/api#editmessagecaption
    * @param {string} [caption] New caption of the message, 0-1024 characters after entities parsing
    * @param {object|Extra} [extra] Other parameters
@@ -658,6 +690,7 @@ class OpengramContext {
    *
    * On success, if the edited message is not an inline message, the edited {@link Message} is returned,
    * otherwise `True` is returned.
+   *
    * @see https://core.telegram.org/bots/api#editmessagemedia
    * @param {InputMedia} media Object for a new media content of the message
    * @param {object|Extra} [extra] Other parameters
@@ -688,6 +721,7 @@ class OpengramContext {
    *
    * On success, if the edited message is not an inline message, the edited {@link Message} is
    * returned, otherwise `True` is returned.
+   *
    * @see https://core.telegram.org/bots/api#editmessagereplymarkup
    * @param {object|Extra} [markup] Other parameters
    * @throws {TelegramError}
@@ -717,6 +751,7 @@ class OpengramContext {
    *
    * On success, if the edited message is not an inline message, the edited {@link Message} is returned,
    * otherwise `True` is returned.
+   *
    * @see https://core.telegram.org/bots/api#editmessagelivelocation
    * @param {number} latitude Latitude of new location
    * @param {number} longitude Longitude of new location
@@ -752,6 +787,7 @@ class OpengramContext {
    *
    * On success, if the edited message is not an inline message, the edited {@link Message} is returned,
    * otherwise `True` is returned.
+   *
    * @see https://core.telegram.org/bots/api#stopmessagelivelocation
    * @param {object|Markup} [markup] Other parameters
    * @throws {TelegramError}
@@ -778,6 +814,7 @@ class OpengramContext {
    * Use this method to send text messages to current chat.
    *
    * On success, the sent {@link Message} is returned.
+   *
    * @see https://core.telegram.org/bots/api#sendmessage
    * @param {string} text Text of the message to be sent, 1-4096 characters after entities parsing
    * @param {MessageExtraParams|Extra} [extra] Other parameters
@@ -794,6 +831,7 @@ class OpengramContext {
    * conversations, current username of a user, group or channel, etc.).
    *
    * Returns a {@link Chat} object on success.
+   *
    * @see https://core.telegram.org/bots/api#getchat
    * @throws {TelegramError}
    * @return {Promise<Chat>}
@@ -814,6 +852,7 @@ class OpengramContext {
    * other administrators. If you want your bot to work with invite links,
    * it will need to generate its own link using exportChatInviteLink or by calling the getChat method.
    * If your bot needs to generate a new primary invite link replacing its previous one, use exportChatInviteLink again.
+   *
    * @see https://core.telegram.org/bots/api#exportchatinvitelink
    * @throws {TelegramError}
    * @return {Promise}
@@ -830,6 +869,7 @@ class OpengramContext {
    * The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights.
    *
    * Returns `True` on success.
+   *
    * @see https://core.telegram.org/bots/api#banchatmember
    * @param userId Unique identifier of the target user
    * @param {object|Extra} [extra] Other parameters
@@ -843,6 +883,7 @@ class OpengramContext {
 
   /**
    * Alias to {@link banChatMember}, but have different arguments
+   *
    * @see https://core.telegram.org/bots/api#banchatmember
    * @param {number} userId Unique identifier of the target user
    * @param {number} [untilDate] Date when the user will be unbanned, unix time. If user is banned for more than 366 days or less
@@ -865,6 +906,7 @@ class OpengramContext {
    * If you don't want this, use the parameter `only_if_banned`.
    *
    * Returns `True` on success.
+   *
    * @see https://core.telegram.org/bots/api#unbanchatmember
    * @param {number} userId Unique identifier of the target user
    * @param {object|Extra} [extra] Other parameters
@@ -882,6 +924,7 @@ class OpengramContext {
    * restrictions from a user.
    *
    * Returns `True` on success.
+   *
    * @see https://core.telegram.org/bots/api#restrictchatmember
    * @param {number} userId Unique identifier of the target user
    * @param {object} [extra] Other parameters
@@ -899,6 +942,7 @@ class OpengramContext {
    * parameters to demote a user.
    *
    * Returns `True` on success.
+   *
    * @see https://core.telegram.org/bots/api#promotechatmember
    * @param {number} userId Unique identifier of the target user
    * @param {object} [extra] Other parameters
@@ -917,6 +961,7 @@ class OpengramContext {
    * to work and must have the appropriate administrator rights.
    *
    * Returns `True` on success.
+   *
    * @see https://core.telegram.org/bots/api#banchatsenderchat
    * @param {number} senderChatId Unique identifier of the target sender chat
    * @throws {TelegramError}
@@ -932,6 +977,7 @@ class OpengramContext {
    * The bot must be an administrator for this to work and must have the appropriate administrator rights.
    *
    * Returns `True` on success.
+   *
    * @see https://core.telegram.org/bots/api#unbanchatsenderchat
    * @param {number} senderChatId Unique identifier of the target sender chat
    * @throws {TelegramError}
@@ -946,6 +992,7 @@ class OpengramContext {
    * Use this method to set a custom title for an administrator in current supergroup promoted by the bot.
    *
    * Returns `True` on success.
+   *
    * @see https://core.telegram.org/bots/api#setchatadministratorcustomtitle
    * @param {number} userId Unique identifier of the target user
    * @param {string} title New custom title for the administrator; 0-16 characters, emoji are not allowed
@@ -962,6 +1009,7 @@ class OpengramContext {
    * The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights.
    *
    * Returns `True` on success.
+   *
    * @see https://core.telegram.org/bots/api#setchatphoto
    * @param {attachmentFile} photo New chat photo, uploaded using multipart/form-data
    * @throws {TelegramError}
@@ -977,6 +1025,7 @@ class OpengramContext {
    * administrator in the chat for this to work and must have the appropriate administrator rights.
    *
    * Returns `True` on success.
+   *
    * @see https://core.telegram.org/bots/api#deletechatphoto
    * @throws {TelegramError}
    * @return {Promise<boolean>}
@@ -991,6 +1040,7 @@ class OpengramContext {
    * The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights.
    *
    * Returns `True` on success.
+   *
    * @see https://core.telegram.org/bots/api#setchattitle
    * @param {string} title New chat title, 1-255 characters
    * @throws {TelegramError}
@@ -1007,6 +1057,7 @@ class OpengramContext {
    *
    * Returns `True` on success.
    * https://core.telegram.org/bots/api#setchatdescription
+   *
    * @param {string} [description] New chat description, 0-255 characters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
@@ -1022,6 +1073,7 @@ class OpengramContext {
    * right in a supergroup or 'can_edit_messages' administrator right in a channel.
    *
    * Returns `True` on success.
+   *
    * @see https://core.telegram.org/bots/api#pinchatmessage
    * @param {number} messageId Identifier of a message to pin
    * @param {object} [extra] Other parameters
@@ -1040,6 +1092,7 @@ class OpengramContext {
    * right in a channel.
    *
    * Returns `True` on success.
+   *
    * @see https://core.telegram.org/bots/api#unpinchatmessage
    * @param {object} [extra] Other parameters
    * @throws {TelegramError}
@@ -1057,6 +1110,7 @@ class OpengramContext {
    * right in a channel.
    *
    * Returns `True` on success.
+   *
    * @see https://core.telegram.org/bots/api#unpinallchatmessages
    * @throws {TelegramError}
    * @return {Promise<boolean>}
@@ -1070,6 +1124,7 @@ class OpengramContext {
    * Use this method for your bot to leave from group, supergroup or channel from current update.
    *
    * Returns `True` on success.
+   *
    * @see https://core.telegram.org/bots/api#leavechat
    * @throws {TelegramError}
    * @return {Promise<boolean>}
@@ -1085,6 +1140,7 @@ class OpengramContext {
    * or a supergroup for this to work and must have the `can_restrict_members` administrator rights.
    *
    * Returns `True` on success.
+   *
    * @see https://core.telegram.org/bots/api#setchatpermissions
    * @param {ChatPermissions} permissions A object for new default chat permissions
    * @throws {TelegramError}
@@ -1101,6 +1157,7 @@ class OpengramContext {
    * On success, returns an Array of {@link ChatMember}
    * objects that contains information about all chat administrators except other bots. If the chat is a group
    * or a supergroup and no administrators were appointed, only the creator will be returned.
+   *
    * @see https://core.telegram.org/bots/api#getchatadministrators
    * @throws {TelegramError}
    * @return {Promise<ChatMember[]>}
@@ -1114,6 +1171,7 @@ class OpengramContext {
    * Use this method to get information about a member of chat from current update.
    *
    * Returns a {@link ChatMember} object on success.
+   *
    * @see https://core.telegram.org/bots/api#getchatmember
    * @param userId Unique identifier of the target user
    * @throws {TelegramError}
@@ -1128,6 +1186,7 @@ class OpengramContext {
    * Use this method to get the number of members in chat from current update.
    *
    * Returns `Int` on success.
+   *
    * @see https://core.telegram.org/bots/api#getchatmembercount
    * @deprecated Use {@link getChatMemberCount}
    * @throws {TelegramError}
@@ -1142,6 +1201,7 @@ class OpengramContext {
    * Use this method to get the number of members in chat from current update.
    *
    * Returns `Int` on success.
+   *
    * @see https://core.telegram.org/bots/api#getchatmembercount
    * @deprecated Use {@link getChatMemberCount}
    * @throws {TelegramError}
@@ -1157,6 +1217,7 @@ class OpengramContext {
    * or the default menu button.
    *
    * Returns {@link MenuButton} on success.
+   *
    * @see https://core.telegram.org/bots/api#getchatmenubutton
    * @throws {TelegramError}
    * @return {Promise<MenuButton>}
@@ -1170,6 +1231,7 @@ class OpengramContext {
    * Use this method to change the bot's menu button in private chat from current update, or the default menu button.
    *
    * Returns `True` on success.
+   *
    * @see https://core.telegram.org/bots/api#setchatmenubutton
    * @param {MenuButton} [menuButton] Unique identifier for the target private chat.
    *    If not specified, default bot's menu button will be changed
@@ -1188,6 +1250,7 @@ class OpengramContext {
    *
    * Returns `True` on success.
    * https://core.telegram.org/bots/api#setmydefaultadministratorrights
+   *
    * @param {ChatAdministratorRights} [rights] Object describing new default administrator rights.
    * If not specified, the default administrator rights will be cleared.
    * @param {boolean} [forChannels] Pass True to change the default administrator rights of the bot in channels.
@@ -1203,6 +1266,7 @@ class OpengramContext {
    * Use this method to get the current default administrator rights of the bot.
    *
    * Returns {@link ChatAdministratorRights} on success.
+   *
    * @see https://core.telegram.org/bots/api#getmydefaultadministratorrights
    * @param {boolean} [forChannels] Pass True to get default administrator rights of the bot in channels.
    *    Otherwise, default administrator rights of the bot for groups and supergroups will be returned.
@@ -1223,6 +1287,7 @@ class OpengramContext {
    * Use this if the data submitted by the user doesn't satisfy the standards your service requires for any reason.
    * For example, if a birthday date seems invalid, a submitted document is blurry, a scan shows evidence of tampering,
    * etc. Supply some details in the error message to make sure the user knows how to correct the issues.
+   *
    * @see https://core.telegram.org/bots/api#setpassportdataerrors
    * @param {PassportElementError[]} errors Array describing the errors
    * @throws {TelegramError}
@@ -1237,6 +1302,7 @@ class OpengramContext {
    * Use this method to send message with photo to chat from current update.
    *
    * On success, the sent {@link Message} is returned.
+   *
    * @see https://core.telegram.org/bots/api#sendmessage
    * @param {attachmentFile} photo Photo to send. Pass a `file_id` as String to send a photo that exists on the
    *    Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet,
@@ -1260,6 +1326,7 @@ class OpengramContext {
    *
    * On success, an array of {@link Message Messages}
    * that were sent is returned.
+   *
    * @see https://core.telegram.org/bots/api#sendmediagroup
    * @param {Array<InputMediaPhoto|InputMediaAudio|InputMediaVideo|InputMediaDocument>} media A array describing
    *    messages to be sent, must include 2-10 items
@@ -1281,6 +1348,7 @@ class OpengramContext {
    * Bots can currently send audio files of up to 50 MB in size, this limit may be changed in the future.
    *
    * For sending voice messages, use the {@link OpengramContext#replyWithVoice} method instead.
+   *
    * @see https://core.telegram.org/bots/api#sendaudio
    * @param {attachmentFile} audio Audio file to send. Pass a `file_id` as String to send an audio file that exists on the Telegram
    *    servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet,
@@ -1299,6 +1367,7 @@ class OpengramContext {
    * Use this method to send an animated emoji that will display a random value to chat from current update.
    *
    * On success, the sent {@link Message} is returned.
+   *
    * @see https://core.telegram.org/bots/api#sendphoto
    * @param {object|Extra} [extra] Other parameters
    * @throws {TelegramError}
@@ -1314,6 +1383,7 @@ class OpengramContext {
    *
    * On success, the sent {@link Message} is returned.
    * Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
+   *
    * @see https://core.telegram.org/bots/api#senddocument
    * @param {attachmentFile} document Document to send. Pass a `file_id` as String to send a document that exists
    *    on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet,
@@ -1332,6 +1402,7 @@ class OpengramContext {
    * Use this method to send static `.WEBP`, animated `.TGS`, or video `.WEBM` stickers to chat from current update.
    *
    * On success, the sent {@link Message} is returned.
+   *
    * @see https://core.telegram.org/bots/api#sendsticker
    * @param {attachmentFile} sticker Sticker to send. Pass a `file_id` as String to send a file that exists on
    *    the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP file from the
@@ -1353,6 +1424,7 @@ class OpengramContext {
    * On success, the sent {@link Message} is returned.
    *
    * Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
+   *
    * @see https://core.telegram.org/bots/api#sendvideo
    * @param {attachmentFile} video Video to send. Pass a `file_id` as String to send a video that
    *    exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get
@@ -1373,6 +1445,7 @@ class OpengramContext {
    * On success, the sent {@link Message} is returned.
    *
    * Bots can currently send animation files of up to 50 MB in size, this limit may be changed in the future.
+   *
    * @see https://core.telegram.org/bots/api#sendanimation
    * @param {attachmentFile} animation Animation to send. Pass a `file_id` as String to send an animation that exists
    *    on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an animation from
@@ -1393,6 +1466,7 @@ class OpengramContext {
    * Use this method to send video messages to chat from current update.
    *
    * On success, the sent {@link Message} is returned.
+   *
    * @see https://core.telegram.org/bots/api#sendvideonote
    * @param {attachmentFile} videoNote Video note to send. Pass a `file_id` as String to send a video note that exists on
    *    the Telegram servers (recommended) or upload a new video using multipart/form-data.
@@ -1411,6 +1485,7 @@ class OpengramContext {
    * Use this method to send invoice to current chat.
    *
    * On success, the sent {@link Message} is returned.
+   *
    * @see https://core.telegram.org/bots/api#sendinvoice
    * @param {object} invoice Other invoice parameters
    * @param {object|Extra} [extra] Other parameters
@@ -1426,6 +1501,7 @@ class OpengramContext {
    * Use this method to send a game to chat from current update.
    *
    * On success, the sent {@link Message} is returned.
+   *
    * @see https://core.telegram.org/bots/api#sendgame
    * @param {string} gameName Short name of the game, serves as the unique identifier for the game.
    *    Set up your games via [@BotFather](https://t.me/BotFather).
@@ -1446,6 +1522,7 @@ class OpengramContext {
    *
    * On success, the sent {@link Message} is returned.
    * Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.
+   *
    * @see https://core.telegram.org/bots/api#sendvoice
    * @param {attachmentFile} voice Audio file to send. Pass a file_id as String to send a file that exists on the
    *    Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet,
@@ -1463,6 +1540,7 @@ class OpengramContext {
    * Use this method to send a native poll with type `regular` to chat from current update.
    *
    * On success, the sent {@link Message} is returned.
+   *
    * @see https://core.telegram.org/bots/api#sendpoll
    * @param {string} question Poll question, 1-300 characters
    * @param {string[]} options List of answer options, 2-10 strings 1-100 characters each
@@ -1479,6 +1557,7 @@ class OpengramContext {
    * Use this method to send a native poll with type `quiz` to chat from current update.
    *
    * On success, the sent {@link Message} is returned.
+   *
    * @see https://core.telegram.org/bots/api#sendpoll
    * @param {string} question Poll question, 1-300 characters
    * @param {string[]} options List of answer options, 2-10 strings 1-100 characters each
@@ -1495,6 +1574,7 @@ class OpengramContext {
    * Use this method to stop a poll in chat from current update. which was sent by the bot.
    *
    * On success, the stopped {@link Poll} is returned.
+   *
    * @see https://core.telegram.org/bots/api#stoppoll
    * @param {number} messageId Identifier of the original message with the poll
    * @param {object|Extra} [extra] Other parameters
@@ -1519,6 +1599,7 @@ class OpengramContext {
    * status for the bot.
    *
    * We only recommend using this method when a response from the bot will take a **noticeable** amount of time to arrive.
+   *
    * @see https://core.telegram.org/bots/api#sendchataction
    * @param {Action} action Type of action to broadcast. Choose one, depending on what the user is about to receive:
    *    `typing` for text messages,
@@ -1541,6 +1622,7 @@ class OpengramContext {
    * Use this method to send point on the map to chat from current update.
    *
    * On success, the sent {@link Message} is returned.
+   *
    * @see https://core.telegram.org/bots/api#sendlocation
    * @param {number} latitude Latitude of the location
    * @param {number} longitude Longitude of the location
@@ -1557,6 +1639,7 @@ class OpengramContext {
    * Use this method to send information about a venue to chat from current update.
    *
    * On success, the sent {@link Message} is returned.
+   *
    * @see https://core.telegram.org/bots/api#sendvenue
    * @param {number} latitude Latitude of the venue
    * @param {number} longitude Longitude of the venue
@@ -1575,6 +1658,7 @@ class OpengramContext {
    * Use this method to send phone contacts to chat from current update.
    *
    * On success, the sent {@link Message} is returned.
+   *
    * @see https://core.telegram.org/bots/api#sendcontact
    * @param {string} phoneNumber Contact's phone number
    * @param {string} firstName Contact's first name
@@ -1591,6 +1675,7 @@ class OpengramContext {
    * Use this method to get a sticker set.
    *
    * On success, a {@link StickerSet} object is returned.
+   *
    * @see https://core.telegram.org/bots/api#getstickerset
    * @param {string} name Name of the sticker set
    * @throws {TelegramError}
@@ -1607,6 +1692,7 @@ class OpengramContext {
    * bot can use this method.
    *
    * Returns `True` on success.
+   *
    * @see https://core.telegram.org/bots/api#setchatstickerset
    * @param {string} setName Name of the sticker set to be set as the group sticker set
    * @throws {TelegramError}
@@ -1623,6 +1709,7 @@ class OpengramContext {
    * returned in {@link getChat} requests to check if the bot can use this method.
    *
    * Returns `True` on success.
+   *
    * @see https://core.telegram.org/bots/api#deletechatstickerset
    * @throws {TelegramError}
    * @return {Promise<boolean>}
@@ -1742,6 +1829,7 @@ class OpengramContext {
    * Use this method to move a sticker in a set created by the bot to a specific position.
    *
    * Returns `True` on success.
+   *
    * @see https://core.telegram.org/bots/api#setstickerpositioninset
    * @param {string} sticker File identifier of the sticker
    * @param {number} position New sticker position in the set, zero-based
@@ -1758,6 +1846,7 @@ class OpengramContext {
    * sets only. Video thumbnails can be set only for video sticker sets only.
    *
    * Returns `True` on success.
+   *
    * @see https://core.telegram.org/bots/api#setstickersetthumb
    * @param {string} name Sticker set name
    * @param {number} userId User identifier of the sticker set owner
@@ -1782,6 +1871,7 @@ class OpengramContext {
    * Use this method to delete a sticker from a set created by the bot.
    *
    * Returns `True` on success.
+   *
    * @see https://core.telegram.org/bots/api#deletestickerfromset
    * @param {string} sticker File identifier of the sticker
    * @throws {TelegramError}
@@ -1797,6 +1887,7 @@ class OpengramContext {
    * methods (can be used multiple times).
    *
    * Returns the uploaded {@link File} on success.
+   *
    * @see https://core.telegram.org/bots/api#uploadstickerfile
    * @param {attachmentFile} stickerFile **PNG** image with the sticker, must be up to 512 kilobytes in size,
    *    dimensions must not exceed 512px, and either width or height must be exactly 512px.
@@ -1814,6 +1905,7 @@ class OpengramContext {
    * thus created. You must use exactly one of the fields `png_sticker`, `tgs_sticker`, or `webm_sticker`.
    *
    * Returns `True` on success.
+   *
    * @see https://core.telegram.org/bots/api#createnewstickerset
    * @param {string} name Short name of sticker set, to be used in `t.me/addstickers/` URLs (e.g., *animals*).
    *    Can contain only English letters, digits and underscores. Must begin with a letter,
@@ -1836,6 +1928,7 @@ class OpengramContext {
    * Animated sticker sets can have up to 50 stickers. Static sticker sets can have up to 120 stickers.
    *
    * Returns `True` on success.
+   *
    * @see https://core.telegram.org/bots/api#addstickertoset
    * @param {string} name Sticker set name
    * @param {object} stickerData Other parameters
@@ -1851,6 +1944,7 @@ class OpengramContext {
    * Use this method to get the current list of the bot's commands for the given scope and user language.
    *
    * Returns Array of {@link BotCommand} on success. If commands aren't set, an empty list is returned.
+   *
    * @see https://core.telegram.org/bots/api#getmycommands
    * @param {object|Extra} [extra] Other parameters
    * @throws {TelegramError}
@@ -1866,6 +1960,7 @@ class OpengramContext {
    * about bot commands.
    *
    * Returns `True` on success.
+   *
    * @see https://core.telegram.org/bots/api#setmycommands
    * @param {BotCommand[]} commands List of bot commands to be set as the list of the bot's commands.
    *    At most 100 commands can be specified.
@@ -1882,6 +1977,7 @@ class OpengramContext {
    * After deletion, higher level commands will be shown to affected users.
    *
    * Returns `True` on success.
+   *
    * @see https://core.telegram.org/bots/api#deletemycommands
    * @param {object|Extra} [extra] Other parameters
    * @throws {TelegramError}
@@ -1895,6 +1991,7 @@ class OpengramContext {
    * Use this method to send text messages with Markdown (`parse_mode: 'Markdown'`) to chat from current update.
    *
    * On success, the sent {@link Message} is returned.
+   *
    * @see https://core.telegram.org/bots/api#sendmessage
    * @param {string} markdown Text with Markdown of the message to be sent, 1-4096 characters after entities parsing
    * @param {MessageExtraParams|Extra} [extra] Other parameters
@@ -1909,6 +2006,7 @@ class OpengramContext {
    * Use this method to send text messages with MarkdownV2 (`parse_mode: 'MarkdownV2'`) to chat from current update.
    *
    * On success, the sent {@link Message} is returned.
+   *
    * @see https://core.telegram.org/bots/api#sendmessage
    * @param {string} markdown Text with MarkdownV2 of the message to be sent, 1-4096 characters after entities parsing
    * @param {MessageExtraParams|Extra} [extra] Other parameters
@@ -1923,6 +2021,7 @@ class OpengramContext {
    * Use this method to send text messages with HTML (`parse_mode: 'HTML'`) to chat from current update.
    *
    * On success, the sent {@link Message} is returned.
+   *
    * @see https://core.telegram.org/bots/api#sendmessage
    * @param {string} html Text with HTML of the message to be sent, 1-4096 characters after entities parsing
    * @param {MessageExtraParams|Extra} [extra] Other parameters
@@ -1945,6 +2044,7 @@ class OpengramContext {
    * - If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.
    *
    * Returns `True` on success.
+   *
    * @see https://core.telegram.org/bots/api#deletemessage
    * @param {number} messageId Identifier of the message to delete
    * @throws {TelegramError}
@@ -1964,6 +2064,7 @@ class OpengramContext {
    * Use this method to forward messages of any kind from current chat. Service messages can't be forwarded.
    *
    * On success, the sent {@link Message} is returned.
+   *
    * @see https://core.telegram.org/bots/api#forwardmessage
    * @param {string|number} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
@@ -1984,6 +2085,7 @@ class OpengramContext {
    * original message.
    *
    * Returns the {@link MessageId} of the sent message on success.
+   *
    * @see https://core.telegram.org/bots/api#copymessage
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
@@ -2004,6 +2106,7 @@ class OpengramContext {
    * {@link Telegram.revokeChatInviteLink revokeChatInviteLink}.
    *
    * Returns the new invite link as {@link ChatInviteLink} object.
+   *
    * @see https://core.telegram.org/bots/api#createchatinvitelink
    * @param {object|Extra} [extra] Other parameters
    * @throws {TelegramError}
@@ -2020,6 +2123,7 @@ class OpengramContext {
    *
    * Returns the edited invite link
    * as a {@link ChatInviteLink} object.
+   *
    * @see https://core.telegram.org/bots/api#editchatinvitelink
    * @param {string} inviteLink The invite link to edit
    * @param {object|Extra} [extra] Other parameters
@@ -2038,6 +2142,7 @@ class OpengramContext {
    * have the appropriate administrator rights.
    *
    * Returns the revoked invite link as {@link ChatInviteLink} object.
+   *
    * @see https://core.telegram.org/bots/api#revokechatinvitelink
    * @param {string} inviteLink The invite link to revoke
    * @throws {TelegramError}
@@ -2054,6 +2159,7 @@ class OpengramContext {
    * the `can_invite_users` administrator right.
    *
    * Returns `True` on success.
+   *
    * @see https://core.telegram.org/bots/api#approvechatjoinrequest
    * @param {number} userId Unique identifier of the target user
    * @throws {TelegramError}
@@ -2070,6 +2176,7 @@ class OpengramContext {
    * the `can_invite_users` administrator right.
    *
    * Returns `True` on success.
+   *
    * @see https://core.telegram.org/bots/api#declinechatjoinrequest
    * @param {number} userId Unique identifier of the target user
    * @throws {TelegramError}
@@ -2084,6 +2191,7 @@ class OpengramContext {
    * Use this method to get information about custom emoji stickers by their identifiers.
    *
    * Returns an Array of {@link Sticker} objects.
+   *
    * @see https://core.telegram.org/bots/api#getcustomemojistickers
    * @param {string[]} customEmojiIds List of custom emoji identifiers. At most 200 custom emoji identifiers can be
    *    specified.
@@ -2098,6 +2206,7 @@ class OpengramContext {
    * Use this method to create a link for an invoice.
    *
    * Returns the created invoice link as `String` on success.
+   *
    * @see https://core.telegram.org/bots/api#createinvoicelink
    * @param {Invoice} invoice Object with invoice properties
    * @throws {TelegramError}

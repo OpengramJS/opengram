@@ -18,6 +18,7 @@ function getSessionKey (ctx) {
 class Session {
   /**
    * Constructor of session class
+   *
    * @param {SessionOptions} [options] Options
    */
   constructor (options = {}) {
@@ -32,6 +33,7 @@ class Session {
    * Store getter
    *
    * Return store object given in constructor
+   *
    * @return {object}
    */
   get store () {
@@ -42,6 +44,7 @@ class Session {
    * TTL getter
    *
    * Returns current ttl in **seconds** or [Nullish](https://developer.mozilla.org/en-US/docs/Glossary/Nullish) value
+   *
    * @return {number|null|undefined}
    */
   get ttl () {
@@ -52,6 +55,7 @@ class Session {
    * TTL setter
    *
    * Sets new ttl for session
+   *
    * @return {void}
    */
   set ttl (seconds) {
@@ -60,6 +64,7 @@ class Session {
 
   /**
    * Returns session middleware
+   *
    * @return {MiddlewareFn}
    */
   middleware () {
@@ -175,6 +180,7 @@ class Session {
  * by default session time not limited, but if you use in memory store like
  * [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) or other,
  * session be destroyed after bot restart
+ *
  * @param {SessionOptions} [options] Session options
  * @return {Session}
  */

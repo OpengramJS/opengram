@@ -1,5 +1,6 @@
 /**
  * Filtering properties in object with `undefined` values
+ *
  * @param options Object for filtering
  * @private
  * @return {object}

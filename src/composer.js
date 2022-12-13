@@ -365,6 +365,7 @@ class Composer {
    * // Called only for messages with date < 6 hr after send
    * bot.on('message', () => ctx.reply('Good, update date less then 6 hours!'))
    * ```
+   *
    * @param {PredicateFn} predicate The predicate to check. Can be async, returns boolean or Promise with boolean
    * @return {Composer}
    */
@@ -389,6 +390,7 @@ class Composer {
    * bot.filter(ctx => ctx.update.update_id % 2 === 0)
    * bot.on('message', ctx => ctx.reply('Update id of this message is divided by two without a remainder'))
    * ```
+   *
    * @param {PredicateFn} predicate The predicate to check. Can be async, returns boolean or Promise with boolean
    * @return {Composer}
    */
@@ -611,6 +613,7 @@ class Composer {
    *   Composer.groupChat(Composer.reply('I not support group chats'))
    * )
    * ```
+   *
    * @param args
    * @return {MiddlewareFn}
    */
@@ -761,6 +764,7 @@ class Composer {
    *   )
    * )
    * ```
+   *
    * @param {PredicateFn} predicate The predicate to check. Can be async, returns boolean or Promise with boolean
    * @param {MiddlewareFn} trueMiddleware The middleware for the `true` case
    * @param {MiddlewareFn} falseMiddleware The middleware for the `false` case

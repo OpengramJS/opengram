@@ -53,6 +53,7 @@ class Stage extends Composer {
 
   /**
    * Register new scene object in scenes repository
+   *
    * @param {BaseScene|WizardScene} [scenes] Scenes objects
    * @throws {TypeError}
    * @return {Stage}
@@ -69,6 +70,7 @@ class Stage extends Composer {
 
   /**
    * Generates and returns stage middleware  for embedding
+   *
    * @return {Function}
    */
   middleware () {
@@ -85,6 +87,7 @@ class Stage extends Composer {
 
   /**
    * Generates middleware which call `ctx.scene.enter` with given arguments
+   *
    * @param args Arguments for `ctx.scene.enter`
    * @return {Function}
   */
@@ -94,6 +97,7 @@ class Stage extends Composer {
 
   /**
    * Generates middleware which call `ctx.scene.reenter` with given arguments
+   *
    * @param args Arguments for `ctx.scene.reenter`
    * @return {Function}
    */
@@ -103,6 +107,7 @@ class Stage extends Composer {
 
   /**
    * Generates middleware which call `ctx.scene.leave` with given arguments
+   *
    * @param args Arguments for `ctx.scene.leave`
    * @return {Function}
    */

@@ -52,6 +52,7 @@ const noop = () => { }
  * bot.on('text', (ctx) => ctx.reply('Hello World'))
  * bot.launch()
  * ```
+ *
  * @extends Composer
  */
 class Opengram extends Composer {
@@ -90,6 +91,7 @@ class Opengram extends Composer {
 
   /**
    * Setter for bot token
+   *
    * @param {string} token Bot token
    */
   set token (token) {
@@ -101,6 +103,7 @@ class Opengram extends Composer {
 
   /**
    * Getter for bot token
+   *
    * @return {string} Bot token
    */
   get token () {
@@ -109,6 +112,7 @@ class Opengram extends Composer {
 
   /**
    * Setter for enabling / disabling for webhook reply. if assigned `true` - webhook reply enabled
+   *
    * @param {boolean} webhookReply
    */
   set webhookReply (webhookReply) {
@@ -117,6 +121,7 @@ class Opengram extends Composer {
 
   /**
    * Returns the status of the webhook reply (enabled / disabled). if `true` is returned, the webhook reply is enabled
+   *
    * @return {boolean}
    */
   get webhookReply () {
@@ -200,6 +205,7 @@ class Opengram extends Composer {
    * app.use(bot.webhookCallback('/secret-path'))
    * app.listen(3000, () => console.log('Bot listening on port 3000!'))
    * ```
+   *
    * @param {webhookCallbackOptions} config Options
    * @return {Function}
    */
@@ -210,6 +216,7 @@ class Opengram extends Composer {
 
   /**
    * Starts long polling and updates processing with given configuration
+   *
    * @property {number} [timeout=30] Timeout in seconds for long polling. Defaults to 30
    * @property {number} [limit=100] Limits the number of updates to be retrieved. Values between 1-100 are accepted.
    *     Defaults to 100.
@@ -287,6 +294,7 @@ class Opengram extends Composer {
    *   source: 'server-cert.pem'
    * })
    * ```
+   *
    * @param {startWebhookOptions} [options] Webhook options
    * @param {object|null} [tlsOptions] - Options for `https` NodeJS module, see official
    *    [docs](https://nodejs.org/api/https.html#httpscreateserveroptions-requestlistener)
@@ -318,6 +326,7 @@ class Opengram extends Composer {
    * Generate secret token for webhook path
    *
    * Returns the same result with the same token and `process.version`
+   *
    * @return {string} - 256bit hex string, not really random, based on bot token and `process.version`.
    */
   secretPathComponent () {
@@ -387,6 +396,7 @@ class Opengram extends Composer {
 
   /**
    * Launching a bot with a given config
+   *
    * @param {launchConfig} [config] Launch configuration
    * @throws Error
    * @return {Promise<Opengram>}
@@ -454,6 +464,7 @@ class Opengram extends Composer {
 
   /**
    * Stopping the bot. For webhook, it will close the server, for long polling stop getting updates
+   *
    * @param [cb] Callback function, which called when bot fully stopped
    * @return {Promise<void>}
    */
@@ -477,6 +488,7 @@ class Opengram extends Composer {
 
   /**
    * Starting processing array of updates
+   *
    * @param {object[]} updates
    * @throws Error
    * @return {Promise}
@@ -490,6 +502,7 @@ class Opengram extends Composer {
 
   /**
    * Starting processing one update
+   *
    * @param {object} update Update object
    * @param [webhookResponse] Response object for send webhook reply
    * @throws Error
@@ -525,6 +538,7 @@ class Opengram extends Composer {
 
   /**
    * Fetching updates using long polling
+   *
    * @private
    * @return {Promise<void>}
    */

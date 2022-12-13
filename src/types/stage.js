@@ -4,6 +4,7 @@
  * When you use custom name of session property or multiple sessions, you should configure `sessionName`
  *
  * After TTL expired, all scene data stored in local session of scene be permanently removed
+ *
  * @typedef {object} stageOptions
  * @property {string} [sessionName='session'] Name of session property used for scenes, by default - `session`
  * @property {string} [default] Name of scene by default

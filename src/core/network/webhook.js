@@ -7,6 +7,7 @@ const crypto = require('crypto')
  *
  * Runtime is always corresponding to the length of the first parameter (string
  * a).
+ *
  * @author Michael Raith
  * @param {string} a
  * @param {string} b

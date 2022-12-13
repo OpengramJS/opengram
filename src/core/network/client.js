@@ -47,6 +47,7 @@ const WEBHOOK_REPLY_STUB = {
 
 /**
  * Hides bot token in request errors
+ *
  * @private
  * @return {object}
  * @param {object} error JSON to parse
@@ -61,6 +62,7 @@ function redactToken (error) {
 
 /**
  * Parsing JSON without error throw if invalid
+ *
  * @private
  * @return {object}
  * @param {string} text JSON to parse
@@ -206,6 +208,7 @@ async function attachFormMedia (form, media, id, agent) {
 
 /**
  * Checking if response object belongs to KoaJs
+ *
  * @private
  * @param {object} response Response object
  * @return {boolean}
@@ -284,6 +287,7 @@ class ApiClient {
    * Setter for webhookReply
    *
    * Use this property to control reply via webhook feature.
+   *
    * @param {boolean} enable
    * @return {void}
    */
@@ -295,6 +299,7 @@ class ApiClient {
    * Getter for webhookReply
    *
    * Use this property to control reply via webhook feature.
+   *
    * @return {boolean}
    */
   get webhookReply () {
@@ -326,6 +331,7 @@ class ApiClient {
    * controller.abort(); // Abort request
    * ```
    * [Read more about request aborts](https://developer.mozilla.org/en-US/docs/Web/API/AbortController/signal)
+   *
    * @param {string} method Telegram API method name
    * @param {object} data Object with method parameters
    * @param {callApiExtra} [extra] Extra parameters
