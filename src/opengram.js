@@ -466,7 +466,7 @@ class Opengram extends Composer {
   /**
    * Stopping the bot. For webhook, it will close the server, for long polling stop getting updates
    *
-   * @param [cb] Callback function, which called when bot fully stopped
+   * @param {Function} [cb] Callback function, which called when bot fully stopped
    * @return {Promise<void>}
    */
   async stop (cb = noop) {
@@ -505,7 +505,7 @@ class Opengram extends Composer {
    * Starting processing one update
    *
    * @param {object} update Update object
-   * @param [webhookResponse] Response object for send webhook reply
+   * @param {object} [webhookResponse] Response object for send webhook reply
    * @throws Error
    * @return {Promise}
    */

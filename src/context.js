@@ -508,8 +508,8 @@ class OpengramContext {
    * Method used for checking is method available for current update
    *
    * @private
-   * @param value Value to check
-   * @param method Method name
+   * @param {*} value Value to check
+   * @param {string} method Method name
    */
   assert (value, method) {
     if (!value) {
@@ -562,7 +562,7 @@ class OpengramContext {
    * Alias to {@link answerCbQuery} for game query
    *
    * @see https://core.telegram.org/bots/api#answercallbackquery
-   * @param [url] URL that will be opened by the user's client. If you have created a Game and accepted the conditions
+   * @param {string} [url] URL that will be opened by the user's client. If you have created a Game and accepted the conditions
    *    via [@BotFather](https://t.me/BotFather), specify the URL that opens your game - note that this will only work
    *    if the query comes from a `callback_game` button.
    * @throws {TelegramError}
@@ -871,7 +871,7 @@ class OpengramContext {
    * Returns `True` on success.
    *
    * @see https://core.telegram.org/bots/api#banchatmember
-   * @param userId Unique identifier of the target user
+   * @param {number} userId Unique identifier of the target user
    * @param {object|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
@@ -1173,7 +1173,7 @@ class OpengramContext {
    * Returns a {@link ChatMember} object on success.
    *
    * @see https://core.telegram.org/bots/api#getchatmember
-   * @param userId Unique identifier of the target user
+   * @param {number|string} userId Unique identifier of the target user
    * @throws {TelegramError}
    * @return {Promise<ChatMember>}
    */

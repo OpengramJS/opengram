@@ -709,7 +709,7 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#getchatmember
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
-   * @param userId Unique identifier of the target user
+   * @param {number} userId Unique identifier of the target user
    * @throws {TelegramError}
    * @return {Promise<ChatMember>}
    */
@@ -793,7 +793,7 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#banchatmember
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
-   * @param userId Unique identifier of the target user
+   * @param {number} userId Unique identifier of the target user
    * @param {object|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
@@ -1171,7 +1171,7 @@ class Telegram extends ApiClient {
    * Otherwise, you may use links like `t.me/your_bot?start=XXXX` that open your bot with a parameter.
    *
    * @see https://core.telegram.org/bots/api#answercallbackquery
-   * @param [callbackQueryId] Unique identifier for the query to be answered
+   * @param {string} [callbackQueryId] Unique identifier for the query to be answered
    * @param {string} text Text of the notification. If not specified, nothing will be shown to the user, 0-200 characters
    * @param {boolean} [showAlert] If True, an alert will be shown by the client instead of a notification at the top of the
    *    chat screen. Defaults to false.
@@ -1193,7 +1193,7 @@ class Telegram extends ApiClient {
    *
    * @see https://core.telegram.org/bots/api#answercallbackquery
    * @param {string} callbackQueryId Unique identifier for the query to be answered
-   * @param [url] URL that will be opened by the user's client. If you have created a Game and accepted the conditions
+   * @param {string} [url] URL that will be opened by the user's client. If you have created a Game and accepted the conditions
    *    via [@BotFather](https://t.me/BotFather), specify the URL that opens your game - note that this will only work
    *    if the query comes from a `callback_game` button.
    * @throws {TelegramError}
@@ -1358,8 +1358,8 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#editmessagereplymarkup
    * @param {number|string} [chatId] Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
-   * @param [messageId] Required if `inline_message_id` is not specified. Identifier of the message to edit
-   * @param [inlineMessageId] Required if `chat_id` and `message_id` are not specified. Identifier of the inline message
+   * @param {number} [messageId] Required if `inline_message_id` is not specified. Identifier of the message to edit
+   * @param {string} [inlineMessageId] Required if `chat_id` and `message_id` are not specified. Identifier of the inline message
    * @param {object|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean|Message>}
@@ -1413,9 +1413,9 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#stopmessagelivelocation
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
-   * @param [messageId] Required if `inline_message_id` is not specified. Identifier of the message with
+   * @param {number} [messageId] Required if `inline_message_id` is not specified. Identifier of the message with
    *    live location to stop
-   * @param [inlineMessageId] Required if `chat_id` and `message_id` are not specified. Identifier of the inline message
+   * @param {string} [inlineMessageId] Required if `chat_id` and `message_id` are not specified. Identifier of the inline message
    * @param {object|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean|Message>}
@@ -1537,7 +1537,7 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#editforumtopic
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *   (in the format `@channelusername`)
-   * @param messageThreadId Unique identifier for the target message thread of the forum topic
+   * @param {number} messageThreadId Unique identifier for the target message thread of the forum topic
    * @param {object} [extra] Other parameters
    *
    * @throws {TelegramError}
@@ -1559,9 +1559,9 @@ class Telegram extends ApiClient {
    *
    * @see https://core.telegram.org/bots/api#closeforumtopic
    *
-   * @param chatId Unique identifier for the target chat or username of the target channel
+   * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *   (in the format @channelusername)
-   * @param messageThreadId Unique identifier for the target message thread of the forum topic
+   * @param {number} messageThreadId Unique identifier for the target message thread of the forum topic
    *
    * @throws {TelegramError}
    * @return {Promise<boolean>}
@@ -1580,9 +1580,9 @@ class Telegram extends ApiClient {
    * Returns True on success.
    *
    * @see https://core.telegram.org/bots/api#reopenforumtopic
-   * @param chatId Unique identifier for the target chat or username of the target channel
+   * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *   (in the format @channelusername)
-   * @param messageThreadId Unique identifier for the target message thread of the forum topic
+   * @param {number} messageThreadId Unique identifier for the target message thread of the forum topic
    *
    * @throws {TelegramError}
    * @return {Promise<boolean>}
@@ -1599,9 +1599,9 @@ class Telegram extends ApiClient {
    * administrator in the chat for this to work and must have the can_delete_messages administrator rights.
    * Returns True on success.
    *
-   * @param chatId Unique identifier for the target chat or username of the target channel
+   * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *   (in the format @channelusername)
-   * @param messageThreadId Unique identifier for the target message thread of the forum topic
+   * @param {number} messageThreadId Unique identifier for the target message thread of the forum topic
    *
    * @see https://core.telegram.org/bots/api#deleteforumtopic
    */
@@ -1616,9 +1616,9 @@ class Telegram extends ApiClient {
    * Use this method to clear the list of pinned messages in a forum topic. The bot must be an administrator in the chat
    * for this to work and must have the can_pin_messages administrator right in the supergroup. Returns True on success.
    *
-   * @param chatId Unique identifier for the target chat or username of the target channel
+   * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *   (in the format @channelusername)
-   * @param messageThreadId Unique identifier for the target message thread of the forum topic
+   * @param {number} messageThreadId Unique identifier for the target message thread of the forum topic
    *
    * @see https://core.telegram.org/bots/api#unpinallforumtopicmessages
    */
@@ -1881,9 +1881,9 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#copymessage
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
-   * @param fromChatId Unique identifier for the target chat or username of the target channel
+   * @param {number|string} fromChatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
-   * @param messageId Message identifier in the chat specified in `from_chat_id`
+   * @param {number} messageId Message identifier in the chat specified in `from_chat_id`
    * @param {object|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<MessageId>}

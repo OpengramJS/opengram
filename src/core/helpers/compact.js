@@ -1,7 +1,7 @@
 /**
  * Filtering properties in object with `undefined` values
  *
- * @param options Object for filtering
+ * @param {object} options Object for filtering
  * @private
  * @return {object}
  */
