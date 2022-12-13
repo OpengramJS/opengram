@@ -11,7 +11,6 @@
  * @property {boolean} [testEnv=false] Enable / disable test environment for WebApps,
  *    see more [here](https://core.telegram.org/bots/webapps#testing-web-apps)
  * @property {boolean} [webhookReply=true] Enable / disable webhook reply
- *
  */
 
 /**
@@ -113,7 +112,6 @@
  *    webhook for update delivery
  * @property {string[]} [allowed_updates] *Optional.* A list of update types the bot is subscribed to.
  *    Defaults to all update types except `chat_member`
- *
  */
 
 /** @typedef {'Markdown'|'MarkdownV2'|'HTML'} parseMode */

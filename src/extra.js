@@ -72,7 +72,6 @@ class Extra {
    * @name markupCallback
    * @function
    * @param {Markup} markup Empty created Markup instance
-   *
    * @example
    * Extra.markdown().markup((markup) => markup.removeKeyboard())
    */

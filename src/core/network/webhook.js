@@ -11,7 +11,6 @@ const crypto = require('crypto')
  * @author Michael Raith
  * @param {string} a First string
  * @param {string} b Second string
- *
  * @return {boolean}
  */
 function timingSafeEqual (a, b) {

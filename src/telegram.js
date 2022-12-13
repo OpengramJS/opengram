@@ -1519,7 +1519,6 @@ class Telegram extends ApiClient {
    *   (in the format `@channelusername`)
    * @param {string} name Topic name, 1-128 characters
    * @param {object} [extra] Other parameters
-   *
    * @throws {TelegramError}
    * @return {Promise<ForumTopic>}
    */
@@ -1539,7 +1538,6 @@ class Telegram extends ApiClient {
    *   (in the format `@channelusername`)
    * @param {number} messageThreadId Unique identifier for the target message thread of the forum topic
    * @param {object} [extra] Other parameters
-   *
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -1558,11 +1556,9 @@ class Telegram extends ApiClient {
    * Returns `True` on success.
    *
    * @see https://core.telegram.org/bots/api#closeforumtopic
-   *
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *   (in the format @channelusername)
    * @param {number} messageThreadId Unique identifier for the target message thread of the forum topic
-   *
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -1583,7 +1579,6 @@ class Telegram extends ApiClient {
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *   (in the format @channelusername)
    * @param {number} messageThreadId Unique identifier for the target message thread of the forum topic
-   *
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -1602,7 +1597,6 @@ class Telegram extends ApiClient {
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *   (in the format @channelusername)
    * @param {number} messageThreadId Unique identifier for the target message thread of the forum topic
-   *
    * @see https://core.telegram.org/bots/api#deleteforumtopic
    */
   deleteForumTopic (chatId, messageThreadId) {
@@ -1619,7 +1613,6 @@ class Telegram extends ApiClient {
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *   (in the format @channelusername)
    * @param {number} messageThreadId Unique identifier for the target message thread of the forum topic
-   *
    * @see https://core.telegram.org/bots/api#unpinallforumtopicmessages
    */
   unpinAllForumTopicMessages (chatId, messageThreadId) {

@@ -474,7 +474,6 @@ class OpengramContext {
    * > You can store some temporary data for sharing with other middlewares in chain
    *
    * @param {object} value New state object
-   *
    * @return {void}
    */
   set state (value) {
@@ -1727,10 +1726,8 @@ class OpengramContext {
    * Returns information about the created topic as a {@link ForumTopic} object.
    *
    * @see https://core.telegram.org/bots/api#createforumtopic
-   *
    * @param {string} name Topic name, 1-128 characters
    * @param {object} [extra] Other parameters
-   *
    * @throws {TelegramError}
    * @return {Promise<ForumTopic>}
    */
@@ -1750,7 +1747,6 @@ class OpengramContext {
    * @param {string} name Topic name, 1-128 characters
    * @param {string} iconCustomEmojiId New unique identifier of the custom emoji shown as the topic icon.
    *   Use {@link getForumTopicIconStickers} to get all allowed custom emoji identifiers.
-   *
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -1815,7 +1811,6 @@ class OpengramContext {
    * for this to work and must have the can_pin_messages administrator right in the supergroup. Returns True on success.
    *
    * @see https://core.telegram.org/bots/api#unpinallforumtopicmessages
-   *
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -1834,7 +1829,6 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#setstickerpositioninset
    * @param {string} sticker File identifier of the sticker
    * @param {number} position New sticker position in the set, zero-based
-   *
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */

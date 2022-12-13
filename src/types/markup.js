@@ -6,7 +6,6 @@
  * @param {string} btn Current button object
  * @param {number} index Current button index
  * @param {number} currentRow Current row
- *
  * @return {boolean}
  * @example
  * Markup.keyboard(['one', 'two', 'three', 'four'], {
