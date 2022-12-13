@@ -11,13 +11,13 @@
  * ```
  *
  * @private
- * @param {object} updateData
+ * @param {Message} message Message object for extracting entities
  * @return {string|Array}
  */
-function getEntities (updateData) {
-  if (updateData == null) return []
-  if ('caption_entities' in updateData) return updateData.caption_entities ?? []
-  if ('entities' in updateData) return updateData.entities ?? []
+function getEntities (message) {
+  if (message == null) return []
+  if ('caption_entities' in message) return message.caption_entities ?? []
+  if ('entities' in message) return message.entities ?? []
   return []
 }
 
@@ -38,17 +38,17 @@ function getEntities (updateData) {
  * ```
  *
  * @private
- * @param {object} updateData
+ * @param {Message} message Message object for extracting text
  * @return {string|undefined}
  */
 function getText (
-  updateData
+  message
 ) {
-  if (updateData == null) return undefined
-  if ('caption' in updateData) return updateData.caption
-  if ('text' in updateData) return updateData.text
-  if ('data' in updateData) return updateData.data
-  if ('game_short_name' in updateData) return updateData.game_short_name
+  if (message == null) return undefined
+  if ('caption' in message) return message.caption
+  if ('text' in message) return message.text
+  if ('data' in message) return message.data
+  if ('game_short_name' in message) return message.game_short_name
   return undefined
 }
 
