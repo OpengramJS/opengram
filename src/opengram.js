@@ -217,14 +217,14 @@ class Opengram extends Composer {
   /**
    * Starts long polling and updates processing with given configuration
    *
-   * @property {number} [timeout=30] Timeout in seconds for long polling. Defaults to 30
-   * @property {number} [limit=100] Limits the number of updates to be retrieved. Values between 1-100 are accepted.
+   * @param {number} [timeout=30] Timeout in seconds for long polling. Defaults to 30
+   * @param {number} [limit=100] Limits the number of updates to be retrieved. Values between 1-100 are accepted.
    *     Defaults to 100.
-   * @property {Array<string>|string} [allowedUpdates] Array of allowed updates or update name
+   * @param {Array<string>|string} [allowedUpdates] Array of allowed updates or update name
    *     For example, specify `["message", "edited_channel_post", "callback_query"]` to only receive
    *     updates of these types. Please note that this parameter doesn't affect updates created before the call
    *     to the getUpdates, so unwanted updates may be received for a short period of time.
-   * @property {Function} [stopCallback] Function called when bot fully stopped.
+   * @param {Function} [stopCallback] Function called when bot fully stopped.
    *     If you call `bot.stop()` it be rewritten with other function and never called, for using with `bot.stop`,
    *     you can pass `callback` into `bot.stop` argument, for example `bot.stop(() => console.log('Stopped'))`
    * @return {Opengram}
