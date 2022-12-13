@@ -5,6 +5,11 @@ class Markup {
   /**
    * Adding force reply option to markup
    *
+   * Upon receiving a message with this object, Telegram clients will display a
+   *   reply interface to the user (act as if the user has selected the bot's
+   *   message and tapped 'Reply'). This can be extremely useful if you want
+   *   to create user-friendly step-by-step interfaces without having to sacrifice privacy mode.
+   *
    * @see https://core.telegram.org/bots/api#forcereply
    * @param {boolean} [value=true] Value
    * @return {Markup}
@@ -17,6 +22,11 @@ class Markup {
   /**
    * Enable / Disable keyboard removing
    *
+   * Upon receiving a message with this object, Telegram clients will remove the current custom keyboard and
+   * display the default letter-keyboard. By default, custom keyboards are displayed until a new keyboard is sent by a
+   * bot. An exception is made for one-time keyboards that are hidden immediately after the user presses a
+   * button (see [ReplyKeyboardMarkup](https://core.telegram.org/bots/api#replykeyboardmarkup)).
+   *
    * @see https://core.telegram.org/bots/api#replykeyboardremove
    * @param {boolean} [value=true] Value
    * @return {Markup}
@@ -27,7 +37,7 @@ class Markup {
   }
 
   /**
-   * Changing input field placeholder when reply is active (used with forceReply)
+   * The placeholder to be shown in the input field when the reply is active; 1-64 characters
    *
    * @see https://core.telegram.org/bots/api#forcereply
    * @param {string} placeholder Placeholder text
@@ -41,9 +51,10 @@ class Markup {
   /**
    * Enable / Disable selective for force reply / remove keyboard
    *
-   * Keyboards are non-selective by default, use this function to enable it
-   * (without any parameters or pass `true`). Pass `false` to force the
-   * keyboard to be non-selective.
+   * Use this parameter if you want to force reply from specific users only.
+   * Targets:
+   * 1) users that are `@mentioned` in the text of the Message object;
+   * 2) if the bot's message is a reply (has `reply_to_message_id`), sender of the original message.
    *
    * @see https://core.telegram.org/bots/api#forcereply
    * @see https://core.telegram.org/bots/api#replykeyboardremove
@@ -140,6 +151,10 @@ class Markup {
    * (without any parameters or pass `true`). Pass `false` to force the
    * keyboard to be non-resized.
    *
+   * Requests clients to resize the keyboard vertically for optimal fit (e.g., make the keyboard smaller if there are
+   * just two rows of buttons). Defaults to false, in which case the custom keyboard is always of the same
+   * height as the app's standard keyboard.
+   *
    * @see https://core.telegram.org/bots/api#replykeyboardmarkup
    * @param {boolean} [value=true] Value
    * @return {Markup}
@@ -152,6 +167,10 @@ class Markup {
   /**
    * Enable / Disable hiding keyboard after click
    *
+   * Requests clients to hide the keyboard as soon as it's been used. The keyboard will still be available, but clients
+   * will automatically display the usual letter-keyboard in the
+   * chat - the user can press a special button in the input field to see the custom keyboard again.
+   *
    * @see https://core.telegram.org/bots/api#replykeyboardmarkup
    * @param {boolean} [value=true] Value
    * @return {Markup}
@@ -163,11 +182,12 @@ class Markup {
 
   /**
    * Adds a new text button. This button will simply send the given text as a
-   * text message back to your bot if a user clicks on it. Available for non-inline keyboard only.
+   * text message back to your bot if a user clicks on it. **Available for non-inline keyboard only.**
    *
    * @see https://core.telegram.org/bots/api#keyboardbutton
    * @param {string} text The text to display and send
-   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
+   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for
+   *   hide button when build keyboard
    * @return {object}
    */
   button (text, hide) {
@@ -176,7 +196,7 @@ class Markup {
 
   /**
    * Adds a new contact request button. The user's phone number will be sent
-   * as a contact when the button is pressed. Available in private chats only.
+   * as a contact when the button is pressed. **Available in private chats only.**
    *
    * Your bot will in turn receive location updates. You can listen
    * to contact updates like this:
@@ -186,7 +206,8 @@ class Markup {
    *
    * @see https://core.telegram.org/bots/api#keyboardbutton
    * @param {string} text The text to display
-   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
+   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
+   *   for hide button when build keyboard
    * @return {object}
    */
   contactRequestButton (text, hide) {
@@ -195,7 +216,7 @@ class Markup {
 
   /**
    * Adds a new location request button. The user's current location will be
-   * sent when the button is pressed. Available in private chats only.
+   * sent when the button is pressed. **Available in private chats only.**
    *
    * Your bot will in turn receive location updates. You can listen
    * to inline query updates like this:
@@ -205,7 +226,8 @@ class Markup {
    *
    * @see https://core.telegram.org/bots/api#keyboardbutton
    * @param {string} text The text to display
-   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
+   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
+   *   for hide button when build keyboard
    * @return {object}
    */
   locationRequestButton (text, hide) {
@@ -214,14 +236,14 @@ class Markup {
 
   /**
    * Adds a new poll request button. The user will be asked to create a poll
-   * and send it to the bot when the button is pressed. Available in private
-   * chats only.
+   * and send it to the bot when the button is pressed. **Available in private chats only.**
    *
    * @see https://core.telegram.org/bots/api#keyboardbutton
    * @see https://core.telegram.org/bots/api#keyboardbuttonpolltype
    * @param {string} text The text to display
    * @param {'quiz'|'regular'} [type] The type of permitted polls to create, omit if the user may send a poll of any type
-   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
+   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for
+   *   hide button when build keyboard
    * @return {object}
    */
   pollRequestButton (text, type, hide) {
@@ -234,8 +256,10 @@ class Markup {
    *
    * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
    * @param {string} text The text to display
-   * @param {string} url HTTP or `tg://` URL to be opened when the button is pressed. Links `tg://user?id=<user_id>` can be used to mention a user by their ID without using a username, if this is allowed by their privacy settings.
-   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
+   * @param {string} url HTTP or `tg://` URL to be opened when the button is pressed. Links `tg://user?id=<user_id>`
+   *   can be used to mention a user by their ID without using a username, if this is allowed by their privacy settings.
+   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
+   *   for hide button when build keyboard
    * @return {object}
    */
   urlButton (text, url, hide) {
@@ -261,7 +285,8 @@ class Markup {
    * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
    * @param {string} text The text to display
    * @param {string} data Data to be sent in a callback query to the bot when button is pressed, 1-64 bytes
-   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
+   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
+   *   for hide button when build keyboard
    * @return {object}
    */
   callbackButton (text, data, hide) {
@@ -283,7 +308,8 @@ class Markup {
    * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
    * @param {string} text The text to display
    * @param {string} value Value
-   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
+   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
+   *   for hide button when build keyboard
    * @return {object}
    */
   switchToChatButton (text, value, hide) {
@@ -304,7 +330,8 @@ class Markup {
    * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
    * @param {string} text The text to display
    * @param {string} value Value
-   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
+   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
+   *   for hide button when build keyboard
    * @return {object}
    */
   switchToCurrentChatButton (text, value, hide) {
@@ -317,7 +344,8 @@ class Markup {
    * @see https://core.telegram.org/bots/api#games
    * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
    * @param {string} text The text to display
-   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
+   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for
+   *   hide button when build keyboard
    * @return {object}
    */
   gameButton (text, hide) {
@@ -330,7 +358,8 @@ class Markup {
    * @see https://core.telegram.org/bots/api#payments
    * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
    * @param {string} text The text to display
-   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
+   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
+   *   for hide button when build keyboard
    * @return {object}
    */
   payButton (text, hide) {
@@ -344,9 +373,12 @@ class Markup {
    *
    * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
    * @param {string} text Message text
-   * @param {string} url An HTTPS URL to be opened with user authorization data added to the query string when the button is pressed. If the user refuses to provide authorization data, the original URL without information about the user will be opened. The data added is the same as described in Receiving authorization data.
+   * @param {string} url An HTTPS URL to be opened with user authorization data added to the query string when the
+   *   button is pressed. If the user refuses to provide authorization data, the original URL without information about
+   *   the user will be opened. The data added is the same as described in Receiving authorization data.
    * @param {loginButtonOptions} [opts] Login options
-   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
+   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
+   *   for hide button when build keyboard
    * @return {object}
    */
   loginButton (text, url, opts, hide) {
@@ -363,7 +395,8 @@ class Markup {
    * @see https://core.telegram.org/bots/api#keyboardbutton
    * @param {string} text text to display
    * @param {string} url An HTTPS URL of a Web App to be opened with additional data
-   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
+   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
+   *   for hide button when build keyboard
    * @return {object}
    */
   webApp (text, url, hide) {
@@ -436,7 +469,8 @@ class Markup {
    *
    * @see https://core.telegram.org/bots/api#inlinekeyboardmarkup
    * @param {object} buttons Array of buttons
-   * @param {inlineKeyboardOptions} [options] You can pass here columns count or wrap function for slice buttons to columns
+   * @param {inlineKeyboardOptions} [options] You can pass here columns count or wrap function for slice
+   *   buttons to columns
    * @return {Markup}
    */
   static inlineKeyboard (buttons, options) {
@@ -502,7 +536,8 @@ class Markup {
    *
    * @see https://core.telegram.org/bots/api#keyboardbutton
    * @param {string} text The text to display and send
-   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
+   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for
+   *   hide button when build keyboard
    * @return {object}
    */
   static button (text, hide = false) {
@@ -521,7 +556,8 @@ class Markup {
    *
    * @see https://core.telegram.org/bots/api#keyboardbutton
    * @param {string} text The text to display
-   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
+   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
+   *   for hide button when build keyboard
    * @return {object}
    */
   static contactRequestButton (text, hide = false) {
@@ -540,7 +576,8 @@ class Markup {
    *
    * @see https://core.telegram.org/bots/api#keyboardbutton
    * @param {string} text The text to display
-   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
+   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for
+   *   hide button when build keyboard
    * @return {object}
    */
   static locationRequestButton (text, hide = false) {
@@ -556,7 +593,8 @@ class Markup {
    * @see https://core.telegram.org/bots/api#keyboardbuttonpolltype
    * @param {string} text The text to display
    * @param {'quiz'|'regular'} [type] The type of permitted polls to create, omit if the user may send a poll of any type
-   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
+   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for
+   *   hide button when build keyboard
    * @return {object}
    */
   static pollRequestButton (text, type, hide = false) {
@@ -569,8 +607,10 @@ class Markup {
    *
    * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
    * @param {string} text The text to display
-   * @param {string} url HTTP or `tg://` URL to be opened when the button is pressed. Links `tg://user?id=<user_id>` can be used to mention a user by their ID without using a username, if this is allowed by their privacy settings.
-   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
+   * @param {string} url HTTP or `tg://` URL to be opened when the button is pressed. Links `tg://user?id=<user_id>`
+   *   can be used to mention a user by their ID without using a username, if this is allowed by their privacy settings.
+   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for
+   *   hide button when build keyboard
    * @return {object}
    */
   static urlButton (text, url, hide = false) {
@@ -596,7 +636,8 @@ class Markup {
    * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
    * @param {string} text The text to display
    * @param {string} data Data to be sent in a callback query to the bot when button is pressed, 1-64 bytes
-   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
+   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for
+   *   hide button when build keyboard
    * @return {object}
    */
   static callbackButton (text, data, hide = false) {
@@ -618,7 +659,8 @@ class Markup {
    * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
    * @param {string} text The text to display
    * @param {string} value Value
-   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
+   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for
+   *   hide button when build keyboard
    * @return {object}
    */
   static switchToChatButton (text, value, hide = false) {
@@ -639,7 +681,8 @@ class Markup {
    * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
    * @param {string} text The text to display
    * @param {string} value Value
-   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
+   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for
+   *   hide button when build keyboard
    * @return {object}
    */
   static switchToCurrentChatButton (text, value, hide = false) {
@@ -652,7 +695,8 @@ class Markup {
    * @see https://core.telegram.org/bots/api#games
    * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
    * @param {string} text The text to display
-   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
+   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for
+   *   hide button when build keyboard
    * @return {object}
    */
   static gameButton (text, hide = false) {
@@ -665,7 +709,8 @@ class Markup {
    * @see https://core.telegram.org/bots/api#payments
    * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
    * @param {string} text The text to display
-   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
+   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for
+   *   hide button when build keyboard
    * @return {object}
    */
   static payButton (text, hide = false) {
@@ -679,9 +724,12 @@ class Markup {
    *
    * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
    * @param {string} text Button text
-   * @param {string} url An HTTPS URL to be opened with user authorization data added to the query string when the button is pressed. If the user refuses to provide authorization data, the original URL without information about the user will be opened. The data added is the same as described in Receiving authorization data.
+   * @param {string} url An HTTPS URL to be opened with user authorization data added to the query string when the
+   *   button is pressed. If the user refuses to provide authorization data, the original URL without information about
+   *   the user will be opened. The data added is the same as described in Receiving authorization data.
    * @param {loginButtonOptions} [opts] Options
-   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
+   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for
+   *   hide button when build keyboard
    * @return {object}
    */
   static loginButton (text, url, opts = {}, hide = false) {
@@ -702,7 +750,8 @@ class Markup {
    * @see https://core.telegram.org/bots/api#keyboardbutton
    * @param {string} text Text to display
    * @param {string} url An HTTPS URL of a Web App to be opened with additional data
-   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for hide button when build keyboard
+   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for
+   *   hide button when build keyboard
    * @return {object}
    */
   static webApp (text, url, hide = false) {
