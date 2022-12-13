@@ -489,7 +489,7 @@
  * @property {MessageEntity[]} caption_entities Optional. List of special entities that appear in the caption,
  *    which can be specified instead of `parse_mode`
  * @property {object} reply_markup Optional. Inline keyboard attached to the message
- * @property {InputTextMessageContent} input_message_content
+ * @property {InputTextMessageContent} input_message_content Content of the message to be sent
  */
 
 /**
