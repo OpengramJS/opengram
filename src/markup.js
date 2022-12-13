@@ -120,15 +120,31 @@ class Markup {
    *
    * ```js
    * // Make one-line inline keyboard with resize
-   * Markup.inlineKeyboard(['one', 'two', 'three', 'four'])
+   * Markup.inlineKeyboard([
+   *   Markup.urlButton('one', 'https://example.com'),
+   *   Markup.urlButton('two', 'https://example.com'),
+   *   Markup.urlButton('three', 'https://example.com'),
+   *   Markup.urlButton('four', 'https://example.com')
+   * ])
    *
    * // Make two columns inline keyboard with custom function
-   * Markup.inlineKeyboard(['one', 'two', 'three', 'four'], {
-   *   wrap: (btn, index, currentRow) => index % 2 !== 0
-   * })
+   * Markup.inlineKeyboard([
+   *   Markup.urlButton('one', 'https://example.com'),
+   *   Markup.urlButton('two', 'https://example.com'),
+   *   Markup.urlButton('three', 'https://example.com'),
+   *   Markup.urlButton('four', 'https://example.com')
+   *   ], {
+   *     wrap: (btn, index, currentRow) => index % 2 !== 0
+   *   }
+   * )
    *
    * // Make fixed two columns inline keyboard with columns option
-   * Markup.inlineKeyboard(['one', 'two', 'three', 'four'], { columns: 2 })
+   * Markup.inlineKeyboard([
+   *   Markup.urlButton('one', 'https://example.com'),
+   *   Markup.urlButton('two', 'https://example.com'),
+   *   Markup.urlButton('three', 'https://example.com'),
+   *   Markup.urlButton('four', 'https://example.com')
+   * ], { columns: 2 })
    * ```
    *
    * @see https://core.telegram.org/bots/api#inlinekeyboardmarkup
