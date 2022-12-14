@@ -5,41 +5,46 @@
  */
 
 /**
- * @typedef {object} ChatMemberUpdated
+ * @typedef {object} MessageExtraParams
+ * @property {parseMode} [parse_mode] Mode for parsing entities in the message text. See formatting
+ *    options for more details.
+ * @property {MessageEntity} [entities] List of special entities that appear in message text,
+ *    which can be specified instead of `parse_mode`
+ * @property {boolean} [disable_web_page_preview] Disables link previews for links in this message
+ * @property {boolean} [disable_notification] Sends the message
+ *    [silently](https://telegram.org/blog/channels-2-0#silent-messages). Users will receive
+ *    a notification with no sound.
+ * @property {boolean} [protect_content] Protects the contents of the sent message from forwarding and saving
+ * @property {number} [reply_to_message_id] If the message is a reply, ID of the original message
+ * @property {boolean} [allow_sending_without_reply] Pass `True`, if the message should be sent even if the specified
+ *    replied-to message is not found
+ * @property {object} [reply_markup] Additional interface options. A object for an inline keyboard,
+ *    custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
+ */
+
+/** @typedef {Buffer|stream|string} attachmentFile **/
+
+/**
+ * @typedef {object} stickerExtraParams
+ * @property {boolean} [disable_notification] Sends the message
+ *    [silently](https://telegram.org/blog/channels-2-0#silent-messages). Users will receive
+ *    a notification with no sound.
+ * @property {boolean} [protect_content] Protects the contents of the forwarded message from forwarding and saving
  */
 
 /**
- * @typedef {object} CallbackQuery
+ * @typedef {
+    'typing'|'upload_photo'|'record_video'|'upload_video'|'record_voice'|'upload_voice'|'upload_document'|
+    'choose_sticker'|'find_location'|'record_video_note'|'upload_video_note'
+   } Action
  */
 
 /**
- * @typedef {object} ChosenInlineResult
+ * @typedef {object} forwardExtraParams
+ * @property {boolean} [disable_notification] Sends the message
+ *    [silently](https://telegram.org/blog/channels-2-0#silent-messages). Users will receive
+ *    a notification with no sound.
+ * @property {boolean} [protect_content] Protects the contents of the forwarded message from forwarding and saving
  */
 
-/**
- * @typedef {object} PreCheckoutQuery
- */
-
-/**
- * @typedef {object} ShippingQuery
- */
-
-/**
- * @typedef {object} PassportData
- */
-
-/**
- * @typedef {object} InlineQuery
- */
-
-/**
- * @typedef {object} ChatJoinRequest
- */
-
-/**
- * @typedef {object} WebAppData
- */
-
-/**
- * @typedef {object} PollAnswer
- */
+/** @typedef {'Markdown'|'MarkdownV2'|'HTML'} parseMode */
