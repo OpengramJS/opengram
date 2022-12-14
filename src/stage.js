@@ -71,7 +71,7 @@ class Stage extends Composer {
   /**
    * Generates and returns stage middleware  for embedding
    *
-   * @return {Function}
+   * @return {MiddlewareFn}
    */
   middleware () {
     const handler = compose([
