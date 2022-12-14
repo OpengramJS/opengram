@@ -111,9 +111,12 @@ class OpengramContext {
    * @param {ContextOptions} options Extra options
    */
   constructor (update, telegram, options) {
+    /** @type {Telegram} **/
     this.tg = telegram
+    /** @type {Update} **/
     this.update = update
     this.options = options
+    /** @type {updateType} **/
     this.updateType = UpdateTypes.find((key) => key in this.update)
 
     if (this.updateType === 'message' || (this.options.channelMode && this.updateType === 'channel_post')) {
