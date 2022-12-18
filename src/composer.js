@@ -1053,6 +1053,15 @@ class Composer {
   }
 }
 
+/**
+ * Converts single triggers to array of triggers and regex / strings to predicate functions
+ *
+ * @private
+ * @param {Trigger|Trigger[]} triggers The text / array of
+ *   texts / regex / function to look for
+ * @throws {TypeError}
+ * @return {triggerPredicateFn[]}
+ */
 function normalizeTriggers (triggers) {
   if (!Array.isArray(triggers)) {
     triggers = [triggers]
