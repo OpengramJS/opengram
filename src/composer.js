@@ -645,6 +645,11 @@ class Composer {
     return this.command('settings', ...fns)
   }
 
+  /**
+   * Returns the middleware to embed
+   *
+   * @return {MiddlewareFn}
+   */
   middleware () {
     return this.handler
   }
