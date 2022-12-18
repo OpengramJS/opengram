@@ -105,6 +105,7 @@ class Composer {
    * // Match a regular expression
    * bot.hears(/\/echo (.+)/, ctx => ctx.reply(ctx.match[1]))
    * ```
+   *
    * > Note how `ctx.match` will contain the result of the regular expression.
    * > So `ctx.match[1]` refers to the part of the regex that was matched by `(.+)`,
    * > i.e. the text that comes after "/echo".
@@ -450,11 +451,12 @@ class Composer {
    *
    * This method matches entity in channel post, message and media caption
    *
-   * @param {MiddlewareFn} args The middleware(s) to register
+   * @param {entityPredicate} predicate The predicate to check. Can be async, returns boolean or Promise with boolean
+   * @param {MiddlewareFn} fns The middleware(s) to register
    * @return {Composer}
    */
-  entity (...args) {
-    return this.use(Composer.entity(...args))
+  entity (predicate, ...fns) {
+    return this.use(Composer.entity(predicate, ...fns))
   }
 
   /**
