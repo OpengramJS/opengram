@@ -1047,6 +1047,83 @@ class Composer {
     return Composer.mount('callback_query', Composer.match(normalizeTriggers(triggers), ...fns))
   }
 
+  /**
+   * Generates middleware that execute given middleware(s) will only be executed for certain inline queries.
+   * Telegram sends an inline query to your bot whenever a user types `@your_bot_name ...` into a text field
+   * in Telegram.
+   *
+   * Your bot will then receive the entered search query and can
+   * respond with a number of results (text, images, etc.) that the user can
+   * pick from to send a message _via_ your bot to the respective chat.
+   * Check [here](https://core.telegram.org/bots/inline) to read more about inline bots.
+   *
+   * > Note that you have to enable inline mode for you bot by contacting
+   * > [@BotFather](https://t.me/BotFather) first.
+   *
+   * ```js
+   * // Listen for users typing `@your_bot_name query`
+   * bot.use(
+   *   Composer.inlineQuery('query', async ctx => {
+   *     // Answer the inline query, confer https://core.telegram.org/bots/api#answerinlinequery
+   *     await ctx.answerInlineQuery( ... )
+   *   })
+   * )
+   * ```
+   *
+   * You can pass one or an array of triggers (Regexp / strings). Your middleware(s) will be executed if at
+   * least one of them matches.
+   *
+   * > Note how `ctx.match` will contain the result of the regular expression.
+   * > So `ctx.match[1]` refers to the part of the regexp that was matched by `([0-9]+)`,
+   * > i.e. the text that comes after "query:".
+   * ```js
+   * // Listen for users typing `@your_bot_name query`
+   * bot.use(
+   *   Composer.inlineQuery(/query:([0-9]+)/, async ctx => {
+   *     // Answer the inline query, confer https://core.telegram.org/bots/api#answerinlinequery
+   *     await ctx.answerInlineQuery([{
+   *       type: 'article',
+   *       id: Math.random(),
+   *       title: 'Regex test',
+   *       cache_time: 1,
+   *       description: `Query Regex result: ${ctx.match[1]}`,
+   *       input_message_content: {
+   *         message_text: `Query Regex result: ${ctx.match[1]}`,
+   *       }
+   *     }])
+   *   })
+   * )
+   * ```
+   *
+   * You can also paste function (or array of functions) that takes the value and context as arguments and returns true
+   * or false (or some `Truthy` result) based on them. This can be used, for example, for dynamic text matching at i18n.
+   * **The result returned by the function will be available from** `ctx.match`
+   *
+   * ```js
+   * bot.inlineQuery(
+   *   (value, ctx) => {
+   *     //... some checks ...
+   *     return ['some', 'data']
+   *   },
+   *   // Show cb query answer for all queries with "I love some data"
+   *   ctx => ctx.answerInlineQuery([{
+   *     type: 'article',
+   *     id: Math.random(),
+   *     title: 'Regex test',
+   *     cache_time: 1,
+   *     description: `I love ${ctx.match[0]} ${ctx.match[1]}`,
+   *     input_message_content: {
+   *       message_text: `I love ${ctx.match[0]} ${ctx.match[1]}`,
+   *     }
+   *   }])
+   * })
+   * ```
+   *
+   * @param {Trigger|Trigger[]} triggers The inline query text
+   *   or array of text to match
+   * @param {MiddlewareFn} fns The middleware(s) to register
+   * @return {MiddlewareFn}
+   */
   static inlineQuery (triggers, ...fns) {
     return Composer.mount('inline_query', Composer.match(normalizeTriggers(triggers), ...fns))
   }
