@@ -1040,6 +1040,21 @@ function normalizeTriggers (triggers) {
   })
 }
 
+/**
+ * Converts given argument to array if not array, filter empty arguments.
+ * If prefix given, adds prefix if not exists
+ *
+ * ```js
+ * normalizeTextArguments('name') // Returns ['name']
+ * normalizeTextArguments(['name', 'name1']) // Returns ['name', 'name1']
+ * normalizeTextArguments(['@name', 'name1'], '@') // Returns ['@name', '@name1']
+ * ```
+ *
+ * @private
+ * @param {string|string[]} argument Arguments to normalize
+ * @param {string} [prefix] Prefix
+ * @return {string[]}
+ */
 function normalizeTextArguments (argument, prefix) {
   const args = Array.isArray(argument) ? argument : [argument]
   return args
