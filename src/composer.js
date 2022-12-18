@@ -1022,6 +1022,65 @@ class Composer {
     }, ...fns)
   }
 
+  /**
+   * Generates middleware that execute given middlewares when the message / channel post
+   * contains some text (in media caption too). Is it possible to pass a regular expression to match:
+   * ```js
+   * // Match some text (exact match)
+   * bot.use(
+   *   Composer.hears('I love anime', ctx => ctx.reply('I love too'))
+   * )
+   *
+   * // Match a regular expression
+   * bot.use(
+   *   Composer.hears(/\/echo (.+)/, ctx => ctx.reply(ctx.match[1]))
+   * )
+   * ```
+   *
+   * > Note how `ctx.match` will contain the result of the regular expression.
+   * > So `ctx.match[1]` refers to the part of the regex that was matched by `(.+)`,
+   * > i.e. the text that comes after "/echo".
+   *
+   * You can also paste function (or array of functions) that takes the value and context as arguments and returns true
+   * or false (or some `Truthy` result) based on them. This can be used, for example, for dynamic text matching at i18n.
+   * **The result returned by the function will be available from** `ctx.match`
+   *
+   * ```js
+   * bot.use(
+   *   Composer.hears(
+   *     (value, ctx) => {
+   *       //... some checks ...
+   *       return ['some', 'data']
+   *     },
+   *     ctx => ctx.reply(`I love ${ctx.match[0]} ${ctx.match[1]}`) // Replies at all with "I love some data"
+   *   )
+   * )
+   * ```
+   *
+   * You can pass an array of triggers. Your middleware will be executed if at
+   * least one of them matches.
+   *
+   * Both text and captions of the received messages will be scanned. For
+   * example, when a photo is sent to the chat and its caption matches the
+   * trigger, your middleware will be executed.
+   *
+   * If you only want to match text messages and not captions, you can do
+   * this:
+   * ```js
+   * // Only matches text messages for the regex
+   * bot.on('text', Composer.hears(/\/echo (.+)/, ctx => { ... }))
+   * ```
+   *
+   * > _**Be careful, the example above may not work as expected if `channelMode` is enabled.**_
+   * >
+   * > By default `text` type not match channel posts, but `channel_post` matched as `text` type and
+   * > `ctx.message` potentially `undefined`
+   * > when `channelMode` enabled. You can add additional chat type check for this case
+   *
+   * @param {Trigger|Trigger[]} triggers The text / array of
+   * texts / regex / function to look for
+   * @param {MiddlewareFn} fns The middleware(s) to register as argument(s)
+   */
   static hears (triggers, ...fns) {
     return Composer.mount('text', Composer.match(normalizeTriggers(triggers), ...fns))
   }
