@@ -676,6 +676,13 @@ class Composer {
     }, ...fns)
   }
 
+  /**
+   * Generates middleware that catches all errors in the middleware(s) given to it and calls given error handler
+   *
+   * @param {Function} errorHandler Error handler which takes error and context object as arguments
+   * @param {MiddlewareFn} fns Middleware(s)
+   * @return {MiddlewareFn}
+   */
   static catch (errorHandler, ...fns) {
     const handler = Composer.compose(fns)
     return (ctx, next) => Promise.resolve(handler(ctx, next))
