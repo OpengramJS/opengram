@@ -928,7 +928,13 @@ class Composer {
 
   static mount (updateType, ...fns) {
     const updateTypes = remapMessageSubtypes(normalizeTextArguments(updateType))
-    const predicate = (ctx) => updateTypes.includes(ctx.updateType) || updateTypes.some((type) => ctx.updateSubTypes.includes(type))
+    const predicate = (ctx) => {
+      return updateTypes.includes(ctx.updateType) || updateTypes
+        .some(
+          (type) => ctx.updateSubTypes.includes(type)
+        )
+    }
+
     return Composer.optional(predicate, ...fns)
   }
 
