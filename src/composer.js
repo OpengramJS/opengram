@@ -778,6 +778,33 @@ class Composer {
       .then((value) => value ? trueMiddleware : falseMiddleware))
   }
 
+  /**
+   * Generates middleware that makes given middleware(s) optional
+   *
+   * Example
+   * ```js
+   * bot.use(
+   *   Composer.optional(
+   *     (ctx) => ctx.from.is_premium, // Check premium
+   *     // The handlers from below will be executed only if predict returns true
+   *     async (ctx, next) => {
+   *       await ctx.reply('This mw and below will be executed only for premium users')
+   *       return next()
+   *     },
+   *     (ctx) => {
+   *       // ...other middleware.. ...code...,
+   *     },
+   *     (ctx) => {
+   *       // ...other middleware.. ...code...,
+   *     },
+   *   )
+   * )
+   * ```
+   *
+   * @param {PredicateFn} predicate The predicate to check. Can be async, returns boolean or Promise with boolean
+   * @param {MiddlewareFn} fns Middleware(s)
+   * @return {MiddlewareFn}
+   */
   static optional (predicate, ...fns) {
     return Composer.branch(predicate, Composer.compose(fns), Composer.safePassThru())
   }
