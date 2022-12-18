@@ -932,10 +932,20 @@ class Composer {
     return Composer.optional(predicate, ...fns)
   }
 
+  /**
+   * Generates middleware that execute given middlewares if a certain entity is present in the update
+   *
+   * This method matches entity in channel post, message and media caption
+   *
+   * @param {entityPredicate} predicate The predicate to check. Entity name or predicate function.
+   *   If function provided, it can be sync only and returns boolean
+   * @param {MiddlewareFn} fns The middleware(s) to register
+   * @return {MiddlewareFn}
+   */
   static entity (predicate, ...fns) {
     if (typeof predicate !== 'function') {
       const entityTypes = normalizeTextArguments(predicate)
-      return Composer.entity(({ type }) => entityTypes.includes(type), ...fns)
+      return Composer.entity((entity) => entityTypes.includes(entity.type), ...fns)
     }
     return Composer.optional((ctx) => {
       const message = ctx.message || ctx.channelPost
@@ -1193,11 +1203,14 @@ class Composer {
       const groupCommands = ctx.me && (ctx.chat.type === 'group' || ctx.chat.type === 'supergroup')
         ? commands.map((command) => `${command}@${ctx.me}`)
         : []
-      return Composer.entity(({ offset, type }, value) =>
-        offset === 0 &&
-        type === 'bot_command' &&
-        (commands.includes(value) || groupCommands.includes(value))
-      , ...fns)
+      return Composer.entity(
+        (entity, value) =>
+          (
+            entity.offset === 0 &&
+            entity.type === 'bot_command' &&
+            (commands.includes(value) || groupCommands.includes(value))
+          ),
+        ...fns)
     }))
   }
 
