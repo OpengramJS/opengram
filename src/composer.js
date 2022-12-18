@@ -109,6 +109,20 @@ class Composer {
    * > So `ctx.match[1]` refers to the part of the regex that was matched by `(.+)`,
    * > i.e. the text that comes after "/echo".
    *
+   * You can also paste function (or array of functions) that takes the value and context as arguments and returns true
+   * or false (or some `Truthy` result) based on them. This can be used, for example, for dynamic text matching at i18n.
+   * **The result returned by the function will be available from** `ctx.match`
+   *
+   * ```js
+   * bot.hears(
+   *   (value, ctx) => {
+   *     //... some checks ...
+   *     return ['some', 'data']
+   *   },
+   *   ctx => ctx.reply(`I love ${ctx.match[0]} ${ctx.match[1]}`) // Replies at all with "I love some data"
+   * )
+   * ```
+   *
    * You can pass an array of triggers. Your middleware will be executed if at
    * least one of them matches.
    *
@@ -130,7 +144,8 @@ class Composer {
    * > `ctx.message` potentially `undefined`
    * > when `channelMode` enabled. You can add additional chat type check for this case
    *
-   * @param {string|RegExp|Array<RegExp|string>} triggers The text / array of texts or regex to look for
+   * @param {Trigger|Trigger[]} triggers The text / array of
+   * texts / regex / function to look for
    * @param {MiddlewareFn} fns The middleware(s) to register as argument(s)
    */
   hears (triggers, ...fns) {
@@ -257,8 +272,23 @@ class Composer {
    * > await bot.telegram.sendMessage(chat_id, 'Press a button!', keyboard.extra())
    * > ```
    *
-   * @param {string|RegExp|Array<RegExp|string>} triggers One or an array of regular expressions / strings
-   *   to search in the payload
+   * You can also paste function (or array of functions) that takes the value and context as arguments and returns true
+   * or false (or some `Truthy` result) based on them. This can be used, for example, for dynamic text matching at i18n.
+   * **The result returned by the function will be available from** `ctx.match`
+   *
+   * ```js
+   * bot.action(
+   *   (value, ctx) => {
+   *     //... some checks ...
+   *     return ['some', 'data']
+   *   },
+   *   // Show cb query answer for all queries with "I love some data"
+   *   ctx => ctx.answerCbQuery(`I love ${ctx.match[0]} ${ctx.match[1]}`)
+   * )
+   * ```
+   *
+   * @param {Trigger|Trigger[]} triggers One or an array of
+   * regular expressions / strings to search in the payload
    * @param {MiddlewareFn} fns The middleware(s) to register as arguments
    * @return {Composer}
    */
@@ -314,7 +344,32 @@ class Composer {
    * })
    * ```
    *
-   * @param {string|RegExp|Array<RegExp|string>} triggers The inline query text or array of text to match
+   * You can also paste function (or array of functions) that takes the value and context as arguments and returns true
+   * or false (or some `Truthy` result) based on them. This can be used, for example, for dynamic text matching at i18n.
+   * **The result returned by the function will be available from** `ctx.match`
+   *
+   * ```js
+   * bot.inlineQuery(
+   *   (value, ctx) => {
+   *     //... some checks ...
+   *     return ['some', 'data']
+   *   },
+   *   // Show cb query answer for all queries with "I love some data"
+   *   ctx => ctx.answerInlineQuery([{
+   *     type: 'article',
+   *     id: Math.random(),
+   *     title: 'Regex test',
+   *     cache_time: 1,
+   *     description: `I love ${ctx.match[0]} ${ctx.match[1]}`,
+   *     input_message_content: {
+   *       message_text: `I love ${ctx.match[0]} ${ctx.match[1]}`,
+   *     }
+   *   }])
+   * })
+   * ```
+   *
+   * @param {Trigger|Trigger[]} triggers The inline query text
+   *   or array of text to match
    * @param {MiddlewareFn} fns The middleware(s) to register
    * @return {Composer}
    */
