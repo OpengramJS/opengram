@@ -301,10 +301,6 @@ class Composer {
    * to your bot whenever a user types `@your_bot_name ...` into a text field
    * in Telegram.
    *
-   *
-   * [![Inline query](https://raw.githubusercontent.com/OpengramJS/opengram/master/docs/media/interactive-examples/inlineQuery.png)](https://raw.githubusercontent.com/OpengramJS/opengram/master/docs/media/interactive-examples/inlineQuery.png)
-   *
-   *
    * Your bot will then receive the entered search query and can
    * respond with a number of results (text, images, etc.) that the user can
    * pick from to send a message _via_ your bot to the respective chat.
