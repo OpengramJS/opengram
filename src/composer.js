@@ -1025,7 +1025,7 @@ function normalizeTriggers (triggers) {
   }
   return triggers.map((trigger) => {
     if (!trigger) {
-      throw new Error('Invalid trigger')
+      throw new TypeError('Invalid trigger')
     }
     if (typeof trigger === 'function') {
       return trigger
