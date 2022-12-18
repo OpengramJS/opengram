@@ -24,3 +24,26 @@
  * @param {OpengramContext} context Update context
  * @return {boolean|Promise<boolean>}
  */
+
+/**
+ * @callback triggerPredicateFn
+ * @param {string} value Received value
+ * @param {OpengramContext} context Update context
+ * @return {boolean}
+ */
+
+/**
+ * @callback entityPredicateFn
+ * @param {MessageEntity} entityObject Entity object
+ * @param {string} entityText Entity text
+ * @param {OpengramContext} context Update context
+ * @return {boolean}
+ */
+
+/**
+ * @typedef {entityPredicateFn|MessageEntityType} entityPredicate
+ */
+
+/**
+ * @typedef {RegExp|string|triggerPredicateFn} Trigger
+ */

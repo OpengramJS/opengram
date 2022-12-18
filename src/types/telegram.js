@@ -2745,3 +2745,7 @@
  * @see https://core.telegram.org/bots/api#deletewebhook
  * @property {boolean} [drop_pending_updates] Pass True to drop all pending updates
  */
+
+/**
+ * @typedef {'mention'|'hashtag'|'cashtag'|'bot_command'|'url'|'email'|'phone_number'|'bold'|'italic'|'underline'|'strikethrough'|'spoiler'|'code'|'pre'|'text_link'|'text_mention'|'custom_emoji'} MessageEntityType
+ */
