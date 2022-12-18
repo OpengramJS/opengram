@@ -818,9 +818,16 @@ class Composer {
   }
 
   static dispatch (routeFn, handlers) {
-    return typeof routeFn === 'function'
-      ? Composer.lazy((ctx) => Promise.resolve(routeFn(ctx)).then((value) => handlers[value]))
-      : handlers[routeFn]
+    if (typeof routeFn === 'function') {
+      return Composer.lazy(async (ctx) => {
+        const route = await Promise.resolve(
+          routeFn(ctx)
+        )
+        return handlers[route]
+      })
+    } else {
+      return handlers[routeFn]
+    }
   }
 
   static mount (updateType, ...fns) {
