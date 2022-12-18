@@ -711,10 +711,11 @@ class Composer {
    */
   static tap (middleware) {
     const handler = Composer.unwrap(middleware)
-    return (ctx, next) => {
-      return Promise.resolve(
+    return async (ctx, next) => {
+      await Promise.resolve(
         handler(ctx, Composer.safePassThru())
-      ).then(() => next(ctx))
+      )
+      return next(ctx)
     }
   }
 
@@ -763,8 +764,10 @@ class Composer {
     if (typeof factoryFn !== 'function') {
       throw new TypeError('Argument must be a function')
     }
-    return (ctx, next) => Promise.resolve(factoryFn(ctx))
-      .then((middleware) => Composer.unwrap(middleware)(ctx, next))
+    return async (ctx, next) => {
+      const middleware = await Promise.resolve(factoryFn(ctx))
+      return Composer.unwrap(middleware)(ctx, next)
+    }
   }
 
   /**
