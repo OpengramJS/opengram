@@ -1007,6 +1007,34 @@ class Composer {
     return Composer.entityText('spoiler', text, ...fns)
   }
 
+  /**
+   * Generates middleware that execute given middlewares when some given trigger(s) returns true
+   *
+   * Example:
+   * ```js
+   * Composer.match (/[a-z]/, ...fns)
+   *
+   * Composer.match ([/[a-z]/, /[0-9]/], ...fns)
+   *
+   * Composer.match ((value, context) => {
+   *   // ...checks...
+   * } , ...fns)
+   *
+   * Composer.match (
+   *   (value, context) => {
+   *     // ...checks...
+   *   },
+   *   (value, context) => {
+   *     // ...checks...
+   *   },
+   *   ...fns
+   * )
+   * ```
+   *
+   * @param {Trigger|Trigger[]} triggers The text / array of
+   * texts / regex / function to look for
+   * @param {MiddlewareFn} fns The middleware(s) to register as argument(s)
+   */
   static match (triggers, ...fns) {
     return Composer.optional((ctx) => {
       const text = getText(ctx.message) ||
