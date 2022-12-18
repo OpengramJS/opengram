@@ -1028,6 +1028,32 @@ class Composer {
     }, ...fns)
   }
 
+  /**
+   * Generates and returns a middleware that only runs the given middleware for updates from "private" (DM)
+   *
+   * Usage example:
+   * ```js
+   * // Send message with text "I'm not support group chats" when receive update from group chat
+   * bot.use(
+   *   Composer.privateChat(Composer.reply('I work only in group chats'))
+   * )
+   * ```
+   *
+   * Isolate private commands:
+   * ```js
+   * const private = new Composer()
+   *
+   * private.hears(...)
+   * private.command(...)
+   *
+   * bot.use(
+   *   Composer.privateChat(private)
+   * )
+   * ```
+   *
+   * @param {MiddlewareFn} fns The middleware(s) to register
+   * @return {MiddlewareFn}
+   */
   static privateChat (...fns) {
     return Composer.chatType('private', ...fns)
   }
