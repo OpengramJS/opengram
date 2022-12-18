@@ -673,6 +673,12 @@ class Composer {
     return (ctx) => ctx.reply(...args)
   }
 
+  /**
+   * Generates middleware that catches all errors in the middleware(s) given to it and outputs them to the console
+   *
+   * @param {MiddlewareFn} fns Middlewares
+   * @return {MiddlewareFn}
+   */
   static catchAll (...fns) {
     return Composer.catch((err) => {
       console.error()
