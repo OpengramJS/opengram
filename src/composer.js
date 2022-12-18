@@ -395,8 +395,6 @@ class Composer {
   }
 
   /**
-   * > ❗️ **This is an advanced method of Opengram.**
-   *
    * Registers middleware behind a custom filter function that operates on the
    * context object and decides whether to execute the middleware.
    *
@@ -425,8 +423,6 @@ class Composer {
   }
 
   /**
-   * > ❗️ **This is an advanced method of Opengram.**
-   *
    * Registers middleware(s) behind a custom filter function that operates on the
    * context object and decides whether to execute the middleware. In
    * other words, the middleware will only be executed if the given predicate
@@ -687,8 +683,6 @@ class Composer {
   }
 
   /**
-   * > ❗️ **This is an advanced method of Opengram.**
-   *
    * Registers some middleware that runs concurrently to the executing middleware stack.
    * Runs the middleware at the next event loop using
    * [setImmediate](https://nodejs.dev/en/learn/understanding-setimmediate) and force call `next()`
@@ -709,7 +703,6 @@ class Composer {
   }
 
   /**
-   * > ❗️ **This is an advanced method of Opengram.**
    * Middleware that calls a middleware or chain of middleware and calls the `next`, whether it called `next` or not.
    * Allows you to execute some code and continue execution regardless of its result.
    *
@@ -726,8 +719,6 @@ class Composer {
   }
 
   /**
-   * > ❗️ **This is an advanced method of Opengram.**
-   *
    * Generates middleware which call next middleware
    *
    * For example, you can use it with {@link Composer.branch} or other to skip middleware (make middleware optional)
@@ -739,7 +730,6 @@ class Composer {
   }
 
   /**
-   * > ❗️ **This is an advanced method of Opengram.**
    *
    * Generates middleware which call next middleware if `next` function exists or returns empty resolved promise
    *
@@ -752,7 +742,6 @@ class Composer {
   }
 
   /**
-   * > ❗️ **This is an advanced method of Opengram.**
    * Lazily asynchronously returns some middleware that can be generated on the fly for each context.
    * Pass a factory function that creates some middleware
    *
@@ -797,7 +786,6 @@ class Composer {
   }
 
   /**
-   * > ❗️ **This is an advanced method of Opengram.**
    *
    * Allows you to branch between two cases for a given context object.
    *
@@ -1050,8 +1038,6 @@ class Composer {
   }
 
   /**
-   * > ❗️ **This is an advanced method of Opengram.**
-   *
    * Method used for unwrapping middleware, when middleware has method with name `middleware` (middleware factory)
    * {@link Composer.unwrap} calls him and return result
    *
