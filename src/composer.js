@@ -1037,14 +1037,18 @@ class Composer {
   }
 
   static gameQuery (...fns) {
-    return Composer.mount('callback_query', Composer.optional((ctx) => ctx.callbackQuery.game_short_name, ...fns))
+    return Composer.mount(
+      'callback_query',
+      Composer.optional((ctx) => !!ctx.callbackQuery.game_short_name, ...fns)
+    )
   }
 
   /**
    * Method used for unwrapping middleware, when middleware has method with name `middleware` (middleware factory)
    * {@link Composer.unwrap} calls him and return result
    *
-   * This method used in some other {@link Composer} methods, like {@link Composer.compose}, {@link Composer.lazy} and other
+   * This method used in some other {@link Composer} methods, like {@link Composer.compose}, {@link Composer.lazy} and
+   * other
    *
    * @param {MiddlewareFn} handler The middleware for unwrap
    * @throws {Error}
@@ -1072,6 +1076,7 @@ class Composer {
     return (ctx, next) => {
       let index = -1
       return execute(0, ctx)
+
       async function execute (i, context) {
         if (!(context instanceof Context)) {
           throw new Error('next(ctx) called with invalid context')
