@@ -1032,6 +1032,32 @@ class Composer {
     return Composer.chatType('private', ...fns)
   }
 
+  /**
+   * Creates and returns a middleware that only runs the given middleware for updates from "group" and "supergroup".
+   *
+   * Usage example:
+   * ```js
+   * // Send message with text "I'm not support group chats" when receive update from group chat
+   * bot.use(
+   *   Composer.groupChat(Composer.reply('I do not support group chats'))
+   * )
+   * ```
+   *
+   * Isolate group commands:
+   * ```js
+   * const group = new Composer()
+   *
+   * group.hears(...)
+   * group.command(...)
+   *
+   * bot.use(
+   *   Composer.groupChat(group)
+   * )
+   * ```
+   *
+   * @param {MiddlewareFn} fns The middleware(s) to register
+   * @return {MiddlewareFn}
+   */
   static groupChat (...fns) {
     return Composer.chatType(['group', 'supergroup'], ...fns)
   }
