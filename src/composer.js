@@ -931,6 +931,45 @@ class Composer {
     }
   }
 
+  /**
+   * Generates middleware that execute given middleware(s) only for some specific
+   * updates, namely those matching the provided filter query. Filter queries
+   * are a concise way to specify which updates you are interested in.
+   *
+   * Here are some examples of valid filter queries:
+   * ```js
+   * // All kinds of message updates
+   * bot.use(
+   *   Composer.mount('message', ctx => { ... })
+   * )
+   *
+   * // Text messages
+   * bot.use(
+   *   Composer.mount('text', ctx => { ... })
+   * )
+   *
+   * // Messages with document
+   * bot.use(
+   *   Composer.mount('document', ctx => { ... })
+   * )
+   * ```
+   *
+   * It is possible to pass multiple filter queries in an array, i.e.
+   * ```js
+   * // Matches all messages that contain a video or audio
+   * bot.use(
+   *   Composer.mount(['audio', 'video'], ctx => { ... })
+   * )
+   * ```
+   *
+   * Your middleware will be executed if _any of the provided filter queries_
+   * matches (logical OR).
+   *
+   * @param {updateType|updateType[]} updateType The update type or array of update types to use,
+   *    may also be an array or string
+   * @param {MiddlewareFn} fns The middleware(s) to register with the given types as argument(s)
+   * @return {MiddlewareFn}
+   */
   static mount (updateType, ...fns) {
     const updateTypes = remapMessageSubtypes(normalizeTextArguments(updateType))
     const predicate = (ctx) => {
