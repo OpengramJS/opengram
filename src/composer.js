@@ -1085,6 +1085,77 @@ class Composer {
     return Composer.mount('text', Composer.match(normalizeTriggers(triggers), ...fns))
   }
 
+  /**
+   * Generates middleware that execute given middlewares will only be executed if a certain command is found.
+   *
+   * ```js
+   * // Reacts to /start commands
+   * bot.use(
+   *   Composer.command('start', ctx => { ... })
+   * )
+   * // Reacts to /help commands
+   * bot.use(
+   *   Composer.command('help', ctx => { ... })
+   * )
+   * ```
+   *
+   * > **Note:** Commands are not matched in the middle of the text.
+   *
+   * ```js
+   * bot.use(
+   *   Composer.command('start', ctx => { ... })
+   * )
+   * // ... does not match:
+   * // A message saying: “some text /start some more text”
+   * // A photo message with the caption “some text /start some more text”
+   * ```
+   *
+   * By default, commands are detected in channel posts and media captions, too. This means that
+   * `ctx.message` for channel post or `ctx.message.text` for media is potentially `undefined`,
+   * so you should use `ctx.channelPost` and `ctx.message.caption` accordingly
+   * for channel posts. Alternatively, if you
+   * want to limit your bot to finding commands only in private and group
+   * chats, you can use
+   *
+   * ```js
+   * const { Opengram, Composer: { command } } = require('opengram')
+   * // ...
+   * bot.on('message', command('start', ctx => ctx.reply('Only private / group messages or media with caption')))`
+   * ```
+   *
+   * or using {@link Composer.chatType}:
+   *
+   * ```js
+   * const { Opengram, Composer, Composer: { command } } = require('opengram')
+   * // ...
+   * bot.use(
+   *   Composer.chatType(
+   *     ["private", "group", "supergroup"],
+   *     command('start', ctx => ctx.reply('Only private / group messages or media with caption'))
+   *   )
+   * )
+   * ```
+   *
+   * for match all message exclude channel posts, or
+   *
+   * ```js
+   * const { Opengram, Composer: { command } } = require('opengram')
+   * // ...
+   * bot.on('text', command('start', ctx => ctx.reply('Math commands only text, not media captions')))
+   * ```
+   *
+   * for match only text message, not media caption
+   * or even store a message-only version of your bot in a variable like so:
+   *
+   * > _**Be careful, the example above may not work as expected if `channelMode` is enabled.**_
+   * >
+   * > By default `text` type not match channel posts, but `channel_post` matched as `text` type and
+   * > `ctx.message` potentially `undefined`
+   * > when `channelMode` enabled. You can add additional chat type check for this case
+   *
+   * @param {string|string[]|'start'|'settings'|'help'} command The command or array of commands to look for
+   * @param {MiddlewareFn} fns The middleware(s) to register as arguments
+   */
   static command (command, ...fns) {
     if (fns.length === 0) {
       return Composer.entity('bot_command', command)
