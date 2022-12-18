@@ -662,15 +662,18 @@ class Composer {
    * ```js
    * // Send message with text "I'm not support group chats" when receive update from group chat
    * bot.use(
-   *   Composer.groupChat(Composer.reply('I not support group chats'))
+   *   Composer.groupChat(Composer.reply('I do not support group chats'))
    * )
    * ```
    *
-   * @param args
-   * @return {MiddlewareFn}
+   * @see https://core.telegram.org/bots/api#sendmessage
+   * @param {string} text Text of the message to be sent, 1-4096 characters after entities parsing
+   * @param {MessageExtraParams|Extra} [extra] Other parameters
+   * @throws {TelegramError}
+   * @return {MiddlewareFn<Promise<Message>>}
    */
-  static reply (...args) {
-    return (ctx) => ctx.reply(...args)
+  static reply (text, extra) {
+    return (ctx) => ctx.reply(text, extra)
   }
 
   /**
