@@ -1081,6 +1081,8 @@ class Composer {
   /**
    * Generates middleware that execute given middlewares when some given trigger(s) returns true
    *
+   * Triggers are executed for channel post / message text / callback query / inline query
+   *
    * Example:
    * ```js
    * Composer.match (/[a-z]/, ...fns)
