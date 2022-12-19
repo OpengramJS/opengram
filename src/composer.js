@@ -662,7 +662,7 @@ class Composer {
    *
    * Usage example:
    * ```js
-   * // Send message with text "I'm not support group chats" when receive update from group chat
+   * // Send message with text "I do not support group chats" when receive update from group chat
    * bot.use(
    *   Composer.groupChat(Composer.reply('I do not support group chats'))
    * )
@@ -1475,7 +1475,7 @@ class Composer {
    *
    * Usage example:
    * ```js
-   * // Send message with text "I'm not support group chats" when receive update from group chat
+   * // Send message with text "I do not support group chats" when receive update from group chat
    * bot.use(
    *   Composer.privateChat(Composer.reply('I work only in group chats'))
    * )
@@ -1505,7 +1505,7 @@ class Composer {
    *
    * Usage example:
    * ```js
-   * // Send message with text "I'm not support group chats" when receive update from group chat
+   * // Send message with text "I do not support group chats" when receive update from group chat
    * bot.use(
    *   Composer.groupChat(Composer.reply('I do not support group chats'))
    * )
