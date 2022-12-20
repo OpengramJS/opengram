@@ -179,7 +179,7 @@ class OpengramContext {
   }
 
   /**
-   * Returns {@link Message} object for current update.
+   * Returns text for current update.
    *
    * Shortcut to
    * - `context.message.caption`
@@ -201,7 +201,7 @@ class OpengramContext {
   }
 
   /**
-   * Returns {@link Message} object for current update.
+   * Returns {@link MessageEntity} array for current update.
    *
    * Shortcut to
    * - `context.message.entities`
