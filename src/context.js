@@ -549,9 +549,10 @@ class OpengramContext {
    * Otherwise, you may use links like `t.me/your_bot?start=XXXX` that open your bot with a parameter.
    *
    * @see https://core.telegram.org/bots/api#answercallbackquery
-   * @param {string} text Text of the notification. If not specified, nothing will be shown to the user, 0-200 characters
-   * @param {boolean} [showAlert] If True, an alert will be shown by the client instead of a notification at the top of the
-   *    chat screen. Defaults to false.
+   * @param {string} text Text of the notification. If not specified, nothing will be shown to the user, 0-200
+   *   characters
+   * @param {boolean} [showAlert] If True, an alert will be shown by the client instead of a notification at the top of
+   *   the chat screen. Defaults to false.
    * @param {object} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
@@ -565,9 +566,9 @@ class OpengramContext {
    * Alias to {@link answerCbQuery} for game query
    *
    * @see https://core.telegram.org/bots/api#answercallbackquery
-   * @param {string} [url] URL that will be opened by the user's client. If you have created a Game and accepted the conditions
-   *    via [@BotFather](https://t.me/BotFather), specify the URL that opens your game - note that this will only work
-   *    if the query comes from a `callback_game` button.
+   * @param {string} [url] URL that will be opened by the user's client. If you have created a Game and accepted the
+   *   conditions via [@BotFather](https://t.me/BotFather), specify the URL that opens your game - note that this will
+   *   only work if the query comes from a `callback_game` button.
    * @throws {TelegramError}
    * @return {Promise}
    */
@@ -584,7 +585,8 @@ class OpengramContext {
    * On success, `True` is returned.
    *
    * @see https://core.telegram.org/bots/api#answershippingquery
-   * @param {boolean} ok Specify True if delivery to the specified address is possible and False if there are any problems
+   * @param {boolean} ok Specify True if delivery to the specified address is possible and False if there are any
+   *   problems
    *    (for example, if delivery to the specified address is not possible)
    * @param {ShippingOption[]} [shippingOptions] Required if ok is True. Array of available shipping options.
    * @param {string} [errorMessage] Required if ok is False. Error message in human-readable form that explains why it
@@ -609,12 +611,12 @@ class OpengramContext {
    * the pre-checkout query was sent.
    *
    * @see https://core.telegram.org/bots/api#answerprecheckoutquery
-   * @param {boolean} ok Specify True if everything is alright (goods are available, etc.) and the bot is ready to proceed
-   *    with the order. Use False if there are any problems.
-   * @param {string} [errorMessage] Required if ok is False. Error message in human readable form that explains the reason for
-   *    failure to proceed with the checkout (e.g. "Sorry, somebody just bought the last of our amazing black T-shirts
-   *    while you were busy filling out your payment details. Please choose a different color or garment!").
-   *    Telegram will display this message to the user.
+   * @param {boolean} ok Specify True if everything is alright (goods are available, etc.) and the bot is ready to
+   *   proceed with the order. Use False if there are any problems.
+   * @param {string} [errorMessage] Required if ok is False. Error message in human readable form that explains the
+   *   reason for failure to proceed with the checkout (e.g. "Sorry, somebody just bought the last of our amazing black
+   *   T-shirts while you were busy filling out your payment details. Please choose a different color or garment!").
+   *   Telegram will display this message to the user.
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -889,9 +891,9 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#banchatmember
    * @param {number} userId Unique identifier of the target user
-   * @param {number} [untilDate] Date when the user will be unbanned, unix time. If user is banned for more than 366 days or less
-   *    than 30 seconds from the current time they are considered to be banned forever.
-   *    Applied for supergroups and channels only.
+   * @param {number} [untilDate] Date when the user will be unbanned, unix time. If user is banned for more than 366
+   *   days or less than 30 seconds from the current time they are considered to be banned forever. Applied for
+   *   supergroups and channels only.
    * @param {object} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
@@ -1353,9 +1355,9 @@ class OpengramContext {
    * For sending voice messages, use the {@link OpengramContext#replyWithVoice} method instead.
    *
    * @see https://core.telegram.org/bots/api#sendaudio
-   * @param {attachmentFile} audio Audio file to send. Pass a `file_id` as String to send an audio file that exists on the Telegram
-   *    servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet,
-   *    or upload a new one using multipart/form-data.
+   * @param {attachmentFile} audio Audio file to send. Pass a `file_id` as String to send an audio file that exists on
+   *   the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the
+   *   Internet, or upload a new one using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
    * @param {object|Extra} [extra] Other parameters
    * @throws {TelegramError}
@@ -1389,8 +1391,8 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#senddocument
    * @param {attachmentFile} document Document to send. Pass a `file_id` as String to send a document that exists
-   *    on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet,
-   *    or upload a new photo using multipart/form-data.
+   *    on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the
+   *   Internet, or upload a new photo using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
    * @param {object|Extra} [extra] Other parameters
    * @throws {TelegramError}
@@ -1471,8 +1473,8 @@ class OpengramContext {
    * On success, the sent {@link Message} is returned.
    *
    * @see https://core.telegram.org/bots/api#sendvideonote
-   * @param {attachmentFile} videoNote Video note to send. Pass a `file_id` as String to send a video note that exists on
-   *    the Telegram servers (recommended) or upload a new video using multipart/form-data.
+   * @param {attachmentFile} videoNote Video note to send. Pass a `file_id` as String to send a video note that exists
+   *   on the Telegram servers (recommended) or upload a new video using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files).
    *    Sending video notes by a URL is currently unsupported
    * @param {object|Extra} [extra] Other parameters
@@ -1601,7 +1603,8 @@ class OpengramContext {
    * the bot may use {@link replyWithChatAction} with `action = upload_photo`. The user will see a “sending photo”
    * status for the bot.
    *
-   * We only recommend using this method when a response from the bot will take a **noticeable** amount of time to arrive.
+   * We only recommend using this method when a response from the bot will take a **noticeable** amount of time to
+   * arrive.
    *
    * @see https://core.telegram.org/bots/api#sendchataction
    * @param {Action} action Type of action to broadcast. Choose one, depending on what the user is about to receive:
@@ -1707,9 +1710,9 @@ class OpengramContext {
   }
 
   /**
-   * Use this method to delete a group sticker set from current supergroup. The bot must be an administrator in the chat for
-   * this to work and must have the appropriate administrator rights. Use the field `can_set_sticker_set` optionally
-   * returned in {@link getChat} requests to check if the bot can use this method.
+   * Use this method to delete a group sticker set from current supergroup. The bot must be an administrator in the
+   * chat for this to work and must have the appropriate administrator rights. Use the field `can_set_sticker_set`
+   * optionally returned in {@link getChat} requests to check if the bot can use this method.
    *
    * Returns `True` on success.
    *
@@ -1848,14 +1851,13 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#setstickersetthumb
    * @param {string} name Sticker set name
    * @param {number} userId User identifier of the sticker set owner
-   * @param {attachmentFile} [thumb] A **PNG** image with the thumbnail, must be up to 128 kilobytes in size and have width and height
-   *    exactly 100px, or a **TGS** animation with the thumbnail up to 32 kilobytes in size;
-   *    see https://core.telegram.org/stickers#animated-sticker-requirements for animated sticker technical requirements,
-   *    or a **WEBM** video with the thumbnail up to 32 kilobytes in size;
-   *    see https://core.telegram.org/stickers#video-sticker-requirements for video sticker technical
-   *    requirements. Pass a file_id as a String to send a file that already exists on the Telegram servers,
-   *    pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one
-   *    using multipart/form-data.
+   * @param {attachmentFile} [thumb] A **PNG** image with the thumbnail, must be up to 128 kilobytes in size and have
+   *   width and height exactly 100px, or a **TGS** animation with the thumbnail up to 32 kilobytes in size; see
+   *   https://core.telegram.org/stickers#animated-sticker-requirements for animated sticker technical requirements, or
+   *   a **WEBM** video with the thumbnail up to 32 kilobytes in size; see
+   *   https://core.telegram.org/stickers#video-sticker-requirements for video sticker technical requirements. Pass a
+   *   file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for
+   *   Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files).
    *    Animated sticker set thumbnails can't be uploaded via HTTP URL.
    * @throws {TelegramError}
@@ -2078,9 +2080,9 @@ class OpengramContext {
   }
 
   /**
-   * Use this method to copy messages of any kind from current chat. Service messages and invoice messages can't be copied.
-   * The method is analogous to the method {@link forwardMessage}, but the copied message doesn't have a link to the
-   * original message.
+   * Use this method to copy messages of any kind from current chat. Service messages and invoice messages can't be
+   * copied. The method is analogous to the method {@link forwardMessage}, but the copied message doesn't have a link
+   * to the original message.
    *
    * Returns the {@link MessageId} of the sent message on success.
    *
