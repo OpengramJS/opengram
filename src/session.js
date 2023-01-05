@@ -9,10 +9,10 @@ function getSessionKey (ctx) {
 
 /**
  * @typedef {object} SessionOptions
- * @property {object} [options] Options object
- * @property {Function} [options.getSessionKey] Function for generating session key.
- * @property {string} [options.property] Sets session property name in context
- * @property {number} [options.ttl] Time to live
+ * @property {Function} [getSessionKey] Function for generating session key.
+ * @property {string} [property] Sets session property name in context
+ * @property {number} [ttl] Time to live
+ * @property {object} [store] Store
  */
 
 class Session {
