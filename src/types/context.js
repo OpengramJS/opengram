@@ -18,6 +18,7 @@
  * @property {number} [reply_to_message_id] If the message is a reply, ID of the original message
  * @property {boolean} [allow_sending_without_reply] Pass `True`, if the message should be sent even if the specified
  *    replied-to message is not found
+ * @property {number} [message_thread_id] Unique identifier of a message thread to which the message belongs; for supergroups only
  * @property {object} [reply_markup] Additional interface options. A object for an inline keyboard,
  *    custom reply keyboard, instructions to remove reply keyboard or to force a reply from the user.
  */
@@ -29,6 +30,7 @@
  * @property {boolean} [disable_notification] Sends the message
  *    [silently](https://telegram.org/blog/channels-2-0#silent-messages). Users will receive
  *    a notification with no sound.
+ * @property {number} [message_thread_id] Unique identifier of a message thread to which the message belongs; for supergroups only
  * @property {boolean} [protect_content] Protects the contents of the forwarded message from forwarding and saving
  */
 
@@ -44,6 +46,7 @@
  * @property {boolean} [disable_notification] Sends the message
  *    [silently](https://telegram.org/blog/channels-2-0#silent-messages). Users will receive
  *    a notification with no sound.
+ * @property {number} [message_thread_id] Unique identifier of a message thread to which the message belongs; for supergroups only
  * @property {boolean} [protect_content] Protects the contents of the forwarded message from forwarding and saving
  */
 
