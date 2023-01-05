@@ -263,7 +263,7 @@ class Composer {
    * > Note how `ctx.match` will contain the result of the regular expression.
    * > So `ctx.match[1]` refers to the part of the regexp that was matched by `([0-9]+)`,
    * > i.e. the text that comes after "button:".
-   * > ```
+   * > ```js
    * > bot.action(/button:([0-9]+)/, ctx => ctx.reply(`You choose button with number ${ctx.match[1]} in payload`))
    * > const keyboard = Markup.inlineKeyboard([
    * >  Markup.callbackButton('Button 1', 'button:1'),
@@ -1322,7 +1322,7 @@ class Composer {
    * > Note how `ctx.match` will contain the result of the regular expression.
    * > So `ctx.match[1]` refers to the part of the regexp that was matched by `([0-9]+)`,
    * > i.e. the text that comes after "button:".
-   * > ```
+   * > ```js
    * > const mw = Composer.action(/button:([0-9]+)/, ctx => ctx.reply(`You choose button with number ${ctx.match[1]} in payload`))
    * > const keyboard = Markup.inlineKeyboard([
    * >  Markup.callbackButton('Button 1', 'button:1'),
