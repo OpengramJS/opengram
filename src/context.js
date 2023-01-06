@@ -1,4 +1,4 @@
-const { getMessageFromAnySource, getText, getEntities } = require('./core/helpers/utils')
+const { getMessageFromAnySource, getText, getEntities, getThreadId } = require('./core/helpers/utils')
 
 const UpdateTypes = [
   'callback_query',
@@ -828,7 +828,10 @@ class OpengramContext {
    */
   reply (text, extra) {
     this.assert(this.chat, 'reply')
-    return this.telegram.sendMessage(this.chat.id, text, extra)
+    return this.telegram.sendMessage(this.chat.id, text, {
+      ...extra,
+      message_thread_id: getThreadId(this)
+    })
   }
 
   /**
@@ -1322,7 +1325,10 @@ class OpengramContext {
    */
   replyWithPhoto (photo, extra) {
     this.assert(this.chat, 'replyWithPhoto')
-    return this.telegram.sendPhoto(this.chat.id, photo, extra)
+    return this.telegram.sendPhoto(this.chat.id, photo, {
+      ...extra,
+      message_thread_id: getThreadId(this)
+    })
   }
 
   /**
@@ -1341,7 +1347,10 @@ class OpengramContext {
    */
   replyWithMediaGroup (media, extra) {
     this.assert(this.chat, 'replyWithMediaGroup')
-    return this.telegram.sendMediaGroup(this.chat.id, media, extra)
+    return this.telegram.sendMediaGroup(this.chat.id, media, {
+      ...extra,
+      message_thread_id: getThreadId(this)
+    })
   }
 
   /**
@@ -1365,7 +1374,10 @@ class OpengramContext {
    */
   replyWithAudio (audio, extra) {
     this.assert(this.chat, 'replyWithAudio')
-    return this.telegram.sendAudio(this.chat.id, audio, extra)
+    return this.telegram.sendAudio(this.chat.id, audio, {
+      ...extra,
+      message_thread_id: getThreadId(this)
+    })
   }
 
   /**
@@ -1380,7 +1392,10 @@ class OpengramContext {
    */
   replyWithDice (extra) {
     this.assert(this.chat, 'replyWithDice')
-    return this.telegram.sendDice(this.chat.id, extra)
+    return this.telegram.sendDice(this.chat.id, {
+      ...extra,
+      message_thread_id: getThreadId(this)
+    })
   }
 
   /**
@@ -1400,7 +1415,10 @@ class OpengramContext {
    */
   replyWithDocument (document, extra) {
     this.assert(this.chat, 'replyWithDocument')
-    return this.telegram.sendDocument(this.chat.id, document, extra)
+    return this.telegram.sendDocument(this.chat.id, document, {
+      ...extra,
+      message_thread_id: getThreadId(this)
+    })
   }
 
   /**
@@ -1419,7 +1437,10 @@ class OpengramContext {
    */
   replyWithSticker (sticker, extra) {
     this.assert(this.chat, 'replyWithSticker')
-    return this.telegram.sendSticker(this.chat.id, sticker, extra)
+    return this.telegram.sendSticker(this.chat.id, sticker, {
+      ...extra,
+      message_thread_id: getThreadId(this)
+    })
   }
 
   /**
@@ -1441,7 +1462,10 @@ class OpengramContext {
    */
   replyWithVideo (video, extra) {
     this.assert(this.chat, 'replyWithVideo')
-    return this.telegram.sendVideo(this.chat.id, video, extra)
+    return this.telegram.sendVideo(this.chat.id, video, {
+      ...extra,
+      message_thread_id: getThreadId(this)
+    })
   }
 
   /**
@@ -1462,7 +1486,10 @@ class OpengramContext {
    */
   replyWithAnimation (animation, extra) {
     this.assert(this.chat, 'replyWithAnimation')
-    return this.telegram.sendAnimation(this.chat.id, animation, extra)
+    return this.telegram.sendAnimation(this.chat.id, animation, {
+      ...extra,
+      message_thread_id: getThreadId(this)
+    })
   }
 
   /**
@@ -1483,7 +1510,10 @@ class OpengramContext {
    */
   replyWithVideoNote (videoNote, extra) {
     this.assert(this.chat, 'replyWithVideoNote')
-    return this.telegram.sendVideoNote(this.chat.id, videoNote, extra)
+    return this.telegram.sendVideoNote(this.chat.id, videoNote, {
+      ...extra,
+      message_thread_id: getThreadId(this)
+    })
   }
 
   /**
@@ -1499,7 +1529,10 @@ class OpengramContext {
    */
   replyWithInvoice (invoice, extra) {
     this.assert(this.chat, 'replyWithInvoice')
-    return this.telegram.sendInvoice(this.chat.id, invoice, extra)
+    return this.telegram.sendInvoice(this.chat.id, invoice, {
+      ...extra,
+      message_thread_id: getThreadId(this)
+    })
   }
 
   /**
@@ -1516,7 +1549,10 @@ class OpengramContext {
    */
   replyWithGame (gameName, extra) {
     this.assert(this.chat, 'replyWithGame')
-    return this.telegram.sendGame(this.chat.id, gameName, extra)
+    return this.telegram.sendGame(this.chat.id, gameName, {
+      ...extra,
+      message_thread_id: getThreadId(this)
+    })
   }
 
   /**
@@ -1538,7 +1574,10 @@ class OpengramContext {
    */
   replyWithVoice (voice, extra) {
     this.assert(this.chat, 'replyWithVoice')
-    return this.telegram.sendVoice(this.chat.id, voice, extra)
+    return this.telegram.sendVoice(this.chat.id, voice, {
+      ...extra,
+      message_thread_id: getThreadId(this)
+    })
   }
 
   /**
@@ -1555,7 +1594,10 @@ class OpengramContext {
    */
   replyWithPoll (question, options, extra) {
     this.assert(this.chat, 'replyWithPoll')
-    return this.telegram.sendPoll(this.chat.id, question, options, extra)
+    return this.telegram.sendPoll(this.chat.id, question, options, {
+      ...extra,
+      message_thread_id: getThreadId(this)
+    })
   }
 
   /**
@@ -1572,7 +1614,10 @@ class OpengramContext {
    */
   replyWithQuiz (question, options, extra) {
     this.assert(this.chat, 'replyWithQuiz')
-    return this.telegram.sendQuiz(this.chat.id, question, options, extra)
+    return this.telegram.sendQuiz(this.chat.id, question, options, {
+      ...extra,
+      message_thread_id: getThreadId(this)
+    })
   }
 
   /**
@@ -1621,7 +1666,9 @@ class OpengramContext {
    */
   replyWithChatAction (action) {
     this.assert(this.chat, 'replyWithChatAction')
-    return this.telegram.sendChatAction(this.chat.id, action)
+    return this.telegram.sendChatAction(this.chat.id, action, {
+      message_thread_id: getThreadId(this)
+    })
   }
 
   /**
@@ -1638,7 +1685,10 @@ class OpengramContext {
    */
   replyWithLocation (latitude, longitude, extra) {
     this.assert(this.chat, 'replyWithLocation')
-    return this.telegram.sendLocation(this.chat.id, latitude, longitude, extra)
+    return this.telegram.sendLocation(this.chat.id, latitude, longitude, {
+      ...extra,
+      message_thread_id: getThreadId(this)
+    })
   }
 
   /**
@@ -1657,7 +1707,10 @@ class OpengramContext {
    */
   replyWithVenue (latitude, longitude, title, address, extra) {
     this.assert(this.chat, 'replyWithVenue')
-    return this.telegram.sendVenue(this.chat.id, latitude, longitude, title, address, extra)
+    return this.telegram.sendVenue(this.chat.id, latitude, longitude, title, address, {
+      ...extra,
+      message_thread_id: getThreadId(this)
+    })
   }
 
   /**
@@ -1674,7 +1727,10 @@ class OpengramContext {
    */
   replyWithContact (phoneNumber, firstName, extra) {
     this.assert(this.from, 'replyWithContact')
-    return this.telegram.sendContact(this.chat.id, phoneNumber, firstName, extra)
+    return this.telegram.sendContact(this.chat.id, phoneNumber, firstName, {
+      ...extra,
+      message_thread_id: getThreadId(this)
+    })
   }
 
   /**
@@ -2076,7 +2132,10 @@ class OpengramContext {
     this.assert(this.chat, 'forwardMessage')
     const message = getMessageFromAnySource(this)
     this.assert(message, 'forwardMessage')
-    return this.telegram.forwardMessage(chatId, this.chat.id, message.message_id, extra)
+    return this.telegram.forwardMessage(chatId, this.chat.id, message.message_id, {
+      ...extra,
+      message_thread_id: getThreadId(this)
+    })
   }
 
   /**

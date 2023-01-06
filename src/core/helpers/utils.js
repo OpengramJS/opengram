@@ -74,4 +74,15 @@ function getMessageFromAnySource (ctx) {
   )
 }
 
-module.exports = { getEntities, getText, getMessageFromAnySource }
+/**
+ * Returns `message_thread_id` from {@link Message} object for current update.
+ *
+ * @param {OpengramContext} ctx Update context for extracting `message_thread_id` from {@link Message} object
+ * @return {number|undefined}
+ */
+function getThreadId (ctx) {
+  const msg = getMessageFromAnySource(ctx)
+  return msg?.is_topic_message ? msg.message_thread_id : undefined
+}
+
+module.exports = { getEntities, getText, getMessageFromAnySource, getThreadId }

@@ -278,11 +278,12 @@ class Telegram extends ApiClient {
    *    `choose_sticker` for {@link sendSticker stickers},
    *    `find_location` for {@link sendLocation location data},
    *    `record_video_note` or `upload_video_note` for {@link sendVideoNote video notes}.
+   * @param {object} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
-  sendChatAction (chatId, action) {
-    return this.callApi('sendChatAction', { chat_id: chatId, action })
+  sendChatAction (chatId, action, extra) {
+    return this.callApi('sendChatAction', { chat_id: chatId, action, ...extra })
   }
 
   /**
