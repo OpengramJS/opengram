@@ -549,7 +549,7 @@ class OpengramContext {
    * Otherwise, you may use links like `t.me/your_bot?start=XXXX` that open your bot with a parameter.
    *
    * @see https://core.telegram.org/bots/api#answercallbackquery
-   * @param {string} text Text of the notification. If not specified, nothing will be shown to the user, 0-200
+   * @param {string} [text] Text of the notification. If not specified, nothing will be shown to the user, 0-200
    *   characters
    * @param {boolean} [showAlert] If True, an alert will be shown by the client instead of a notification at the top of
    *   the chat screen. Defaults to false.

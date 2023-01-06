@@ -1173,7 +1173,7 @@ class Telegram extends ApiClient {
    *
    * @see https://core.telegram.org/bots/api#answercallbackquery
    * @param {string} [callbackQueryId] Unique identifier for the query to be answered
-   * @param {string} text Text of the notification. If not specified, nothing will be shown to the user, 0-200 characters
+   * @param {string} [text] Text of the notification. If not specified, nothing will be shown to the user, 0-200 characters
    * @param {boolean} [showAlert] If True, an alert will be shown by the client instead of a notification at the top of the
    *    chat screen. Defaults to false.
    * @param {object} [extra] Other parameters
