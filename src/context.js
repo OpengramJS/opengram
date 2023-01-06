@@ -1211,7 +1211,6 @@ class OpengramContext {
    * Returns `Int` on success.
    *
    * @see https://core.telegram.org/bots/api#getchatmembercount
-   * @deprecated Use {@link getChatMemberCount}
    * @throws {TelegramError}
    * @return {Promise<number>}
    */
