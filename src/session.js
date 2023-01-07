@@ -43,9 +43,9 @@ class Session {
   /**
    * TTL getter
    *
-   * Returns current ttl in **seconds** or [Nullish](https://developer.mozilla.org/en-US/docs/Glossary/Nullish) value
+   * Returns current ttl in **seconds** or `undefined` value
    *
-   * @return {number|null|undefined}
+   * @return {number|undefined}
    */
   get ttl () {
     return this[ttl]
