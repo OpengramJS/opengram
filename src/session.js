@@ -1,3 +1,4 @@
+const { showWarning } = require('./core/helpers/utils')
 const debug = require('debug')('opengram:session')
 
 const storeSym = Symbol('store')
@@ -5,6 +6,8 @@ const ttlSym = Symbol('ttl')
 const propSym = Symbol('property')
 const keyGeneratorFnSym = Symbol('keyGeneratorFn')
 const storeSetMethodSym = Symbol('storeSetMethod')
+
+const WARN_AFTER_SAVE_TEXT = 'A write/read attempt on the session after it was saved detected! Perhaps the chain of promises has broken.'
 
 function getSessionKey (ctx) {
   return ctx.from && ctx.chat && `${ctx.from.id}:${ctx.chat.id}`
@@ -72,21 +75,27 @@ class Session {
    */
   middleware () {
     const method = this[storeSetMethodSym]
-    const prop = this[propSym]
+    const propName = this[propSym]
     const getSessionKey = this[keyGeneratorFnSym]
 
     return async (ctx, next) => {
       const key = getSessionKey(ctx)
 
+      let afterSave = false
+
       const wrapSession = (targetSessionObject) => (
         new Proxy({ ...targetSessionObject }, {
           set: (target, prop, value) => {
+            if (afterSave) showWarning(WARN_AFTER_SAVE_TEXT + ` [${propName}.${prop}]`)
             target[prop] = value
-
             return true
           },
-
+          get (target, prop) {
+            if (afterSave) showWarning(WARN_AFTER_SAVE_TEXT + ` [${propName}.${prop}]`)
+            return target[prop]
+          },
           deleteProperty: (target, prop) => {
+            if (afterSave) showWarning(WARN_AFTER_SAVE_TEXT + ` [${propName}.${prop}]`)
             delete target[prop]
             return true
           }
@@ -115,7 +124,7 @@ class Session {
         session = {}
       }
 
-      Object.defineProperty(ctx, prop, {
+      Object.defineProperty(ctx, propName, {
         get: () => session,
         set: (newSession) => {
           // Wrap session to Proxy
@@ -126,9 +135,11 @@ class Session {
       const result = await next(ctx)
 
       debug('save session', key, session)
+      const newSession = { ...session } // Bypass proxy
+      afterSave = true
       await Promise.resolve(
         this.store[method](key, {
-          session,
+          session: newSession,
           expires: this.ttl ? now + this.ttl : null
         })
       )
