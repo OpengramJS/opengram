@@ -85,4 +85,14 @@ function getThreadId (ctx) {
   return msg?.is_topic_message ? msg.message_thread_id : undefined
 }
 
-module.exports = { getEntities, getText, getMessageFromAnySource, getThreadId }
+/**
+ * Prints warning messages
+ *
+ * @param {string} text Text of warning
+ * @return {void}
+ */
+function showWarning (text) {
+  process.emitWarning(text)
+}
+
+module.exports = { getEntities, getText, getMessageFromAnySource, getThreadId, showWarning }
