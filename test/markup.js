@@ -28,8 +28,13 @@ test('should generate selective hide markup', t => {
 })
 
 test('should generate selective one time keyboard markup', t => {
-  const markup = { ...Markup.keyboard().selective().oneTime() }
+  const markup = { ...Markup.keyboard([]).selective().oneTime() }
   t.deepEqual(markup, { selective: true, one_time_keyboard: true })
+})
+
+test('should generate persistent keyboard markup', t => {
+  const markup = { ...Markup.keyboard([]).persistent() }
+  t.deepEqual(markup, { is_persistent: true })
 })
 
 test('should generate keyboard markup', t => {

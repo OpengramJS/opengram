@@ -704,6 +704,8 @@ class Telegram extends ApiClient {
 
   /**
    * Use this method to get information about a member of a chat.
+   * > Note that the method getChatMember is only guaranteed to work if the bot is an administrator in the chat.
+   * (for hidden members after Bots API 6.4)
    *
    * Returns a {@link ChatMember} object on success.
    *
@@ -1547,6 +1549,100 @@ class Telegram extends ApiClient {
       chat_id: chatId,
       message_thread_id: messageThreadId,
       ...extra
+    })
+  }
+
+  /**
+   * Use this method to edit the name of the 'General' topic in a forum supergroup chat. The bot must be an
+   * administrator in the chat for this to work and must have `can_manage_topics` administrator rights.
+   *
+   * Returns `True` on success.
+   *
+   * @see https://core.telegram.org/bots/api#editgeneralforumtopic
+   * @param {number|string} chatId Unique identifier for the target chat or username of the target supergroup
+   *   (in the format `@supergroupusername`)
+   * @param {string} name New topic name, 1-128 characters
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
+  editGeneralForumTopic (chatId, name) {
+    return this.callApi('editGeneralForumTopic', {
+      chat_id: chatId,
+      name
+    })
+  }
+
+  /**
+   * Use this method to close an open 'General' topic in a forum supergroup chat. The bot must be an administrator in
+   * the chat for this to work and must have the `can_manage_topics` administrator rights.
+   *
+   * Returns `True` on success.
+   *
+   * @see https://core.telegram.org/bots/api#closegeneralforumtopic
+   * @param {number|string} chatId Unique identifier for the target chat or username of the target supergroup
+   *   (in the format `@supergroupusername`)
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
+  closeGeneralForumTopic (chatId) {
+    return this.callApi('closeGeneralForumTopic', {
+      chat_id: chatId
+    })
+  }
+
+  /**
+   * Use this method to reopen a closed 'General' topic in a forum supergroup chat. The bot must be an administrator
+   * in the chat for this to work and must have the `can_manage_topics` administrator rights.
+   * The topic will be automatically unhidden if it was hidden.
+   *
+   * Returns `True` on success.
+   *
+   * @see https://core.telegram.org/bots/api#reopengeneralforumtopic
+   * @param {number|string} chatId Unique identifier for the target chat or username of the target supergroup
+   *   (in the format `@supergroupusername`)
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
+  reopenGeneralForumTopic (chatId) {
+    return this.callApi('reopenGeneralForumTopic', {
+      chat_id: chatId
+    })
+  }
+
+  /**
+   * Use this method to hide the 'General' topic in a forum supergroup chat. The bot must be an administrator in the
+   * chat for this to work and must have the `can_manage_topics` administrator rights.
+   * The topic will be automatically closed if it was open.
+   *
+   * Returns `True` on success.
+   *
+   * @see https://core.telegram.org/bots/api#hidegeneralforumtopic
+   * @param {number|string} chatId Unique identifier for the target chat or username of the target supergroup
+   *   (in the format `@supergroupusername`)
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
+  hideGeneralForumTopic (chatId) {
+    return this.callApi('hideGeneralForumTopic', {
+      chat_id: chatId
+    })
+  }
+
+  /**
+   * Use this method to unhide the 'General' topic in a forum supergroup chat. The bot must be an administrator
+   * in the chat for this to work and must have the `can_manage_topics` administrator rights.
+   *
+   * Returns `True` on success.
+   *
+   * @see https://core.telegram.org/bots/api#unhidegeneralforumtopic
+   * @param {number|string} chatId Unique identifier for the target chat or username of the target supergroup
+   *   (in the format `@supergroupusername`)
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
+  unhideGeneralForumTopic (chatId) {
+    return this.callApi('unhideGeneralForumTopic', {
+      chat_id: chatId
     })
   }
 

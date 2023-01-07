@@ -1177,7 +1177,8 @@ class OpengramContext {
 
   /**
    * Use this method to get information about a member of chat from current update.
-   *
+   * > Note that the method getChatMember is only guaranteed to work if the bot is an administrator in the chat.
+   * (for hidden members after Bots API 6.4)
    * Returns a {@link ChatMember} object on success.
    *
    * @see https://core.telegram.org/bots/api#getchatmember
@@ -1805,8 +1806,8 @@ class OpengramContext {
    * Returns `True` on success.
    *
    * @see https://core.telegram.org/bots/api#editforumtopic
-   * @param {string} name Topic name, 1-128 characters
-   * @param {string} iconCustomEmojiId New unique identifier of the custom emoji shown as the topic icon.
+   * @param {string} [name] Topic name, 1-128 characters
+   * @param {string} [iconCustomEmojiId] New unique identifier of the custom emoji shown as the topic icon.
    *   Use {@link getForumTopicIconStickers} to get all allowed custom emoji identifiers.
    * @throws {TelegramError}
    * @return {Promise<boolean>}
@@ -1833,6 +1834,84 @@ class OpengramContext {
     this.assert(this.chat, 'closeForumTopic')
     this.assert(this.message?.message_thread_id, 'closeForumTopic')
     return this.telegram.closeForumTopic(this.chat.id, this.message.message_thread_id)
+  }
+
+  /**
+   * Use this method to edit the name of the 'General' topic in a forum supergroup chat. The bot must be an
+   * administrator in the chat for this to work and must have `can_manage_topics` administrator rights.
+   *
+   * Returns `True` on success.
+   *
+   * @see https://core.telegram.org/bots/api#editgeneralforumtopic
+   * @param {string} name New topic name, 1-128 characters
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
+  editGeneralForumTopic (name) {
+    this.assert(this.chat, 'editGeneralForumTopic')
+    return this.telegram.editGeneralForumTopic(this.chat.id, name)
+  }
+
+  /**
+   * Use this method to close an open 'General' topic in a forum supergroup chat. The bot must be an administrator in
+   * the chat for this to work and must have the `can_manage_topics` administrator rights.
+   *
+   * Returns `True` on success.
+   *
+   * @see https://core.telegram.org/bots/api#closegeneralforumtopic
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
+  closeGeneralForumTopic () {
+    this.assert(this.chat, 'closeGeneralForumTopic')
+    return this.telegram.closeGeneralForumTopic(this.chat.id)
+  }
+
+  /**
+   * Use this method to reopen a closed 'General' topic in a forum supergroup chat. The bot must be an administrator
+   * in the chat for this to work and must have the `can_manage_topics` administrator rights.
+   * The topic will be automatically unhidden if it was hidden.
+   *
+   * Returns `True` on success.
+   *
+   * @see https://core.telegram.org/bots/api#reopengeneralforumtopic
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
+  reopenGeneralForumTopic () {
+    this.assert(this.chat, 'reopenGeneralForumTopic')
+    return this.telegram.reopenGeneralForumTopic(this.chat.id)
+  }
+
+  /**
+   * Use this method to hide the 'General' topic in a forum supergroup chat. The bot must be an administrator in the
+   * chat for this to work and must have the `can_manage_topics` administrator rights.
+   * The topic will be automatically closed if it was open.
+   *
+   * Returns `True` on success.
+   *
+   * @see https://core.telegram.org/bots/api#hidegeneralforumtopic
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
+  hideGeneralForumTopic () {
+    this.assert(this.chat, 'hideGeneralForumTopic')
+    return this.telegram.hideGeneralForumTopic(this.chat.id)
+  }
+
+  /**
+   * Use this method to unhide the 'General' topic in a forum supergroup chat. The bot must be an administrator
+   * in the chat for this to work and must have the `can_manage_topics` administrator rights.
+   *
+   * Returns `True` on success.
+   *
+   * @see https://core.telegram.org/bots/api#unhidegeneralforumtopic
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
+  unhideGeneralForumTopic () {
+    this.assert(this.chat, 'unhideGeneralForumTopic')
+    return this.telegram.unhideGeneralForumTopic(this.chat.id)
   }
 
   /**

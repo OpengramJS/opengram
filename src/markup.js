@@ -67,6 +67,22 @@ class Markup {
   }
 
   /**
+   * Requests clients to always show the keyboard when the regular keyboard is
+   * hidden.
+   *
+   * Defaults to false, in which case the custom keyboard can be
+   * hidden and opened with a keyboard icon.
+   *
+   * @see https://core.telegram.org/bots/api#replykeyboardremove
+   * @param {boolean} [value=true] Value
+   * @return {Markup}
+   */
+  persistent (value = true) {
+    this.is_persistent = value
+    return this
+  }
+
+  /**
    * Returns a ready object for extra parameters with given additional options, equals result to `Extra.markup(markupObj)`
    *
    * ```js

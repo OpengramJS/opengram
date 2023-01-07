@@ -142,6 +142,11 @@
   * @property {number} [message_auto_delete_time] *Optional*. The time after which all messages sent to the chat will be
   *   automatically deleted; in seconds. Returned only in
   *   [getChat](https://core.telegram.org/bots/api/#getchat).
+  * @property {boolean} [has_aggressive_anti_spam_enabled] *Optional*. *True*, if aggressive anti-spam checks are
+ *     enabled in the supergroup. The field is only available to chat administrators.
+ *     Returned only in [getChat](https://core.telegram.org/bots/api/#getchat).
+  * @property {boolean} [has_hidden_members] *Optional*. *True*, if non-administrators can only get the list of bots
+  *    and administrators in the chat. Returned only in [getChat](https://core.telegram.org/bots/api/#getchat).
   * @property {boolean} [has_protected_content] *Optional*. *True*, if messages from the chat can't be forwarded to other chats.
   *   Returned only in [getChat](https://core.telegram.org/bots/api/#getchat).
   * @property {string} [sticker_set_name] *Optional*. For supergroups, name of group sticker set. Returned only in
@@ -220,6 +225,7 @@
   * @property {string} [caption] *Optional*. Caption for the animation, audio, document, photo, video or voice
   * @property {MessageEntity[]} [caption_entities] *Optional*. For messages with a caption, special entities like usernames, URLs,
   *   bot commands, etc. that appear in the caption
+  * @property {boolean} [has_media_spoiler] *Optional*. `True`, if the message media is covered by a spoiler animation
   * @property {Contact} [contact] *Optional*. Message is a shared contact, information about the contact
   * @property {Dice} [dice] *Optional*. Message is a dice with random value
   * @property {Game} [game] *Optional*. Message is a game, information about the game. [More about games
@@ -272,6 +278,11 @@
   * @property {ForumTopicCreated} [forum_topic_created] *Optional*. Service message: forum topic created
   * @property {ForumTopicClosed} [forum_topic_closed] *Optional*. Service message: forum topic closed
   * @property {ForumTopicReopened} [forum_topic_reopened] *Optional*. Service message: forum topic reopened
+  * @property {WriteAccessAllowed} [write_access_allowed] *Optional*. Service message: the user allowed the bot added to the attachment
+  *   menu to write messages
+  * @property {GeneralForumTopicUnhidden} [general_forum_topic_unhidden] *Optional*. Service message: the 'General' forum topic unhidden
+  * @property {GeneralForumTopicHidden} [general_forum_topic_hidden] *Optional*. Service message: the 'General' forum topic hidden
+  * @property {ForumTopicEdited} [forum_topic_edited] *Optional*. Service message: forum topic edited
   * @property {VideoChatScheduled} [video_chat_scheduled] *Optional*. Service message: video chat scheduled
   * @property {VideoChatStarted} [video_chat_started] *Optional*. Service message: video chat started
   * @property {VideoChatEnded} [video_chat_ended] *Optional*. Service message: video chat ended
@@ -604,12 +615,46 @@
 */
 
 /**
+ * This object represents a service message about an edited forum topic.
+ *
+ * @typedef {object} ForumTopicEdited
+ * @property {string} [name] *Optional*. New name of the topic, if it was edited
+ * @property {string} [icon_custom_emoji_id] *Optional*. New identifier of the custom emoji shown as the topic icon, if it
+ *   was edited; an empty string if the icon was removed
+ * @see https://core.telegram.org/bots/api/#forumtopicedited
+ */
+
+/**
   * This object represents a service message about a forum topic reopened in the chat. Currently holds
   * no information.
   *
   * @typedef {*} ForumTopicReopened
   * @see https://core.telegram.org/bots/api/#forumtopicreopened
 */
+
+/**
+ * This object represents a service message about General forum topic hidden in the chat. Currently
+ * holds no information.
+ *
+ * @typedef {*} GeneralForumTopicHidden
+ * @see https://core.telegram.org/bots/api/#generalforumtopichidden
+ */
+
+/**
+ * This object represents a service message about General forum topic unhidden in the chat. Currently
+ * holds no information.
+ *
+ * @typedef {*} GeneralForumTopicUnhidden
+ * @see https://core.telegram.org/bots/api/#generalforumtopicunhidden
+ */
+
+/**
+ * This object represents a service message about a user allowing a bot added to the attachment menu to
+ * write messages. Currently holds no information.
+ *
+ * @typedef {*} WriteAccessAllowed
+ * @see https://core.telegram.org/bots/api/#writeaccessallowed
+ */
 
 /**
   * This object represents a service message about a video chat scheduled in the chat.
@@ -700,6 +745,8 @@
   *   (e.g., make the keyboard smaller if there are just two rows of buttons).
   *   Defaults to *false*, in which case the custom keyboard is always of the same
   *   height as the app's standard keyboard.
+  * @property {boolean} [is_persistent] *Optional*. Requests clients to always show the keyboard when the regular
+  *   keyboard is hidden. Defaults to *false*, in which case the custom keyboard can be hidden and opened with a keyboard icon.
   * @property {boolean} [one_time_keyboard] *Optional*. Requests clients to hide the keyboard as soon as it's been used. The
   *   keyboard will still be available, but clients will automatically display the
   *   usual letter-keyboard in the chat - the user can press a special button in the
@@ -1387,6 +1434,7 @@
   *   details.
   * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption, which can be
   *   specified instead of *parse\_mode*
+  * @property {boolean} [has_spoiler] *Optional*. Pass `True` if the photo needs to be covered with a spoiler animation
   * @see https://core.telegram.org/bots/api/#inputmediaphoto
 */
 
@@ -1419,6 +1467,7 @@
   * @property {number} [height] *Optional*. Video height
   * @property {number} [duration] *Optional*. Video duration in seconds
   * @property {boolean} [supports_streaming] *Optional*. Pass *True* if the uploaded video is suitable for streaming
+  * @property {boolean} [has_spoiler] *Optional*. Pass `True` if the video needs to be covered with a spoiler animation
   * @see https://core.telegram.org/bots/api/#inputmediavideo
 */
 
@@ -1450,6 +1499,7 @@
   * @property {number} [width] *Optional*. Animation width
   * @property {number} [height] *Optional*. Animation height
   * @property {number} [duration] *Optional*. Animation duration in seconds
+  * @property {boolean} [has_spoiler] *Optional*. Pass `True` if the animation needs to be covered with a spoiler animation
   * @see https://core.telegram.org/bots/api/#inputmediaanimation
 */
 
