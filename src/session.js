@@ -1,7 +1,10 @@
 const debug = require('debug')('opengram:session')
 
-const store = Symbol('store')
-const ttl = Symbol('ttl')
+const storeSym = Symbol('store')
+const ttlSym = Symbol('ttl')
+const propSym = Symbol('property')
+const keyGeneratorFnSym = Symbol('keyGeneratorFn')
+const storeSetMethodSym = Symbol('storeSetMethod')
 
 function getSessionKey (ctx) {
   return ctx.from && ctx.chat && `${ctx.from.id}:${ctx.chat.id}`
@@ -22,11 +25,11 @@ class Session {
    * @param {SessionOptions} [options] Options
    */
   constructor (options = {}) {
-    this[store] = options.store ?? new Map()
-    this._property = options.property ?? 'session'
-    this._getSessionKey = options.getSessionKey ?? getSessionKey
-    this[ttl] = options.ttl && options.ttl * 1000
-    this.setMethodName = typeof this[store].put === 'function' ? 'put' : 'set'
+    this[storeSym] = options.store ?? new Map()
+    this[propSym] = options.property ?? 'session'
+    this[keyGeneratorFnSym] = options.getSessionKey ?? getSessionKey
+    this[ttlSym] = options.ttl && options.ttl * 1000
+    this[storeSetMethodSym] = typeof this[storeSym].put === 'function' ? 'put' : 'set'
   }
 
   /**
@@ -37,7 +40,7 @@ class Session {
    * @return {object}
    */
   get store () {
-    return this[store]
+    return this[storeSym]
   }
 
   /**
@@ -48,7 +51,7 @@ class Session {
    * @return {number|undefined}
    */
   get ttl () {
-    return this[ttl]
+    return this[ttlSym]
   }
 
   /**
@@ -59,7 +62,7 @@ class Session {
    * @return {void}
    */
   set ttl (seconds) {
-    this[ttl] = seconds
+    this[ttlSym] = seconds
   }
 
   /**
@@ -68,22 +71,22 @@ class Session {
    * @return {MiddlewareFn}
    */
   middleware () {
-    return async (ctx, next) => {
-      const key = this._getSessionKey(ctx)
+    const method = this[storeSetMethodSym]
+    const prop = this[propSym]
+    const getSessionKey = this[keyGeneratorFnSym]
 
-      let sessionChanged = false
+    return async (ctx, next) => {
+      const key = getSessionKey(ctx)
 
       const wrapSession = (targetSessionObject) => (
         new Proxy({ ...targetSessionObject }, {
           set: (target, prop, value) => {
-            sessionChanged = true
             target[prop] = value
 
             return true
           },
 
           deleteProperty: (target, prop) => {
-            sessionChanged = true
             delete target[prop]
             return true
           }
@@ -96,7 +99,10 @@ class Session {
 
       const now = Date.now()
 
-      const state = await Promise.resolve(this.store.get(key)) || { session: {} }
+      const state = await Promise.resolve(
+        this.store.get(key)
+      ) || { session: {} }
+
       let { session, expires } = state
 
       // Wrap session to Proxy
@@ -109,26 +115,24 @@ class Session {
         session = {}
       }
 
-      Object.defineProperty(ctx, this._property, {
+      Object.defineProperty(ctx, prop, {
         get: () => session,
         set: (newSession) => {
           // Wrap session to Proxy
           session = wrapSession(newSession)
-          sessionChanged = true
         }
       })
 
       const result = await next(ctx)
 
       debug('save session', key, session)
-      if (sessionChanged) {
-        await Promise.resolve(
-          this[store][this.setMethodName](key, {
-            session,
-            expires: this.ttl ? now + this.ttl : null
-          })
-        )
-      }
+      await Promise.resolve(
+        this.store[method](key, {
+          session,
+          expires: this.ttl ? now + this.ttl : null
+        })
+      )
+      debug('session saved', key, session)
 
       return result
     }
@@ -144,11 +148,11 @@ class Session {
  * ```js
  * bot.use(
  *   session({
- *     property: 'myprop'
+ *     property: 'propName'
  *   })
  * )
  * ```
- * For this example, session available in `ctx.myprop`
+ * For this example, session available in `ctx.propName`
  *
  * ### Custom session key
  * By default, session key in storage generated with this function:
