@@ -2211,8 +2211,7 @@ class OpengramContext {
     const message = getMessageFromAnySource(this)
     this.assert(message, 'forwardMessage')
     return this.telegram.forwardMessage(chatId, this.chat.id, message.message_id, {
-      ...extra,
-      message_thread_id: getThreadId(this)
+      ...extra
     })
   }
 
