@@ -1441,6 +1441,46 @@ class Composer {
     return Composer.mount('inline_query', Composer.match(normalizeTriggers(triggers), ...fns))
   }
 
+  /**
+   * Generates and returns a middleware that runs the given middleware(s) only for when array of given id's contains
+   * user id or predicate function returns true for given context
+   *
+   * Access-control list - allows you to create guards for middlewares
+   *
+   * Usage example:
+   * ```js
+   * bot.use(
+   *   Composer.admin(
+   *     1234567890,
+   *     Composer.reply('Some middleware for admin of bot - 1234567890')
+   *   )
+   * )
+   *
+   * bot.use(
+   *   Composer.admin(
+   *     [1234567890, 09876543],
+   *     Composer.reply('Some middleware for admins of bot - 1234567890 and 09876543')
+   *   )
+   * )
+   *
+   *
+   * function checkIsAdmin (ctx) {
+   *   // ...
+   *   return true
+   * }
+   *
+   * bot.use(
+   *   Composer.admin(
+   *     ctx => checkIsAdmin(ctx),
+   *     Composer.reply('Some middleware for admins of bot')
+   *   )
+   * )
+   * ```
+   *
+   * @param {PredicateFn|number|number[]} userId The predicate to check or user id / array of user id's
+   * @param {MiddlewareFn} fns The middleware(s) to register
+   * @return {MiddlewareFn}
+   */
   static acl (userId, ...fns) {
     if (typeof userId === 'function') {
       return Composer.optional(userId, ...fns)
