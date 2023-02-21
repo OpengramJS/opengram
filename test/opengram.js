@@ -383,6 +383,32 @@ test('should store session state with custom store', t => {
     .then(() => bot.handleUpdate({ message: { ...BaseTextMessage, from: { id: 42 }, chat: { id: 42 }, text: 'calc' } }))
 })
 
+test('should throw error on read / write session when key not defined', async t => {
+  await t.throwsAsync(
+    new Promise((resolve, reject) => {
+      const bot = createBot()
+      bot.use(session())
+      bot.on('inline_query', ctx => {
+        try {
+          ctx.session.abc = 1
+        } catch (err) {
+          reject(err)
+        }
+      })
+
+      bot.handleUpdate({
+        update_id: 10000,
+        inline_query: {
+          id: 134567890097,
+          from: { last_name: 'a', type: 'private', id: 1111111, first_name: 'b', username: 'roxy migurdia' },
+          query: 'Code Geass characters',
+          offset: ''
+        }
+      })
+    })
+  )
+})
+
 test('should work with context extensions', async t => {
   await t.notThrowsAsync(
     new Promise(resolve => {
