@@ -1553,6 +1553,48 @@ class Composer {
     return Composer.memberStatus('creator', ...fns)
   }
 
+  /**
+   * Registers some middleware for certain chat types only.
+   *
+   * For example, you can use this method to only receive
+   * updates from private chats. The four chat types are `channel`, `supergroup`, `group`, and `private`.
+   * This is especially useful when combined with other filtering logic.
+   *
+   * For example, this is how can you respond to /start commands only from private chats:
+   *
+   * Usage example:
+   * ```js
+   * const privateZone = new Composer()
+   * privateZone.command("start", ctx => { ... })
+   *
+   * bot.use(
+   *   Composer.chatType('private', privateZone)
+   * )
+   *
+   * bot.use(
+   *   Composer.chatType('supergroup', Composer.reply('I work only in supergroups chats'))
+   * )
+   *
+   * bot.use(
+   *   Composer.chatType(['supergroup', 'group'], Composer.reply('I work only in supergroup + group chats'))
+   * )
+   * ```
+   *
+   * ```js
+   * const onlyGroup = new Composer()
+   *
+   * onlyGroup.hears(...)
+   * onlyGroup.command(...)
+   * // ...
+   * bot.use(
+   *   Composer.chatType('group', onlyGroup)
+   * )
+   * ```
+   *
+   * @param {ChatType[]|ChatType} type Chat type or array of shat types
+   * @param {MiddlewareFn} fns The middleware(s) to register
+   * @return {MiddlewareFn}
+   */
   static chatType (type, ...fns) {
     const types = Array.isArray(type) ? type : [type]
     return Composer.optional((ctx) => {
