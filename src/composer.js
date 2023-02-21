@@ -1514,6 +1514,22 @@ class Composer {
     , ...fns)
   }
 
+  /**
+   * Generates and returns a middleware that runs the given middleware(s) only for updates if member
+   * status = `creator` or 'administrator'
+   *
+   * Usage example:
+   * ```js
+   * bot.use(
+   *   Composer.admin(
+   *     Composer.reply('I work only when called by chat creator and administrator ')
+   *   )
+   * )
+   * ```
+   *
+   * @param {MiddlewareFn} fns The middleware(s) to register
+   * @return {MiddlewareFn}
+   */
   static admin (...fns) {
     return Composer.memberStatus(['administrator', 'creator'], ...fns)
   }
