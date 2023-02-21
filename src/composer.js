@@ -1489,6 +1489,24 @@ class Composer {
     return Composer.optional((ctx) => !ctx.from || allowed.includes(ctx.from.id), ...fns)
   }
 
+  /**
+   * Generates and returns a middleware that runs the given middleware(s) only for updates user has one of given
+   * member statuses of chat
+   *
+   * Usage example:
+   * ```js
+   * bot.use(
+   *   Composer.memberStatus(
+   *     ["creator", "administrator"],
+   *     Composer.reply('I work only for chat creator and administrator ')
+   *   )
+   * )
+   * ```
+   *
+   * @param {ChatMemberStatus[]|ChatMemberStatus} status Member status of array of statuses
+   * @param {MiddlewareFn} fns The middleware(s) to register
+   * @return {MiddlewareFn}
+   */
   static memberStatus (status, ...fns) {
     const statuses = Array.isArray(status) ? status : [status]
     return Composer.optional((ctx) => ctx.message && ctx.getChatMember(ctx.message.from.id)
