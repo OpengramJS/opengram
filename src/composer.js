@@ -1,4 +1,4 @@
-const { OpengramContext: Context, MessageSubTypesMapping } = require('./context')
+const { OpengramContext: Context } = require('./context')
 const { getEntities, getText } = require('./core/helpers/utils')
 
 /**
@@ -982,7 +982,7 @@ class Composer {
    * @return {MiddlewareFn}
    */
   static mount (updateType, ...fns) {
-    const updateTypes = remapMessageSubtypes(normalizeTextArguments(updateType))
+    const updateTypes = normalizeTextArguments(updateType)
     const predicate = (ctx) => {
       return updateTypes.includes(ctx.updateType) || updateTypes
         .some(
@@ -1782,11 +1782,6 @@ function normalizeTextArguments (argument, prefix) {
   return args
     .filter(Boolean)
     .map((arg) => prefix && typeof arg === 'string' && !arg.startsWith(prefix) ? `${prefix}${arg}` : arg)
-}
-
-function remapMessageSubtypes (subTypes) {
-  return subTypes
-    .map((type) => MessageSubTypesMapping[type] || type)
 }
 
 module.exports = Composer

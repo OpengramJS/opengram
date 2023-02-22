@@ -50,25 +50,18 @@ const MessageSubTypes = [
   'poll',
   'forward_date',
   'message_auto_delete_timer_changed',
-  'voice_chat_started',
-  'voice_chat_ended',
-  'voice_chat_participants_invited',
-  'voice_chat_scheduled',
+  'video_chat_started',
+  'video_chat_ended',
+  'video_chat_participants_invited',
+  'video_chat_scheduled',
   'web_app_data',
   'forum_topic_created',
   'forum_topic_closed',
   'forum_topic_reopened'
 ]
 
-const MessageSubTypesMappingForChannelMode = {
-  forward_date: 'forward'
-}
-
 const MessageSubTypesMapping = {
-  video_chat_scheduled: 'voice_chat_scheduled',
-  video_chat_started: 'voice_chat_started',
-  video_chat_ended: 'voice_chat_ended',
-  video_chat_participants_invited: 'voice_chat_participants_invited'
+  forward_date: 'forward'
 }
 
 /**
@@ -122,7 +115,7 @@ class OpengramContext {
     if (this.updateType === 'message' || (this.options.channelMode && this.updateType === 'channel_post')) {
       this.updateSubTypes = MessageSubTypes
         .filter((key) => key in this.update[this.updateType])
-        .map((type) => MessageSubTypesMappingForChannelMode[type] || type)
+        .map((type) => MessageSubTypesMapping[type] || type)
     } else {
       this.updateSubTypes = []
     }
@@ -2353,4 +2346,4 @@ class OpengramContext {
   }
 }
 
-module.exports = { OpengramContext, MessageSubTypesMappingForChannelMode, MessageSubTypesMapping }
+module.exports = { OpengramContext, MessageSubTypesMapping }
