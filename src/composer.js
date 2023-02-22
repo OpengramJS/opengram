@@ -1690,9 +1690,16 @@ class Composer {
       : handler
   }
 
+  /**
+   * Used for compose array of middlewares
+   *
+   * @param {MiddlewareFn[]} middlewares The middlewares for compose
+   * @throws {Error|TypeError}
+   * @return {MiddlewareFn}
+   */
   static compose (middlewares) {
     if (!Array.isArray(middlewares)) {
-      throw new Error('Middlewares must be an array')
+      throw new TypeError('Middlewares must be an array')
     }
     if (middlewares.length === 0) {
       return Composer.safePassThru()
