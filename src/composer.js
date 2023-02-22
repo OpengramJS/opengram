@@ -1604,7 +1604,7 @@ class Composer {
   }
 
   /**
-   * Generates and returns a middleware that only runs the given middleware for updates from "private" (DM)
+   * Generates and returns a middleware that runs the given middleware only for updates from "private" (DM)
    *
    * Usage example:
    * ```js
@@ -1634,7 +1634,7 @@ class Composer {
   }
 
   /**
-   * Creates and returns a middleware that only runs the given middleware for updates from "group" and "supergroup".
+   * Creates and returns a middleware that runs the given middleware only for updates from "group" and "supergroup".
    *
    * Usage example:
    * ```js
