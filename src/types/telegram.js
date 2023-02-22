@@ -2801,6 +2801,18 @@
  */
 
 /**
+ * @typedef {
+ *   'private'|'group'|'supergroup'|'channel'
+ * } ChatType
+ */
+
+/**
+ * @typedef {
+ *   'creator'|'administrator'|'member'|'restricted'|'left'|'kicked'
+ * } ChatMemberStatus
+ */
+
+/**
  * @typedef {object} TelegramOptions
  * @property {string} [username] Bot username, used if you don't call `bot.launch()`
  * @property {http.Agent} [attachmentAgent] HTTP Agent used for attachments
