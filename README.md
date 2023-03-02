@@ -5,6 +5,7 @@
 Telegram Bot API framework for Node.js based on **Telegraf 3.38**
 
 [![Bot API Version][bots-api-image]][bots-api-url] [![CI][ci-image]][ci-url] [![codecov][codecov-image]][codecov-url] [![npm][npm-image]][npm-url] [![downloads][downloads-image]][downloads-url] [![javascript style guide][standard-image]][standard-url] [![Codacy Badge][codacy-image]][codacy-url] [![License: MIT][license-image]][license-url]
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FOpengramJS%2Fopengram.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FOpengramJS%2Fopengram?ref=badge_shield)
 </header>
 
 [codecov-image]: https://codecov.io/gh/OpengramJS/opengram/branch/master/graph/badge.svg?token=8HJ46DCTSC
@@ -29,3 +30,7 @@ Telegram Bot API framework for Node.js based on **Telegraf 3.38**
 If you want to help in development. Welcome! Current v1.0 Roadmap - [#1][i1]
 
 [i1]: https://github.com/OpengramJS/opengram/issues/1
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FOpengramJS%2Fopengram.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FOpengramJS%2Fopengram?ref=badge_large)
