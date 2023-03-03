@@ -270,6 +270,8 @@
   * @property {SuccessfulPayment} [successful_payment] *Optional*. Message is a service message about a successful payment, information
   *   about the payment. [More about payments
   *   »](https://core.telegram.org/bots/api/#payments)
+  * @property {UserShared} [user_shared] *Optional*. Service message: a user was shared with the bot
+  * @property {ChatShared} [chat_shared] *Optional*. Service message: a chat was shared with the bot
   * @property {string} [connected_website] *Optional*. The domain name of the website on which the user has logged in.
   *   [More about Telegram Login »](https://core.telegram.org/widgets/login)
   * @property {PassportData} [passport_data] *Optional*. Telegram Passport data
@@ -649,6 +651,38 @@
  */
 
 /**
+ * This object contains information about the user whose identifier was shared with the bot using a
+ * [KeyboardButtonRequestUser](https://core.telegram.org/bots/api/#keyboardbuttonrequestuser)
+ * button.
+ *
+ * @typedef {object} UserShared
+ * @property {number} request_id Identifier of the request
+ * @property {number} user_id Identifier of the shared user. This number may have more than 32 significant
+ *   bits and some programming languages may have difficulty/silent defects in
+ *   interpreting it. But it has at most 52 significant bits, so a 64-bit integer or
+ *   double-precision float type are safe for storing this identifier. The bot may
+ *   not have access to the user and could be unable to use this identifier, unless
+ *   the user is already known to the bot by some other means.
+ * @see https://core.telegram.org/bots/api/#usershared
+ */
+
+/**
+ * This object contains information about the chat whose identifier was shared with the bot using a
+ * [KeyboardButtonRequestChat](https://core.telegram.org/bots/api/#keyboardbuttonrequestchat)
+ * button.
+ *
+ * @typedef {object} ChatShared
+ * @property {number} request_id Identifier of the request
+ * @property {number} chat_id Identifier of the shared chat. This number may have more than 32 significant
+ *   bits and some programming languages may have difficulty/silent defects in
+ *   interpreting it. But it has at most 52 significant bits, so a 64-bit integer or
+ *   double-precision float type are safe for storing this identifier. The bot may
+ *   not have access to the chat and could be unable to use this identifier, unless
+ *   the chat is already known to the bot by some other means.
+ * @see https://core.telegram.org/bots/api/#chatshared
+ */
+
+/**
  * This object represents a service message about a user allowing a bot added to the attachment menu to
  * write messages. Currently holds no information.
  *
@@ -766,13 +800,20 @@
 */
 
 /**
-  * This object represents one button of the reply keyboard. For simple text buttons *String* can be
-  * used instead of this object to specify text of the button. Optional fields *web\_app*,
-  * *request\_contact*, *request\_location*, and *request\_poll* are mutually exclusive.
+  * This object represents one button of the reply keyboard. For simple text buttons, *String* can be
+  * used instead of this object to specify the button text. The optional fields *web\_app*,
+  * *request\_user*, *request\_chat*, *request\_contact*, *request\_location*, and *request\_poll* are
+  * mutually exclusive.
   *
   * @typedef {object} KeyboardButton
   * @property {string} text Text of the button. If none of the optional fields are used, it will be sent as
   *   a message when the button is pressed
+  * @property {KeyboardButtonRequestUser} [request_user] *Optional.* If specified, pressing the button will open a list of suitable
+  *   users. Tapping on any user will send their identifier to the bot in a
+  *   “user\_shared” service message. Available in private chats only.
+  * @property {KeyboardButtonRequestChat} [request_chat] *Optional.* If specified, pressing the button will open a list of suitable
+  *   chats. Tapping on a chat will send its identifier to the bot in a “chat\_shared”
+  *   service message. Available in private chats only.
   * @property {boolean} [request_contact] *Optional*. If *True*, the user's phone number will be sent as a contact when
   *   the button is pressed. Available in private chats only.
   * @property {boolean} [request_location] *Optional*. If *True*, the user's current location will be sent when the button
@@ -785,6 +826,51 @@
   *   Available in private chats only.
   * @see https://core.telegram.org/bots/api/#keyboardbutton
 */
+
+/**
+ * This object defines the criteria used to request a suitable user. The identifier of the selected
+ * user will be shared with the bot when the corresponding button is pressed.
+ *
+ * @typedef {object} KeyboardButtonRequestUser
+ * @property {number} request_id Signed 32-bit identifier of the request, which will be received back in the
+ *   [UserShared](https://core.telegram.org/bots/api/#usershared) object. Must be
+ *   unique within the message
+ * @property {boolean} [user_is_bot] *Optional*. Pass *True* to request a bot, pass *False* to request a regular
+ *   user. If not specified, no additional restrictions are applied.
+ * @property {boolean} [user_is_premium] *Optional*. Pass *True* to request a premium user, pass *False* to request a
+ *   non-premium user. If not specified, no additional restrictions are applied.
+ * @see https://core.telegram.org/bots/api/#keyboardbuttonrequestuser
+ */
+
+/**
+ * This object defines the criteria used to request a suitable chat. The identifier of the selected
+ * chat will be shared with the bot when the corresponding button is pressed.
+ *
+ * @typedef {object} KeyboardButtonRequestChat
+ * @property {number} request_id Signed 32-bit identifier of the request, which will be received back in the
+ *   [ChatShared](https://core.telegram.org/bots/api/#chatshared) object. Must be
+ *   unique within the message
+ * @property {boolean} chat_is_channel Pass *True* to request a channel chat, pass *False* to request a group or a
+ *   supergroup chat.
+ * @property {boolean} [chat_is_forum] *Optional*. Pass *True* to request a forum supergroup, pass *False* to request a
+ *   non-forum chat. If not specified, no additional restrictions are applied.
+ * @property {boolean} [chat_has_username] *Optional*. Pass *True* to request a supergroup or a channel with a username,
+ *   pass *False* to request a chat without a username. If not specified, no
+ *   additional restrictions are applied.
+ * @property {boolean} [chat_is_created] *Optional*. Pass *True* to request a chat owned by the user. Otherwise, no
+ *   additional restrictions are applied.
+ * @property {ChatAdministratorRights} [user_administrator_rights] *Optional*. A JSON-serialized object listing the required administrator rights
+ *   of the user in the chat. The rights must be a superset of
+ *   *bot\_administrator\_rights*. If not specified, no additional restrictions are
+ *   applied.
+ * @property {ChatAdministratorRights} [bot_administrator_rights] *Optional*. A JSON-serialized object listing the required administrator rights
+ *   of the bot in the chat. The rights must be a subset of
+ *   *user\_administrator\_rights*. If not specified, no additional restrictions are
+ *   applied.
+ * @property {boolean} [bot_is_member] *Optional*. Pass *True* to request a chat with the bot as a member. Otherwise,
+ *   no additional restrictions are applied.
+ * @see https://core.telegram.org/bots/api/#keyboardbuttonrequestchat
+ */
 
 /**
   * This object represents type of a poll, which is allowed to be created and sent when the
@@ -1015,7 +1101,7 @@
   * @property {boolean} can_manage_video_chats *True*, if the administrator can manage video chats
   * @property {boolean} can_restrict_members *True*, if the administrator can restrict, ban or unban chat members
   * @property {boolean} can_promote_members *True*, if the administrator can add new administrators with a subset of their
-  *   own privileges or demote administrators that he has promoted, directly or
+  *   own privileges or demote administrators that they have promoted, directly or
   *   indirectly (promoted by administrators that were appointed by the user)
   * @property {boolean} can_change_info *True*, if the user is allowed to change the chat title, photo and other
   *   settings
@@ -1082,7 +1168,7 @@
   * @property {boolean} can_manage_video_chats *True*, if the administrator can manage video chats
   * @property {boolean} can_restrict_members *True*, if the administrator can restrict, ban or unban chat members
   * @property {boolean} can_promote_members *True*, if the administrator can add new administrators with a subset of their
-  *   own privileges or demote administrators that he has promoted, directly or
+  *   own privileges or demote administrators that they have promoted, directly or
   *   indirectly (promoted by administrators that were appointed by the user)
   * @property {boolean} can_change_info *True*, if the user is allowed to change the chat title, photo and other
   *   settings
@@ -1118,13 +1204,23 @@
   * @property {'restricted'} status The member's status in the chat, always “restricted”
   * @property {User} user Information about the user
   * @property {boolean} is_member *True*, if the user is a member of the chat at the moment of the request
+  * @property {boolean} can_send_messages *True*, if the user is allowed to send text messages, contacts, invoices,
+  *   locations and venues
+  * @property {boolean} can_send_audios *True*, if the user is allowed to send audios
+  * @property {boolean} can_send_documents *True*, if the user is allowed to send documents
+  * @property {boolean} can_send_photos *True*, if the user is allowed to send photos
+  * @property {boolean} can_send_videos *True*, if the user is allowed to send videos
+  * @property {boolean} can_send_video_notes *True*, if the user is allowed to send video notes
+  * @property {boolean} can_send_voice_notes *True*, if the user is allowed to send voice notes
+  * @property {boolean} can_send_polls *True*, if the user is allowed to send polls
+  * @property {boolean} can_send_other_messages *True*, if the user is allowed to send animations, games, stickers and use
+  *   inline bots
+  * @property {boolean} can_add_web_page_previews *True*, if the user is allowed to add web page previews to their messages
   * @property {boolean} can_change_info *True*, if the user is allowed to change the chat title, photo and other
   *   settings
   * @property {boolean} can_invite_users *True*, if the user is allowed to invite new users to the chat
   * @property {boolean} can_pin_messages *True*, if the user is allowed to pin messages
   * @property {boolean} can_manage_topics *True*, if the user is allowed to create forum topics
-  * @property {boolean} can_send_messages *True*, if the user is allowed to send text messages, contacts, locations and
-  *   venues
   * @property {boolean} can_send_media_messages *True*, if the user is allowed to send audios, documents, photos, videos, video
   *   notes and voice notes
   * @property {boolean} can_send_polls *True*, if the user is allowed to send polls
@@ -1180,6 +1276,11 @@
   * @typedef {object} ChatJoinRequest
   * @property {Chat} chat Chat to which the request was sent
   * @property {User} from User that sent the join request
+  * @property {number} user_chat_id Identifier of a private chat with the user who sent the join request.
+  *   This number may have more than 32 significant bits and some programming languages may have difficulty/silent
+  *   defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision
+  *   float type are safe for storing this identifier. The bot can use this identifier for 24 hours to send messages
+  *   until the join request is processed, assuming no other administrator contacted the user.
   * @property {number} date Date the request was sent in Unix time
   * @property {string} [bio] *Optional*. Bio of the user.
   * @property {ChatInviteLink} [invite_link] *Optional*. Chat invite link that was used by the user to send the join request
@@ -1191,15 +1292,20 @@
   *
   * @typedef {object} ChatPermissions
   * @property {boolean} [can_send_messages] *Optional*. *True*, if the user is allowed to send text messages, contacts,
-  *   locations and venues
+  *   invoices, locations and venues
   * @property {boolean} [can_send_media_messages] *Optional*. *True*, if the user is allowed to send audios, documents, photos,
   *   videos, video notes and voice notes, implies can\_send\_messages
-  * @property {boolean} [can_send_polls] *Optional*. *True*, if the user is allowed to send polls, implies
-  *   can\_send\_messages
-  * @property {boolean} [can_send_other_messages] *Optional*. *True*, if the user is allowed to send animations, games, stickers
-  *   and use inline bots, implies can\_send\_media\_messages
+  * @property {boolean} [can_send_audios] *Optional*. *True*, if the user is allowed to send audios
+  * @property {boolean} [can_send_documents] *Optional*. *True*, if the user is allowed to send documents
+  * @property {boolean} [can_send_photos] *Optional*. *True*, if the user is allowed to send photos
+  * @property {boolean} [can_send_videos] *Optional*. *True*, if the user is allowed to send videos
+  * @property {boolean} [can_send_video_notes] *Optional*. *True*, if the user is allowed to send video notes
+  * @property {boolean} [can_send_voice_notes] *Optional*. *True*, if the user is allowed to send voice notes
+  * @property {boolean} [can_send_polls] *Optional*. *True*, if the user is allowed to send polls
+  * @property {boolean} [can_send_other_messages] *Optional*. *True*, if the user is allowed to send animations,
+  *   games, stickers and use inline bots
   * @property {boolean} [can_add_web_page_previews] *Optional*. *True*, if the user is allowed to add web page previews to their
-  *   messages, implies can\_send\_media\_messages
+  *   messages
   * @property {boolean} [can_change_info] *Optional*. *True*, if the user is allowed to change the chat title, photo and
   *   other settings. Ignored in public supergroups
   * @property {boolean} [can_invite_users] *Optional*. *True*, if the user is allowed to invite new users to the chat
