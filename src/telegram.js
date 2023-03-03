@@ -778,11 +778,12 @@ class Telegram extends ApiClient {
    * @param {number|string} chatId Unique identifier for the target chat or username of the target supergroup
    *    (in the format `@supergroupusername`)
    * @param {ChatPermissions} permissions A object for new default chat permissions
+   * @param {object} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
-  setChatPermissions (chatId, permissions) {
-    return this.callApi('setChatPermissions', { chat_id: chatId, permissions })
+  setChatPermissions (chatId, permissions, extra) {
+    return this.callApi('setChatPermissions', { chat_id: chatId, permissions, ...extra })
   }
 
   /**
