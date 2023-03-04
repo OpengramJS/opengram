@@ -1696,6 +1696,8 @@ class Telegram extends ApiClient {
    *   (in the format @channelusername)
    * @param {number} messageThreadId Unique identifier for the target message thread of the forum topic
    * @see https://core.telegram.org/bots/api#deleteforumtopic
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
    */
   deleteForumTopic (chatId, messageThreadId) {
     return this.callApi('deleteForumTopic', {
@@ -1712,6 +1714,8 @@ class Telegram extends ApiClient {
    *   (in the format @channelusername)
    * @param {number} messageThreadId Unique identifier for the target message thread of the forum topic
    * @see https://core.telegram.org/bots/api#unpinallforumtopicmessages
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
    */
   unpinAllForumTopicMessages (chatId, messageThreadId) {
     return this.callApi('unpinAllForumTopicMessages', {
@@ -2013,8 +2017,7 @@ class Telegram extends ApiClient {
    * Use this method to edit a non-primary invite link created by the bot. The bot must be an administrator in the chat
    * for this to work and must have the appropriate administrator rights.
    *
-   * Returns the edited invite link
-   * as a {@link ChatInviteLink} object.
+   * Returns the edited invite link as a {@link ChatInviteLink} object.
    *
    * @see https://core.telegram.org/bots/api#editchatinvitelink
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
