@@ -1245,7 +1245,6 @@
   * @property {boolean} can_manage_topics *True*, if the user is allowed to create forum topics
   * @property {boolean} can_send_media_messages *True*, if the user is allowed to send audios, documents, photos,
   *   videos, video notes and voice notes
-  *   messages
   * @property {number} until_date Date when restrictions will be lifted for this user; unix time. If 0, then the
   *   user is restricted forever
   * @see https://core.telegram.org/bots/api/#chatmemberrestricted
@@ -2238,6 +2237,8 @@
   * @property {ParseMode} [parse_mode] *Optional*. Mode for parsing entities in the caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
+  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
+  *   which can be specified instead of *parse\_mode*
   * @property {InlineKeyboardMarkup} [reply_markup] *Optional*. [Inline
   *   keyboard](https://core.telegram.org/bots/features#inline-keyboards) attached to
   *   the message
@@ -2487,6 +2488,8 @@
   * @property {number} [photo_height] *Optional*. Photo height
   * @property {boolean} [need_name] *Optional*. Pass *True* if you require the user's full name to complete the
   *   order
+  * @property {boolean} [need_phone_number] *Optional*. Pass *True* if you require the user's phone number to complete
+  *   the order
   * @property {boolean} [need_email] *Optional*. Pass *True* if you require the user's email address to complete the
   *   order
   * @property {boolean} [need_shipping_address] *Optional*. Pass *True* if you require the user's shipping address to
