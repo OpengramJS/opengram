@@ -99,3 +99,15 @@
  * @property {InlineKeyboardMarkup} [reply_markup] *Optional* A JSON-serialized object for a new
  *   [inline keyboard](https://core.telegram.org/bots/features#inline-keyboards).
  */
+
+/**
+ * @typedef {object} ExtraForwardMessage
+ * @see https://core.telegram.org/bots/api#forwardmessage
+ * @property {number} [message_thread_id] *Optional*. Unique identifier of a message thread to which the message
+ *   belongs; for supergroups only
+ * @property {boolean} [protect_content] *Optional*. Protects the contents of the forwarded message from forwarding and
+ *   saving
+ * @property {boolean} [disable_notification] *Optional*. Sends the message
+ *   [silently](https://telegram.org/blog/channels-2-0#silent-messages). Users will receive
+ *   a notification with no sound.
+ */
