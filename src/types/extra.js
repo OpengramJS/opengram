@@ -177,7 +177,7 @@
  * @property {number} [max_connections=40] *Optional*. The maximum allowed number of simultaneous HTTPS connections to
  *   the webhook for update delivery, 1-100. Defaults to 40. Use lower values to limit the load on your bot's server,
  *   and higher values to increase your bot's throughput.
- * @param {updateType[]} [allowedUpdates] *Optional*. Array of allowed updates or update name
+ * @param {UpdateType[]} [allowedUpdates] *Optional*. Array of allowed updates or update name
  *     For example, specify `["message", "edited_channel_post", "callback_query"]` to only receive
  *     updates of these types. See [Update](https://core.telegram.org/bots/api#update) for a complete list of
  *     available update types.
