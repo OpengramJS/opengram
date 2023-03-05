@@ -355,3 +355,20 @@
  *   [InlineKeyboardMarkup](https://core.telegram.org/bots/api#inlinekeyboardmarkup) A JSON-serialized object for a new
  *   [inline keyboard](https://core.telegram.org/bots/features#inline-keyboards).
  */
+
+/**
+ * @typedef {object} ExtraGame
+ * @see https://core.telegram.org/bots/api#sendgame
+ * @property {number} [message_thread_id] *Optional*. Unique identifier for the target message thread (topic)
+ *   of the forum; for forum supergroups only
+ * @property {boolean} [disable_notification] *Optional*. Sends the message
+ *   [silently](https://telegram.org/blog/channels-2-0#silent-messages). Users will receive a notification with no
+ *   sound.
+ * @property {boolean} [protect_content] *Optional*. Protects the contents of the sent message from forwarding
+ * @property {number} [reply_to_message_id] *Optional*. If the message is a reply, ID of the original message
+ * @property {boolean} [allow_sending_without_reply] *Optional*. Pass *True* if the message should be sent even if the
+ *   specified replied-to message is not found
+ * @property {InlineKeyboardMarkup} [reply_markup]
+ *   [InlineKeyboardMarkup](https://core.telegram.org/bots/api#inlinekeyboardmarkup) A JSON-serialized object for a new
+ *   [inline keyboard](https://core.telegram.org/bots/features#inline-keyboards).
+*/
