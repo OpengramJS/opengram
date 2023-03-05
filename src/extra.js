@@ -1,6 +1,10 @@
 const Markup = require('./markup')
 
-/** Class for building extra parameters of messages */
+/**
+ * Class for building extra parameters of messages
+ *
+ * @class
+ */
 class Extra {
   /**
    * @constructor
