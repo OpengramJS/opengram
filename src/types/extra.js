@@ -888,3 +888,11 @@
  * @see https://core.telegram.org/bots/api#deletemycommands
  * @property {string} [language_code] *Optional*. A two-letter ISO 639-1 language code or an empty string
  */
+
+/**
+ * @typedef {object} ExtraSetMyCommands
+ * @see https://core.telegram.org/bots/api#setmycommands
+ * @property {string} [language_code] *Optional*. A two-letter ISO 639-1 language code or an empty string
+ * @property {BotCommandScope} [scope] *Optional*. A JSON-serialized object, describing scope of users for which the commands are
+ *   relevant. Defaults to [BotCommandScopeDefault](https://core.telegram.org/bots/api#botcommandscopedefault).
+ */
