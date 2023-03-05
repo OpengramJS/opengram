@@ -29,7 +29,7 @@
  * @callback TriggerPredicateFn
  * @param {string} value Received value
  * @param {OpengramContext} context Update context
- * @return {boolean}
+ * @return {*}
  */
 
 /**
