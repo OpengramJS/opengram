@@ -372,3 +372,35 @@
  *   [InlineKeyboardMarkup](https://core.telegram.org/bots/api#inlinekeyboardmarkup) A JSON-serialized object for a new
  *   [inline keyboard](https://core.telegram.org/bots/features#inline-keyboards).
 */
+
+/**
+ * @typedef {object} ExtraLocation
+ * @see https://core.telegram.org/bots/api#sendlocation
+ * @see https://telegram.org/blog/live-locations
+ * @property {number} [message_thread_id] *Optional*. Unique identifier for the target message thread (topic)
+ *   of the forum; for forum supergroups only
+ * @property {number} [horizontal_accuracy] *Optional* The radius of uncertainty for the location, measured in meters;
+ *   0-1500
+ * @property {number} [heading] *Optional* Direction in which the user is moving, in degrees. Must be between 1 and
+ *   360 if specified.
+ * @property {number} [proximity_alert_radius] *Optional* The radius of uncertainty for the location, measured in
+ *   meters;
+ *   0-1500
+ * @property {number} [live_period] *Optional*. Period in seconds for which the location will be updated, see
+ *   [Live Locations](https://telegram.org/blog/live-locations), should be between `60` and `86400`.
+ * @property {boolean} [disable_notification] *Optional*. Sends the message
+ *   [silently](https://telegram.org/blog/channels-2-0#silent-messages). Users will receive a notification with no
+ *   sound.
+ * @property {boolean} [protect_content] *Optional*. Protects the contents of the sent message from forwarding
+ * @property {number} [reply_to_message_id] *Optional*. If the message is a reply, ID of the original message
+ * @property {boolean} [allow_sending_without_reply] *Optional*. Pass *True* if the message should be sent even if the
+ *   specified replied-to message is not found
+ * @property {InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply} [reply_markup] *Optional*.
+ *   [InlineKeyboardMarkup](https://core.telegram.org/bots/api#inlinekeyboardmarkup) or
+ *   [ReplyKeyboardMarkup](https://core.telegram.org/bots/api#replykeyboardmarkup) or
+ *   [ReplyKeyboardRemove](https://core.telegram.org/bots/api#replykeyboardremove) or
+ *   [ForceReply](https://core.telegram.org/bots/api#forcereply) Additional interface options.
+ *   A JSON-serialized object for an [inline keyboard](https://core.telegram.org/bots/features#inline-keyboards),
+ *   [custom reply keyboard](https://core.telegram.org/bots/features#keyboards), instructions to remove reply keyboard
+ *   or to force a reply from the user.
+ */
