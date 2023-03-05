@@ -882,3 +882,9 @@
  * @see https://core.telegram.org/bots/api#getmycommands
  * @property {string} [language_code] *Optional*. A two-letter ISO 639-1 language code or an empty string
  */
+
+/**
+ * @typedef {object} ExtraDeleteMyCommands
+ * @see https://core.telegram.org/bots/api#deletemycommands
+ * @property {string} [language_code] *Optional*. A two-letter ISO 639-1 language code or an empty string
+ */
