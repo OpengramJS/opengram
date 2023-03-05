@@ -249,3 +249,22 @@
  *   [custom reply keyboard](https://core.telegram.org/bots/features#keyboards), instructions to remove reply keyboard
  *   or to force a reply from the user.
  */
+
+/**
+ * @typedef {object} ExtraAddStickerToSet
+ * @see https://core.telegram.org/bots/api#addstickertoset
+ * @see https://core.telegram.org/stickers#animated-sticker-requirements
+ * @property {InputFile|string} [png_sticker] *Optional*. **PNG** image with the sticker, must be up to 512 kilobytes
+ *   in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a *file_id* as a
+ *   String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get
+ *   a file from the Internet, or upload a new one using multipart/form-data.
+ *   [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
+ * @property {InputFile} [tgs_sticker] *Optional*. **TGS** animation with the sticker, uploaded using
+ *   multipart/form-data. See https://core.telegram.org/stickers#animated-sticker-requirements for technical
+ *   requirements
+ * @property {InputFile} [webm_sticker] *Optional*. **WEBM** video with the sticker, uploaded using multipart/form-data.
+ *   See https://core.telegram.org/stickers#video-sticker-requirements for technical requirements
+ * @property {string} emojis One or more emoji corresponding to the sticker
+ * @property {MaskPosition} [mask_position] *Optional*. A JSON-serialized object for position where the mask should be
+ *   placed on faces
+ */
