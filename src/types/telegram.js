@@ -1579,7 +1579,7 @@
   *   pass “attach://\<file\_attach\_name\>” to upload a new one using
   *   multipart/form-data under \<file\_attach\_name\> name. [More information on
   *   Sending Files »](https://core.telegram.org/bots/api/#sending-files)
-  * @property {InputFile|string} [thumb] *Optional*. Thumbnail of the file sent; can be ignored if thumbnail generation
+  * @property {InputFile|FileId} [thumb] *Optional*. Thumbnail of the file sent; can be ignored if thumbnail generation
   *   for the file is supported server-side. The thumbnail should be in JPEG format
   *   and less than 200 kB in size. A thumbnail's width and height should not exceed
   *   320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails
@@ -1612,7 +1612,7 @@
   *   pass “attach://\<file\_attach\_name\>” to upload a new one using
   *   multipart/form-data under \<file\_attach\_name\> name. [More information on
   *   Sending Files »](https://core.telegram.org/bots/api/#sending-files)
-  * @property {InputFile|string} [thumb] *Optional*. Thumbnail of the file sent; can be ignored if thumbnail generation
+  * @property {InputFile|FileId} [thumb] *Optional*. Thumbnail of the file sent; can be ignored if thumbnail generation
   *   for the file is supported server-side. The thumbnail should be in JPEG format
   *   and less than 200 kB in size. A thumbnail's width and height should not exceed
   *   320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails
@@ -1645,7 +1645,7 @@
   *   pass “attach://\<file\_attach\_name\>” to upload a new one using
   *   multipart/form-data under \<file\_attach\_name\> name. [More information on
   *   Sending Files »](https://core.telegram.org/bots/api/#sending-files)
-  * @property {InputFile|string} [thumb] *Optional*. Thumbnail of the file sent; can be ignored if thumbnail generation
+  * @property {InputFile|FileId} [thumb] *Optional*. Thumbnail of the file sent; can be ignored if thumbnail generation
   *   for the file is supported server-side. The thumbnail should be in JPEG format
   *   and less than 200 kB in size. A thumbnail's width and height should not exceed
   *   320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails
@@ -1676,7 +1676,7 @@
   *   pass “attach://\<file\_attach\_name\>” to upload a new one using
   *   multipart/form-data under \<file\_attach\_name\> name. [More information on
   *   Sending Files »](https://core.telegram.org/bots/api/#sending-files)
-  * @property {InputFile|string} [thumb] *Optional*. Thumbnail of the file sent; can be ignored if thumbnail generation
+  * @property {InputFile|FileId} [thumb] *Optional*. Thumbnail of the file sent; can be ignored if thumbnail generation
   *   for the file is supported server-side. The thumbnail should be in JPEG format
   *   and less than 200 kB in size. A thumbnail's width and height should not exceed
   *   320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails

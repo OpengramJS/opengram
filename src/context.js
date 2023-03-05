@@ -1012,7 +1012,7 @@ class OpengramContext {
    * Returns `True` on success.
    *
    * @see https://core.telegram.org/bots/api#setchatphoto
-   * @param {attachmentFile} photo New chat photo, uploaded using multipart/form-data
+   * @param {InputFile} photo New chat photo, uploaded using multipart/form-data
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -1304,8 +1304,8 @@ class OpengramContext {
    *
    * On success, the sent {@link Message} is returned.
    *
-   * @see https://core.telegram.org/bots/api#sendmessage
-   * @param {attachmentFile} photo Photo to send. Pass a `file_id` as String to send a photo that exists on the
+   * @see https://core.telegram.org/bots/api#sendphoto
+   * @param {InputFile|FileId} photo Photo to send. Pass a `file_id` as String to send a photo that exists on the
    *    Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet,
    *    or upload a new photo using multipart/form-data.
    *    The photo must be at most 10 MB in size.
@@ -1357,7 +1357,7 @@ class OpengramContext {
    * For sending voice messages, use the {@link OpengramContext#replyWithVoice} method instead.
    *
    * @see https://core.telegram.org/bots/api#sendaudio
-   * @param {attachmentFile} audio Audio file to send. Pass a `file_id` as String to send an audio file that exists on
+   * @param {InputFile|FileId} audio Audio file to send. Pass a `file_id` as String to send an audio file that exists on
    *   the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the
    *   Internet, or upload a new one using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
@@ -1398,7 +1398,7 @@ class OpengramContext {
    * Bots can currently send files of any type of up to 50 MB in size, this limit may be changed in the future.
    *
    * @see https://core.telegram.org/bots/api#senddocument
-   * @param {attachmentFile} document Document to send. Pass a `file_id` as String to send a document that exists
+   * @param {InputFile|FileId} document Document to send. Pass a `file_id` as String to send a document that exists
    *    on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the
    *   Internet, or upload a new photo using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
@@ -1420,7 +1420,7 @@ class OpengramContext {
    * On success, the sent {@link Message} is returned.
    *
    * @see https://core.telegram.org/bots/api#sendsticker
-   * @param {attachmentFile} sticker Sticker to send. Pass a `file_id` as String to send a file that exists on
+   * @param {InputFile|FileId} sticker Sticker to send. Pass a `file_id` as String to send a file that exists on
    *    the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP file from the
    *    Internet, or upload a new one using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
@@ -1445,7 +1445,7 @@ class OpengramContext {
    * Bots can currently send video files of up to 50 MB in size, this limit may be changed in the future.
    *
    * @see https://core.telegram.org/bots/api#sendvideo
-   * @param {attachmentFile} video Video to send. Pass a `file_id` as String to send a video that
+   * @param {InputFile|FileId} video Video to send. Pass a `file_id` as String to send a video that
    *    exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get
    *    a video from the Internet, or upload a new video using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
@@ -1469,7 +1469,7 @@ class OpengramContext {
    * Bots can currently send animation files of up to 50 MB in size, this limit may be changed in the future.
    *
    * @see https://core.telegram.org/bots/api#sendanimation
-   * @param {attachmentFile} animation Animation to send. Pass a `file_id` as String to send an animation that exists
+   * @param {InputFile|FileId} animation Animation to send. Pass a `file_id` as String to send an animation that exists
    *    on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an animation from
    *    the Internet, or upload a new animation using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
@@ -1493,7 +1493,7 @@ class OpengramContext {
    * On success, the sent {@link Message} is returned.
    *
    * @see https://core.telegram.org/bots/api#sendvideonote
-   * @param {attachmentFile} videoNote Video note to send. Pass a `file_id` as String to send a video note that exists
+   * @param {InputFile|FileId} videoNote Video note to send. Pass a `file_id` as String to send a video note that exists
    *   on the Telegram servers (recommended) or upload a new video using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files).
    *    Sending video notes by a URL is currently unsupported
@@ -1558,7 +1558,7 @@ class OpengramContext {
    * Bots can currently send voice messages of up to 50 MB in size, this limit may be changed in the future.
    *
    * @see https://core.telegram.org/bots/api#sendvoice
-   * @param {attachmentFile} voice Audio file to send. Pass a file_id as String to send a file that exists on the
+   * @param {InputFile|FileId} voice Audio file to send. Pass a file_id as String to send a file that exists on the
    *    Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet,
    *    or upload a new one using multipart/form-data.
    * @param {object|Extra} [extra] Other parameters
@@ -1978,7 +1978,7 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#setstickersetthumb
    * @param {string} name Sticker set name
    * @param {number} userId User identifier of the sticker set owner
-   * @param {attachmentFile} [thumb] A **PNG** image with the thumbnail, must be up to 128 kilobytes in size and have
+   * @param {InputFile|FileId} [thumb] A **PNG** image with the thumbnail, must be up to 128 kilobytes in size and have
    *   width and height exactly 100px, or a **TGS** animation with the thumbnail up to 32 kilobytes in size; see
    *   https://core.telegram.org/stickers#animated-sticker-requirements for animated sticker technical requirements, or
    *   a **WEBM** video with the thumbnail up to 32 kilobytes in size; see
@@ -2016,7 +2016,7 @@ class OpengramContext {
    * Returns the uploaded {@link File} on success.
    *
    * @see https://core.telegram.org/bots/api#uploadstickerfile
-   * @param {attachmentFile} stickerFile **PNG** image with the sticker, must be up to 512 kilobytes in size,
+   * @param {InputFile} stickerFile **PNG** image with the sticker, must be up to 512 kilobytes in size,
    *    dimensions must not exceed 512px, and either width or height must be exactly 512px.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files).
    * @throws {TelegramError}

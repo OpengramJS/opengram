@@ -393,7 +393,7 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#sendphoto
    * @param {string|number} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
-   * @param {attachmentFile} photo Photo to send. Pass a `file_id` as String to send a photo that exists on the
+   * @param {InputFile|FileId} photo Photo to send. Pass a `file_id` as String to send a photo that exists on the
    *    Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet,
    *    or upload a new photo using multipart/form-data.
    *    The photo must be at most 10 MB in size.
@@ -433,9 +433,9 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#senddocument
    * @param {string|number} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
-   * @param {attachmentFile} document Document to send. Pass a `file_id` as String to send a document that exists
-   *    on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the Internet,
-   *    or upload a new photo using multipart/form-data.
+   * @param {InputFile|FileId} document Document to send. Pass a `file_id` as String to send a document that exists
+   *    on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the
+   *   Internet, or upload a new photo using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
    * @param {object|Extra} [extra] Other parameters
    * @throws {TelegramError}
@@ -457,9 +457,9 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#sendaudio
    * @param {string|number} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
-   * @param {attachmentFile} audio Audio file to send. Pass a `file_id` as String to send an audio file that exists on the Telegram
-   *    servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the Internet,
-   *    or upload a new one using multipart/form-data.
+   * @param {InputFile|FileId} audio Audio file to send. Pass a `file_id` as String to send an audio file that exists on
+   *   the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the
+   *   Internet, or upload a new one using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
    * @param {object|Extra} [extra] Other parameters
    * @throws {TelegramError}
@@ -477,7 +477,7 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#sendsticker
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
-   * @param {attachmentFile} sticker Sticker to send. Pass a `file_id` as String to send a file that exists on
+   * @param {InputFile|FileId} sticker Sticker to send. Pass a `file_id` as String to send a file that exists on
    *    the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP file from the
    *    Internet, or upload a new one using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
@@ -500,7 +500,7 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#sendvideo
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
-   * @param {attachmentFile} video Video to send. Pass a `file_id` as String to send a video that
+   * @param {InputFile|FileId} video Video to send. Pass a `file_id` as String to send a video that
    *    exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get
    *    a video from the Internet, or upload a new video using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
@@ -522,7 +522,7 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#sendanimation
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
-   * @param {attachmentFile} animation Animation to send. Pass a `file_id` as String to send an animation that exists
+   * @param {InputFile|FileId} animation Animation to send. Pass a `file_id` as String to send an animation that exists
    *    on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an animation from
    *    the Internet, or upload a new animation using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
@@ -544,8 +544,8 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#sendvideonote
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
-   * @param {attachmentFile} videoNote Video note to send. Pass a `file_id` as String to send a video note that exists on
-   *    the Telegram servers (recommended) or upload a new video using multipart/form-data.
+   * @param {InputFile|FileId} videoNote Video note to send. Pass a `file_id` as String to send a video note that exists
+   *   on the Telegram servers (recommended) or upload a new video using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files).
    *    Sending video notes by a URL is currently unsupported
    * @param {object|Extra} [extra] Other parameters
@@ -567,7 +567,7 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#sendvoice
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
-   * @param {attachmentFile} voice Audio file to send. Pass a file_id as String to send a file that exists on the
+   * @param {InputFile|FileId} voice Audio file to send. Pass a file_id as String to send a file that exists on the
    *    Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet,
    *    or upload a new one using multipart/form-data.
    * @param {object|Extra} [extra] Other parameters
@@ -946,7 +946,7 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#setchatphoto
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
-   * @param {attachmentFile} photo New chat photo, uploaded using multipart/form-data
+   * @param {InputFile} photo New chat photo, uploaded using multipart/form-data
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -1747,7 +1747,7 @@ class Telegram extends ApiClient {
    *
    * @see https://core.telegram.org/bots/api#uploadstickerfile
    * @param {number} ownerId User identifier of sticker file owner
-   * @param {attachmentFile} stickerFile **PNG** image with the sticker, must be up to 512 kilobytes in size,
+   * @param {InputFile} stickerFile **PNG** image with the sticker, must be up to 512 kilobytes in size,
    *    dimensions must not exceed 512px, and either width or height must be exactly 512px.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files).
    * @throws {TelegramError}

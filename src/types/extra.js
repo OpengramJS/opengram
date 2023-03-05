@@ -59,7 +59,7 @@
  * @typedef {object} ExtraCreateNewStickerSet
  * @see https://core.telegram.org/bots/api#createnewstickerset
  * @see https://core.telegram.org/stickers#animated-sticker-requirements
- * @property {InputFile|string} [png_sticker] *Optional*. **PNG** image with the sticker, must be up to 512 kilobytes
+ * @property {InputFile|FileId} [png_sticker] *Optional*. **PNG** image with the sticker, must be up to 512 kilobytes
  *   in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a *file_id* as a
  *   String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get
  *   a file from the Internet, or upload a new one using multipart/form-data.
@@ -502,7 +502,7 @@
  * @see https://core.telegram.org/bots/api#sendsticker
  * @property {number} [message_thread_id] *Optional*. Unique identifier for the target message thread (topic)
  *   of the forum; for forum supergroups only
- * @property {InputFile|string} sticker Sticker to send. Pass a file_id as String to send a file that exists on the
+ * @property {InputFile|FileId} sticker Sticker to send. Pass a file_id as String to send a file that exists on the
  *   Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP file from the Internet,
  *   or upload a new one using multipart/form-data.
  *   [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
@@ -531,7 +531,7 @@
  * @property {number} [duration] *Optional*. Duration of sent video in seconds
  * @property {number} [width] *Optional*. Video width
  * @property {number} [height] *Optional*. Video height
- * @property {InputFile|string} [thumb] Thumbnail of the file sent; can be ignored if thumbnail generation for the file
+ * @property {InputFile|FileId} [thumb] Thumbnail of the file sent; can be ignored if thumbnail generation for the file
  *   is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width
  *   and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't
  *   be reused and can be only uploaded as a new file, so you can pass "attach://<file_attach_name>" if the thumbnail
@@ -675,7 +675,7 @@
  * @property {number} [duration] *Optional*. Duration of sent animation in seconds
  * @property {number} [width] *Optional*. Animation width
  * @property {number} [height] *Optional*. Animation height
- * @property {InputFile|string} [thumb] Thumbnail of the file sent; can be ignored if thumbnail generation for the file
+ * @property {InputFile|FileId} [thumb] Thumbnail of the file sent; can be ignored if thumbnail generation for the file
  *   is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width
  *   and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't
  *   be reused and can be only uploaded as a new file, so you can pass "attach://<file_attach_name>" if the thumbnail
@@ -714,7 +714,7 @@
  * @property {string} [performer] Performer
  * @property {string} [title] Track name
  * @property {number} [duration] *Optional*. Duration of sent audio in seconds
- * @property {InputFile|string} [thumb] Thumbnail of the file sent; can be ignored if thumbnail generation for the file
+ * @property {InputFile|FileId} [thumb] Thumbnail of the file sent; can be ignored if thumbnail generation for the file
  *   is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width
  *   and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't
  *   be reused and can be only uploaded as a new file, so you can pass "attach://<file_attach_name>" if the thumbnail
@@ -789,7 +789,7 @@
  * @see https://core.telegram.org/bots/api#senddocument
  * @property {number} [message_thread_id] *Optional*. Unique identifier for the target message thread (topic)
  *   of the forum; for forum supergroups only
- * @property {InputFile|string} [thumb] *Optional*. Thumbnail of the file sent; can be ignored if thumbnail generation
+ * @property {InputFile|FileId} [thumb] *Optional*. Thumbnail of the file sent; can be ignored if thumbnail generation
  *   for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size.
  *   A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data.
  *   Thumbnails can't be reused and can be only uploaded as a new file, so you can pass "attach://<file_attach_name>"
@@ -959,7 +959,7 @@
  *   of the forum; for forum supergroups only
  * @property {number} [duration] *Optional*. Duration of sent video in seconds
  * @property {number} [length] *Optional*. Video width and height, i.e. diameter of the video message
- * @property {InputFile|string} [thumb] *Optional*. Thumbnail of the file sent; can be ignored if thumbnail generation
+ * @property {InputFile|FileId} [thumb] *Optional*. Thumbnail of the file sent; can be ignored if thumbnail generation
  *   for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A
  *   thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data.
  *   Thumbnails can't be reused and can be only uploaded as a new file, so you can pass "attach://<file_attach_name>"
