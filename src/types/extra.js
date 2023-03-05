@@ -339,3 +339,19 @@
  *   allowed custom emoji identifiers. Pass an empty string to remove the icon. If not specified, the current icon will
  *   be kept
  */
+
+/**
+ * @typedef {object} ExtraEditMessageMedia
+ * @see https://core.telegram.org/bots/api#editmessagemedia
+ * @property {string} [caption] *Optional*. Caption of the media to be sent, 0-1024 characters after entities
+ *   parsing
+ * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the media caption. See [formatting
+ *   options](https://core.telegram.org/bots/api/#formatting-options) for more
+ *   details.
+ * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
+ *   which can be specified instead of *parse\_mode*
+ * @property {boolean} [has_spoiler] *Optional*. Pass `True` if the video needs to be covered with a spoiler animation
+ * @property {InlineKeyboardMarkup} [reply_markup]
+ *   [InlineKeyboardMarkup](https://core.telegram.org/bots/api#inlinekeyboardmarkup) A JSON-serialized object for a new
+ *   [inline keyboard](https://core.telegram.org/bots/features#inline-keyboards).
+ */
