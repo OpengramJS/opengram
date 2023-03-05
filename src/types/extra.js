@@ -562,3 +562,17 @@
  *   [custom reply keyboard](https://core.telegram.org/bots/features#keyboards), instructions to remove reply keyboard
  *   or to force a reply from the user.
  */
+
+/**
+ * @typedef {object} ExtraMediaGroup
+ * @see https://core.telegram.org/bots/api#sendmediagroup
+ * @property {number} [message_thread_id] *Optional*. Unique identifier for the target message thread (topic)
+ *   of the forum; for forum supergroups only
+ * @property {boolean} [disable_notification] *Optional*. Sends the message
+ *   [silently](https://telegram.org/blog/channels-2-0#silent-messages). Users will receive a notification with no
+ *   sound.
+ * @property {boolean} [protect_content] *Optional*. Protects the contents of the sent message from forwarding
+ * @property {number} [reply_to_message_id] *Optional*. If the message is a reply, ID of the original message
+ * @property {boolean} [allow_sending_without_reply] *Optional*. Pass *True* if the message should be sent even if the
+ *   specified replied-to message is not found
+ */
