@@ -20,3 +20,11 @@
  *   is being removed. If False, the user will be able to see messages in the group that were sent before the user was
  *   removed. Always True for supergroups and channels.
  */
+
+/**
+ * @typedef {object} ExtraKickChatMember
+ * @see https://core.telegram.org/bots/api#banchatmember
+ * @property {boolean} [revoke_messages] *Optional*. Pass `True` to delete all messages from the chat for the user that
+ *   is being removed. If False, the user will be able to see messages in the group that were sent before the user was
+ *   removed. Always True for supergroups and channels.
+ */
