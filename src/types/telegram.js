@@ -2932,3 +2932,19 @@
  *    see more [here](https://core.telegram.org/bots/webapps#testing-web-apps)
  * @property {boolean} [webhookReply=true] Enable / disable webhook reply
  */
+
+/**
+ * @typedef {object} InvoiceParams
+ * @see https://core.telegram.org/bots/api#sendinvoice
+ * @property {number} [message_thread_id] *Optional*. Unique identifier for the target message thread (topic)
+ *   of the forum; for forum supergroups only
+ * @property {string} title Product name, 1-32 characters
+ * @property {string} description Product description, 1-255 characters
+ * @property {string} payload Bot-defined invoice payload, 1-128 bytes. This will not be displayed to the user,
+ *   use for your internal processes.
+ * @property {string} provider_token Payment provider token, obtained via [@BotFather](https://t.me/botfather)
+ * @property {string} currency Three-letter ISO 4217 currency code, see
+ *   [more on currencies](https://core.telegram.org/bots/payments#supported-currencies)
+ * @property {LabeledPrice[]} prices Price breakdown, a JSON-serialized list of components (e.g. product price, tax,
+ *   discount, delivery cost, delivery tax, bonus, etc.)
+ */
