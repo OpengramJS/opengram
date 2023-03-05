@@ -14,7 +14,8 @@
   * @property {Message} [message] *Optional*. New incoming message of any kind - text, photo, sticker, etc.
   * @property {Message} [edited_message] *Optional*. New version of a message that is known to the bot and was edited
   * @property {Message} [channel_post] *Optional*. New incoming channel post of any kind - text, photo, sticker, etc.
-  * @property {Message} [edited_channel_post] *Optional*. New version of a channel post that is known to the bot and was
+  * @property {Message} [edited_channel_post] *Optional*. New version of a channel post that is known to the bot and
+  *   was
   *   edited
   * @property {InlineQuery} [inline_query] *Optional*. New incoming
   *   [inline](https://core.telegram.org/bots/api/#inline-mode) query
@@ -24,20 +25,21 @@
   *   [feedback collecting](https://core.telegram.org/bots/inline#collecting-feedback)
   *   for details on how to enable these updates for your bot.
   * @property {CallbackQuery} [callback_query] *Optional*. New incoming callback query
-  * @property {ShippingQuery} [shipping_query] *Optional*. New incoming shipping query. Only for invoices with flexible price
-  * @property {PreCheckoutQuery} [pre_checkout_query] *Optional*. New incoming pre-checkout query. Contains full information about
-  *   checkout
+  * @property {ShippingQuery} [shipping_query] *Optional*. New incoming shipping query. Only for invoices with flexible
+  *   price
+  * @property {PreCheckoutQuery} [pre_checkout_query] *Optional*. New incoming pre-checkout query. Contains full
+  *   information about checkout
   * @property {Poll} [poll] *Optional*. New poll state. Bots receive only updates about stopped polls and
   *   polls, which are sent by the bot
   * @property {PollAnswer} [poll_answer] *Optional*. A user changed their answer in a non-anonymous poll. Bots receive
   *   new votes only in polls that were sent by the bot itself.
-  * @property {ChatMemberUpdated} [my_chat_member] *Optional*. The bot's chat member status was updated in a chat. For private
-  *   chats, this update is received only when the bot is blocked or unblocked by the
-  *   user.
-  * @property {ChatMemberUpdated} [chat_member] *Optional*. A chat member's status was updated in a chat. The bot must be an
-  *   administrator in the chat and must explicitly specify “chat\_member” in the list
-  *   of *allowed\_updates* to receive these updates.
-  * @property {ChatJoinRequest} [chat_join_request] *Optional*. A request to join the chat has been sent. The bot must have the
+  * @property {ChatMemberUpdated} [my_chat_member] *Optional*. The bot's chat member status was updated in a chat. For
+  *   private chats, this update is received only when the bot is blocked or unblocked by the user.
+  * @property {ChatMemberUpdated} [chat_member] *Optional*. A chat member's status was updated in a chat. The bot must
+  *   be an administrator in the chat and must explicitly specify “chat\_member” in the list of *allowed\_updates* to
+  *   receive these updates.
+  * @property {ChatJoinRequest} [chat_join_request] *Optional*. A request to join the chat has been sent. The bot must
+  *   have the
   *   *can\_invite\_users* administrator right in the chat to receive these updates.
   * @see https://core.telegram.org/bots/api/#update
 */
@@ -47,16 +49,19 @@
   *
   * @typedef {object} WebhookInfo
   * @property {string} url Webhook URL, may be empty if webhook is not set up
-  * @property {boolean} has_custom_certificate *True*, if a custom certificate was provided for webhook certificate checks
+  * @property {boolean} has_custom_certificate *True*, if a custom certificate was provided for webhook certificate
+  *   checks
   * @property {number} pending_update_count Number of updates awaiting delivery
   * @property {string} [ip_address] *Optional*. Currently used webhook IP address
   * @property {number} [last_error_date] *Optional*. Unix time for the most recent error that happened when trying to
   *   deliver an update via webhook
-  * @property {string} [last_error_message] *Optional*. Error message in human-readable format for the most recent error
+  * @property {string} [last_error_message] *Optional*. Error message in human-readable format for the most recent
+  *   error
   *   that happened when trying to deliver an update via webhook
-  * @property {number} [last_synchronization_error_date] *Optional*. Unix time of the most recent error that happened when trying to
-  *   synchronize available updates with Telegram datacenters
-  * @property {number} [max_connections] *Optional*. The maximum allowed number of simultaneous HTTPS connections to the
+  * @property {number} [last_synchronization_error_date] *Optional*. Unix time of the most recent error that happened
+  *   when trying to synchronize available updates with Telegram datacenters
+  * @property {number} [max_connections] *Optional*. The maximum allowed number of simultaneous HTTPS connections to
+  *   the
   *   webhook for update delivery
   * @property {string[]} [allowed_updates] *Optional*. A list of update types the bot is subscribed to. Defaults to all
   *   update types except *chat\_member*
@@ -78,13 +83,15 @@
   * @property {string} [language_code] *Optional*. [IETF language tag](https://en.wikipedia.org/wiki/IETF_language_tag)
   *   of the user's language
   * @property {boolean} [is_premium] *Optional*. *True*, if this user is a Telegram Premium user
-  * @property {boolean} [added_to_attachment_menu] *Optional*. *True*, if this user added the bot to the attachment menu
+  * @property {boolean} [added_to_attachment_menu] *Optional*. *True*, if this user added the bot to the attachment
+  *   menu
   * @property {boolean} [can_join_groups] *Optional*. *True*, if the bot can be invited to groups. Returned only in
   *   [getMe](https://core.telegram.org/bots/api/#getme).
   * @property {boolean} [can_read_all_group_messages] *Optional*. *True*, if [privacy
   *   mode](https://core.telegram.org/bots/features#privacy-mode) is disabled for the
   *   bot. Returned only in [getMe](https://core.telegram.org/bots/api/#getme).
-  * @property {boolean} [supports_inline_queries] *Optional*. *True*, if the bot supports inline queries. Returned only in
+  * @property {boolean} [supports_inline_queries] *Optional*. *True*, if the bot supports inline queries. Returned only
+  *   in
   *   [getMe](https://core.telegram.org/bots/api/#getme).
   * @see https://core.telegram.org/bots/api/#user
 */
@@ -97,7 +104,8 @@
   *   bits and some programming languages may have difficulty/silent defects in
   *   interpreting it. But it has at most 52 significant bits, so a signed 64-bit
   *   integer or double-precision float type are safe for storing this identifier.
-  * @property {'private'|'group'|'supergroup'|'channel'} type Type of chat, can be either “private”, “group”, “supergroup” or “channel”
+  * @property {'private'|'group'|'supergroup'|'channel'} type Type of chat, can be either “private”, “group”,
+  *   “supergroup” or “channel”
   * @property {string} [title] *Optional*. Title, for supergroups, channels and group chats
   * @property {string} [username] *Optional*. Username, for private chats, supergroups and channels if available
   * @property {string} [first_name] *Optional*. First name of the other party in a private chat
@@ -111,19 +119,19 @@
   *   usernames](https://telegram.org/blog/topics-in-groups-collectible-usernames#collectible-usernames);
   *   for private chats, supergroups and channels. Returned only in
   *   [getChat](https://core.telegram.org/bots/api/#getchat).
-  * @property {string} [emoji_status_custom_emoji_id] *Optional*. Custom emoji identifier of emoji status of the other party in a
-  *   private chat. Returned only in
+  * @property {string} [emoji_status_custom_emoji_id] *Optional*. Custom emoji identifier of emoji status of the other
+  *   party in a private chat. Returned only in
   *   [getChat](https://core.telegram.org/bots/api/#getchat).
   * @property {string} [bio] *Optional*. Bio of the other party in a private chat. Returned only in
   *   [getChat](https://core.telegram.org/bots/api/#getchat).
-  * @property {boolean} [has_private_forwards] *Optional*. *True*, if privacy settings of the other party in the private chat
-  *   allows to use `tg://user?id=<user_id>` links only in chats with the user.
-  *   Returned only in [getChat](https://core.telegram.org/bots/api/#getchat).
-  * @property {boolean} [has_restricted_voice_and_video_messages] *Optional*. *True*, if the privacy settings of the other party restrict sending
-  *   voice and video note messages in the private chat. Returned only in
+  * @property {boolean} [has_private_forwards] *Optional*. *True*, if privacy settings of the other party in the
+  *   private chat allows to use `tg://user?id=<user_id>` links only in chats with the user. Returned only in
   *   [getChat](https://core.telegram.org/bots/api/#getchat).
-  * @property {boolean} [join_to_send_messages] *Optional*. *True*, if users need to join the supergroup before they can send
-  *   messages. Returned only in
+  * @property {boolean} [has_restricted_voice_and_video_messages] *Optional*. *True*, if the privacy settings of the
+  *   other party restrict sending voice and video note messages in the private chat. Returned only in
+  *   [getChat](https://core.telegram.org/bots/api/#getchat).
+  * @property {boolean} [join_to_send_messages] *Optional*. *True*, if users need to join the supergroup before they
+  *   can send messages. Returned only in
   *   [getChat](https://core.telegram.org/bots/api/#getchat).
   * @property {boolean} [join_by_request] *Optional*. *True*, if all users directly joining the supergroup need to be
   *   approved by supergroup administrators. Returned only in
@@ -139,7 +147,8 @@
   * @property {number} [slow_mode_delay] *Optional*. For supergroups, the minimum allowed delay between consecutive
   *   messages sent by each unpriviledged user; in seconds. Returned only in
   *   [getChat](https://core.telegram.org/bots/api/#getchat).
-  * @property {number} [message_auto_delete_time] *Optional*. The time after which all messages sent to the chat will be
+  * @property {number} [message_auto_delete_time] *Optional*. The time after which all messages sent to the chat will
+  *   be
   *   automatically deleted; in seconds. Returned only in
   *   [getChat](https://core.telegram.org/bots/api/#getchat).
   * @property {boolean} [has_aggressive_anti_spam_enabled] *Optional*. *True*, if aggressive anti-spam checks are
@@ -147,12 +156,12 @@
  *     Returned only in [getChat](https://core.telegram.org/bots/api/#getchat).
   * @property {boolean} [has_hidden_members] *Optional*. *True*, if non-administrators can only get the list of bots
   *    and administrators in the chat. Returned only in [getChat](https://core.telegram.org/bots/api/#getchat).
-  * @property {boolean} [has_protected_content] *Optional*. *True*, if messages from the chat can't be forwarded to other chats.
-  *   Returned only in [getChat](https://core.telegram.org/bots/api/#getchat).
+  * @property {boolean} [has_protected_content] *Optional*. *True*, if messages from the chat can't be forwarded to
+  *   other chats. Returned only in [getChat](https://core.telegram.org/bots/api/#getchat).
   * @property {string} [sticker_set_name] *Optional*. For supergroups, name of group sticker set. Returned only in
   *   [getChat](https://core.telegram.org/bots/api/#getchat).
-  * @property {boolean} [can_set_sticker_set] *Optional*. *True*, if the bot can change the group sticker set. Returned only
-  *   in [getChat](https://core.telegram.org/bots/api/#getchat).
+  * @property {boolean} [can_set_sticker_set] *Optional*. *True*, if the bot can change the group sticker set. Returned
+  *   only in [getChat](https://core.telegram.org/bots/api/#getchat).
   * @property {number} [linked_chat_id] *Optional*. Unique identifier for the linked chat, i.e. the discussion group
   *   identifier for a channel and vice versa; for supergroups and channel chats. This
   *   identifier may be greater than 32 bits and some programming languages may have
@@ -170,8 +179,8 @@
   *
   * @typedef {object} Message
   * @property {number} message_id Unique message identifier inside this chat
-  * @property {number} [message_thread_id] *Optional*. Unique identifier of a message thread to which the message belongs;
-  *   for supergroups only
+  * @property {number} [message_thread_id] *Optional*. Unique identifier of a message thread to which the message
+  *   belongs; for supergroups only
   * @property {User} [from] *Optional*. Sender of the message; empty for messages sent to channels. For
   *   backward compatibility, the field contains a fake sender user in non-channel
   *   chats, if the message was sent on behalf of a chat.
@@ -186,27 +195,26 @@
   * @property {User} [forward_from] *Optional*. For forwarded messages, sender of the original message
   * @property {Chat} [forward_from_chat] *Optional*. For messages forwarded from channels or from anonymous
   *   administrators, information about the original sender chat
-  * @property {number} [forward_from_message_id] *Optional*. For messages forwarded from channels, identifier of the original
-  *   message in the channel
-  * @property {string} [forward_signature] *Optional*. For forwarded messages that were originally sent in channels or by
-  *   an anonymous chat administrator, signature of the message sender if present
-  * @property {string} [forward_sender_name] *Optional*. Sender's name for messages forwarded from users who disallow adding
-  *   a link to their account in forwarded messages
+  * @property {number} [forward_from_message_id] *Optional*. For messages forwarded from channels, identifier of the
+  *   original message in the channel
+  * @property {string} [forward_signature] *Optional*. For forwarded messages that were originally sent in channels or
+  *   by an anonymous chat administrator, signature of the message sender if present
+  * @property {string} [forward_sender_name] *Optional*. Sender's name for messages forwarded from users who disallow
+  *   adding a link to their account in forwarded messages
   * @property {number} [forward_date] *Optional*. For forwarded messages, date the original message was sent in Unix
   *   time
   * @property {boolean} [is_topic_message] *Optional*. *True*, if the message is sent to a forum topic
-  * @property {boolean} [is_automatic_forward] *Optional*. *True*, if the message is a channel post that was automatically
-  *   forwarded to the connected discussion group
-  * @property {Message} [reply_to_message] *Optional*. For replies, the original message. Note that the Message object in
-  *   this field will not contain further *reply\_to\_message* fields even if it
-  *   itself is a reply.
+  * @property {boolean} [is_automatic_forward] *Optional*. *True*, if the message is a channel post that was
+  *   automatically forwarded to the connected discussion group
+  * @property {Message} [reply_to_message] *Optional*. For replies, the original message. Note that the Message object
+  *   in this field will not contain further *reply\_to\_message* fields even if it itself is a reply.
   * @property {User} [via_bot] *Optional*. Bot through which the message was sent
   * @property {number} [edit_date] *Optional*. Date the message was last edited in Unix time
   * @property {boolean} [has_protected_content] *Optional*. *True*, if the message can't be forwarded
   * @property {string} [media_group_id] *Optional*. The unique identifier of a media message group this message belongs
   *   to
-  * @property {string} [author_signature] *Optional*. Signature of the post author for messages in channels, or the custom
-  *   title of an anonymous group administrator
+  * @property {string} [author_signature] *Optional*. Signature of the post author for messages in channels, or the
+  *   custom title of an anonymous group administrator
   * @property {string} [text] *Optional*. For text messages, the actual UTF-8 text of the message
   * @property {MessageEntity[]} [entities] *Optional*. For text messages, special entities like usernames, URLs, bot
   *   commands, etc. that appear in the text
@@ -223,8 +231,8 @@
   *   the video message
   * @property {Voice} [voice] *Optional*. Message is a voice message, information about the file
   * @property {string} [caption] *Optional*. Caption for the animation, audio, document, photo, video or voice
-  * @property {MessageEntity[]} [caption_entities] *Optional*. For messages with a caption, special entities like usernames, URLs,
-  *   bot commands, etc. that appear in the caption
+  * @property {MessageEntity[]} [caption_entities] *Optional*. For messages with a caption, special entities like
+  *   usernames, URLs, bot commands, etc. that appear in the caption
   * @property {boolean} [has_media_spoiler] *Optional*. `True`, if the message media is covered by a spoiler animation
   * @property {Contact} [contact] *Optional*. Message is a shared contact, information about the contact
   * @property {Dice} [dice] *Optional*. Message is a dice with random value
@@ -242,56 +250,58 @@
   * @property {PhotoSize[]} [new_chat_photo] *Optional*. A chat photo was change to this value
   * @property {boolean} [delete_chat_photo] *Optional*. Service message: the chat photo was deleted
   * @property {boolean} [group_chat_created] *Optional*. Service message: the group has been created
-  * @property {boolean} [supergroup_chat_created] *Optional*. Service message: the supergroup has been created. This field can't
-  *   be received in a message coming through updates, because bot can't be a member
-  *   of a supergroup when it is created. It can only be found in reply\_to\_message
-  *   if someone replies to a very first message in a directly created supergroup.
-  * @property {boolean} [channel_chat_created] *Optional*. Service message: the channel has been created. This field can't be
-  *   received in a message coming through updates, because bot can't be a member of a
-  *   channel when it is created. It can only be found in reply\_to\_message if
-  *   someone replies to a very first message in a channel.
-  * @property {MessageAutoDeleteTimerChanged} [message_auto_delete_timer_changed] *Optional*. Service message: auto-delete timer settings changed in the chat
+  * @property {boolean} [supergroup_chat_created] *Optional*. Service message: the supergroup has been created. This
+  *   field can't be received in a message coming through updates, because bot can't be a member of a supergroup when
+  *   it is created. It can only be found in reply\_to\_message if someone replies to a very first message in a
+  *   directly created supergroup.
+  * @property {boolean} [channel_chat_created] *Optional*. Service message: the channel has been created. This field
+  *   can't be received in a message coming through updates, because bot can't be a member of a channel when it is
+  *   created. It can only be found in reply\_to\_message if someone replies to a very first message in a channel.
+  * @property {MessageAutoDeleteTimerChanged} [message_auto_delete_timer_changed] *Optional*. Service message:
+  *   auto-delete timer settings changed in the chat
   * @property {number} [migrate_to_chat_id] *Optional*. The group has been migrated to a supergroup with the specified
   *   identifier. This number may have more than 32 significant bits and some
   *   programming languages may have difficulty/silent defects in interpreting it. But
   *   it has at most 52 significant bits, so a signed 64-bit integer or
   *   double-precision float type are safe for storing this identifier.
-  * @property {number} [migrate_from_chat_id] *Optional*. The supergroup has been migrated from a group with the specified
-  *   identifier. This number may have more than 32 significant bits and some
-  *   programming languages may have difficulty/silent defects in interpreting it. But
-  *   it has at most 52 significant bits, so a signed 64-bit integer or
-  *   double-precision float type are safe for storing this identifier.
+  * @property {number} [migrate_from_chat_id] *Optional*. The supergroup has been migrated from a group with the
+  *   specified identifier. This number may have more than 32 significant bits and some programming languages may have
+  *   difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer
+  *   or double-precision float type are safe for storing this identifier.
   * @property {Message} [pinned_message] *Optional*. Specified message was pinned. Note that the Message object in this
   *   field will not contain further *reply\_to\_message* fields even if it is itself
   *   a reply.
   * @property {Invoice} [invoice] *Optional*. Message is an invoice for a
   *   [payment](https://core.telegram.org/bots/api/#payments), information about the
   *   invoice. [More about payments »](https://core.telegram.org/bots/api/#payments)
-  * @property {SuccessfulPayment} [successful_payment] *Optional*. Message is a service message about a successful payment, information
-  *   about the payment. [More about payments
+  * @property {SuccessfulPayment} [successful_payment] *Optional*. Message is a service message about a successful
+  *   payment, information about the payment. [More about payments
   *   »](https://core.telegram.org/bots/api/#payments)
   * @property {UserShared} [user_shared] *Optional*. Service message: a user was shared with the bot
   * @property {ChatShared} [chat_shared] *Optional*. Service message: a chat was shared with the bot
   * @property {string} [connected_website] *Optional*. The domain name of the website on which the user has logged in.
   *   [More about Telegram Login »](https://core.telegram.org/widgets/login)
   * @property {PassportData} [passport_data] *Optional*. Telegram Passport data
-  * @property {ProximityAlertTriggered} [proximity_alert_triggered] *Optional*. Service message. A user in the chat triggered another user's
-  *   proximity alert while sharing Live Location.
+  * @property {ProximityAlertTriggered} [proximity_alert_triggered] *Optional*. Service message. A user in the chat
+  *   triggered another user's proximity alert while sharing Live Location.
   * @property {ForumTopicCreated} [forum_topic_created] *Optional*. Service message: forum topic created
   * @property {ForumTopicClosed} [forum_topic_closed] *Optional*. Service message: forum topic closed
   * @property {ForumTopicReopened} [forum_topic_reopened] *Optional*. Service message: forum topic reopened
-  * @property {WriteAccessAllowed} [write_access_allowed] *Optional*. Service message: the user allowed the bot added to the attachment
-  *   menu to write messages
-  * @property {GeneralForumTopicUnhidden} [general_forum_topic_unhidden] *Optional*. Service message: the 'General' forum topic unhidden
-  * @property {GeneralForumTopicHidden} [general_forum_topic_hidden] *Optional*. Service message: the 'General' forum topic hidden
+  * @property {WriteAccessAllowed} [write_access_allowed] *Optional*. Service message: the user allowed the bot added
+  *   to the attachment menu to write messages
+  * @property {GeneralForumTopicUnhidden} [general_forum_topic_unhidden] *Optional*. Service message: the 'General'
+  *   forum topic unhidden
+  * @property {GeneralForumTopicHidden} [general_forum_topic_hidden] *Optional*. Service message: the 'General' forum
+  *   topic hidden
   * @property {ForumTopicEdited} [forum_topic_edited] *Optional*. Service message: forum topic edited
   * @property {VideoChatScheduled} [video_chat_scheduled] *Optional*. Service message: video chat scheduled
   * @property {VideoChatStarted} [video_chat_started] *Optional*. Service message: video chat started
   * @property {VideoChatEnded} [video_chat_ended] *Optional*. Service message: video chat ended
-  * @property {VideoChatParticipantsInvited} [video_chat_participants_invited] *Optional*. Service message: new participants invited to a video chat
+  * @property {VideoChatParticipantsInvited} [video_chat_participants_invited] *Optional*. Service message: new
+  *   participants invited to a video chat
   * @property {WebAppData} [web_app_data] *Optional*. Service message: data sent by a Web App
-  * @property {InlineKeyboardMarkup} [reply_markup] *Optional*. Inline keyboard attached to the message. `login_url` buttons are
-  *   represented as ordinary `url` buttons.
+  * @property {InlineKeyboardMarkup} [reply_markup] *Optional*. Inline keyboard attached to the message. `login_url`
+  *   buttons are represented as ordinary `url` buttons.
   * @see https://core.telegram.org/bots/api/#message
 */
 
@@ -308,7 +318,8 @@
   * etc.
   *
   * @typedef {object} MessageEntity
-  * @property {'mention'|'hashtag'|'cashtag'|'bot_command'|'url'|'email'|'phone_number'|'bold'|'italic'|'underline'|'strikethrough'|'spoiler'|'code'|'pre'|'text_link'|'text_mention'|'custom_emoji'} type Type of the entity. Currently, can be “mention” (`@username`), “hashtag”
+  * @property {'mention'|'hashtag'|'cashtag'|'bot_command'|'url'|'email'|'phone_number'|'bold'|'italic'|'underline'|'strikethrough'|'spoiler'|'code'|'pre'|'text_link'|'text_mention'|'custom_emoji'}
+  *   type Type of the entity. Currently, can be “mention” (`@username`), “hashtag”
   *   (`#hashtag`), “cashtag” (`$USD`), “bot\_command” (`/start@jobs_bot`), “url”
   *   (`https://telegram.org`), “email” (`do-not-reply@telegram.org`), “phone\_number”
   *   (`+1-212-555-0123`), “bold” (**bold text**), “italic” (*italic text*),
@@ -326,7 +337,8 @@
   *   the text
   * @property {User} [user] *Optional*. For “text\_mention” only, the mentioned user
   * @property {string} [language] *Optional*. For “pre” only, the programming language of the entity text
-  * @property {string} [custom_emoji_id] *Optional*. For “custom\_emoji” only, unique identifier of the custom emoji. Use
+  * @property {string} [custom_emoji_id] *Optional*. For “custom\_emoji” only, unique identifier of the custom emoji.
+  *   Use
   *   [getCustomEmojiStickers](https://core.telegram.org/bots/api/#getcustomemojistickers)
   *   to get full information about the sticker
   * @see https://core.telegram.org/bots/api/#messageentity
@@ -521,13 +533,13 @@
   * @property {boolean} is_anonymous *True*, if the poll is anonymous
   * @property {'regular'|'quiz'} type Poll type, currently can be “regular” or “quiz”
   * @property {boolean} allows_multiple_answers *True*, if the poll allows multiple answers
-  * @property {number} [correct_option_id] *Optional*. 0-based identifier of the correct answer option. Available only for
-  *   polls in the quiz mode, which are closed, or was sent (not forwarded) by the bot
-  *   or to the private chat with the bot.
+  * @property {number} [correct_option_id] *Optional*. 0-based identifier of the correct answer option. Available only
+  *   for polls in the quiz mode, which are closed, or was sent (not forwarded) by the bot or to the private chat with
+  *   the bot.
   * @property {string} [explanation] *Optional*. Text that is shown when a user chooses an incorrect answer or taps
   *   on the lamp icon in a quiz-style poll, 0-200 characters
-  * @property {MessageEntity[]} [explanation_entities] *Optional*. Special entities like usernames, URLs, bot commands, etc. that
-  *   appear in the *explanation*
+  * @property {MessageEntity[]} [explanation_entities] *Optional*. Special entities like usernames, URLs, bot commands,
+  *   etc. that appear in the *explanation*
   * @property {number} [open_period] *Optional*. Amount of time in seconds the poll will be active after creation
   * @property {number} [close_date] *Optional*. Point in time (Unix timestamp) when the poll will be automatically
   *   closed
@@ -540,14 +552,15 @@
   * @typedef {object} Location
   * @property {number} longitude Longitude as defined by sender
   * @property {number} latitude Latitude as defined by sender
-  * @property {number} [horizontal_accuracy] *Optional*. The radius of uncertainty for the location, measured in meters;
+  * @property {number} [horizontal_accuracy] *Optional*. The radius of uncertainty for the location, measured in
+  *   meters;
   *   0-1500
   * @property {number} [live_period] *Optional*. Time relative to the message sending date, during which the location
   *   can be updated; in seconds. For active live locations only.
   * @property {number} [heading] *Optional*. The direction in which user is moving, in degrees; 1-360. For active
   *   live locations only.
-  * @property {number} [proximity_alert_radius] *Optional*. The maximum distance for proximity alerts about approaching another
-  *   chat member, in meters. For sent live locations only.
+  * @property {number} [proximity_alert_radius] *Optional*. The maximum distance for proximity alerts about approaching
+  *   another chat member, in meters. For sent live locations only.
   * @see https://core.telegram.org/bots/api/#location
 */
 
@@ -621,8 +634,8 @@
  *
  * @typedef {object} ForumTopicEdited
  * @property {string} [name] *Optional*. New name of the topic, if it was edited
- * @property {string} [icon_custom_emoji_id] *Optional*. New identifier of the custom emoji shown as the topic icon, if it
- *   was edited; an empty string if the icon was removed
+ * @property {string} [icon_custom_emoji_id] *Optional*. New identifier of the custom emoji shown as the topic icon, if
+ *   it was edited; an empty string if the icon was removed
  * @see https://core.telegram.org/bots/api/#forumtopicedited
  */
 
@@ -775,18 +788,20 @@
   * @typedef {object} ReplyKeyboardMarkup
   * @property {KeyboardButton[][]} keyboard Array of button rows, each represented by an Array of
   *   [KeyboardButton](https://core.telegram.org/bots/api/#keyboardbutton) objects
-  * @property {boolean} [resize_keyboard] *Optional*. Requests clients to resize the keyboard vertically for optimal fit
+  * @property {boolean} [resize_keyboard] *Optional*. Requests clients to resize the keyboard vertically for optimal
+  *   fit
   *   (e.g., make the keyboard smaller if there are just two rows of buttons).
   *   Defaults to *false*, in which case the custom keyboard is always of the same
   *   height as the app's standard keyboard.
   * @property {boolean} [is_persistent] *Optional*. Requests clients to always show the keyboard when the regular
-  *   keyboard is hidden. Defaults to *false*, in which case the custom keyboard can be hidden and opened with a keyboard icon.
-  * @property {boolean} [one_time_keyboard] *Optional*. Requests clients to hide the keyboard as soon as it's been used. The
-  *   keyboard will still be available, but clients will automatically display the
-  *   usual letter-keyboard in the chat - the user can press a special button in the
-  *   input field to see the custom keyboard again. Defaults to *false*.
-  * @property {string} [input_field_placeholder] *Optional*. The placeholder to be shown in the input field when the keyboard is
-  *   active; 1-64 characters
+  *   keyboard is hidden. Defaults to *false*, in which case the custom keyboard can be hidden and opened with a
+  *   keyboard icon.
+  * @property {boolean} [one_time_keyboard] *Optional*. Requests clients to hide the keyboard as soon as it's been
+  *   used. The keyboard will still be available, but clients will automatically display the usual letter-keyboard in
+  *   the chat - the user can press a special button in the input field to see the custom keyboard again. Defaults to
+  *   *false*.
+  * @property {string} [input_field_placeholder] *Optional*. The placeholder to be shown in the input field when the
+  *   keyboard is active; 1-64 characters
   * @property {boolean} [selective] *Optional*. Use this parameter if you want to show the keyboard to specific
   *   users only. Targets: 1) users that are @mentioned in the *text* of the
   *   [Message](https://core.telegram.org/bots/api/#message) object; 2) if the bot's
@@ -811,15 +826,15 @@
   * @property {KeyboardButtonRequestUser} [request_user] *Optional.* If specified, pressing the button will open a list of suitable
   *   users. Tapping on any user will send their identifier to the bot in a
   *   “user\_shared” service message. Available in private chats only.
-  * @property {KeyboardButtonRequestChat} [request_chat] *Optional.* If specified, pressing the button will open a list of suitable
-  *   chats. Tapping on a chat will send its identifier to the bot in a “chat\_shared”
-  *   service message. Available in private chats only.
+  * @property {KeyboardButtonRequestChat} [request_chat] *Optional.* If specified, pressing the button will open a list
+  *   of suitable chats. Tapping on a chat will send its identifier to the bot in a “chat\_shared” service message.
+  *   Available in private chats only.
   * @property {boolean} [request_contact] *Optional*. If *True*, the user's phone number will be sent as a contact when
   *   the button is pressed. Available in private chats only.
-  * @property {boolean} [request_location] *Optional*. If *True*, the user's current location will be sent when the button
-  *   is pressed. Available in private chats only.
-  * @property {KeyboardButtonPollType} [request_poll] *Optional*. If specified, the user will be asked to create a poll and send it to
-  *   the bot when the button is pressed. Available in private chats only.
+  * @property {boolean} [request_location] *Optional*. If *True*, the user's current location will be sent when the
+  *   button is pressed. Available in private chats only.
+  * @property {KeyboardButtonPollType} [request_poll] *Optional*. If specified, the user will be asked to create a poll
+  *   and send it to the bot when the button is pressed. Available in private chats only.
   * @property {WebAppInfo} [web_app] *Optional*. If specified, the described [Web
   *   App](https://core.telegram.org/bots/webapps) will be launched when the button is
   *   pressed. The Web App will be able to send a “web\_app\_data” service message.
@@ -854,17 +869,18 @@
  *   supergroup chat.
  * @property {boolean} [chat_is_forum] *Optional*. Pass *True* to request a forum supergroup, pass *False* to request a
  *   non-forum chat. If not specified, no additional restrictions are applied.
- * @property {boolean} [chat_has_username] *Optional*. Pass *True* to request a supergroup or a channel with a username,
+ * @property {boolean} [chat_has_username] *Optional*. Pass *True* to request a supergroup or a channel with a
+ *   username,
  *   pass *False* to request a chat without a username. If not specified, no
  *   additional restrictions are applied.
  * @property {boolean} [chat_is_created] *Optional*. Pass *True* to request a chat owned by the user. Otherwise, no
  *   additional restrictions are applied.
- * @property {ChatAdministratorRights} [user_administrator_rights] *Optional*. A JSON-serialized object listing the required administrator rights
- *   of the user in the chat. The rights must be a superset of
+ * @property {ChatAdministratorRights} [user_administrator_rights] *Optional*. A JSON-serialized object listing the
+ *   required administrator rights of the user in the chat. The rights must be a superset of
  *   *bot\_administrator\_rights*. If not specified, no additional restrictions are
  *   applied.
- * @property {ChatAdministratorRights} [bot_administrator_rights] *Optional*. A JSON-serialized object listing the required administrator rights
- *   of the bot in the chat. The rights must be a subset of
+ * @property {ChatAdministratorRights} [bot_administrator_rights] *Optional*. A JSON-serialized object listing the
+ *   required administrator rights of the bot in the chat. The rights must be a subset of
  *   *user\_administrator\_rights*. If not specified, no additional restrictions are
  *   applied.
  * @property {boolean} [bot_is_member] *Optional*. Pass *True* to request a chat with the bot as a member. Otherwise,
@@ -940,10 +956,9 @@
   * @property {LoginUrl} [login_url] *Optional*. An HTTPS URL used to automatically authorize the user. Can be used
   *   as a replacement for the [Telegram Login
   *   Widget](https://core.telegram.org/widgets/login).
-  * @property {string} [switch_inline_query] *Optional*. If set, pressing the button will prompt the user to select one of
-  *   their chats, open that chat and insert the bot's username and the specified
-  *   inline query in the input field. May be empty, in which case just the bot's
-  *   username will be inserted.
+  * @property {string} [switch_inline_query] *Optional*. If set, pressing the button will prompt the user to select one
+  *   of their chats, open that chat and insert the bot's username and the specified inline query in the input field.
+  *   May be empty, in which case just the bot's username will be inserted.
   *
   *   **Note:** This offers an easy way for users to start using your bot in [inline
   *   mode](https://core.telegram.org/bots/inline) when they are currently in a
@@ -951,14 +966,14 @@
   *   [*switch\_pm…*](https://core.telegram.org/bots/api/#answerinlinequery) actions -
   *   in this case the user will be automatically returned to the chat they switched
   *   from, skipping the chat selection screen.
-  * @property {string} [switch_inline_query_current_chat] *Optional*. If set, pressing the button will insert the bot's username and the
-  *   specified inline query in the current chat's input field. May be empty, in which
-  *   case only the bot's username will be inserted.
+  * @property {string} [switch_inline_query_current_chat] *Optional*. If set, pressing the button will insert the bot's
+  *   username and the specified inline query in the current chat's input field. May be empty, in which case only the
+  *   bot's username will be inserted.
   *
   *   This offers a quick way for the user to open your bot in inline mode in the same
   *   chat - good for selecting something from multiple options.
-  * @property {CallbackGame} [callback_game] *Optional*. Description of the game that will be launched when the user presses
-  *   the button.
+  * @property {CallbackGame} [callback_game] *Optional*. Description of the game that will be launched when the user
+  *   presses the button.
   *
   *   **NOTE:** This type of button **must** always be the first button in the first
   *   row.
@@ -978,7 +993,6 @@
   *
   * Telegram apps support these buttons as of [version
   * 5.7](https://telegram.org/blog/privacy-discussions-web-bots#meet-seamless-web-bots).
-
   * Sample bot: [@discussbot](https://t.me/discussbot)
   *
   *
@@ -1000,8 +1014,8 @@
   *   your domain to the
   *   bot](https://core.telegram.org/widgets/login#linking-your-domain-to-the-bot) for
   *   more details.
-  * @property {boolean} [request_write_access] *Optional*. Pass *True* to request the permission for your bot to send messages
-  *   to the user.
+  * @property {boolean} [request_write_access] *Optional*. Pass *True* to request the permission for your bot to send
+  *   messages to the user.
   * @see https://core.telegram.org/bots/api/#loginurl
 */
 
@@ -1026,8 +1040,8 @@
   *   [games](https://core.telegram.org/bots/api/#games).
   * @property {string} [data] *Optional*. Data associated with the callback button. Be aware that the message
   *   originated the query can contain no callback buttons with this data.
-  * @property {string} [game_short_name] *Optional*. Short name of a [Game](https://core.telegram.org/bots/api/#games) to
-  *   be returned, serves as the unique identifier for the game
+  * @property {string} [game_short_name] *Optional*. Short name of a [Game](https://core.telegram.org/bots/api/#games)
+  *   to be returned, serves as the unique identifier for the game
   * @see https://core.telegram.org/bots/api/#callbackquery
 */
 
@@ -1041,8 +1055,8 @@
   * @typedef {object} ForceReply
   * @property {boolean} force_reply Shows reply interface to the user, as if they manually selected the bot's
   *   message and tapped 'Reply'
-  * @property {string} [input_field_placeholder] *Optional*. The placeholder to be shown in the input field when the reply is
-  *   active; 1-64 characters
+  * @property {string} [input_field_placeholder] *Optional*. The placeholder to be shown in the input field when the
+  *   reply is active; 1-64 characters
   * @property {boolean} [selective] *Optional*. Use this parameter if you want to force reply from specific users
   *   only. Targets: 1) users that are @mentioned in the *text* of the
   *   [Message](https://core.telegram.org/bots/api/#message) object; 2) if the bot's
@@ -1057,14 +1071,12 @@
   * @typedef {object} ChatPhoto
   * @property {string} small_file_id File identifier of small (160x160) chat photo. This file\_id can be used only
   *   for photo download and only for as long as the photo is not changed.
-  * @property {string} small_file_unique_id Unique file identifier of small (160x160) chat photo, which is supposed to be
-  *   the same over time and for different bots. Can't be used to download or reuse
-  *   the file.
+  * @property {string} small_file_unique_id Unique file identifier of small (160x160) chat photo, which is supposed to
+  *   be the same over time and for different bots. Can't be used to download or reuse the file.
   * @property {string} big_file_id File identifier of big (640x640) chat photo. This file\_id can be used only for
   *   photo download and only for as long as the photo is not changed.
-  * @property {string} big_file_unique_id Unique file identifier of big (640x640) chat photo, which is supposed to be the
-  *   same over time and for different bots. Can't be used to download or reuse the
-  *   file.
+  * @property {string} big_file_unique_id Unique file identifier of big (640x640) chat photo, which is supposed to be
+  *   the same over time and for different bots. Can't be used to download or reuse the file.
   * @see https://core.telegram.org/bots/api/#chatphoto
 */
 
@@ -1100,19 +1112,20 @@
   * @property {boolean} can_delete_messages *True*, if the administrator can delete messages of other users
   * @property {boolean} can_manage_video_chats *True*, if the administrator can manage video chats
   * @property {boolean} can_restrict_members *True*, if the administrator can restrict, ban or unban chat members
-  * @property {boolean} can_promote_members *True*, if the administrator can add new administrators with a subset of their
-  *   own privileges or demote administrators that they have promoted, directly or
-  *   indirectly (promoted by administrators that were appointed by the user)
+  * @property {boolean} can_promote_members *True*, if the administrator can add new administrators with a subset of
+  *   their own privileges or demote administrators that they have promoted, directly or indirectly (promoted by
+  *   administrators that were appointed by the user)
   * @property {boolean} can_change_info *True*, if the user is allowed to change the chat title, photo and other
   *   settings
   * @property {boolean} can_invite_users *True*, if the user is allowed to invite new users to the chat
-  * @property {boolean} [can_post_messages] *Optional*. *True*, if the administrator can post in the channel; channels only
-  * @property {boolean} [can_edit_messages] *Optional*. *True*, if the administrator can edit messages of other users and
-  *   can pin messages; channels only
+  * @property {boolean} [can_post_messages] *Optional*. *True*, if the administrator can post in the channel; channels
+  *   only
+  * @property {boolean} [can_edit_messages] *Optional*. *True*, if the administrator can edit messages of other users
+  *   and can pin messages; channels only
   * @property {boolean} [can_pin_messages] *Optional*. *True*, if the user is allowed to pin messages; groups and
   *   supergroups only
-  * @property {boolean} [can_manage_topics] *Optional*. *True*, if the user is allowed to create, rename, close, and reopen
-  *   forum topics; supergroups only
+  * @property {boolean} [can_manage_topics] *Optional*. *True*, if the user is allowed to create, rename, close, and
+  *   reopen forum topics; supergroups only
   * @see https://core.telegram.org/bots/api/#chatadministratorrights
 */
 
@@ -1133,7 +1146,8 @@
   * [ChatMemberBanned](https://core.telegram.org/bots/api/#chatmemberbanned)
   *
   *
-  * @typedef {ChatMemberOwner|ChatMemberAdministrator|ChatMemberMember|ChatMemberRestricted|ChatMemberLeft|ChatMemberBanned} ChatMember
+  * @typedef {ChatMemberOwner|ChatMemberAdministrator|ChatMemberMember|ChatMemberRestricted|ChatMemberLeft|ChatMemberBanned}
+  *   ChatMember
   * @see https://core.telegram.org/bots/api/#chatmember
 */
 
@@ -1167,19 +1181,20 @@
   * @property {boolean} can_delete_messages *True*, if the administrator can delete messages of other users
   * @property {boolean} can_manage_video_chats *True*, if the administrator can manage video chats
   * @property {boolean} can_restrict_members *True*, if the administrator can restrict, ban or unban chat members
-  * @property {boolean} can_promote_members *True*, if the administrator can add new administrators with a subset of their
-  *   own privileges or demote administrators that they have promoted, directly or
-  *   indirectly (promoted by administrators that were appointed by the user)
+  * @property {boolean} can_promote_members *True*, if the administrator can add new administrators with a subset of
+  *   their own privileges or demote administrators that they have promoted, directly or indirectly (promoted by
+  *   administrators that were appointed by the user)
   * @property {boolean} can_change_info *True*, if the user is allowed to change the chat title, photo and other
   *   settings
   * @property {boolean} can_invite_users *True*, if the user is allowed to invite new users to the chat
-  * @property {boolean} [can_post_messages] *Optional*. *True*, if the administrator can post in the channel; channels only
-  * @property {boolean} [can_edit_messages] *Optional*. *True*, if the administrator can edit messages of other users and
-  *   can pin messages; channels only
+  * @property {boolean} [can_post_messages] *Optional*. *True*, if the administrator can post in the channel; channels
+  *   only
+  * @property {boolean} [can_edit_messages] *Optional*. *True*, if the administrator can edit messages of other users
+  *   and can pin messages; channels only
   * @property {boolean} [can_pin_messages] *Optional*. *True*, if the user is allowed to pin messages; groups and
   *   supergroups only
-  * @property {boolean} [can_manage_topics] *Optional*. *True*, if the user is allowed to create, rename, close, and reopen
-  *   forum topics; supergroups only
+  * @property {boolean} [can_manage_topics] *Optional*. *True*, if the user is allowed to create, rename, close, and
+  *   reopen forum topics; supergroups only
   * @property {string} [custom_title] *Optional*. Custom title for this user
   * @see https://core.telegram.org/bots/api/#chatmemberadministrator
 */
@@ -1213,20 +1228,22 @@
   * @property {boolean} can_send_video_notes *True*, if the user is allowed to send video notes
   * @property {boolean} can_send_voice_notes *True*, if the user is allowed to send voice notes
   * @property {boolean} can_send_polls *True*, if the user is allowed to send polls
-  * @property {boolean} can_send_other_messages *True*, if the user is allowed to send animations, games, stickers and use
-  *   inline bots
-  * @property {boolean} can_add_web_page_previews *True*, if the user is allowed to add web page previews to their messages
+  * @property {boolean} can_send_other_messages *True*, if the user is allowed to send animations, games, stickers and
+  *   use inline bots
+  * @property {boolean} can_add_web_page_previews *True*, if the user is allowed to add web page previews to their
+  *   messages
   * @property {boolean} can_change_info *True*, if the user is allowed to change the chat title, photo and other
   *   settings
   * @property {boolean} can_invite_users *True*, if the user is allowed to invite new users to the chat
   * @property {boolean} can_pin_messages *True*, if the user is allowed to pin messages
   * @property {boolean} can_manage_topics *True*, if the user is allowed to create forum topics
-  * @property {boolean} can_send_media_messages *True*, if the user is allowed to send audios, documents, photos, videos, video
-  *   notes and voice notes
+  * @property {boolean} can_send_media_messages *True*, if the user is allowed to send audios, documents, photos,
+  *   videos, video notes and voice notes
   * @property {boolean} can_send_polls *True*, if the user is allowed to send polls
-  * @property {boolean} can_send_other_messages *True*, if the user is allowed to send animations, games, stickers and use
-  *   inline bots
-  * @property {boolean} can_add_web_page_previews *True*, if the user is allowed to add web page previews to their messages
+  * @property {boolean} can_send_other_messages *True*, if the user is allowed to send animations, games, stickers and
+  *   use inline bots
+  * @property {boolean} can_add_web_page_previews *True*, if the user is allowed to add web page previews to their
+  *   messages
   * @property {number} until_date Date when restrictions will be lifted for this user; unix time. If 0, then the
   *   user is restricted forever
   * @see https://core.telegram.org/bots/api/#chatmemberrestricted
@@ -1265,8 +1282,8 @@
   * @property {number} date Date the change was done in Unix time
   * @property {ChatMember} old_chat_member Previous information about the chat member
   * @property {ChatMember} new_chat_member New information about the chat member
-  * @property {ChatInviteLink} [invite_link] *Optional*. Chat invite link, which was used by the user to join the chat; for
-  *   joining by invite link events only.
+  * @property {ChatInviteLink} [invite_link] *Optional*. Chat invite link, which was used by the user to join the chat;
+  *   for joining by invite link events only.
   * @see https://core.telegram.org/bots/api/#chatmemberupdated
 */
 
@@ -1283,7 +1300,8 @@
   *   until the join request is processed, assuming no other administrator contacted the user.
   * @property {number} date Date the request was sent in Unix time
   * @property {string} [bio] *Optional*. Bio of the user.
-  * @property {ChatInviteLink} [invite_link] *Optional*. Chat invite link that was used by the user to send the join request
+  * @property {ChatInviteLink} [invite_link] *Optional*. Chat invite link that was used by the user to send the join
+  *   request
   * @see https://core.telegram.org/bots/api/#chatjoinrequest
 */
 
@@ -1293,8 +1311,8 @@
   * @typedef {object} ChatPermissions
   * @property {boolean} [can_send_messages] *Optional*. *True*, if the user is allowed to send text messages, contacts,
   *   invoices, locations and venues
-  * @property {boolean} [can_send_media_messages] *Optional*. *True*, if the user is allowed to send audios, documents, photos,
-  *   videos, video notes and voice notes, implies can\_send\_messages
+  * @property {boolean} [can_send_media_messages] *Optional*. *True*, if the user is allowed to send audios, documents,
+  *   photos, videos, video notes and voice notes, implies can\_send\_messages
   * @property {boolean} [can_send_audios] *Optional*. *True*, if the user is allowed to send audios
   * @property {boolean} [can_send_documents] *Optional*. *True*, if the user is allowed to send documents
   * @property {boolean} [can_send_photos] *Optional*. *True*, if the user is allowed to send photos
@@ -1304,15 +1322,17 @@
   * @property {boolean} [can_send_polls] *Optional*. *True*, if the user is allowed to send polls
   * @property {boolean} [can_send_other_messages] *Optional*. *True*, if the user is allowed to send animations,
   *   games, stickers and use inline bots
-  * @property {boolean} [can_add_web_page_previews] *Optional*. *True*, if the user is allowed to add web page previews to their
-  *   messages
-  * @property {boolean} [can_change_info] *Optional*. *True*, if the user is allowed to change the chat title, photo and
+  * @property {boolean} [can_add_web_page_previews] *Optional*. *True*, if the user is allowed to add web page previews
+  *   to their messages
+  * @property {boolean} [can_change_info] *Optional*. *True*, if the user is allowed to change the chat title, photo
+  *   and
   *   other settings. Ignored in public supergroups
   * @property {boolean} [can_invite_users] *Optional*. *True*, if the user is allowed to invite new users to the chat
-  * @property {boolean} [can_pin_messages] *Optional*. *True*, if the user is allowed to pin messages. Ignored in public
+  * @property {boolean} [can_pin_messages] *Optional*. *True*, if the user is allowed to pin messages. Ignored in
+  *   public
   *   supergroups
-  * @property {boolean} [can_manage_topics] *Optional*. *True*, if the user is allowed to create forum topics. If omitted
-  *   defaults to the value of can\_pin\_messages
+  * @property {boolean} [can_manage_topics] *Optional*. *True*, if the user is allowed to create forum topics. If
+  *   omitted defaults to the value of can\_pin\_messages
   * @see https://core.telegram.org/bots/api/#chatpermissions
 */
 
@@ -1365,7 +1385,8 @@
   * [BotCommandScopeChatMember](https://core.telegram.org/bots/api/#botcommandscopechatmember)
   *
   *
-  * @typedef {BotCommandScopeDefault|BotCommandScopeAllPrivateChats|BotCommandScopeAllGroupChats|BotCommandScopeAllChatAdministrators|BotCommandScopeChat|BotCommandScopeChatAdministrators|BotCommandScopeChatMember} BotCommandScope
+  * @typedef {BotCommandScopeDefault|BotCommandScopeAllPrivateChats|BotCommandScopeAllGroupChats|BotCommandScopeAllChatAdministrators|BotCommandScopeChat|BotCommandScopeChatAdministrators|BotCommandScopeChatMember}
+  *   BotCommandScope
   * @see https://core.telegram.org/bots/api/#botcommandscope
 */
 
@@ -1538,8 +1559,8 @@
   * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the photo caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
-  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption, which can be
-  *   specified instead of *parse\_mode*
+  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
+  *   which can be specified instead of *parse\_mode*
   * @property {boolean} [has_spoiler] *Optional*. Pass `True` if the photo needs to be covered with a spoiler animation
   * @see https://core.telegram.org/bots/api/#inputmediaphoto
 */
@@ -1567,8 +1588,8 @@
   * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the video caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
-  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption, which can be
-  *   specified instead of *parse\_mode*
+  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
+  *   which can be specified instead of *parse\_mode*
   * @property {number} [width] *Optional*. Video width
   * @property {number} [height] *Optional*. Video height
   * @property {number} [duration] *Optional*. Video duration in seconds
@@ -1600,12 +1621,13 @@
   * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the animation caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
-  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption, which can be
-  *   specified instead of *parse\_mode*
+  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
+  *   which can be specified instead of *parse\_mode*
   * @property {number} [width] *Optional*. Animation width
   * @property {number} [height] *Optional*. Animation height
   * @property {number} [duration] *Optional*. Animation duration in seconds
-  * @property {boolean} [has_spoiler] *Optional*. Pass `True` if the animation needs to be covered with a spoiler animation
+  * @property {boolean} [has_spoiler] *Optional*. Pass `True` if the animation needs to be covered with a spoiler
+  *   animation
   * @see https://core.telegram.org/bots/api/#inputmediaanimation
 */
 
@@ -1632,8 +1654,8 @@
   * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the audio caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
-  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption, which can be
-  *   specified instead of *parse\_mode*
+  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
+  *   which can be specified instead of *parse\_mode*
   * @property {number} [duration] *Optional*. Duration of the audio in seconds
   * @property {string} [performer] *Optional*. Performer of the audio
   * @property {string} [title] *Optional*. Title of the audio
@@ -1663,11 +1685,11 @@
   * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the document caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
-  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption, which can be
-  *   specified instead of *parse\_mode*
-  * @property {boolean} [disable_content_type_detection] *Optional*. Disables automatic server-side content type detection for files
-  *   uploaded using multipart/form-data. Always *True*, if the document is sent as
-  *   part of an album.
+  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
+  *   which can be specified instead of *parse\_mode*
+  * @property {boolean} [disable_content_type_detection] *Optional*. Disables automatic server-side content type
+  *   detection for files uploaded using multipart/form-data. Always *True*, if the document is sent as part of an
+  *   album.
   * @see https://core.telegram.org/bots/api/#inputmediadocument
 */
 
@@ -1686,9 +1708,9 @@
   * @property {string} file_id Identifier for this file, which can be used to download or reuse the file
   * @property {string} file_unique_id Unique identifier for this file, which is supposed to be the same over time and
   *   for different bots. Can't be used to download or reuse the file.
-  * @property {'regular'|'mask'|'custom_emoji'} type Type of the sticker, currently one of “regular”, “mask”, “custom\_emoji”. The
-  *   type of the sticker is independent from its format, which is determined by the
-  *   fields *is\_animated* and *is\_video*.
+  * @property {'regular'|'mask'|'custom_emoji'} type Type of the sticker, currently one of “regular”, “mask”,
+  *   “custom\_emoji”. The type of the sticker is independent from its format, which is determined by the fields
+  *   *is\_animated* and *is\_video*.
   * @property {number} width Sticker width
   * @property {number} height Sticker height
   * @property {boolean} is_animated *True*, if the sticker is
@@ -1699,7 +1721,8 @@
   * @property {string} [emoji] *Optional*. Emoji associated with the sticker
   * @property {string} [set_name] *Optional*. Name of the sticker set to which the sticker belongs
   * @property {File} [premium_animation] *Optional*. For premium regular stickers, premium animation for the sticker
-  * @property {MaskPosition} [mask_position] *Optional*. For mask stickers, the position where the mask should be placed
+  * @property {MaskPosition} [mask_position] *Optional*. For mask stickers, the position where the mask should be
+  *   placed
   * @property {string} [custom_emoji_id] *Optional*. For custom emoji stickers, unique identifier of the custom emoji
   * @property {number} [file_size] *Optional*. File size in bytes
   * @see https://core.telegram.org/bots/api/#sticker
@@ -1711,7 +1734,8 @@
   * @typedef {object} StickerSet
   * @property {string} name Sticker set name
   * @property {string} title Sticker set title
-  * @property {'regular'|'mask'|'custom_emoji'} sticker_type Type of stickers in the set, currently one of “regular”, “mask”, “custom\_emoji”
+  * @property {'regular'|'mask'|'custom_emoji'} sticker_type Type of stickers in the set, currently one of “regular”,
+  *   “mask”, “custom\_emoji”
   * @property {boolean} is_animated *True*, if the sticker set contains [animated
   *   stickers](https://telegram.org/blog/animated-stickers)
   * @property {boolean} is_video *True*, if the sticker set contains [video
@@ -1725,7 +1749,8 @@
   * This object describes the position on faces where a mask should be placed by default.
   *
   * @typedef {object} MaskPosition
-  * @property {'forehead'|'eyes'|'mouth'|'chin'} point The part of the face relative to which the mask should be placed. One of
+  * @property {'forehead'|'eyes'|'mouth'|'chin'} point The part of the face relative to which the mask should be
+  *   placed. One of
   *   “forehead”, “eyes”, “mouth”, or “chin”.
   * @property {number} x_shift Shift by X-axis measured in widths of the mask scaled to the face size, from
   *   left to right. For example, choosing -1.0 will place mask just to the left of
@@ -1746,7 +1771,8 @@
   * @property {User} from Sender
   * @property {string} query Text of the query (up to 256 characters)
   * @property {string} offset Offset of the results to be returned, can be controlled by the bot
-  * @property {'sender'|'private'|'group'|'supergroup'|'channel'} [chat_type] *Optional*. Type of the chat from which the inline query was sent. Can be either
+  * @property {'sender'|'private'|'group'|'supergroup'|'channel'} [chat_type] *Optional*. Type of the chat from which
+  *   the inline query was sent. Can be either
   *   “sender” for a private chat with the inline query sender, “private”, “group”,
   *   “supergroup”, or “channel”. The chat type should be always known for requests
   *   sent from official clients and most third-party clients, unless the request was
@@ -1800,7 +1826,8 @@
   * [InlineQueryResultVoice](https://core.telegram.org/bots/api/#inlinequeryresultvoice)
   *
   *
-  * @typedef {InlineQueryResultCachedAudio|InlineQueryResultCachedDocument|InlineQueryResultCachedGif|InlineQueryResultCachedMpeg4Gif|InlineQueryResultCachedPhoto|InlineQueryResultCachedSticker|InlineQueryResultCachedVideo|InlineQueryResultCachedVoice|InlineQueryResultArticle|InlineQueryResultAudio|InlineQueryResultContact|InlineQueryResultGame|InlineQueryResultDocument|InlineQueryResultGif|InlineQueryResultLocation|InlineQueryResultMpeg4Gif|InlineQueryResultPhoto|InlineQueryResultVenue|InlineQueryResultVideo|InlineQueryResultVoice} InlineQueryResult
+  * @typedef {InlineQueryResultCachedAudio|InlineQueryResultCachedDocument|InlineQueryResultCachedGif|InlineQueryResultCachedMpeg4Gif|InlineQueryResultCachedPhoto|InlineQueryResultCachedSticker|InlineQueryResultCachedVideo|InlineQueryResultCachedVoice|InlineQueryResultArticle|InlineQueryResultAudio|InlineQueryResultContact|InlineQueryResultGame|InlineQueryResultDocument|InlineQueryResultGif|InlineQueryResultLocation|InlineQueryResultMpeg4Gif|InlineQueryResultPhoto|InlineQueryResultVenue|InlineQueryResultVideo|InlineQueryResultVoice}
+  *   InlineQueryResult
   * @see https://core.telegram.org/bots/api/#inlinequeryresult
 */
 
@@ -1844,12 +1871,13 @@
   * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the photo caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
-  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption, which can be
-  *   specified instead of *parse\_mode*
+  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
+  *   which can be specified instead of *parse\_mode*
   * @property {InlineKeyboardMarkup} [reply_markup] *Optional*. [Inline
   *   keyboard](https://core.telegram.org/bots/features#inline-keyboards) attached to
   *   the message
-  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of the photo
+  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of
+  *   the photo
   * @see https://core.telegram.org/bots/api/#inlinequeryresultphoto
 */
 
@@ -1866,7 +1894,8 @@
   * @property {number} [gif_height] *Optional*. Height of the GIF
   * @property {number} [gif_duration] *Optional*. Duration of the GIF in seconds
   * @property {string} thumb_url URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result
-  * @property {'image/jpeg'|'image/gif'|'video/mp4'} [thumb_mime_type=image/jpeg] *Optional*. MIME type of the thumbnail, must be one of “image/jpeg”,
+  * @property {'image/jpeg'|'image/gif'|'video/mp4'} [thumb_mime_type=image/jpeg] *Optional*. MIME type of the
+  *   thumbnail, must be one of “image/jpeg”,
   *   “image/gif”, or “video/mp4”. Defaults to “image/jpeg”
   * @property {string} [title] *Optional*. Title for the result
   * @property {string} [caption] *Optional*. Caption of the GIF file to be sent, 0-1024 characters after entities
@@ -1874,12 +1903,13 @@
   * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
-  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption, which can be
-  *   specified instead of *parse\_mode*
+  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
+  *   which can be specified instead of *parse\_mode*
   * @property {InlineKeyboardMarkup} [reply_markup] *Optional*. [Inline
   *   keyboard](https://core.telegram.org/bots/features#inline-keyboards) attached to
   *   the message
-  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of the GIF animation
+  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of
+  *   the GIF animation
   * @see https://core.telegram.org/bots/api/#inlinequeryresultgif
 */
 
@@ -1896,7 +1926,8 @@
   * @property {number} [mpeg4_height] *Optional*. Video height
   * @property {number} [mpeg4_duration] *Optional*. Video duration in seconds
   * @property {string} thumb_url URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result
-  * @property {'image/jpeg'|'image/gif'|'video/mp4'} [thumb_mime_type=image/jpeg] *Optional*. MIME type of the thumbnail, must be one of “image/jpeg”,
+  * @property {'image/jpeg'|'image/gif'|'video/mp4'} [thumb_mime_type=image/jpeg] *Optional*. MIME type of the
+  *   thumbnail, must be one of “image/jpeg”,
   *   “image/gif”, or “video/mp4”. Defaults to “image/jpeg”
   * @property {string} [title] *Optional*. Title for the result
   * @property {string} [caption] *Optional*. Caption of the MPEG-4 file to be sent, 0-1024 characters after
@@ -1904,12 +1935,13 @@
   * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
-  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption, which can be
-  *   specified instead of *parse\_mode*
+  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
+  *   which can be specified instead of *parse\_mode*
   * @property {InlineKeyboardMarkup} [reply_markup] *Optional*. [Inline
   *   keyboard](https://core.telegram.org/bots/features#inline-keyboards) attached to
   *   the message
-  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of the video animation
+  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of
+  *   the video animation
   * @see https://core.telegram.org/bots/api/#inlinequeryresultmpeg4gif
 */
 
@@ -1933,8 +1965,8 @@
   * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the video caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
-  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption, which can be
-  *   specified instead of *parse\_mode*
+  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
+  *   which can be specified instead of *parse\_mode*
   * @property {number} [video_width] *Optional*. Video width
   * @property {number} [video_height] *Optional*. Video height
   * @property {number} [video_duration] *Optional*. Video duration in seconds
@@ -1942,9 +1974,9 @@
   * @property {InlineKeyboardMarkup} [reply_markup] *Optional*. [Inline
   *   keyboard](https://core.telegram.org/bots/features#inline-keyboards) attached to
   *   the message
-  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of the video. This field
-  *   is **required** if InlineQueryResultVideo is used to send an HTML-page as a
-  *   result (e.g., a YouTube video).
+  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of
+  *   the video. This field is **required** if InlineQueryResultVideo is used to send an HTML-page as a result (e.g., a
+  *   YouTube video).
   * @see https://core.telegram.org/bots/api/#inlinequeryresultvideo
 */
 
@@ -1962,14 +1994,15 @@
   * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the audio caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
-  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption, which can be
-  *   specified instead of *parse\_mode*
+  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
+  *   which can be specified instead of *parse\_mode*
   * @property {string} [performer] *Optional*. Performer
   * @property {number} [audio_duration] *Optional*. Audio duration in seconds
   * @property {InlineKeyboardMarkup} [reply_markup] *Optional*. [Inline
   *   keyboard](https://core.telegram.org/bots/features#inline-keyboards) attached to
   *   the message
-  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of the audio
+  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of
+  *   the audio
   * @see https://core.telegram.org/bots/api/#inlinequeryresultaudio
 */
 
@@ -1987,13 +2020,14 @@
   * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the voice message caption. See
   *   [formatting options](https://core.telegram.org/bots/api/#formatting-options) for
   *   more details.
-  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption, which can be
-  *   specified instead of *parse\_mode*
+  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
+  *   which can be specified instead of *parse\_mode*
   * @property {number} [voice_duration] *Optional*. Recording duration in seconds
   * @property {InlineKeyboardMarkup} [reply_markup] *Optional*. [Inline
   *   keyboard](https://core.telegram.org/bots/features#inline-keyboards) attached to
   *   the message
-  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of the voice recording
+  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of
+  *   the voice recording
   * @see https://core.telegram.org/bots/api/#inlinequeryresultvoice
 */
 
@@ -2012,14 +2046,16 @@
   * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the document caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
-  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption, which can be
-  *   specified instead of *parse\_mode*
+  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
+  *   which can be specified instead of *parse\_mode*
   * @property {string} document_url A valid URL for the file
-  * @property {'application/pdf'|'application/zip'} mime_type MIME type of the content of the file, either “application/pdf” or
+  * @property {'application/pdf'|'application/zip'} mime_type MIME type of the content of the file, either
+  *   “application/pdf” or
   *   “application/zip”
   * @property {string} [description] *Optional*. Short description of the result
   * @property {InlineKeyboardMarkup} [reply_markup] *Optional*. Inline keyboard attached to the message
-  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of the file
+  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of
+  *   the file
   * @property {string} [thumb_url] *Optional*. URL of the thumbnail (JPEG only) for the file
   * @property {number} [thumb_width] *Optional*. Thumbnail width
   * @property {number} [thumb_height] *Optional*. Thumbnail height
@@ -2037,19 +2073,20 @@
   * @property {number} latitude Location latitude in degrees
   * @property {number} longitude Location longitude in degrees
   * @property {string} title Location title
-  * @property {number} [horizontal_accuracy] *Optional*. The radius of uncertainty for the location, measured in meters;
+  * @property {number} [horizontal_accuracy] *Optional*. The radius of uncertainty for the location, measured in
+  *   meters;
   *   0-1500
   * @property {number} [live_period] *Optional*. Period in seconds for which the location can be updated, should be
   *   between 60 and 86400.
   * @property {number} [heading] *Optional*. For live locations, a direction in which the user is moving, in
   *   degrees. Must be between 1 and 360 if specified.
-  * @property {number} [proximity_alert_radius] *Optional*. For live locations, a maximum distance for proximity alerts about
-  *   approaching another chat member, in meters. Must be between 1 and 100000 if
-  *   specified.
+  * @property {number} [proximity_alert_radius] *Optional*. For live locations, a maximum distance for proximity alerts
+  *   about approaching another chat member, in meters. Must be between 1 and 100000 if specified.
   * @property {InlineKeyboardMarkup} [reply_markup] *Optional*. [Inline
   *   keyboard](https://core.telegram.org/bots/features#inline-keyboards) attached to
   *   the message
-  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of the location
+  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of
+  *   the location
   * @property {string} [thumb_url] *Optional*. Url of the thumbnail for the result
   * @property {number} [thumb_width] *Optional*. Thumbnail width
   * @property {number} [thumb_height] *Optional*. Thumbnail height
@@ -2077,7 +2114,8 @@
   * @property {InlineKeyboardMarkup} [reply_markup] *Optional*. [Inline
   *   keyboard](https://core.telegram.org/bots/features#inline-keyboards) attached to
   *   the message
-  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of the venue
+  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of
+  *   the venue
   * @property {string} [thumb_url] *Optional*. Url of the thumbnail for the result
   * @property {number} [thumb_width] *Optional*. Thumbnail width
   * @property {number} [thumb_height] *Optional*. Thumbnail height
@@ -2100,7 +2138,8 @@
   * @property {InlineKeyboardMarkup} [reply_markup] *Optional*. [Inline
   *   keyboard](https://core.telegram.org/bots/features#inline-keyboards) attached to
   *   the message
-  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of the contact
+  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of
+  *   the contact
   * @property {string} [thumb_url] *Optional*. Url of the thumbnail for the result
   * @property {number} [thumb_width] *Optional*. Thumbnail width
   * @property {number} [thumb_height] *Optional*. Thumbnail height
@@ -2137,12 +2176,13 @@
   * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the photo caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
-  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption, which can be
-  *   specified instead of *parse\_mode*
+  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
+  *   which can be specified instead of *parse\_mode*
   * @property {InlineKeyboardMarkup} [reply_markup] *Optional*. [Inline
   *   keyboard](https://core.telegram.org/bots/features#inline-keyboards) attached to
   *   the message
-  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of the photo
+  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of
+  *   the photo
   * @see https://core.telegram.org/bots/api/#inlinequeryresultcachedphoto
 */
 
@@ -2161,12 +2201,13 @@
   * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
-  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption, which can be
-  *   specified instead of *parse\_mode*
+  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
+  *   which can be specified instead of *parse\_mode*
   * @property {InlineKeyboardMarkup} [reply_markup] *Optional*. [Inline
   *   keyboard](https://core.telegram.org/bots/features#inline-keyboards) attached to
   *   the message
-  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of the GIF animation
+  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of
+  *   the GIF animation
   * @see https://core.telegram.org/bots/api/#inlinequeryresultcachedgif
 */
 
@@ -2186,12 +2227,11 @@
   * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
-  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption, which can be
-  *   specified instead of *parse\_mode*
   * @property {InlineKeyboardMarkup} [reply_markup] *Optional*. [Inline
   *   keyboard](https://core.telegram.org/bots/features#inline-keyboards) attached to
   *   the message
-  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of the video animation
+  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of
+  *   the video animation
   * @see https://core.telegram.org/bots/api/#inlinequeryresultcachedmpeg4gif
 */
 
@@ -2207,7 +2247,8 @@
   * @property {InlineKeyboardMarkup} [reply_markup] *Optional*. [Inline
   *   keyboard](https://core.telegram.org/bots/features#inline-keyboards) attached to
   *   the message
-  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of the sticker
+  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of
+  *   the sticker
   * @see https://core.telegram.org/bots/api/#inlinequeryresultcachedsticker
 */
 
@@ -2227,12 +2268,13 @@
   * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the document caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
-  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption, which can be
-  *   specified instead of *parse\_mode*
+  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
+  *   which can be specified instead of *parse\_mode*
   * @property {InlineKeyboardMarkup} [reply_markup] *Optional*. [Inline
   *   keyboard](https://core.telegram.org/bots/features#inline-keyboards) attached to
   *   the message
-  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of the file
+  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of
+  *   the file
   * @see https://core.telegram.org/bots/api/#inlinequeryresultcacheddocument
 */
 
@@ -2252,12 +2294,13 @@
   * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the video caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
-  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption, which can be
-  *   specified instead of *parse\_mode*
+  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
+  *   which can be specified instead of *parse\_mode*
   * @property {InlineKeyboardMarkup} [reply_markup] *Optional*. [Inline
   *   keyboard](https://core.telegram.org/bots/features#inline-keyboards) attached to
   *   the message
-  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of the video
+  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of
+  *   the video
   * @see https://core.telegram.org/bots/api/#inlinequeryresultcachedvideo
 */
 
@@ -2275,12 +2318,13 @@
   * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the voice message caption. See
   *   [formatting options](https://core.telegram.org/bots/api/#formatting-options) for
   *   more details.
-  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption, which can be
-  *   specified instead of *parse\_mode*
+  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
+  *   which can be specified instead of *parse\_mode*
   * @property {InlineKeyboardMarkup} [reply_markup] *Optional*. [Inline
   *   keyboard](https://core.telegram.org/bots/features#inline-keyboards) attached to
   *   the message
-  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of the voice message
+  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of
+  *   the voice message
   * @see https://core.telegram.org/bots/api/#inlinequeryresultcachedvoice
 */
 
@@ -2297,12 +2341,13 @@
   * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the audio caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
-  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption, which can be
-  *   specified instead of *parse\_mode*
+  * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
+  *   which can be specified instead of *parse\_mode*
   * @property {InlineKeyboardMarkup} [reply_markup] *Optional*. [Inline
   *   keyboard](https://core.telegram.org/bots/features#inline-keyboards) attached to
   *   the message
-  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of the audio
+  * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of
+  *   the audio
   * @see https://core.telegram.org/bots/api/#inlinequeryresultcachedaudio
 */
 
@@ -2321,7 +2366,8 @@
   * [InputInvoiceMessageContent](https://core.telegram.org/bots/api/#inputinvoicemessagecontent)
   *
   *
-  * @typedef {InputTextMessageContent|InputLocationMessageContent|InputVenueMessageContent|InputContactMessageContent|InputInvoiceMessageContent} InputMessageContent
+  * @typedef {InputTextMessageContent|InputLocationMessageContent|InputVenueMessageContent|InputContactMessageContent|InputInvoiceMessageContent}
+  *   InputMessageContent
   * @see https://core.telegram.org/bots/api/#inputmessagecontent
 */
 
@@ -2335,8 +2381,8 @@
   * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the message text. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
-  * @property {MessageEntity[]} [entities] *Optional*. List of special entities that appear in message text, which can be
-  *   specified instead of *parse\_mode*
+  * @property {MessageEntity[]} [entities] *Optional*. List of special entities that appear in message text, which can
+  *   be specified instead of *parse\_mode*
   * @property {boolean} [disable_web_page_preview] *Optional*. Disables link previews for links in the sent message
   * @see https://core.telegram.org/bots/api/#inputtextmessagecontent
 */
@@ -2349,15 +2395,15 @@
   * @typedef {object} InputLocationMessageContent
   * @property {number} latitude Latitude of the location in degrees
   * @property {number} longitude Longitude of the location in degrees
-  * @property {number} [horizontal_accuracy] *Optional*. The radius of uncertainty for the location, measured in meters;
+  * @property {number} [horizontal_accuracy] *Optional*. The radius of uncertainty for the location, measured in
+  *   meters;
   *   0-1500
   * @property {number} [live_period] *Optional*. Period in seconds for which the location can be updated, should be
   *   between 60 and 86400.
   * @property {number} [heading] *Optional*. For live locations, a direction in which the user is moving, in
   *   degrees. Must be between 1 and 360 if specified.
-  * @property {number} [proximity_alert_radius] *Optional*. For live locations, a maximum distance for proximity alerts about
-  *   approaching another chat member, in meters. Must be between 1 and 100000 if
-  *   specified.
+  * @property {number} [proximity_alert_radius] *Optional*. For live locations, a maximum distance for proximity alerts
+  *   about approaching another chat member, in meters. Must be between 1 and 100000 if specified.
   * @see https://core.telegram.org/bots/api/#inputlocationmessagecontent
 */
 
@@ -2416,10 +2462,10 @@
   *   [currencies.json](https://core.telegram.org/bots/payments/currencies.json), it
   *   shows the number of digits past the decimal point for each currency (2 for the
   *   majority of currencies). Defaults to 0
-  * @property {number[]} [suggested_tip_amounts] *Optional*. A JSON-serialized array of suggested amounts of tip in the *smallest
-  *   units* of the currency (integer, **not** float/double). At most 4 suggested tip
-  *   amounts can be specified. The suggested tip amounts must be positive, passed in
-  *   a strictly increased order and must not exceed *max\_tip\_amount*.
+  * @property {number[]} [suggested_tip_amounts] *Optional*. A JSON-serialized array of suggested amounts of tip in the
+  *   *smallest units* of the currency (integer, **not** float/double). At most 4 suggested tip amounts can be
+  *   specified. The suggested tip amounts must be positive, passed in a strictly increased order and must not exceed
+  *   *max\_tip\_amount*.
   * @property {string} [provider_data] *Optional*. A JSON-serialized object for data about the invoice, which will be
   *   shared with the payment provider. A detailed description of the required fields
   *   should be provided by the payment provider.
@@ -2430,14 +2476,14 @@
   * @property {number} [photo_height] *Optional*. Photo height
   * @property {boolean} [need_name] *Optional*. Pass *True* if you require the user's full name to complete the
   *   order
-  * @property {boolean} [need_phone_number] *Optional*. Pass *True* if you require the user's phone number to complete the
-  *   order
   * @property {boolean} [need_email] *Optional*. Pass *True* if you require the user's email address to complete the
   *   order
-  * @property {boolean} [need_shipping_address] *Optional*. Pass *True* if you require the user's shipping address to complete
-  *   the order
-  * @property {boolean} [send_phone_number_to_provider] *Optional*. Pass *True* if the user's phone number should be sent to provider
-  * @property {boolean} [send_email_to_provider] *Optional*. Pass *True* if the user's email address should be sent to provider
+  * @property {boolean} [need_shipping_address] *Optional*. Pass *True* if you require the user's shipping address to
+  *   complete the order
+  * @property {boolean} [send_phone_number_to_provider] *Optional*. Pass *True* if the user's phone number should be
+  *   sent to provider
+  * @property {boolean} [send_email_to_provider] *Optional*. Pass *True* if the user's email address should be sent to
+  *   provider
   * @property {boolean} [is_flexible] *Optional*. Pass *True* if the final price depends on the shipping method
   * @see https://core.telegram.org/bots/api/#inputinvoicemessagecontent
 */
@@ -2451,7 +2497,8 @@
   * @property {string} result_id The unique identifier for the result that was chosen
   * @property {User} from The user that chose the result
   * @property {Location} [location] *Optional*. Sender location, only for bots that require user location
-  * @property {string} [inline_message_id] *Optional*. Identifier of the sent inline message. Available only if there is an
+  * @property {string} [inline_message_id] *Optional*. Identifier of the sent inline message. Available only if there
+  *   is an
   *   [inline keyboard](https://core.telegram.org/bots/api/#inlinekeyboardmarkup)
   *   attached to the message. Will be also received in [callback
   *   queries](https://core.telegram.org/bots/api/#callbackquery) and can be used to
@@ -2466,7 +2513,8 @@
   * a user.
   *
   * @typedef {object} SentWebAppMessage
-  * @property {string} [inline_message_id] *Optional*. Identifier of the sent inline message. Available only if there is an
+  * @property {string} [inline_message_id] *Optional*. Identifier of the sent inline message. Available only if there
+  *   is an
   *   [inline keyboard](https://core.telegram.org/bots/api/#inlinekeyboardmarkup)
   *   attached to the message.
   * @see https://core.telegram.org/bots/api/#sentwebappmessage
@@ -2594,8 +2642,8 @@
   * Describes Telegram Passport data shared with the bot by the user.
   *
   * @typedef {object} PassportData
-  * @property {EncryptedPassportElement[]} data Array with information about documents and other Telegram Passport elements that
-  *   was shared with the bot
+  * @property {EncryptedPassportElement[]} data Array with information about documents and other Telegram Passport
+  *   elements that was shared with the bot
   * @property {EncryptedCredentials} credentials Encrypted credentials required to decrypt the data
   * @see https://core.telegram.org/bots/api/#passportdata
 */
@@ -2617,7 +2665,8 @@
   * Describes documents or other Telegram Passport elements shared with the bot by the user.
   *
   * @typedef {object} EncryptedPassportElement
-  * @property {'personal_details'|'passport'|'driver_license'|'identity_card'|'internal_passport'|'address'|'utility_bill'|'bank_statement'|'rental_agreement'|'passport_registration'|'temporary_registration'|'phone_number'|'email'} type Element type. One of “personal\_details”, “passport”, “driver\_license”,
+  * @property {'personal_details'|'passport'|'driver_license'|'identity_card'|'internal_passport'|'address'|'utility_bill'|'bank_statement'|'rental_agreement'|'passport_registration'|'temporary_registration'|'phone_number'|'email'}
+  *   type Element type. One of “personal\_details”, “passport”, “driver\_license”,
   *   “identity\_card”, “internal\_passport”, “address”, “utility\_bill”,
   *   “bank\_statement”, “rental\_agreement”, “passport\_registration”,
   *   “temporary\_registration”, “phone\_number”, “email”.
@@ -2634,14 +2683,14 @@
   *   “passport\_registration” and “temporary\_registration” types. Files can be
   *   decrypted and verified using the accompanying
   *   [EncryptedCredentials](https://core.telegram.org/bots/api/#encryptedcredentials).
-  * @property {PassportFile} [front_side] *Optional*. Encrypted file with the front side of the document, provided by the
-  *   user. Available for “passport”, “driver\_license”, “identity\_card” and
+  * @property {PassportFile} [front_side] *Optional*. Encrypted file with the front side of the document, provided by
+  *   the user. Available for “passport”, “driver\_license”, “identity\_card” and
   *   “internal\_passport”. The file can be decrypted and verified using the
   *   accompanying
   *   [EncryptedCredentials](https://core.telegram.org/bots/api/#encryptedcredentials).
-  * @property {PassportFile} [reverse_side] *Optional*. Encrypted file with the reverse side of the document, provided by
-  *   the user. Available for “driver\_license” and “identity\_card”. The file can be
-  *   decrypted and verified using the accompanying
+  * @property {PassportFile} [reverse_side] *Optional*. Encrypted file with the reverse side of the document, provided
+  *   by the user. Available for “driver\_license” and “identity\_card”. The file can be decrypted and verified using
+  *   the accompanying
   *   [EncryptedCredentials](https://core.telegram.org/bots/api/#encryptedcredentials).
   * @property {PassportFile} [selfie] *Optional*. Encrypted file with the selfie of the user holding a document,
   *   provided by the user; available for “passport”, “driver\_license”,
@@ -2701,7 +2750,8 @@
   * [PassportElementErrorUnspecified](https://core.telegram.org/bots/api/#passportelementerrorunspecified)
   *
   *
-  * @typedef {PassportElementErrorDataField|PassportElementErrorFrontSide|PassportElementErrorReverseSide|PassportElementErrorSelfie|PassportElementErrorFile|PassportElementErrorFiles|PassportElementErrorTranslationFile|PassportElementErrorTranslationFiles|PassportElementErrorUnspecified} PassportElementError
+  * @typedef {PassportElementErrorDataField|PassportElementErrorFrontSide|PassportElementErrorReverseSide|PassportElementErrorSelfie|PassportElementErrorFile|PassportElementErrorFiles|PassportElementErrorTranslationFile|PassportElementErrorTranslationFiles|PassportElementErrorUnspecified}
+  *   PassportElementError
   * @see https://core.telegram.org/bots/api/#passportelementerror
 */
 
@@ -2711,7 +2761,8 @@
   *
   * @typedef {object} PassportElementErrorDataField
   * @property {'data'} source Error source, must be *data*
-  * @property {'personal_details'|'passport'|'driver_license'|'identity_card'|'internal_passport'|'address'} type The section of the user's Telegram Passport which has the error, one of
+  * @property {'personal_details'|'passport'|'driver_license'|'identity_card'|'internal_passport'|'address'} type The
+  *   section of the user's Telegram Passport which has the error, one of
   *   “personal\_details”, “passport”, “driver\_license”, “identity\_card”,
   *   “internal\_passport”, “address”
   * @property {string} field_name Name of the data field which has the error
@@ -2726,7 +2777,8 @@
   *
   * @typedef {object} PassportElementErrorFrontSide
   * @property {'front_side'} source Error source, must be *front\_side*
-  * @property {'passport'|'driver_license'|'identity_card'|'internal_passport'} type The section of the user's Telegram Passport which has the issue, one of
+  * @property {'passport'|'driver_license'|'identity_card'|'internal_passport'} type The section of the user's Telegram
+  *   Passport which has the issue, one of
   *   “passport”, “driver\_license”, “identity\_card”, “internal\_passport”
   * @property {string} file_hash Base64-encoded hash of the file with the front side of the document
   * @property {string} message Error message
@@ -2739,7 +2791,8 @@
   *
   * @typedef {object} PassportElementErrorReverseSide
   * @property {'reverse_side'} source Error source, must be *reverse\_side*
-  * @property {'driver_license'|'identity_card'} type The section of the user's Telegram Passport which has the issue, one of
+  * @property {'driver_license'|'identity_card'} type The section of the user's Telegram Passport which has the issue,
+  *   one of
   *   “driver\_license”, “identity\_card”
   * @property {string} file_hash Base64-encoded hash of the file with the reverse side of the document
   * @property {string} message Error message
@@ -2752,7 +2805,8 @@
   *
   * @typedef {object} PassportElementErrorSelfie
   * @property {'selfie'} source Error source, must be *selfie*
-  * @property {'passport'|'driver_license'|'identity_card'|'internal_passport'} type The section of the user's Telegram Passport which has the issue, one of
+  * @property {'passport'|'driver_license'|'identity_card'|'internal_passport'} type The section of the user's Telegram
+  *   Passport which has the issue, one of
   *   “passport”, “driver\_license”, “identity\_card”, “internal\_passport”
   * @property {string} file_hash Base64-encoded hash of the file with the selfie
   * @property {string} message Error message
@@ -2765,7 +2819,8 @@
   *
   * @typedef {object} PassportElementErrorFile
   * @property {'file'} source Error source, must be *file*
-  * @property {'utility_bill'|'bank_statement'|'rental_agreement'|'passport_registration'|'temporary_registration'} type The section of the user's Telegram Passport which has the issue, one of
+  * @property {'utility_bill'|'bank_statement'|'rental_agreement'|'passport_registration'|'temporary_registration'}
+  *   type The section of the user's Telegram Passport which has the issue, one of
   *   “utility\_bill”, “bank\_statement”, “rental\_agreement”,
   *   “passport\_registration”, “temporary\_registration”
   * @property {string} file_hash Base64-encoded file hash
@@ -2779,7 +2834,8 @@
   *
   * @typedef {object} PassportElementErrorFiles
   * @property {'files'} source Error source, must be *files*
-  * @property {'utility_bill'|'bank_statement'|'rental_agreement'|'passport_registration'|'temporary_registration'} type The section of the user's Telegram Passport which has the issue, one of
+  * @property {'utility_bill'|'bank_statement'|'rental_agreement'|'passport_registration'|'temporary_registration'}
+  *   type The section of the user's Telegram Passport which has the issue, one of
   *   “utility\_bill”, “bank\_statement”, “rental\_agreement”,
   *   “passport\_registration”, “temporary\_registration”
   * @property {string[]} file_hashes List of base64-encoded file hashes
@@ -2793,7 +2849,8 @@
   *
   * @typedef {object} PassportElementErrorTranslationFile
   * @property {'translation_file'} source Error source, must be *translation\_file*
-  * @property {'passport'|'driver_license'|'identity_card'|'internal_passport'|'utility_bill'|'bank_statement'|'rental_agreement'|'passport_registration'|'temporary_registration'} type Type of element of the user's Telegram Passport which has the issue, one of
+  * @property {'passport'|'driver_license'|'identity_card'|'internal_passport'|'utility_bill'|'bank_statement'|'rental_agreement'|'passport_registration'|'temporary_registration'}
+  *   type Type of element of the user's Telegram Passport which has the issue, one of
   *   “passport”, “driver\_license”, “identity\_card”, “internal\_passport”,
   *   “utility\_bill”, “bank\_statement”, “rental\_agreement”,
   *   “passport\_registration”, “temporary\_registration”
@@ -2808,7 +2865,8 @@
   *
   * @typedef {object} PassportElementErrorTranslationFiles
   * @property {'translation_files'} source Error source, must be *translation\_files*
-  * @property {'passport'|'driver_license'|'identity_card'|'internal_passport'|'utility_bill'|'bank_statement'|'rental_agreement'|'passport_registration'|'temporary_registration'} type Type of element of the user's Telegram Passport which has the issue, one of
+  * @property {'passport'|'driver_license'|'identity_card'|'internal_passport'|'utility_bill'|'bank_statement'|'rental_agreement'|'passport_registration'|'temporary_registration'}
+  *   type Type of element of the user's Telegram Passport which has the issue, one of
   *   “passport”, “driver\_license”, “identity\_card”, “internal\_passport”,
   *   “utility\_bill”, “bank\_statement”, “rental\_agreement”,
   *   “passport\_registration”, “temporary\_registration”
@@ -2844,8 +2902,8 @@
   *   edited using
   *   [editMessageText](https://core.telegram.org/bots/api/#editmessagetext). 0-4096
   *   characters.
-  * @property {MessageEntity[]} [text_entities] *Optional*. Special entities that appear in *text*, such as usernames, URLs, bot
-  *   commands, etc.
+  * @property {MessageEntity[]} [text_entities] *Optional*. Special entities that appear in *text*, such as usernames,
+  *   URLs, bot commands, etc.
   * @property {Animation} [animation] *Optional*. Animation that will be displayed in the game message in chats.
   *   Upload via [BotFather](https://t.me/botfather)
   * @see https://core.telegram.org/bots/api/#game
@@ -2923,13 +2981,13 @@
  * @property {string} [username] Bot username, used if you don't call `bot.launch()`
  * @property {http.Agent} [attachmentAgent] HTTP Agent used for attachments
  * @property {http.Agent} [agent] HTTP agent used for API calls. By default, it have this configuration:
- *     `new https.Agent({ keepAlive: true, keepAliveMsecs: 10000 })`
+ *  `new https.Agent({ keepAlive: true, keepAliveMsecs: 10000 })`
  * @property {string} [apiRoot] API root URL
  * @property {boolean} [channelMode=false] If `true`, channel posts can be matched as `text` update type
  * @property {string} [apiPrefix=bot] API prefix before bot token, by default `bot`, but if you use
- *    [TDLight](https://github.com/tdlight-team/tdlight) you maybe should change `apiPrefix` to `user`
+ *   [TDLight](https://github.com/tdlight-team/tdlight) you maybe should change `apiPrefix` to `user`
  * @property {boolean} [testEnv=false] Enable / disable test environment for WebApps,
- *    see more [here](https://core.telegram.org/bots/webapps#testing-web-apps)
+ *   see more [here](https://core.telegram.org/bots/webapps#testing-web-apps)
  * @property {boolean} [webhookReply=true] Enable / disable webhook reply
  */
 
