@@ -832,3 +832,17 @@
  *   [inline keyboard](https://core.telegram.org/bots/features#inline-keyboards). If empty, one 'Pay `total price`'
  *   button will be shown. If not empty, the first button must be a Pay button.
 */
+
+/**
+ * @typedef {object} ExtraEditMessageText
+ * @see https://core.telegram.org/bots/api#editmessagetext
+ * @property {boolean} [disable_web_page_preview] *Optional*. Disables link previews for links in the sent message
+ * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the text. See [formatting
+ *   options](https://core.telegram.org/bots/api/#formatting-options) for more
+ *   details.
+ * @property {MessageEntity[]} [entities] *Optional*. List of special entities that appear in the caption,
+ *   which can be specified instead of *parse\_mode*
+ * @property {InlineKeyboardMarkup} [reply_markup] *Optional* A JSON-serialized object for an
+ *   [inline keyboard](https://core.telegram.org/bots/features#inline-keyboards). If empty, one 'Pay `total price`'
+ *   button will be shown. If not empty, the first button must be a Pay button.
+ */
