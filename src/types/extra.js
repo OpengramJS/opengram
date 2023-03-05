@@ -940,3 +940,13 @@
  * @property {number} [message_id] Identifier of a message to unpin. If not specified, the most recent pinned message
  *   (by sending date) will be unpinned.
  */
+
+/**
+ * @typedef {object} ExtraSetChatPermissions
+ * @see https://core.telegram.org/bots/api#setchatpermissions
+ * @property {boolean} [use_independent_chat_permissions] *Optional*. Pass *True* if chat permissions are set
+ *   independently. Otherwise, the *can_send_other_messages* and *can_add_web_page_previews* permissions will imply the
+ *   *can_send_messages*, *can_send_audios*, *can_send_documents*, *can_send_photos*, *can_send_videos*,
+ *   *can_send_video_notes*, and *can_send_voice_notes* permissions; the *can_send_polls* permission will
+ *   imply the *can_send_messages* permission.
+ */
