@@ -665,3 +665,42 @@
  * @property {boolean} [send_email_to_provider] *Optional*. Pass *True* if the user's email address should be sent to
  *   provider
  */
+
+/**
+ * @typedef {object} ExtraAnimation
+ * @see https://core.telegram.org/bots/api#sendanimation
+ * @property {number} [message_thread_id] *Optional*. Unique identifier for the target message thread (topic)
+ *   of the forum; for forum supergroups only
+ * @property {number} [duration] *Optional*. Duration of sent animation in seconds
+ * @property {number} [width] *Optional*. Animation width
+ * @property {number} [height] *Optional*. Animation height
+ * @property {InputFile|string} [thumb] Thumbnail of the file sent; can be ignored if thumbnail generation for the file
+ *   is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width
+ *   and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't
+ *   be reused and can be only uploaded as a new file, so you can pass "attach://<file_attach_name>" if the thumbnail
+ *   was uploaded using multipart/form-data under <file_attach_name>.
+ *   [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
+ * @property {string} [caption] *Optional*. Animation caption (may also be used when resending animation by file_id),
+ *   0-1024 characters after entities parsing
+ * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the animation caption. See [formatting
+ *   options](https://core.telegram.org/bots/api/#formatting-options) for more
+ *   details.
+ * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
+ *   which can be specified instead of *parse\_mode*
+ * @property {boolean} [has_spoiler] *Optional*. Pass `True` if the video needs to be covered with a spoiler animation
+ * @property {boolean} [disable_notification] *Optional*. Sends the message
+ *   [silently](https://telegram.org/blog/channels-2-0#silent-messages). Users will receive a notification with no
+ *   sound.
+ * @property {boolean} [protect_content] *Optional*. Protects the contents of the sent message from forwarding
+ * @property {number} [reply_to_message_id] *Optional*. If the message is a reply, ID of the original message
+ * @property {boolean} [allow_sending_without_reply] *Optional*. Pass *True* if the message should be sent even if the
+ *   specified replied-to message is not found
+ * @property {InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply} [reply_markup] *Optional*.
+ *   [InlineKeyboardMarkup](https://core.telegram.org/bots/api#inlinekeyboardmarkup) or
+ *   [ReplyKeyboardMarkup](https://core.telegram.org/bots/api#replykeyboardmarkup) or
+ *   [ReplyKeyboardRemove](https://core.telegram.org/bots/api#replykeyboardremove) or
+ *   [ForceReply](https://core.telegram.org/bots/api#forcereply) Additional interface options.
+ *   A JSON-serialized object for an [inline keyboard](https://core.telegram.org/bots/features#inline-keyboards),
+ *   [custom reply keyboard](https://core.telegram.org/bots/features#keyboards), instructions to remove reply keyboard
+ *   or to force a reply from the user.
+ */
