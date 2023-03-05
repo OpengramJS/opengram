@@ -38,7 +38,7 @@
  *   specified, the original caption is kept
  * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the new caption. See
  *   [formatting options](https://core.telegram.org/bots/api#formatting-options) for more details.
- * @property {Array<MessageEntity>} [caption_entities] A JSON-serialized list of special entities that appear in the
+ * @property {MessageEntity[]} [caption_entities] A JSON-serialized list of special entities that appear in the
  *   new caption, which can be specified instead of *parse_mode*
  * @property {boolean} [disable_notification] Sends the message
  *   [silently](https://telegram.org/blog/channels-2-0#silent-messages). Users will receive
@@ -122,7 +122,7 @@
  * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the photo caption. See [formatting
  *   options](https://core.telegram.org/bots/api/#formatting-options) for more
  *   details.
- * @property {Array<MessageEntity>} [caption_entities] *Optional*. A JSON-serialized list of special entities that appear in the new
+ * @property {MessageEntity[]} [caption_entities] *Optional*. A JSON-serialized list of special entities that appear in the new
  *   caption, which can be specified instead of `parse_mode`
  * @property {boolean} [has_spoiler] *Optional*. Pass `True` if the animation needs to be covered with a spoiler
  *   animation
@@ -149,7 +149,7 @@
  * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the photo caption. See [formatting
  *   options](https://core.telegram.org/bots/api/#formatting-options) for more
  *   details.
- * @property {Array<MessageEntity>} [entities] *Optional*. A JSON-serialized list of special entities that appear in the
+ * @property {MessageEntity[]} [entities] *Optional*. A JSON-serialized list of special entities that appear in the
  *   new caption, which can be specified instead of `parse_mode`
  * @property {boolean} [disable_web_page_preview] *Optional*. Disables link previews for links in this message
  * @property {boolean} [disable_notification] *Optional*. Sends the message
@@ -230,7 +230,7 @@
  * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the photo caption. See [formatting
  *   options](https://core.telegram.org/bots/api/#formatting-options) for more
  *   details.
- * @property {Array<MessageEntity>} [caption_entities] A JSON-serialized list of special entities that appear in the
+ * @property {MessageEntity[]} [caption_entities] A JSON-serialized list of special entities that appear in the
  *   new
  *   caption, which can be specified instead of `parse_mode`
  * @property {number} [duration] *Optional*. Duration of the voice message in seconds
@@ -419,7 +419,7 @@
  *   the lamp icon in a quiz-style poll, 0-200 characters with at most 2 line feeds after entities parsing
  * @property {string} [explanation_parse_mode] *Optional*. Mode for parsing entities in the explanation. See
  *   [formatting options](https://core.telegram.org/bots/api#formatting-options) for more details.
- * @property {Array<MessageEntity>} [explanation_entities] *Optional*. A JSON-serialized list of special entities that
+ * @property {MessageEntity[]} [explanation_entities] *Optional*. A JSON-serialized list of special entities that
  *   appear in the poll explanation, which can be specified instead of *parse_mode*
  * @property {number} [open_period] *Optional*. Amount of time in seconds the poll will be active after creation,
  *   5-600. Can't be used together with *close_date*.
@@ -458,7 +458,7 @@
  *   the lamp icon in a quiz-style poll, 0-200 characters with at most 2 line feeds after entities parsing
  * @property {string} [explanation_parse_mode] *Optional*. Mode for parsing entities in the explanation. See
  *   [formatting options](https://core.telegram.org/bots/api#formatting-options) for more details.
- * @property {Array<MessageEntity>} [explanation_entities] *Optional*. A JSON-serialized list of special entities that
+ * @property {MessageEntity[]} [explanation_entities] *Optional*. A JSON-serialized list of special entities that
  *   appear in the poll explanation, which can be specified instead of *parse_mode*
  * @property {number} [open_period] *Optional*. Amount of time in seconds the poll will be active after creation,
  *   5-600. Can't be used together with *close_date*.
