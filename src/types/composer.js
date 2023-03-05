@@ -26,7 +26,7 @@
  */
 
 /**
- * @callback triggerPredicateFn
+ * @callback TriggerPredicateFn
  * @param {string} value Received value
  * @param {OpengramContext} context Update context
  * @return {boolean}
@@ -45,5 +45,5 @@
  */
 
 /**
- * @typedef {RegExp|string|triggerPredicateFn} Trigger
+ * @typedef {RegExp|string|TriggerPredicateFn} Trigger
  */

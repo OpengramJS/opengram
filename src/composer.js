@@ -1739,7 +1739,7 @@ class Composer {
  * @param {Trigger|Trigger[]} triggers The text / array of
  *   texts / regex / function to look for
  * @throws {TypeError}
- * @return {triggerPredicateFn[]}
+ * @return {TriggerPredicateFn[]}
  */
 function normalizeTriggers (triggers) {
   if (!Array.isArray(triggers)) {
