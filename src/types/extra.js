@@ -443,3 +443,42 @@
  *   [custom reply keyboard](https://core.telegram.org/bots/features#keyboards), instructions to remove reply keyboard
  *   or to force a reply from the user.
  */
+
+/**
+ * @typedef {object} ExtraQuiz
+ * @see https://core.telegram.org/bots/api#sendpoll
+ * @property {number} [message_thread_id] *Optional*. Unique identifier for the target message thread (topic)
+ *   of the forum; for forum supergroups only
+ * @property {boolean} [is_anonymous] *Optional*. *True*, if the poll needs to be anonymous, defaults to *True*
+ * @property {boolean} [allows_multiple_answers] *Optional*. *True*, if the poll allows multiple answers, ignored for
+ *   polls in quiz mode, defaults to *False*
+ * @property {number} [correct_option_id] *Optional*. 0-based identifier of the correct answer option, required for
+ *   polls in quiz mode
+ * @property {string} [explanation] *Optional*. Text that is shown when a user chooses an incorrect answer or taps on
+ *   the lamp icon in a quiz-style poll, 0-200 characters with at most 2 line feeds after entities parsing
+ * @property {string} [explanation_parse_mode] *Optional*. Mode for parsing entities in the explanation. See
+ *   [formatting options](https://core.telegram.org/bots/api#formatting-options) for more details.
+ * @property {Array<MessageEntity>} [explanation_entities] *Optional*. A JSON-serialized list of special entities that
+ *   appear in the poll explanation, which can be specified instead of *parse_mode*
+ * @property {number} [open_period] *Optional*. Amount of time in seconds the poll will be active after creation,
+ *   5-600. Can't be used together with *close_date*.
+ * @property {number} [close_date] *Optional*. Point in time (Unix timestamp) when the poll will be automatically
+ *   closed. Must be at least 5 and no more than 600 seconds in the future. Can't be used together with *open_period*.
+ * @property {boolean} [is_closed] *Optional*. Pass *True* if the poll needs to be immediately closed. This can be
+ *   useful for poll preview.
+ * @property {boolean} [disable_notification] *Optional*. Sends the message
+ *   [silently](https://telegram.org/blog/channels-2-0#silent-messages). Users will receive a notification with no
+ *   sound.
+ * @property {boolean} [protect_content] *Optional*. Protects the contents of the sent message from forwarding
+ * @property {number} [reply_to_message_id] *Optional*. If the message is a reply, ID of the original message
+ * @property {boolean} [allow_sending_without_reply] *Optional*. Pass *True* if the message should be sent even if the
+ *   specified replied-to message is not found
+ * @property {InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply} [reply_markup] *Optional*.
+ *   [InlineKeyboardMarkup](https://core.telegram.org/bots/api#inlinekeyboardmarkup) or
+ *   [ReplyKeyboardMarkup](https://core.telegram.org/bots/api#replykeyboardmarkup) or
+ *   [ReplyKeyboardRemove](https://core.telegram.org/bots/api#replykeyboardremove) or
+ *   [ForceReply](https://core.telegram.org/bots/api#forcereply) Additional interface options.
+ *   A JSON-serialized object for an [inline keyboard](https://core.telegram.org/bots/features#inline-keyboards),
+ *   [custom reply keyboard](https://core.telegram.org/bots/features#keyboards), instructions to remove reply keyboard
+ *   or to force a reply from the user.
+ */
