@@ -3044,3 +3044,7 @@
  *   'choose_sticker'|'find_location'|'record_video_note'|'upload_video_note'
  * } Action
  */
+
+/**
+ * @typedef {string} FileId
+ */
