@@ -75,3 +75,14 @@
  * @property {MaskPosition} [mask_position] *Optional*. A JSON-serialized object for position where the mask should be
  *   placed on faces
  */
+
+/**
+ * @typedef {object} ExtraEditChatInviteLink
+ * @see https://core.telegram.org/bots/api#editchatinvitelink
+ * @property {string} [name] *Optional* Invite link name 0-32 characters
+ * @property {number} [expire_date] number *Optional*. Point in time (Unix timestamp) when the link will expire
+ * @property {number} [member_limit] *Optional*. The maximum number of users that can be members of the chat
+ *   simultaneously after joining the chat via this invite link 1-99999
+ * @property {boolean} [creates_join_request] *Optional* .True, if users joining the chat via the link need to be
+ *   approved by chat administrators. If True, member_limit can't be specified
+ */
