@@ -194,3 +194,29 @@
  * @see https://core.telegram.org/bots/api#deletewebhook
  * @property {boolean} [drop_pending_updates] Pass True to drop all pending updates
  */
+
+/**
+ * @typedef {object} ExtraVenue
+ * @see https://core.telegram.org/bots/api#sendvenue
+ * @property {number} [message_thread_id] *Optional*. Unique identifier of a message thread to which the message
+ *   belongs; for supergroups only
+ * @property {string} [foursquare_id] *Optional*. Foursquare identifier of the venue
+ * @property {string} [foursquare_type] *Optional*. Foursquare type of the venue, if known.
+ *   (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)
+ * @property {string} [google_place_id] *Optional*. Google Places identifier of the venue
+ * @property {string} [google_place_type] *Optional*. Google Places type of the venue.
+ *   (See [supported types](https://developers.google.com/places/web-service/supported_types).)
+ * @property {boolean} [disable_notification] *Optional*. Sends the message
+ *   [silently](https://telegram.org/blog/channels-2-0#silent-messages). Users will receive
+ *   a notification with no sound.
+ * @property {boolean} [protect_content] *Optional*. Protects the contents of the forwarded message from forwarding and
+ *   saving
+ * @property {number} [reply_to_message_id] *Optional*. If the message is a reply, ID of the original message
+ * @property {boolean} [allow_sending_without_reply] *Optional*. Pass `True`, if the message should be sent even if the
+ *   specified replied-to message is not found
+ * @property {ForceReply|ReplyKeyboardRemove|ReplyKeyboardMarkup|InlineKeyboardMarkup} [reply_markup] *Optional*.
+ *   Additional interface options. A JSON-serialized object for an
+ *   [inline keyboard](https://core.telegram.org/bots/features#inline-keyboards),
+ *   [custom reply keyboard](https://core.telegram.org/bots/features#keyboards), instructions to remove reply keyboard
+ *   or to force a reply from the user.
+ */
