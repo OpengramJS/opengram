@@ -925,3 +925,11 @@
  * @property {boolean} [can_manage_topics] *Optional*. *True*, if the user is allowed to create, rename, close, and
  *   reopen forum topics; supergroups only
  */
+
+/**
+ * @typedef {object} ExtraPinChatMessage
+ * @see https://core.telegram.org/bots/api#pinchatmessage
+ * @property {boolean} [disable_notification] Sends the message
+ *   [silently](https://telegram.org/blog/channels-2-0#silent-messages). Users will receive
+ *   a notification with no sound.
+ */
