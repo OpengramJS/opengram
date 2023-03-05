@@ -318,8 +318,12 @@
   * etc.
   *
   * @typedef {object} MessageEntity
-  * @property {'mention'|'hashtag'|'cashtag'|'bot_command'|'url'|'email'|'phone_number'|'bold'|'italic'|'underline'|'strikethrough'|'spoiler'|'code'|'pre'|'text_link'|'text_mention'|'custom_emoji'}
-  *   type Type of the entity. Currently, can be “mention” (`@username`), “hashtag”
+  * @property {
+  *   'mention'|'hashtag'|'cashtag'|'bot_command'|'url'|'email'|'phone_number'|'bold'|'italic'|'underline'|
+  *   'strikethrough'|'spoiler'|'code'|'pre'|'text_link'|'text_mention'|
+  *   'custom_emoji'
+  * } type
+  *   Type of the entity. Currently, can be “mention” (`@username`), “hashtag”
   *   (`#hashtag`), “cashtag” (`$USD`), “bot\_command” (`/start@jobs_bot`), “url”
   *   (`https://telegram.org`), “email” (`do-not-reply@telegram.org`), “phone\_number”
   *   (`+1-212-555-0123`), “bold” (**bold text**), “italic” (*italic text*),
@@ -823,8 +827,8 @@
   * @typedef {object} KeyboardButton
   * @property {string} text Text of the button. If none of the optional fields are used, it will be sent as
   *   a message when the button is pressed
-  * @property {KeyboardButtonRequestUser} [request_user] *Optional.* If specified, pressing the button will open a list of suitable
-  *   users. Tapping on any user will send their identifier to the bot in a
+  * @property {KeyboardButtonRequestUser} [request_user] *Optional.* If specified, pressing the button will open a list
+  *   of suitable users. Tapping on any user will send their identifier to the bot in a
   *   “user\_shared” service message. Available in private chats only.
   * @property {KeyboardButtonRequestChat} [request_chat] *Optional.* If specified, pressing the button will open a list
   *   of suitable chats. Tapping on a chat will send its identifier to the bot in a “chat\_shared” service message.
@@ -1146,8 +1150,10 @@
   * [ChatMemberBanned](https://core.telegram.org/bots/api/#chatmemberbanned)
   *
   *
-  * @typedef {ChatMemberOwner|ChatMemberAdministrator|ChatMemberMember|ChatMemberRestricted|ChatMemberLeft|ChatMemberBanned}
-  *   ChatMember
+  * @typedef {
+  *   ChatMemberOwner|ChatMemberAdministrator|ChatMemberMember|ChatMemberRestricted|ChatMemberLeft|
+  *   ChatMemberBanned
+  * } ChatMember
   * @see https://core.telegram.org/bots/api/#chatmember
 */
 
@@ -1239,10 +1245,6 @@
   * @property {boolean} can_manage_topics *True*, if the user is allowed to create forum topics
   * @property {boolean} can_send_media_messages *True*, if the user is allowed to send audios, documents, photos,
   *   videos, video notes and voice notes
-  * @property {boolean} can_send_polls *True*, if the user is allowed to send polls
-  * @property {boolean} can_send_other_messages *True*, if the user is allowed to send animations, games, stickers and
-  *   use inline bots
-  * @property {boolean} can_add_web_page_previews *True*, if the user is allowed to add web page previews to their
   *   messages
   * @property {number} until_date Date when restrictions will be lifted for this user; unix time. If 0, then the
   *   user is restricted forever
@@ -1385,8 +1387,11 @@
   * [BotCommandScopeChatMember](https://core.telegram.org/bots/api/#botcommandscopechatmember)
   *
   *
-  * @typedef {BotCommandScopeDefault|BotCommandScopeAllPrivateChats|BotCommandScopeAllGroupChats|BotCommandScopeAllChatAdministrators|BotCommandScopeChat|BotCommandScopeChatAdministrators|BotCommandScopeChatMember}
-  *   BotCommandScope
+  * @typedef {
+  *   BotCommandScopeDefault|BotCommandScopeAllPrivateChats|BotCommandScopeAllGroupChats|
+  *   BotCommandScopeAllChatAdministrators|BotCommandScopeChat|BotCommandScopeChatAdministrators|
+  *   BotCommandScopeChatMember
+  * } BotCommandScope
   * @see https://core.telegram.org/bots/api/#botcommandscope
 */
 
@@ -1825,9 +1830,15 @@
   *
   * [InlineQueryResultVoice](https://core.telegram.org/bots/api/#inlinequeryresultvoice)
   *
-  *
-  * @typedef {InlineQueryResultCachedAudio|InlineQueryResultCachedDocument|InlineQueryResultCachedGif|InlineQueryResultCachedMpeg4Gif|InlineQueryResultCachedPhoto|InlineQueryResultCachedSticker|InlineQueryResultCachedVideo|InlineQueryResultCachedVoice|InlineQueryResultArticle|InlineQueryResultAudio|InlineQueryResultContact|InlineQueryResultGame|InlineQueryResultDocument|InlineQueryResultGif|InlineQueryResultLocation|InlineQueryResultMpeg4Gif|InlineQueryResultPhoto|InlineQueryResultVenue|InlineQueryResultVideo|InlineQueryResultVoice}
-  *   InlineQueryResult
+  * @typedef {
+  *   InlineQueryResultCachedAudio|InlineQueryResultCachedDocument|InlineQueryResultCachedGif|
+  *   InlineQueryResultCachedMpeg4Gif|InlineQueryResultCachedPhoto|InlineQueryResultCachedSticker|
+  *   InlineQueryResultCachedVideo|InlineQueryResultCachedVoice|InlineQueryResultArticle|InlineQueryResultAudio|
+  *   InlineQueryResultContact|InlineQueryResultGame|InlineQueryResultDocument|InlineQueryResultGif|
+  *   InlineQueryResultLocation|InlineQueryResultMpeg4Gif|InlineQueryResultPhoto|InlineQueryResultVenue|
+  *   InlineQueryResultVideo|
+  *   InlineQueryResultVoice
+  * } InlineQueryResult
   * @see https://core.telegram.org/bots/api/#inlinequeryresult
 */
 
@@ -2665,8 +2676,11 @@
   * Describes documents or other Telegram Passport elements shared with the bot by the user.
   *
   * @typedef {object} EncryptedPassportElement
-  * @property {'personal_details'|'passport'|'driver_license'|'identity_card'|'internal_passport'|'address'|'utility_bill'|'bank_statement'|'rental_agreement'|'passport_registration'|'temporary_registration'|'phone_number'|'email'}
-  *   type Element type. One of “personal\_details”, “passport”, “driver\_license”,
+  * @property {
+  *   'personal_details'|'passport'|'driver_license'|'identity_card'|'internal_passport'|'address'|'utility_bill'|
+  *   'bank_statement'|'rental_agreement'|'passport_registration'|'temporary_registration'|'phone_number'|'email'
+  * } type
+  *   Element type. One of “personal\_details”, “passport”, “driver\_license”,
   *   “identity\_card”, “internal\_passport”, “address”, “utility\_bill”,
   *   “bank\_statement”, “rental\_agreement”, “passport\_registration”,
   *   “temporary\_registration”, “phone\_number”, “email”.
@@ -2750,8 +2764,11 @@
   * [PassportElementErrorUnspecified](https://core.telegram.org/bots/api/#passportelementerrorunspecified)
   *
   *
-  * @typedef {PassportElementErrorDataField|PassportElementErrorFrontSide|PassportElementErrorReverseSide|PassportElementErrorSelfie|PassportElementErrorFile|PassportElementErrorFiles|PassportElementErrorTranslationFile|PassportElementErrorTranslationFiles|PassportElementErrorUnspecified}
-  *   PassportElementError
+  * @typedef {
+  *   PassportElementErrorDataField|PassportElementErrorFrontSide|PassportElementErrorReverseSide|
+  *   PassportElementErrorSelfie|PassportElementErrorFile|PassportElementErrorFiles|PassportElementErrorTranslationFile|
+  *   PassportElementErrorTranslationFiles|PassportElementErrorUnspecified
+  * } PassportElementError
   * @see https://core.telegram.org/bots/api/#passportelementerror
 */
 
@@ -2819,8 +2836,8 @@
   *
   * @typedef {object} PassportElementErrorFile
   * @property {'file'} source Error source, must be *file*
-  * @property {'utility_bill'|'bank_statement'|'rental_agreement'|'passport_registration'|'temporary_registration'}
-  *   type The section of the user's Telegram Passport which has the issue, one of
+  * @property {'utility_bill'|'bank_statement'|'rental_agreement'|'passport_registration'|'temporary_registration'} type
+  *   The section of the user's Telegram Passport which has the issue, one of
   *   “utility\_bill”, “bank\_statement”, “rental\_agreement”,
   *   “passport\_registration”, “temporary\_registration”
   * @property {string} file_hash Base64-encoded file hash
@@ -2834,8 +2851,8 @@
   *
   * @typedef {object} PassportElementErrorFiles
   * @property {'files'} source Error source, must be *files*
-  * @property {'utility_bill'|'bank_statement'|'rental_agreement'|'passport_registration'|'temporary_registration'}
-  *   type The section of the user's Telegram Passport which has the issue, one of
+  * @property {'utility_bill'|'bank_statement'|'rental_agreement'|'passport_registration'|'temporary_registration'} type
+  *    The section of the user's Telegram Passport which has the issue, one of
   *   “utility\_bill”, “bank\_statement”, “rental\_agreement”,
   *   “passport\_registration”, “temporary\_registration”
   * @property {string[]} file_hashes List of base64-encoded file hashes
@@ -2849,8 +2866,11 @@
   *
   * @typedef {object} PassportElementErrorTranslationFile
   * @property {'translation_file'} source Error source, must be *translation\_file*
-  * @property {'passport'|'driver_license'|'identity_card'|'internal_passport'|'utility_bill'|'bank_statement'|'rental_agreement'|'passport_registration'|'temporary_registration'}
-  *   type Type of element of the user's Telegram Passport which has the issue, one of
+  * @property {
+  *   'passport'|'driver_license'|'identity_card'|'internal_passport'|'utility_bill'|'bank_statement'|'rental_agreement'|
+  *   'passport_registration'|'temporary_registration'
+  * } type
+  *    Type of element of the user's Telegram Passport which has the issue, one of
   *   “passport”, “driver\_license”, “identity\_card”, “internal\_passport”,
   *   “utility\_bill”, “bank\_statement”, “rental\_agreement”,
   *   “passport\_registration”, “temporary\_registration”
@@ -2865,8 +2885,11 @@
   *
   * @typedef {object} PassportElementErrorTranslationFiles
   * @property {'translation_files'} source Error source, must be *translation\_files*
-  * @property {'passport'|'driver_license'|'identity_card'|'internal_passport'|'utility_bill'|'bank_statement'|'rental_agreement'|'passport_registration'|'temporary_registration'}
-  *   type Type of element of the user's Telegram Passport which has the issue, one of
+  * @property {
+  *   'passport'|'driver_license'|'identity_card'|'internal_passport'|'utility_bill'|'bank_statement'|'rental_agreement'
+  *   |'passport_registration'|'temporary_registration'
+  * } type
+  *    Type of element of the user's Telegram Passport which has the issue, one of
   *   “passport”, “driver\_license”, “identity\_card”, “internal\_passport”,
   *   “utility\_bill”, “bank\_statement”, “rental\_agreement”,
   *   “passport\_registration”, “temporary\_registration”
@@ -2960,8 +2983,10 @@
  * @property {boolean} [drop_pending_updates] Pass True to drop all pending updates
  */
 
-/**
- * @typedef {'mention'|'hashtag'|'cashtag'|'bot_command'|'url'|'email'|'phone_number'|'bold'|'italic'|'underline'|'strikethrough'|'spoiler'|'code'|'pre'|'text_link'|'text_mention'|'custom_emoji'} MessageEntityType
+ * @typedef {
+ *   'mention'|'hashtag'|'cashtag'|'bot_command'|'url'|'email'|'phone_number'|'bold'|'italic'|'underline'|
+ *   'strikethrough'|'spoiler'|'code'|'pre'|'text_link'|'text_mention'|'custom_emoji'
+ * } MessageEntityType
  */
 
 /**
