@@ -188,3 +188,9 @@
  *    in every webhook request, 1-256 characters. Only characters `A-Z`, `a-z`, `0-9`, `_` and `-` are allowed.
  *    The header is useful to ensure that the request comes from a webhook set by you.
  */
+
+/**
+ * @typedef {object} ExtraDeleteWebhook
+ * @see https://core.telegram.org/bots/api#deletewebhook
+ * @property {boolean} [drop_pending_updates] Pass True to drop all pending updates
+ */
