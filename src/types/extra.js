@@ -933,3 +933,10 @@
  *   [silently](https://telegram.org/blog/channels-2-0#silent-messages). Users will receive
  *   a notification with no sound.
  */
+
+/**
+ * @typedef {object} ExtraUnPinChatMessage
+ * @see https://core.telegram.org/bots/api#unpinchatmessage
+ * @property {number} [message_id] Identifier of a message to unpin. If not specified, the most recent pinned message
+ *   (by sending date) will be unpinned.
+ */
