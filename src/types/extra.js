@@ -292,3 +292,14 @@
  *   a [*switch_inline*](https://core.telegram.org/bots/api#inlinekeyboardmarkup) button so that the user can easily
  *   return to the chat where they wanted to use the bot's inline capabilities.
  */
+
+/**
+ * @typedef {object} ExtraCreateChatInviteLink
+ * @see https://core.telegram.org/bots/api#createchatinvitelink
+ * @property {string} [name] *Optional*. Invite link name; 0-32 characters
+ * @property {number} [expire_date] *Optional*. Point in time (Unix timestamp) when the link will expire |
+ * @property {number} [member_limit] *Optional*. The maximum number of users that can be members of the
+ *   chat simultaneously after joining the chat via this invite link; 1-99999 |
+ * @property {boolean} [creates_join_request] *Optional*. *True*, if users joining the chat via the link
+ *   need to be approved by chat administrators. If *True*, *member_limit* can't be specified |
+ */
