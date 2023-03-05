@@ -772,8 +772,6 @@
 /**
  * @typedef {object} ExtraCreateForumTopic
  * @see https://core.telegram.org/bots/api#createforumtopic
- * @property {string} [name] *Optional*. New topic name, 0-128 characters. If not specified or empty, the current name
- *   of the topic will be kept
  * @property {number} [icon_color] *Optional*. Color of the topic icon in RGB format. Currently, must be one of
  * `7322096` (`0x6FB9F0`), `16766590` (`0xFFD67E`), `13338331` (`0xCB86DB`), `9367192` (`0x8EEE98`), `16749490`
  *   (`0xFF93B2`), or
