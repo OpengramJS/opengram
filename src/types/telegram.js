@@ -2377,9 +2377,10 @@
   *
   * [InputInvoiceMessageContent](https://core.telegram.org/bots/api/#inputinvoicemessagecontent)
   *
-  *
-  * @typedef {InputTextMessageContent|InputLocationMessageContent|InputVenueMessageContent|InputContactMessageContent|InputInvoiceMessageContent}
-  *   InputMessageContent
+  * @typedef {
+  *   InputTextMessageContent|InputLocationMessageContent|InputVenueMessageContent|InputContactMessageContent|
+  *   InputInvoiceMessageContent
+  * } InputMessageContent
   * @see https://core.telegram.org/bots/api/#inputmessagecontent
 */
 

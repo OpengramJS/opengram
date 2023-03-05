@@ -31,7 +31,8 @@ const noop = () => { }
  * manner upon request. Is similar to many other middleware systems that you may have encountered such as Koa,
  * Ruby's Rack, Connect.
  *
- * Middleware is an essential part of any modern framework. It allows you to modify requests and responses as they pass between the Telegram and your bot.
+ * Middleware is an essential part of any modern framework. It allows you to modify requests and responses as they pass
+ * between the Telegram and your bot.
  *
  * You can imagine middleware as a chain of logic connection your bot to the Telegram request.
  *
@@ -366,7 +367,8 @@ class Opengram extends Composer {
   /**
    * @typedef {object} LaunchWebhookOptions
    * @property {string} [path='/opengram'] Path the server should listen to.
-   *    By default - `/opengram` or with enabled {@link webhookConfig#useSecretPath useSecretPath} - `/opengram/<secret>`
+   *    By default - `/opengram` or with enabled {@link WebhookConfig#useSecretPath useSecretPath} -
+   *   `/opengram/<secret>`
    * @property {string} secret A secret token to be sent in a header “X-Telegram-Bot-Api-Secret-Token”
    *    in every webhook request, 1-256 characters. Only characters A-Z, a-z, 0-9, _ and - are allowed.
    *    The header is useful to ensure that the request comes from a webhook set by you.
@@ -384,7 +386,8 @@ class Opengram extends Composer {
    * @property {LaunchWebhookOptions} options Webhook options object. See {@link Opengram#startWebhook} for more
    *   information
    * @property {object} tlsOptions Options for TLS. See {@link Opengram#startWebhook} for more information
-   * @property {Function} cb Next handler function, called when webhook handler not match path string or request method.
+   * @property {Function} cb Next handler function, called when webhook handler not match path string or request
+   *   method.
    *    See {@link Opengram#startWebhook} for more information
    * @property {number} port Port number. See {@link Opengram#startWebhook} for more information
    * @property {string} host Hostname. See {@link Opengram#startWebhook} for more information

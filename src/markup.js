@@ -83,7 +83,8 @@ class Markup {
   }
 
   /**
-   * Returns a ready object for extra parameters with given additional options, equals result to `Extra.markup(markupObj)`
+   * Returns a ready object for extra parameters with given additional options, equals result to
+   * `Extra.markup(markupObj)`
    *
    * ```js
    * ctx.reply('<i>Banana</i>', Markup.inlineKeyboard([

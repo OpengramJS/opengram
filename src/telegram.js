@@ -79,7 +79,8 @@ class Telegram extends ApiClient {
    * @param {number} [timeout=0] - Timeout in seconds for long polling.
    *    Defaults to 0, i.e. usual short polling. Should be positive,
    *    short polling should be used for testing purposes only.
-   * @param {number} [limit=100] - Limits the number of updates to be retrieved. Values between 1-100 are accepted. Defaults to 100.
+   * @param {number} [limit=100] - Limits the number of updates to be retrieved. Values between 1-100 are accepted.
+   *   Defaults to 100.
    * @param {number} [offset] - Identifier of the first update to be returned.
    *    Must be greater by one than the highest among the identifiers of previously received updates.
    *    By default, updates starting with the earliest unconfirmed update are returned.
@@ -129,7 +130,8 @@ class Telegram extends ApiClient {
    * @param {number} [inlineMessageId] Required if `inline_message_id` is not specified.
    *    Unique identifier for the target chat
    * @param {number} [chatId] Required if `inline_message_id` is not specified. Identifier of the sent message
-   * @param {number} [messageId] Required if `chat_id` and `message_id` are not specified. Identifier of the inline message
+   * @param {number} [messageId] Required if `chat_id` and `message_id` are not specified. Identifier of the inline
+   *   message
    * @throws {TelegramError}
    * @return {Promise<GameHighScore[]>}
    */
@@ -813,10 +815,10 @@ class Telegram extends ApiClient {
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {number} userId Unique identifier of the target user
-   * @param {number} [untilDate] Date when the user will be unbanned, unix time. If user is banned for more than 366 days or less
-   *    than 30 seconds from the current time they are considered to be banned forever.
-   *    Applied for supergroups and channels only.
    * @param {object} [extra] Other parameters
+   * @param {number} [untilDate] Date when the user will be unbanned, unix time. If user is banned for more than 366
+   *   days or less than 30 seconds from the current time they are considered to be banned forever. Applied for
+   *   supergroups and channels only.
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -1176,10 +1178,11 @@ class Telegram extends ApiClient {
    *
    * @see https://core.telegram.org/bots/api#answercallbackquery
    * @param {string} [callbackQueryId] Unique identifier for the query to be answered
-   * @param {string} [text] Text of the notification. If not specified, nothing will be shown to the user, 0-200 characters
-   * @param {boolean} [showAlert] If True, an alert will be shown by the client instead of a notification at the top of the
-   *    chat screen. Defaults to false.
    * @param {object} [extra] Other parameters
+   * @param {string} [text] Text of the notification. If not specified, nothing will be shown to the user, 0-200
+   *   characters
+   * @param {boolean} [showAlert] If True, an alert will be shown by the client instead of a notification at the top of
+   *   the chat screen. Defaults to false.
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -1197,9 +1200,9 @@ class Telegram extends ApiClient {
    *
    * @see https://core.telegram.org/bots/api#answercallbackquery
    * @param {string} callbackQueryId Unique identifier for the query to be answered
-   * @param {string} [url] URL that will be opened by the user's client. If you have created a Game and accepted the conditions
-   *    via [@BotFather](https://t.me/BotFather), specify the URL that opens your game - note that this will only work
-   *    if the query comes from a `callback_game` button.
+   * @param {string} [url] URL that will be opened by the user's client. If you have created a Game and accepted the
+   *   conditions via [@BotFather](https://t.me/BotFather), specify the URL that opens your game - note that this will
+   *   only work if the query comes from a `callback_game` button.
    * @throws {TelegramError}
    * @return {Promise}
    */
@@ -1219,7 +1222,8 @@ class Telegram extends ApiClient {
    *
    * @see https://core.telegram.org/bots/api#answershippingquery
    * @param {string} shippingQueryId Unique identifier for the query to be answered
-   * @param {boolean} ok Specify True if delivery to the specified address is possible and False if there are any problems
+   * @param {boolean} ok Specify True if delivery to the specified address is possible and False if there are any
+   *   problems
    *    (for example, if delivery to the specified address is not possible)
    * @param {ShippingOption[]} [shippingOptions] Required if ok is True. Array of available shipping options.
    * @param {string} [errorMessage] Required if ok is False. Error message in human-readable form that explains why it
@@ -1249,12 +1253,12 @@ class Telegram extends ApiClient {
    *
    * @see https://core.telegram.org/bots/api#answerprecheckoutquery
    * @param {string} preCheckoutQueryId Unique identifier for the query to be answered
-   * @param {boolean} ok Specify True if everything is alright (goods are available, etc.) and the bot is ready to proceed
-   *    with the order. Use False if there are any problems.
-   * @param {string} [errorMessage] Required if ok is False. Error message in human readable form that explains the reason for
-   *    failure to proceed with the checkout (e.g. "Sorry, somebody just bought the last of our amazing black T-shirts
-   *    while you were busy filling out your payment details. Please choose a different color or garment!").
-   *    Telegram will display this message to the user.
+   * @param {boolean} ok Specify True if everything is alright (goods are available, etc.) and the bot is ready to
+   *   proceed with the order. Use False if there are any problems.
+   * @param {string} [errorMessage] Required if ok is False. Error message in human readable form that explains the
+   *   reason for failure to proceed with the checkout (e.g. "Sorry, somebody just bought the last of our amazing black
+   *   T-shirts while you were busy filling out your payment details. Please choose a different color or garment!").
+   *   Telegram will display this message to the user.
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -1276,7 +1280,8 @@ class Telegram extends ApiClient {
    * @param {number|string} [chatId] Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {number} [messageId] Required if `inline_message_id` is not specified. Identifier of the message to edit
-   * @param {string} [inlineMessageId] Required if `chat_id` and `message_id` are not specified. Identifier of the inline message
+   * @param {string} [inlineMessageId] Required if `chat_id` and `message_id` are not specified. Identifier of the
+   *   inline message
    * @param {string} text New text of the message, 1-4096 characters after entities parsing
    * @param {object|Extra} [extra] Other parameters
    * @throws {TelegramError}
@@ -1363,8 +1368,9 @@ class Telegram extends ApiClient {
    * @param {number|string} [chatId] Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {number} [messageId] Required if `inline_message_id` is not specified. Identifier of the message to edit
-   * @param {string} [inlineMessageId] Required if `chat_id` and `message_id` are not specified. Identifier of the inline message
    * @param {object|Extra} [extra] Other parameters
+   * @param {string} [inlineMessageId] Required if `chat_id` and `message_id` are not specified. Identifier of the
+   *   inline message
    * @throws {TelegramError}
    * @return {Promise<boolean|Message>}
    */
@@ -1419,8 +1425,9 @@ class Telegram extends ApiClient {
    *    (in the format `@channelusername`)
    * @param {number} [messageId] Required if `inline_message_id` is not specified. Identifier of the message with
    *    live location to stop
-   * @param {string} [inlineMessageId] Required if `chat_id` and `message_id` are not specified. Identifier of the inline message
    * @param {object|Extra} [extra] Other parameters
+   * @param {string} [inlineMessageId] Required if `chat_id` and `message_id` are not specified. Identifier of the
+   *   inline message
    * @throws {TelegramError}
    * @return {Promise<boolean|Message>}
    */
@@ -1740,7 +1747,7 @@ class Telegram extends ApiClient {
 
   /**
    * Use this method to upload a .PNG file with a sticker for later use in
-   * {@link Telegram.createNewStickerSet createNewStickerSet} and {@link Telegram.addStickerToSet addStickerToSet}
+   * {@link Telegram#createNewStickerSet createNewStickerSet} and {@link Telegram.addStickerToSet addStickerToSet}
    * methods (can be used multiple times).
    *
    * Returns the uploaded {@link File} on success.
