@@ -328,3 +328,14 @@
  *   [custom reply keyboard](https://core.telegram.org/bots/features#keyboards), instructions to remove reply keyboard
  *   or to force a reply from the user.
  */
+
+/**
+ * @typedef {object} ExtraEditForumTopic
+ * @see https://core.telegram.org/bots/api#editforumtopic
+ * @property {string} [name] *Optional*. New topic name, 0-128 characters. If not specified or empty, the current name
+ *   of the topic will be kept
+ * @property {string} [icon_custom_emoji_id] *Optional*. New unique identifier of the custom emoji shown as the topic
+ *   icon. Use [getForumTopicIconStickers](https://core.telegram.org/bots/api#getforumtopiciconstickers) to get all
+ *   allowed custom emoji identifiers. Pass an empty string to remove the icon. If not specified, the current icon will
+ *   be kept
+ */
