@@ -863,6 +863,7 @@
 
 /**
  * @typedef {object} ExtraEditMessageReplyMarkup
+ * @see https://core.telegram.org/bots/api#editmessagereplymarkup
  * @property {InlineKeyboardMarkup} [reply_markup] *Optional* A JSON-serialized object for an
  *   [inline keyboard](https://core.telegram.org/bots/features#inline-keyboards). If empty, one 'Pay `total price`'
  *   button will be shown. If not empty, the first button must be a Pay button.
