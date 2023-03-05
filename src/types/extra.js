@@ -166,3 +166,25 @@
  *   [custom reply keyboard](https://core.telegram.org/bots/features#keyboards), instructions to remove reply keyboard
  *   or to force a reply from the user.
  */
+
+/**
+ * @typedef {object} ExtraSetWebhook
+ * @see https://core.telegram.org/bots/api#setwebhook
+ * @property {InputFile} [certificate] *Optional*. Upload your public key certificate so that the root certificate
+ *   in use can be checked. See our self-signed guide for details.
+ * @property {string} [ip_address] *Optional*. The fixed IP address which will be used to send webhook requests instead
+ *   of the IP address resolved through DNS
+ * @property {number} [max_connections=40] *Optional*. The maximum allowed number of simultaneous HTTPS connections to
+ *   the webhook for update delivery, 1-100. Defaults to 40. Use lower values to limit the load on your bot's server,
+ *   and higher values to increase your bot's throughput.
+ * @param {updateType[]} [allowedUpdates] *Optional*. Array of allowed updates or update name
+ *     For example, specify `["message", "edited_channel_post", "callback_query"]` to only receive
+ *     updates of these types. See [Update](https://core.telegram.org/bots/api#update) for a complete list of
+ *     available update types.
+ *     Specify an empty list to receive all update types except `chat_member` (default).
+ *     If not specified, the previous setting will be used.
+ * @property {boolean} [drop_pending_updates] *Optional*. Pass `True` to drop all pending updates
+ * @property {string} [secret_token] *Optional*. A secret token to be sent in a header `X-Telegram-Bot-Api-Secret-Token`
+ *    in every webhook request, 1-256 characters. Only characters `A-Z`, `a-z`, `0-9`, `_` and `-` are allowed.
+ *    The header is useful to ensure that the request comes from a webhook set by you.
+ */
