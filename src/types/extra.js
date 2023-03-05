@@ -86,3 +86,16 @@
  * @property {boolean} [creates_join_request] *Optional* .True, if users joining the chat via the link need to be
  *   approved by chat administrators. If True, member_limit can't be specified
  */
+
+/**
+ * @typedef {object} ExtraEditMessageLiveLocation
+ * @see https://core.telegram.org/bots/api#editmessagelivelocation
+ * @property {number} [horizontal_accuracy] *Optional* The radius of uncertainty for the location, measured in meters;
+ *   0-1500
+ * @property {number} [heading] *Optional* Direction in which the user is moving, in degrees. Must be between 1 and
+ *   360 if specified.
+ * @property {number} [proximity_alert_radius] *Optional*The maximum distance for proximity alerts about approaching
+ *   another chat member, in meters. Must be between 1 and 100000 if specified.
+ * @property {InlineKeyboardMarkup} [reply_markup] *Optional* A JSON-serialized object for a new
+ *   [inline keyboard](https://core.telegram.org/bots/features#inline-keyboards).
+ */
