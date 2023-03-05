@@ -34,12 +34,6 @@
  * @property {boolean} [protect_content] Protects the contents of the forwarded message from forwarding and saving
  */
 
-/**
- * @typedef {
-    'typing'|'upload_photo'|'record_video'|'upload_video'|'record_voice'|'upload_voice'|'upload_document'|
-    'choose_sticker'|'find_location'|'record_video_note'|'upload_video_note'
-   } Action
- */
 
 /**
  * @typedef {object} forwardExtraParams
@@ -49,5 +43,3 @@
  * @property {number} [message_thread_id] Unique identifier of a message thread to which the message belongs; for supergroups only
  * @property {boolean} [protect_content] Protects the contents of the forwarded message from forwarding and saving
  */
-
-/** @typedef {'Markdown'|'MarkdownV2'|'HTML'} parseMode */

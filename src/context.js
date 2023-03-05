@@ -109,7 +109,7 @@ class OpengramContext {
     /** @type {Update} **/
     this.update = update
     this.options = options
-    /** @type {updateType} **/
+    /** @type {UpdateType} **/
     this.updateType = UpdateTypes.find((key) => key in this.update)
 
     if (this.updateType === 'message' || (this.options.channelMode && this.updateType === 'channel_post')) {

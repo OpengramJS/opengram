@@ -1,7 +1,7 @@
 /**
  * Keyboard Builder wrapping function used to divide the keyboard into columns.
  *
- * @name keyboardWrap
+ * @name KeyboardWrap
  * @function
  * @param {string} btn Current button object
  * @param {number} index Current button index
@@ -14,19 +14,19 @@
  */
 
 /**
- * @typedef {object} keyboardOptions
+ * @typedef {object} KeyboardOptions
  * @property {number} [columns=1] Count of keyboard columns
- * @property {keyboardWrap} [wrap] Warp function
+ * @property {KeyboardWrap} [wrap] Warp function
  */
 
 /**
- * @typedef {object} inlineKeyboardOptions
+ * @typedef {object} InlineKeyboardOptions
  * @property {number} [columns] Count of keyboard columns, by default equals to `buttons.length`
- * @property {keyboardWrap} [wrap] Warp function
+ * @property {KeyboardWrap} [wrap] Warp function
  */
 
 /**
- * @typedef {object} loginButtonOptions
+ * @typedef {object} LoginButtonOptions
  * @property {string} [forward_text] New text of the button in forwarded messages.
  * @property {string} [bot_username] Username of a bot, which will be used for user authorization.
  * @property {boolean} [request_write_access] Pass True to request the permission for your bot to send messages to the user.

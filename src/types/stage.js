@@ -5,7 +5,7 @@
  *
  * After TTL expired, all scene data stored in local session of scene be permanently removed
  *
- * @typedef {object} stageOptions
+ * @typedef {object} StageOptions
  * @property {string} [sessionName='session'] Name of session property used for scenes, by default - `session`
  * @property {string} [default] Name of scene by default
  * @property {number} [ttl] Time of life for scenes in seconds

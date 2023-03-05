@@ -186,7 +186,7 @@ class Opengram extends Composer {
   }
 
   /**
-   * @typedef {object} webhookCallbackOptions
+   * @typedef {object} WebhookCallbackOptions
    * @property {string} [path='/'] Path the server should listen to.
    * @property {string} [secret] A secret token to be sent in a header “X-Telegram-Bot-Api-Secret-Token”
    *    in every webhook request, 1-256 characters. Only characters A-Z, a-z, 0-9, _ and - are allowed.
@@ -218,7 +218,7 @@ class Opengram extends Composer {
    * app.listen(3000, () => console.log('Bot listening on port 3000!'))
    * ```
    *
-   * @param {webhookCallbackOptions} config Options
+   * @param {WebhookCallbackOptions} config Options
    * @return {Function}
    */
   webhookCallback (config = {}) {
@@ -256,7 +256,7 @@ class Opengram extends Composer {
   }
 
   /**
-   * @typedef {object} startWebhookOptions
+   * @typedef {object} StartWebhookOptions
    * @property {string} path Path the server should listen to.
    * @property {string} [secret] A secret token to be sent in a header “X-Telegram-Bot-Api-Secret-Token”
    *    in every webhook request, 1-256 characters. Only characters A-Z, a-z, 0-9, _ and - are allowed.
@@ -307,7 +307,7 @@ class Opengram extends Composer {
    * })
    * ```
    *
-   * @param {startWebhookOptions} [options] Webhook options
+   * @param {StartWebhookOptions} [options] Webhook options
    * @param {object|null} [tlsOptions] - Options for `https` NodeJS module, see official
    *    [docs](https://nodejs.org/api/https.html#httpscreateserveroptions-requestlistener)
    * @param {number} [port] Port to listen. Be careful, Telegram only supports 443, 80, 88, 8443 for now.
@@ -350,7 +350,7 @@ class Opengram extends Composer {
   }
 
   /**
-   * @typedef {object} pollingConfig
+   * @typedef {object} PollingConfig
    * @property {Function} [stopCallback] Function called when bot fully stopped.
    *     If you call `bot.stop()` it be rewritten with other function and never called, for using with `bot.stop`,
    *     you can pass `callback` into `bot.stop` argument, for example `bot.stop(() => console.log('Stopped'))`
@@ -364,7 +364,7 @@ class Opengram extends Composer {
    */
 
   /**
-   * @typedef {object} launchWebhookOptions
+   * @typedef {object} LaunchWebhookOptions
    * @property {string} [path='/opengram'] Path the server should listen to.
    *    By default - `/opengram` or with enabled {@link webhookConfig#useSecretPath useSecretPath} - `/opengram/<secret>`
    * @property {string} secret A secret token to be sent in a header “X-Telegram-Bot-Api-Secret-Token”
@@ -375,13 +375,14 @@ class Opengram extends Composer {
    */
 
   /**
-   * @typedef {object} webhookConfig
+   * @typedef {object} WebhookConfig
    * @property {boolean} [useSecretPath=true] Enable legacy mode by using the secret in the URL instead of the
    *    secret header.
    * @property {string} domain Your external server domain For example -
    *    `example.com`, `https://exmaple.com`, `http://exmaple.com`.
    *    Used for {@link Opengram.telegram.setWebhook}
-   * @property {launchWebhookOptions} options Webhook options object. See {@link Opengram#startWebhook} for more information
+   * @property {LaunchWebhookOptions} options Webhook options object. See {@link Opengram#startWebhook} for more
+   *   information
    * @property {object} tlsOptions Options for TLS. See {@link Opengram#startWebhook} for more information
    * @property {Function} cb Next handler function, called when webhook handler not match path string or request method.
    *    See {@link Opengram#startWebhook} for more information
@@ -395,11 +396,11 @@ class Opengram extends Composer {
    */
 
   /**
-   * @typedef {object} launchConfig
+   * @typedef {object} LaunchConfig
    * @property {boolean} [dropPendingUpdates=false] If sets to true, dropping all pending updates which were sent
    *    when bots bot not was started
-   * @property {pollingConfig} [polling] Polling configuration
-   * @property {webhookConfig} [webhook] Webhook configuration
+   * @property {PollingConfig} [polling] Polling configuration
+   * @property {WebhookConfig} [webhook] Webhook configuration
    * @property {string[]} [allowedUpdates] Array of allowed updates for **webhook**.
    *    For example, specify ["message", "edited_channel_post", "callback_query"] to only receive
    *    updates of these types. Please note that this parameter doesn't affect updates created before the call
@@ -409,8 +410,8 @@ class Opengram extends Composer {
   /**
    * Launching a bot with a given config
    *
-   * @param {launchConfig} [config] Launch configuration
    * @throws Error
+   * @param {LaunchConfig} [config] Launch configuration
    * @return {Promise<Opengram>}
    */
   async launch (config = {}) {

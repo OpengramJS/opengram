@@ -119,8 +119,8 @@ class Markup {
    * ```
    *
    * @see https://core.telegram.org/bots/api#replykeyboardmarkup
-   * @param {object} buttons Array of buttons
-   * @param {keyboardOptions} [options] You can pass here columns count or wrap function for slice buttons to columns
+   * @param {KeyboardButton[]|KeyboardButton[][]} buttons Array of buttons
+   * @param {KeyboardOptions} [options] You can pass here columns count or wrap function for slice buttons to columns
    * @return {Markup}
    */
   keyboard (buttons, options) {
@@ -165,7 +165,8 @@ class Markup {
    *
    * @see https://core.telegram.org/bots/api#inlinekeyboardmarkup
    * @param {object} buttons Array of buttons
-   * @param {inlineKeyboardOptions} options You can pass here columns count or wrap function for slice buttons to columns
+   * @param {InlineKeyboardOptions} options You can pass here columns count or wrap function for slice buttons to
+   *   columns
    * @return {Markup}
    */
   inlineKeyboard (buttons, options) {
@@ -408,7 +409,7 @@ class Markup {
    * @param {string} url An HTTPS URL to be opened with user authorization data added to the query string when the
    *   button is pressed. If the user refuses to provide authorization data, the original URL without information about
    *   the user will be opened. The data added is the same as described in Receiving authorization data.
-   * @param {loginButtonOptions} [opts] Login options
+   * @param {LoginButtonOptions} [opts] Login options
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
    *   for hide button when build keyboard
    * @return {object}
@@ -476,7 +477,7 @@ class Markup {
    *
    * @see https://core.telegram.org/bots/api#replykeyboardmarkup
    * @param {object} buttons Array of buttons
-   * @param {keyboardOptions} [options] You can pass here columns count or wrap function for slice buttons to columns
+   * @param {KeyboardOptions} [options] You can pass here columns count or wrap function for slice buttons to columns
    * @return {Markup}
    */
   static keyboard (buttons, options) {
@@ -517,7 +518,7 @@ class Markup {
    *
    * @see https://core.telegram.org/bots/api#inlinekeyboardmarkup
    * @param {object} buttons Array of buttons
-   * @param {inlineKeyboardOptions} [options] You can pass here columns count or wrap function for slice
+   * @param {InlineKeyboardOptions} [options] You can pass here columns count or wrap function for slice
    *   buttons to columns
    * @return {Markup}
    */
@@ -775,7 +776,7 @@ class Markup {
    * @param {string} url An HTTPS URL to be opened with user authorization data added to the query string when the
    *   button is pressed. If the user refuses to provide authorization data, the original URL without information about
    *   the user will be opened. The data added is the same as described in Receiving authorization data.
-   * @param {loginButtonOptions} [opts] Options
+   * @param {LoginButtonOptions} [opts] Options
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for
    *   hide button when build keyboard
    * @return {object}

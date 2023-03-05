@@ -3006,3 +3006,12 @@
  * @property {LabeledPrice[]} prices Price breakdown, a JSON-serialized list of components (e.g. product price, tax,
  *   discount, delivery cost, delivery tax, bonus, etc.)
  */
+
+/** @typedef {'Markdown'|'MarkdownV2'|'HTML'} ParseMode */
+
+/**
+ * @typedef {
+ *   'typing'|'upload_photo'|'record_video'|'upload_video'|'record_voice'|'upload_voice'|'upload_document'|
+ *   'choose_sticker'|'find_location'|'record_video_note'|'upload_video_note'
+ * } Action
+ */

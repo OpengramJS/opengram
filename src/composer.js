@@ -86,7 +86,7 @@ class Composer {
    *
    * This method returns same as {@link Composer#use}.
    *
-   * @param {updateType|updateType[]} updateTypes The update type or array of update types to use,
+   * @param {UpdateType|UpdateType[]} updateTypes The update type or array of update types to use,
    *    may also be an array or string
    * @param {MiddlewareFn} fns The middleware(s) to register with the given types as argument(s)
    * @return {Composer}
@@ -451,7 +451,7 @@ class Composer {
    *
    * This method matches entity in channel post, message and media caption
    *
-   * @param {entityPredicate} predicate The predicate to check. Can be async, returns boolean or Promise with boolean
+   * @param {EntityPredicate} predicate The predicate to check. Can be async, returns boolean or Promise with boolean
    * @param {MiddlewareFn} fns The middleware(s) to register
    * @return {Composer}
    */
@@ -976,7 +976,7 @@ class Composer {
    * Your middleware will be executed if _any of the provided filter queries_
    * matches (logical OR).
    *
-   * @param {updateType|updateType[]} updateType The update type or array of update types to use,
+   * @param {UpdateType|UpdateType[]} updateType The update type or array of update types to use,
    *    may also be an array or string
    * @param {MiddlewareFn} fns The middleware(s) to register with the given types as argument(s)
    * @return {MiddlewareFn}
@@ -998,7 +998,7 @@ class Composer {
    *
    * This method matches entity in channel post, message and media caption
    *
-   * @param {entityPredicate} predicate The predicate to check. Entity name or predicate function.
+   * @param {EntityPredicate} predicate The predicate to check. Entity name or predicate function.
    *   If function provided, it can be sync only and returns boolean
    * @param {MiddlewareFn} fns The middleware(s) to register
    * @return {MiddlewareFn}

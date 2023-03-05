@@ -16,7 +16,7 @@
     "venue" | "video" | "video_note" | "voice" | "voice_chat_started" | "voice_chat_ended" | "forward" |
     "voice_chat_participants_invited" | "voice_chat_scheduled" | video_chat_scheduled | "video_chat_started" |
     "video_chat_ended" | "web_app_data" | "forum_topic_created" | "forum_topic_closed" | "forum_topic_reopened"
- } updateType
+ } UpdateType
  */
 
 /**
@@ -33,7 +33,7 @@
  */
 
 /**
- * @callback entityPredicateFn
+ * @callback EntityPredicateFn
  * @param {MessageEntity} entityObject Entity object
  * @param {string} entityText Entity text
  * @param {OpengramContext} context Update context
@@ -41,7 +41,7 @@
  */
 
 /**
- * @typedef {entityPredicateFn|MessageEntityType} entityPredicate
+ * @typedef {EntityPredicateFn|MessageEntityType} EntityPredicate
  */
 
 /**

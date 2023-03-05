@@ -69,7 +69,7 @@ class Extra {
   /**
    * Markup factory function
    *
-   * @name markupCallback
+   * @name MarkupCallback
    * @function
    * @param {Markup} markup Empty created Markup instance
    * @example
@@ -96,7 +96,7 @@ class Extra {
    * ```
    *
    * @see https://core.telegram.org/bots/api#sendmessage
-   * @param {object|markupCallback} markup Callback returning markup / Markup object
+   * @param {object|MarkupCallback} markup Callback returning markup / Markup object
    * @return {Extra}
    */
   markup (markup) {
@@ -248,7 +248,7 @@ class Extra {
    * ```
    *
    * @see https://core.telegram.org/bots/api#sendmessage
-   * @param {object|Markup|markupCallback} markup Markup object
+   * @param {object|Markup|MarkupCallback} markup Markup object
    * @return {object}
    */
   static markup (markup) {
