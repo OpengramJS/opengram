@@ -819,3 +819,16 @@
  *   [custom reply keyboard](https://core.telegram.org/bots/features#keyboards), instructions to remove reply keyboard
  *   or to force a reply from the user.
  */
+
+/**
+ * @typedef {object} ExtraEditMessageCaption
+ * @see https://core.telegram.org/bots/api#editmessagecaption
+ * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the message caption. See [formatting
+ *   options](https://core.telegram.org/bots/api/#formatting-options) for more
+ *   details.
+ * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
+ *   which can be specified instead of *parse\_mode*
+ * @property {InlineKeyboardMarkup} [reply_markup] *Optional* A JSON-serialized object for an
+ *   [inline keyboard](https://core.telegram.org/bots/features#inline-keyboards). If empty, one 'Pay `total price`'
+ *   button will be shown. If not empty, the first button must be a Pay button.
+*/
