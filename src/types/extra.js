@@ -950,3 +950,33 @@
  *   *can_send_video_notes*, and *can_send_voice_notes* permissions; the *can_send_polls* permission will
  *   imply the *can_send_messages* permission.
  */
+
+/**
+ * @typedef {object} ExtraVideoNote
+ * @see https://core.telegram.org/bots/api#sendvideonote
+ * @property {number} [message_thread_id] *Optional*. Unique identifier for the target message thread (topic)
+ *   of the forum; for forum supergroups only
+ * @property {number} [duration] *Optional*. Duration of sent video in seconds
+ * @property {number} [length] *Optional*. Video width and height, i.e. diameter of the video message
+ * @property {InputFile|string} [thumb] *Optional*. Thumbnail of the file sent; can be ignored if thumbnail generation
+ *   for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A
+ *   thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data.
+ *   Thumbnails can't be reused and can be only uploaded as a new file, so you can pass "attach://<file_attach_name>"
+ *   if the thumbnail was uploaded using multipart/form-data under <file_attach_name>.
+ *   [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
+ * @property {boolean} [disable_notification] *Optional*. Sends the message
+ *   [silently](https://telegram.org/blog/channels-2-0#silent-messages). Users will receive a notification with no
+ *   sound.
+ * @property {boolean} [protect_content] *Optional*. Protects the contents of the sent message from forwarding
+ * @property {number} [reply_to_message_id] *Optional*. If the message is a reply, ID of the original message
+ * @property {boolean} [allow_sending_without_reply] *Optional*. Pass *True* if the message should be sent even if the
+ *   specified replied-to message is not found
+ * @property {InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply} [reply_markup] *Optional*.
+ *   [InlineKeyboardMarkup](https://core.telegram.org/bots/api#inlinekeyboardmarkup) or
+ *   [ReplyKeyboardMarkup](https://core.telegram.org/bots/api#replykeyboardmarkup) or
+ *   [ReplyKeyboardRemove](https://core.telegram.org/bots/api#replykeyboardremove) or
+ *   [ForceReply](https://core.telegram.org/bots/api#forcereply) Additional interface options.
+ *   A JSON-serialized object for an [inline keyboard](https://core.telegram.org/bots/features#inline-keyboards),
+ *   [custom reply keyboard](https://core.telegram.org/bots/features#keyboards), instructions to remove reply keyboard
+ *   or to force a reply from the user.
+ */
