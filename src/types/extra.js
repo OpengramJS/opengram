@@ -28,3 +28,29 @@
  *   is being removed. If False, the user will be able to see messages in the group that were sent before the user was
  *   removed. Always True for supergroups and channels.
  */
+
+/**
+ * @typedef {object} ExtraCopyMessage
+ * @see https://core.telegram.org/bots/api#copymessage
+ * @property {number} [message_thread_id] *Optional*. Unique identifier of a message thread to which the message
+ *   belongs; for supergroups only
+ * @property {string} [caption] *Optional*. New caption for media, 0-1024 characters after entities parsing. If not
+ *   specified, the original caption is kept
+ * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the new caption. See
+ *   [formatting options](https://core.telegram.org/bots/api#formatting-options) for more details.
+ * @property {Array<MessageEntity>} [caption_entities] A JSON-serialized list of special entities that appear in the
+ *   new caption, which can be specified instead of *parse_mode*
+ * @property {boolean} [disable_notification] Sends the message
+ *   [silently](https://telegram.org/blog/channels-2-0#silent-messages). Users will receive
+ *   a notification with no sound.
+ * @property {boolean} [protect_content] *Optional*. Protects the contents of the forwarded message from forwarding and
+ *   saving
+ * @property {number} [reply_to_message_id] *Optional*. If the message is a reply, ID of the original message
+ * @property {boolean} [allow_sending_without_reply] *Optional*. Pass `True`, if the message should be sent even if the
+ *   specified replied-to message is not found
+ * @property {ForceReply|ReplyKeyboardRemove|ReplyKeyboardMarkup|InlineKeyboardMarkup} [reply_markup] *Optional*.
+ *   Additional interface options. A JSON-serialized object for an
+ *   [inline keyboard](https://core.telegram.org/bots/features#inline-keyboards),
+ *   [custom reply keyboard](https://core.telegram.org/bots/features#keyboards), instructions to remove reply keyboard
+ *   or to force a reply from the user.
+ */
