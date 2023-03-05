@@ -303,3 +303,28 @@
  * @property {boolean} [creates_join_request] *Optional*. *True*, if users joining the chat via the link
  *   need to be approved by chat administrators. If *True*, *member_limit* can't be specified |
  */
+
+/**
+ * @typedef {object} ExtraDice
+ * @see https://core.telegram.org/bots/api#senddice
+ * @property {number} [message_thread_id] *Optional*. Unique identifier for the target message thread (topic)
+ *   of the forum; for forum supergroups only
+ * @property {string} [emoji="🎲"] *Optional*. Emoji on which the dice throw animation is based. Currently, must be one
+ *   of "🎲", "🎯", "🏀", "⚽", "🎳", or "🎰". Dice can have values 1-6 for "🎲", "🎯" and "🎳", values 1-5 for "🏀"
+ *   and "⚽", and values 1-64 for "🎰". Defaults to "🎲"
+ * @property {boolean} [disable_notification] *Optional*. Sends the message
+ *   [silently](https://telegram.org/blog/channels-2-0#silent-messages). Users will receive a notification with no
+ *   sound.
+ * @property {boolean} [protect_content] *Optional*. Protects the contents of the sent message from forwarding
+ * @property {number} [reply_to_message_id] *Optional*. If the message is a reply, ID of the original message
+ * @property {boolean} [allow_sending_without_reply] *Optional*. Pass *True* if the message should be sent even if the
+ *   specified replied-to message is not found
+ * @property {InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply} [reply_markup] *Optional*.
+ *   [InlineKeyboardMarkup](https://core.telegram.org/bots/api#inlinekeyboardmarkup) or
+ *   [ReplyKeyboardMarkup](https://core.telegram.org/bots/api#replykeyboardmarkup) or
+ *   [ReplyKeyboardRemove](https://core.telegram.org/bots/api#replykeyboardremove) or
+ *   [ForceReply](https://core.telegram.org/bots/api#forcereply) Additional interface options.
+ *   A JSON-serialized object for an [inline keyboard](https://core.telegram.org/bots/features#inline-keyboards),
+ *   [custom reply keyboard](https://core.telegram.org/bots/features#keyboards), instructions to remove reply keyboard
+ *   or to force a reply from the user.
+ */
