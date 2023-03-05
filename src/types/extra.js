@@ -496,3 +496,29 @@
  *   restricted for more than 366 days or less than 30 seconds from the current time, they are considered to be
  *   restricted forever
  */
+
+/**
+ * @typedef {object} ExtraSticker
+ * @see https://core.telegram.org/bots/api#sendsticker
+ * @property {number} [message_thread_id] *Optional*. Unique identifier for the target message thread (topic)
+ *   of the forum; for forum supergroups only
+ * @property {InputFile|string} sticker Sticker to send. Pass a file_id as String to send a file that exists on the
+ *   Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP file from the Internet,
+ *   or upload a new one using multipart/form-data.
+ *   [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
+ * @property {boolean} [disable_notification] *Optional*. Sends the message
+ *   [silently](https://telegram.org/blog/channels-2-0#silent-messages). Users will receive a notification with no
+ *   sound.
+ * @property {boolean} [protect_content] *Optional*. Protects the contents of the sent message from forwarding
+ * @property {number} [reply_to_message_id] *Optional*. If the message is a reply, ID of the original message
+ * @property {boolean} [allow_sending_without_reply] *Optional*. Pass *True* if the message should be sent even if the
+ *   specified replied-to message is not found
+ * @property {InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply} [reply_markup] *Optional*.
+ *   [InlineKeyboardMarkup](https://core.telegram.org/bots/api#inlinekeyboardmarkup) or
+ *   [ReplyKeyboardMarkup](https://core.telegram.org/bots/api#replykeyboardmarkup) or
+ *   [ReplyKeyboardRemove](https://core.telegram.org/bots/api#replykeyboardremove) or
+ *   [ForceReply](https://core.telegram.org/bots/api#forcereply) Additional interface options.
+ *   A JSON-serialized object for an [inline keyboard](https://core.telegram.org/bots/features#inline-keyboards),
+ *   [custom reply keyboard](https://core.telegram.org/bots/features#keyboards), instructions to remove reply keyboard
+ *   or to force a reply from the user.
+ */
