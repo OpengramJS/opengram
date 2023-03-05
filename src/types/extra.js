@@ -854,3 +854,9 @@
  *   [inline keyboard](https://core.telegram.org/bots/features#inline-keyboards). If empty, one 'Pay `total price`'
  *   button will be shown. If not empty, the first button must be a Pay button.
  */
+
+/**
+ * @typedef {object} ExtraUnbanMember
+ * @see https://core.telegram.org/bots/api#unbanchatmember
+ * @property {boolean} [only_if_banned] *Optional*. Do nothing if the user is not banned
+ */
