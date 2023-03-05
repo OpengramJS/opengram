@@ -1561,7 +1561,7 @@
   *   Sending Files »](https://core.telegram.org/bots/api/#sending-files)
   * @property {string} [caption] *Optional*. Caption of the photo to be sent, 0-1024 characters after entities
   *   parsing
-  * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the photo caption. See [formatting
+  * @property {ParseMode} [parse_mode] *Optional*. Mode for parsing entities in the photo caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
   * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
@@ -1590,7 +1590,7 @@
   *   Files »](https://core.telegram.org/bots/api/#sending-files)
   * @property {string} [caption] *Optional*. Caption of the video to be sent, 0-1024 characters after entities
   *   parsing
-  * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the video caption. See [formatting
+  * @property {ParseMode} [parse_mode] *Optional*. Mode for parsing entities in the video caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
   * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
@@ -1623,7 +1623,7 @@
   *   Files »](https://core.telegram.org/bots/api/#sending-files)
   * @property {string} [caption] *Optional*. Caption of the animation to be sent, 0-1024 characters after
   *   entities parsing
-  * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the animation caption. See [formatting
+  * @property {ParseMode} [parse_mode] *Optional*. Mode for parsing entities in the animation caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
   * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
@@ -1656,7 +1656,7 @@
   *   Files »](https://core.telegram.org/bots/api/#sending-files)
   * @property {string} [caption] *Optional*. Caption of the audio to be sent, 0-1024 characters after entities
   *   parsing
-  * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the audio caption. See [formatting
+  * @property {ParseMode} [parse_mode] *Optional*. Mode for parsing entities in the audio caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
   * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
@@ -1687,7 +1687,7 @@
   *   Files »](https://core.telegram.org/bots/api/#sending-files)
   * @property {string} [caption] *Optional*. Caption of the document to be sent, 0-1024 characters after entities
   *   parsing
-  * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the document caption. See [formatting
+  * @property {ParseMode} [parse_mode] *Optional*. Mode for parsing entities in the document caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
   * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
@@ -1879,7 +1879,7 @@
   * @property {string} [description] *Optional*. Short description of the result
   * @property {string} [caption] *Optional*. Caption of the photo to be sent, 0-1024 characters after entities
   *   parsing
-  * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the photo caption. See [formatting
+  * @property {ParseMode} [parse_mode] *Optional*. Mode for parsing entities in the photo caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
   * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
@@ -1911,7 +1911,7 @@
   * @property {string} [title] *Optional*. Title for the result
   * @property {string} [caption] *Optional*. Caption of the GIF file to be sent, 0-1024 characters after entities
   *   parsing
-  * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the caption. See [formatting
+  * @property {ParseMode} [parse_mode] *Optional*. Mode for parsing entities in the caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
   * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
@@ -1943,7 +1943,7 @@
   * @property {string} [title] *Optional*. Title for the result
   * @property {string} [caption] *Optional*. Caption of the MPEG-4 file to be sent, 0-1024 characters after
   *   entities parsing
-  * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the caption. See [formatting
+  * @property {ParseMode} [parse_mode] *Optional*. Mode for parsing entities in the caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
   * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
@@ -1973,7 +1973,7 @@
   * @property {string} title Title for the result
   * @property {string} [caption] *Optional*. Caption of the video to be sent, 0-1024 characters after entities
   *   parsing
-  * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the video caption. See [formatting
+  * @property {ParseMode} [parse_mode] *Optional*. Mode for parsing entities in the video caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
   * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
@@ -2002,7 +2002,7 @@
   * @property {string} audio_url A valid URL for the audio file
   * @property {string} title Title
   * @property {string} [caption] *Optional*. Caption, 0-1024 characters after entities parsing
-  * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the audio caption. See [formatting
+  * @property {ParseMode} [parse_mode] *Optional*. Mode for parsing entities in the audio caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
   * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
@@ -2028,7 +2028,7 @@
   * @property {string} voice_url A valid URL for the voice recording
   * @property {string} title Recording title
   * @property {string} [caption] *Optional*. Caption, 0-1024 characters after entities parsing
-  * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the voice message caption. See
+  * @property {ParseMode} [parse_mode] *Optional*. Mode for parsing entities in the voice message caption. See
   *   [formatting options](https://core.telegram.org/bots/api/#formatting-options) for
   *   more details.
   * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
@@ -2054,7 +2054,7 @@
   * @property {string} title Title for the result
   * @property {string} [caption] *Optional*. Caption of the document to be sent, 0-1024 characters after entities
   *   parsing
-  * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the document caption. See [formatting
+  * @property {ParseMode} [parse_mode] *Optional*. Mode for parsing entities in the document caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
   * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
@@ -2184,7 +2184,7 @@
   * @property {string} [description] *Optional*. Short description of the result
   * @property {string} [caption] *Optional*. Caption of the photo to be sent, 0-1024 characters after entities
   *   parsing
-  * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the photo caption. See [formatting
+  * @property {ParseMode} [parse_mode] *Optional*. Mode for parsing entities in the photo caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
   * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
@@ -2209,7 +2209,7 @@
   * @property {string} [title] *Optional*. Title for the result
   * @property {string} [caption] *Optional*. Caption of the GIF file to be sent, 0-1024 characters after entities
   *   parsing
-  * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the caption. See [formatting
+  * @property {ParseMode} [parse_mode] *Optional*. Mode for parsing entities in the caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
   * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
@@ -2235,7 +2235,7 @@
   * @property {string} [title] *Optional*. Title for the result
   * @property {string} [caption] *Optional*. Caption of the MPEG-4 file to be sent, 0-1024 characters after
   *   entities parsing
-  * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the caption. See [formatting
+  * @property {ParseMode} [parse_mode] *Optional*. Mode for parsing entities in the caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
   * @property {InlineKeyboardMarkup} [reply_markup] *Optional*. [Inline
@@ -2276,7 +2276,7 @@
   * @property {string} [description] *Optional*. Short description of the result
   * @property {string} [caption] *Optional*. Caption of the document to be sent, 0-1024 characters after entities
   *   parsing
-  * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the document caption. See [formatting
+  * @property {ParseMode} [parse_mode] *Optional*. Mode for parsing entities in the document caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
   * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
@@ -2302,7 +2302,7 @@
   * @property {string} [description] *Optional*. Short description of the result
   * @property {string} [caption] *Optional*. Caption of the video to be sent, 0-1024 characters after entities
   *   parsing
-  * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the video caption. See [formatting
+  * @property {ParseMode} [parse_mode] *Optional*. Mode for parsing entities in the video caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
   * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
@@ -2326,7 +2326,7 @@
   * @property {string} voice_file_id A valid file identifier for the voice message
   * @property {string} title Voice message title
   * @property {string} [caption] *Optional*. Caption, 0-1024 characters after entities parsing
-  * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the voice message caption. See
+  * @property {ParseMode} [parse_mode] *Optional*. Mode for parsing entities in the voice message caption. See
   *   [formatting options](https://core.telegram.org/bots/api/#formatting-options) for
   *   more details.
   * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
@@ -2349,7 +2349,7 @@
   * @property {string} id Unique identifier for this result, 1-64 bytes
   * @property {string} audio_file_id A valid file identifier for the audio file
   * @property {string} [caption] *Optional*. Caption, 0-1024 characters after entities parsing
-  * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the audio caption. See [formatting
+  * @property {ParseMode} [parse_mode] *Optional*. Mode for parsing entities in the audio caption. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
   * @property {MessageEntity[]} [caption_entities] *Optional*. List of special entities that appear in the caption,
@@ -2389,7 +2389,7 @@
   *
   * @typedef {object} InputTextMessageContent
   * @property {string} message_text Text of the message to be sent, 1-4096 characters
-  * @property {string} [parse_mode] *Optional*. Mode for parsing entities in the message text. See [formatting
+  * @property {ParseMode} [parse_mode] *Optional*. Mode for parsing entities in the message text. See [formatting
   *   options](https://core.telegram.org/bots/api/#formatting-options) for more
   *   details.
   * @property {MessageEntity[]} [entities] *Optional*. List of special entities that appear in message text, which can
