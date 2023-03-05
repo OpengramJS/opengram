@@ -9,3 +9,14 @@
  * @property {number} [cache_time] *Optional*. The maximum amount of time in seconds that the result of the callback
  *   query may be cached client-side. Telegram apps will support caching starting in version `3.14`. Defaults to `0`.
  */
+
+/**
+ * @typedef {object} ExtraBanChatMember
+ * @see https://core.telegram.org/bots/api#banchatmember
+ * @property {number} [until_date] *Optional*. Date when the user will be unbanned, unix time. If user is banned for
+ *   more than 366 days or less than 30 seconds from the current time they are considered to be banned forever. Applied
+ *   for supergroups and channels only.
+ * @property {boolean} [revoke_messages] *Optional*. Pass `True` to delete all messages from the chat for the user that
+ *   is being removed. If False, the user will be able to see messages in the group that were sent before the user was
+ *   removed. Always True for supergroups and channels.
+ */
