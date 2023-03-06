@@ -12,7 +12,7 @@ class MultipartStream extends SandwichStream {
   }
 
   addPart (part) {
-    part = part || {}
+    part = part ?? {}
     const partStream = new stream.PassThrough()
     if (part.headers) {
       for (const [key, header] of Object.entries(part.headers)) {
@@ -28,8 +28,16 @@ class MultipartStream extends SandwichStream {
     this.add(partStream)
   }
 
+  /**
+   * Checks is given object stream
+   *
+   * @param {Stream} stream Stream object
+   * @return {boolean}
+   */
   static isStream (stream) {
-    return stream && typeof stream === 'object' && typeof stream.pipe === 'function'
+    return stream !== null &&
+      typeof stream === 'object' &&
+      typeof stream.pipe === 'function'
   }
 }
 
