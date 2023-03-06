@@ -3,6 +3,11 @@ const WizardContext = require('./context')
 const BaseScene = require('../base')
 const { compose, unwrap } = Composer
 
+/**
+ * @class
+ * @memberOf Scenes
+ * @extends BaseScene
+ */
 class WizardScene extends BaseScene {
   constructor (id, options, ...steps) {
     let tOptions

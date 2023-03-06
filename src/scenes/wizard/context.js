@@ -1,3 +1,7 @@
+/**
+ * @class
+ * @memberof Scenes
+ */
 class WizardContext {
   constructor (ctx, steps) {
     this.ctx = ctx

@@ -1,14 +1,30 @@
-const SceneContext = require('./scenes/context')
-const Composer = require('./composer')
+const SceneContext = require('../scenes/context')
+const Composer = require('../composer')
 const { compose, optional, lazy, safePassThru } = Composer
 
 /**
- * The Stage class extends Composer, so you can use all of its methods such as `hears`, `use`, `command` Catch and more.
+ * The default scene is the scene that is entered when the user is not in another scene.
+ *
+ * When you use custom name of session property or multiple sessions, you should configure `sessionName`
+ *
+ * After TTL expired, all scene data stored in local session of scene be permanently removed
+ *
+ * @typedef {object} StageOptions
+ * @property {string} [sessionName='session'] Name of session property used for scenes, by default - `session`
+ * @property {string} [default] Name of scene by default
+ * @property {number} [ttl] Time of life for scenes in seconds
+ * @memberOf Scenes
+ */
+
+/**
+ * The Stage class extends Composer, so you can use all of its methods such as `hears`, `use`, `command` Catch and
+ * more.
  *
  * These handlers have a higher priority than scene handlers, but they are always executed,
  * not only then the user is in the scene.
  *
- * <b style="color: #139d9d" >Be attentive, scenes are only available in handlers and middleware registered after Stage</b>
+ * <b style="color: #139d9d" >Be attentive, scenes are only available in handlers and middleware registered after
+ * Stage</b>
  *
  * For example:
  *
@@ -32,6 +48,7 @@ const { compose, optional, lazy, safePassThru } = Composer
  * bot.launch()
  * ```
  *
+ * @memberof Scenes
  * @extends Composer
  */
 class Stage extends Composer {
@@ -88,31 +105,33 @@ class Stage extends Composer {
   /**
    * Generates middleware which call `ctx.scene.enter` with given arguments
    *
-   * @param args Arguments for `ctx.scene.enter`
-   * @return {Function}
+   * @param {string} sceneId Scene name
+   * @param {object} [initialState] Scene initial state
+   * @param {boolean} [silent] ???
+   * @throws {Error}
+   * @return {Promise}
+   * @return {MiddlewareFn}
   */
-  static enter (...args) {
-    return (ctx) => ctx.scene.enter(...args)
+  static enter (sceneId, initialState, silent) {
+    return (ctx) => ctx.scene.enter(sceneId, initialState, silent)
   }
 
   /**
    * Generates middleware which call `ctx.scene.reenter` with given arguments
    *
-   * @param args Arguments for `ctx.scene.reenter`
-   * @return {Function}
+   * @return {MiddlewareFn}
    */
-  static reenter (...args) {
-    return (ctx) => ctx.scene.reenter(...args)
+  static reenter () {
+    return (ctx) => ctx.scene.reenter()
   }
 
   /**
    * Generates middleware which call `ctx.scene.leave` with given arguments
    *
-   * @param args Arguments for `ctx.scene.leave`
-   * @return {Function}
+   * @return {MiddlewareFn}
    */
-  static leave (...args) {
-    return (ctx) => ctx.scene.leave(...args)
+  static leave () {
+    return (ctx) => ctx.scene.leave()
   }
 }
 

@@ -1,6 +1,12 @@
 const Composer = require('../composer')
 const { compose } = Composer
 
+/**
+ * @class
+ * @memberof Scenes
+ * @extends Composer
+ */
+
 class BaseScene extends Composer {
   constructor (id, options) {
     const opts = {
