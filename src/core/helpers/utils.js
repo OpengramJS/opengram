@@ -14,6 +14,7 @@ const crypto = require('crypto')
  *
  * @private
  * @param {Message} message Message object for extracting entities
+ * @private
  * @return {string|Array}
  */
 function getEntities (message) {
@@ -41,6 +42,7 @@ function getEntities (message) {
  *
  * @private
  * @param {Message} message Message object for extracting text
+ * @private
  * @return {string|undefined}
  */
 function getText (
@@ -64,6 +66,7 @@ function getText (
  * - `context.editedChannelPost`
  *
  * @param {OpengramContext} ctx Update context for extracting {@link Message} object
+ * @private
  * @return {Message|undefined}
  */
 function getMessageFromAnySource (ctx) {
@@ -80,6 +83,7 @@ function getMessageFromAnySource (ctx) {
  * Returns `message_thread_id` from {@link Message} object for current update.
  *
  * @param {OpengramContext} ctx Update context for extracting `message_thread_id` from {@link Message} object
+ * @private
  * @return {number|undefined}
  */
 function getThreadId (ctx) {
@@ -91,6 +95,7 @@ function getThreadId (ctx) {
  * Prints warning messages
  *
  * @param {string} text Text of warning
+ * @private
  * @return {void}
  */
 function showWarning (text) {
