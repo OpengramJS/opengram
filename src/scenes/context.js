@@ -12,7 +12,7 @@ class SceneContext {
   constructor (ctx, scenes, options) {
     /** @type {OpengramContext} */
     this.ctx = ctx
-    /** @type {Map<string, WizardScene|BaseScene>} */
+    /** @type {Map<string, Scenes.WizardScene|Scenes.BaseScene>} */
     this.scenes = scenes
     /** @type {boolean} */
     this.leaving = false
@@ -39,7 +39,7 @@ class SceneContext {
   }
 
   /**
-   * @return {undefined|WizardScene|BaseScene}
+   * @return {undefined|Scenes.WizardScene|Scenes.BaseScene}
    */
   get current () {
     const sceneId = this.session.current || this.options.default
