@@ -2338,7 +2338,7 @@ class OpengramContext {
    * Returns the created invoice link as `String` on success.
    *
    * @see https://core.telegram.org/bots/api#createinvoicelink
-   * @param {Invoice} invoice Object with invoice properties
+   * @param {InvoiceLinkParams} invoice Object with invoice properties
    * @throws {TelegramError}
    * @return {Promise<string>}
    */
