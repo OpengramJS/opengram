@@ -86,7 +86,7 @@ class Composer {
    *
    * This method returns same as {@link Composer#use}.
    *
-   * @param {UpdateType|UpdateType[]} updateTypes The update type or array of update types to use,
+   * @param {UpdateType|UpdateSubtype|Array<UpdateType|UpdateSubtype>} updateTypes The update type or array of update types to use,
    *    may also be an array or string
    * @param {MiddlewareFn} fns The middleware(s) to register with the given types as argument(s)
    * @return {Composer}
@@ -976,7 +976,7 @@ class Composer {
    * Your middleware will be executed if _any of the provided filter queries_
    * matches (logical OR).
    *
-   * @param {UpdateType|UpdateType[]} updateType The update type or array of update types to use,
+   * @param {UpdateType|UpdateSubtype|Array<UpdateType|UpdateSubtype>} updateType The update type or array of update types to use,
    *    may also be an array or string
    * @param {MiddlewareFn} fns The middleware(s) to register with the given types as argument(s)
    * @return {MiddlewareFn}
