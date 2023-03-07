@@ -73,6 +73,7 @@ class Opengram extends Composer {
    * @property {number} [retryAfter=1] Interval for retrying long-polling requests in seconds
    * @property {Infinity|number} handlerTimeout Maximum interval for update processing,
    *    after which throwing `TimeoutError`
+   * @property {OpengramContext} contextType Custom context class
    */
 
   /**
