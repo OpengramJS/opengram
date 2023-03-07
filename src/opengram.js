@@ -598,18 +598,31 @@ class Opengram extends Composer {
   }
 }
 
+/** @type {Opengram} */
 Opengram.default = Opengram
+/** @type {Opengram} */
 Opengram.Opengram = Opengram
+/** @type {Context} */
 Opengram.Context = Context
+/** @type {TelegramError} */
 Opengram.TelegramError = TelegramError
+/** @type {isTelegramError} */
 Opengram.isTelegramError = isTelegramError
+/** @type {Composer} */
 Opengram.Composer = Composer
+/** @type {Extra} */
 Opengram.Extra = Extra
+/** @type {Markup} */
 Opengram.Markup = Markup
+/** @type {Router} */
 Opengram.Router = Router
+/** @type {Telegram} */
 Opengram.Telegram = Telegram
+/** @type {Scenes.BaseScene} */
 Opengram.BaseScene = BaseScene
+/** @type {Scenes.WizardScene} */
 Opengram.WizardScene = WizardScene
+/** @type {{WizardScene: Scenes.WizardScene, BaseScene: Scenes.BaseScene, Stage: Stage}} */
 Opengram.Scenes = { BaseScene, WizardScene, Stage }
 
 Opengram.session = session
