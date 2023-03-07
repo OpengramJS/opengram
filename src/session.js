@@ -10,9 +10,9 @@ const storeSetMethodSym = Symbol('storeSetMethod')
 const WARN_AFTER_SAVE_TEXT = 'A write/read attempt on the session after it was saved detected! Perhaps the chain of promises has broken.'
 const ERROR_SESSION_KEY_NOT_DEFINED = 'Cannot access session data because this update does not belong to a chat, so the session key not available!'
 
-function getSessionKey (ctx) {
-  return ctx.from && ctx.chat && `${ctx.from.id}:${ctx.chat.id}`
-}
+/**
+ * @module Session
+ */
 
 /**
  * @typedef {object} SessionOptions
@@ -210,6 +210,10 @@ class Session {
  */
 function sessionFactory (options) {
   return new Session(options)
+}
+
+function getSessionKey (ctx) {
+  return ctx.from && ctx.chat && `${ctx.from.id}:${ctx.chat.id}`
 }
 
 module.exports = sessionFactory
