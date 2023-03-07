@@ -1,5 +1,9 @@
 const { escapeHTML } = require('./core/helpers/escape')
 
+/**
+ * @module Markup
+ */
+
 /** Class for building keyboard markup */
 class Markup {
   /**
