@@ -2958,35 +2958,6 @@
 /* other */
 
 /**
- * @typedef {object} setWebhookExtra
- * @description Extra params for {@link Telegram.setWebhook setWebhook}
- * @see https://core.telegram.org/bots/api#setwebhook
- * @property {Buffer|stream} [certificate] Upload your public key certificate so that the root certificate in use
- *    can be checked. See our self-signed guide for details.
- * @property {string} [ip_address] The fixed IP address which will be used to send webhook requests instead of
- *    the IP address resolved through DNS
- * @property {number} [max_connections=40] The maximum allowed number of simultaneous HTTPS connections to the webhook
- *    for update delivery, 1-100. Defaults to 40. Use lower values to limit the load on your bot's server,
- *    and higher values to increase your bot's throughput.
- * @param {string[]} [allowedUpdates] - Array of allowed updates or update name
- *     For example, specify `["message", "edited_channel_post", "callback_query"]` to only receive
- *     updates of these types. See [Update](https://core.telegram.org/bots/api#update) for a complete list of
- *     available update types.
- *     Specify an empty list to receive all update types except `chat_member` (default).
- *     If not specified, the previous setting will be used.
- * @property {boolean} [drop_pending_updates] Pass True to drop all pending updates
- * @property {string} [secret_token] A secret token to be sent in a header `X-Telegram-Bot-Api-Secret-Token`
- *    in every webhook request, 1-256 characters. Only characters `A-Z`, `a-z`, `0-9`, `_` and `-` are allowed.
- *    The header is useful to ensure that the request comes from a webhook set by you.
- */
-
-/**
- * @typedef {object} deleteWebhookExtra
- * @description Extra params for {@link Telegram.deleteWebhook deleteWebhook}
- * @see https://core.telegram.org/bots/api#deletewebhook
- * @property {boolean} [drop_pending_updates] Pass True to drop all pending updates
- */
-
  * @typedef {
  *   'mention'|'hashtag'|'cashtag'|'bot_command'|'url'|'email'|'phone_number'|'bold'|'italic'|'underline'|
  *   'strikethrough'|'spoiler'|'code'|'pre'|'text_link'|'text_mention'|'custom_emoji'
