@@ -16,6 +16,7 @@ const { TelegramError, isTelegramError } = require('./core/error')
 const pTimeout = require('p-timeout')
 const { compactOptions } = require('./core/helpers/compact')
 
+const botInfoPromiseSymbol = Symbol('botInfoPromise')
 const DEFAULT_OPTIONS = {
   retryAfter: 1,
   handlerTimeout: Infinity,
@@ -95,7 +96,6 @@ class Opengram extends Composer {
       throw err
     }
     this.context = {}
-    this.botInfoCall = undefined
     this.polling = {
       offset: 0,
       started: false
@@ -528,8 +528,8 @@ class Opengram extends Composer {
   async handleUpdate (update, webhookResponse) {
     if (this.context.botInfo === undefined) {
       debug('Update %d is waiting for `botInfo` to be initialized', update.update_id)
-      const getBotInfoPromise = this.botInfoCall || (this.botInfoCall = this.telegram.getMe())
-      const botInfo = await getBotInfoPromise
+      const botInfoPromise = this[botInfoPromiseSymbol] ?? (this[botInfoPromiseSymbol] = this.telegram.getMe())
+      const botInfo = await botInfoPromise
       this.options.username = botInfo.username
       this.context.botInfo = botInfo
     }
