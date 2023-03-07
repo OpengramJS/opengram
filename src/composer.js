@@ -670,7 +670,7 @@ class Composer {
    *
    * @see https://core.telegram.org/bots/api#sendmessage
    * @param {string} text Text of the message to be sent, 1-4096 characters after entities parsing
-   * @param {MessageExtraParams|Extra} [extra] Other parameters
+   * @param {ExtraSendMessage|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {MiddlewareFn<Promise<Message>>}
    */

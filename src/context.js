@@ -521,7 +521,7 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#answerinlinequery
    * @param {InlineQueryResult[]} results A array of results for the inline query
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraAnswerInlineQuery} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -546,7 +546,7 @@ class OpengramContext {
    *   characters
    * @param {boolean} [showAlert] If True, an alert will be shown by the client instead of a notification at the top of
    *   the chat screen. Defaults to false.
-   * @param {object} [extra] Other parameters
+   * @param {ExtraAnswerCbQuery} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -626,7 +626,7 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#editmessagetext
    * @param {string} text New text of the message, 1-4096 characters after entities parsing
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraEditMessageText|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean|Message>}
    */
@@ -657,7 +657,7 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#editmessagecaption
    * @param {string} [caption] New caption of the message, 0-1024 characters after entities parsing
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraEditMessageCaption|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean|Message>}
    */
@@ -691,7 +691,7 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#editmessagemedia
    * @param {InputMedia} media Object for a new media content of the message
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraEditMessageMedia|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean|Message>}
    */
@@ -721,7 +721,7 @@ class OpengramContext {
    * returned, otherwise `True` is returned.
    *
    * @see https://core.telegram.org/bots/api#editmessagereplymarkup
-   * @param {object|Extra} [markup] Other parameters
+   * @param {{ reply_markup: InlineKeyboardMarkup }|Extra} [markup] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean|Message>}
    */
@@ -753,7 +753,7 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#editmessagelivelocation
    * @param {number} latitude Latitude of new location
    * @param {number} longitude Longitude of new location
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraEditMessageLiveLocation|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean|Message>}
    */
@@ -787,7 +787,7 @@ class OpengramContext {
    * otherwise `True` is returned.
    *
    * @see https://core.telegram.org/bots/api#stopmessagelivelocation
-   * @param {object|Markup} [markup] Other parameters
+   * @param {{ reply_markup: InlineKeyboardMarkup}|Extra} [markup] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean|Message>}
    */
@@ -815,7 +815,7 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#sendmessage
    * @param {string} text Text of the message to be sent, 1-4096 characters after entities parsing
-   * @param {MessageExtraParams|Extra} [extra] Other parameters
+   * @param {ExtraSendMessage|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -873,7 +873,7 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#banchatmember
    * @param {number} userId Unique identifier of the target user
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraBanChatMember} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -884,13 +884,14 @@ class OpengramContext {
 
   /**
    * Alias to {@link banChatMember}, but have different arguments
+   * (Deprecated after [Bots API 5.3](https://core.telegram.org/bots/api-changelog#june-25-2021))
    *
    * @see https://core.telegram.org/bots/api#banchatmember
    * @param {number} userId Unique identifier of the target user
    * @param {number} [untilDate] Date when the user will be unbanned, unix time. If user is banned for more than 366
    *   days or less than 30 seconds from the current time they are considered to be banned forever. Applied for
    *   supergroups and channels only.
-   * @param {object} [extra] Other parameters
+   * @param {ExtraKickChatMember} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -910,7 +911,7 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#unbanchatmember
    * @param {number} userId Unique identifier of the target user
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraUnbanMember} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -928,7 +929,7 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#restrictchatmember
    * @param {number} userId Unique identifier of the target user
-   * @param {object} [extra] Other parameters
+   * @param {ExtraRestrictChatMember} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -946,7 +947,7 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#promotechatmember
    * @param {number} userId Unique identifier of the target user
-   * @param {object} [extra] Other parameters
+   * @param {ExtraPromoteChatMember} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -1077,7 +1078,7 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#pinchatmessage
    * @param {number} messageId Identifier of a message to pin
-   * @param {object} [extra] Other parameters
+   * @param {ExtraPinChatMessage|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -1095,7 +1096,7 @@ class OpengramContext {
    * Returns `True` on success.
    *
    * @see https://core.telegram.org/bots/api#unpinchatmessage
-   * @param {object} [extra] Other parameters
+   * @param {ExtraUnPinChatMessage} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -1312,7 +1313,7 @@ class OpengramContext {
    *    The photo's width and height must not exceed 10000 in total.
    *    Width and height ratio must be at most 20.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
-   * @param {MessageExtraParams|Extra} [extra] Other parameters
+   * @param {ExtraPhoto|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -1334,7 +1335,7 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#sendmediagroup
    * @param {Array<InputMediaPhoto|InputMediaAudio|InputMediaVideo|InputMediaDocument>} media A array describing
    *    messages to be sent, must include 2-10 items
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraMediaGroup|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message[]>}
    */
@@ -1361,7 +1362,7 @@ class OpengramContext {
    *   the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the
    *   Internet, or upload a new one using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraAudio|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -1378,8 +1379,8 @@ class OpengramContext {
    *
    * On success, the sent {@link Message} is returned.
    *
-   * @see https://core.telegram.org/bots/api#sendphoto
-   * @param {object|Extra} [extra] Other parameters
+   * @see https://core.telegram.org/bots/api#senddice
+   * @param {ExtraDice|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -1402,7 +1403,7 @@ class OpengramContext {
    *    on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the
    *   Internet, or upload a new photo using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraDocument|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -1424,7 +1425,7 @@ class OpengramContext {
    *    the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP file from the
    *    Internet, or upload a new one using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
-   * @param {stickerExtraParams|Extra} [extra] Other parameters
+   * @param {ExtraSticker|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -1449,7 +1450,7 @@ class OpengramContext {
    *    exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get
    *    a video from the Internet, or upload a new video using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraVideo|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -1473,7 +1474,7 @@ class OpengramContext {
    *    on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an animation from
    *    the Internet, or upload a new animation using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraAnimation|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -1497,7 +1498,7 @@ class OpengramContext {
    *   on the Telegram servers (recommended) or upload a new video using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files).
    *    Sending video notes by a URL is currently unsupported
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraVideoNote|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -1516,7 +1517,7 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#sendinvoice
    * @param {object} invoice Other invoice parameters
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraInvoice|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -1536,7 +1537,7 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#sendgame
    * @param {string} gameName Short name of the game, serves as the unique identifier for the game.
    *    Set up your games via [@BotFather](https://t.me/BotFather).
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraGame|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -1561,7 +1562,7 @@ class OpengramContext {
    * @param {InputFile|FileId} voice Audio file to send. Pass a file_id as String to send a file that exists on the
    *    Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet,
    *    or upload a new one using multipart/form-data.
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraVoice|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -1581,7 +1582,7 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#sendpoll
    * @param {string} question Poll question, 1-300 characters
    * @param {string[]} options List of answer options, 2-10 strings 1-100 characters each
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraPoll|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -1601,7 +1602,7 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#sendpoll
    * @param {string} question Poll question, 1-300 characters
    * @param {string[]} options List of answer options, 2-10 strings 1-100 characters each
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraQuiz|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -1620,7 +1621,7 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#stoppoll
    * @param {number} messageId Identifier of the original message with the poll
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraStopPoll|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Poll>}
    */
@@ -1672,7 +1673,7 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#sendlocation
    * @param {number} latitude Latitude of the location
    * @param {number} longitude Longitude of the location
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraLocation|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise}
    */
@@ -1694,7 +1695,7 @@ class OpengramContext {
    * @param {number} longitude Longitude of the venue
    * @param {string} title Name of the venue
    * @param {string} address Address of the venue
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraVenue|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -1714,7 +1715,7 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#sendcontact
    * @param {string} phoneNumber Contact's phone number
    * @param {string} firstName Contact's first name
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraContact|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -1782,7 +1783,7 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#createforumtopic
    * @param {string} name Topic name, 1-128 characters
-   * @param {object} [extra] Other parameters
+   * @param {ExtraCreateForumTopic} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<ForumTopic>}
    */
@@ -2073,7 +2074,7 @@ class OpengramContext {
    * Returns Array of {@link BotCommand} on success. If commands aren't set, an empty list is returned.
    *
    * @see https://core.telegram.org/bots/api#getmycommands
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraGetMyCommands} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<BotCommand[]>}
    */
@@ -2091,7 +2092,7 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#setmycommands
    * @param {BotCommand[]} commands List of bot commands to be set as the list of the bot's commands.
    *    At most 100 commands can be specified.
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraSetMyCommands} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -2106,7 +2107,7 @@ class OpengramContext {
    * Returns `True` on success.
    *
    * @see https://core.telegram.org/bots/api#deletemycommands
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraDeleteMyCommands} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -2121,7 +2122,7 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#sendmessage
    * @param {string} markdown Text with Markdown of the message to be sent, 1-4096 characters after entities parsing
-   * @param {MessageExtraParams|Extra} [extra] Other parameters
+   * @param {ExtraSendMessage|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -2136,7 +2137,7 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#sendmessage
    * @param {string} markdown Text with MarkdownV2 of the message to be sent, 1-4096 characters after entities parsing
-   * @param {MessageExtraParams|Extra} [extra] Other parameters
+   * @param {ExtraSendMessage|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -2151,7 +2152,7 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#sendmessage
    * @param {string} html Text with HTML of the message to be sent, 1-4096 characters after entities parsing
-   * @param {MessageExtraParams|Extra} [extra] Other parameters
+   * @param {ExtraSendMessage|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -2195,7 +2196,7 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#forwardmessage
    * @param {string|number} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
-   * @param {forwardExtraParams|Extra} [extra] Other parameters
+   * @param {ExtraForwardMessage|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -2218,7 +2219,7 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#copymessage
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraCopyMessage|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<MessageId>}
    */
@@ -2237,7 +2238,7 @@ class OpengramContext {
    * Returns the new invite link as {@link ChatInviteLink} object.
    *
    * @see https://core.telegram.org/bots/api#createchatinvitelink
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraCreateChatInviteLink} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<ChatInviteLink>}
    */
@@ -2255,7 +2256,7 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#editchatinvitelink
    * @param {string} inviteLink The invite link to edit
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraEditChatInviteLink} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<ChatInviteLink>}
    */
