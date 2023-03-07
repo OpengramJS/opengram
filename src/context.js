@@ -99,7 +99,7 @@ class OpengramContext {
   /**
    * Constructor of Opengram context object
    *
-   * @param {object} update Raw update object from telegram
+   * @param {Update} update Raw update object from telegram
    * @param {Telegram} telegram Instance of {@link Telegram}
    * @param {ContextOptions} options Extra options
    */

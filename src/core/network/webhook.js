@@ -19,6 +19,7 @@ module.exports = function (config, updateHandler, errorHandler) {
       return res.end()
     }
 
+    /** @type {Update} */
     let update
 
     if (req.body != null) {

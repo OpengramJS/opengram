@@ -505,7 +505,7 @@ class Opengram extends Composer {
   /**
    * Starting processing array of updates
    *
-   * @param {object[]} updates Array of updates
+   * @param {Update[]} updates Array of updates
    * @throws Error
    * @return {Promise}
    */
@@ -519,8 +519,8 @@ class Opengram extends Composer {
   /**
    * Starting processing one update
    *
-   * @param {object} update Update object
    * @param {object} [webhookResponse] Response object for send webhook reply
+   * @param {Update} update Update object
    * @throws Error
    * @return {Promise}
    */
@@ -566,6 +566,7 @@ class Opengram extends Composer {
 
     const { timeout, limit, offset, allowedUpdates } = this.polling
 
+    /** @type {Update[]} */
     let updates = []
 
     try {
