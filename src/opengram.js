@@ -598,19 +598,20 @@ class Opengram extends Composer {
   }
 }
 
-module.exports = Object.assign(Opengram, {
-  Context,
-  TelegramError,
-  isTelegramError,
-  Composer,
-  default: Opengram,
-  Extra,
-  Markup,
-  Router,
-  Opengram,
-  Telegram,
-  Stage,
-  BaseScene,
-  Scenes: { BaseScene, WizardScene, Stage },
-  session
-})
+Opengram.default = Opengram
+Opengram.Opengram = Opengram
+Opengram.Context = Context
+Opengram.TelegramError = TelegramError
+Opengram.isTelegramError = isTelegramError
+Opengram.Composer = Composer
+Opengram.Extra = Extra
+Opengram.Markup = Markup
+Opengram.Router = Router
+Opengram.Telegram = Telegram
+Opengram.BaseScene = BaseScene
+Opengram.WizardScene = WizardScene
+Opengram.Scenes = { BaseScene, WizardScene, Stage }
+
+Opengram.session = session
+
+module.exports = Opengram
