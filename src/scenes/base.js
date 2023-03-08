@@ -30,6 +30,12 @@ class BaseScene extends Composer {
     return this.options.ttl
   }
 
+  /**
+   * Registers enter handler(s) for scene
+   *
+   * @param {MiddlewareFn} fns Middleware(s) to register
+   * @return {BaseScene}
+   */
   enter (...fns) {
     this.enterHandler = compose([this.enterHandler, ...fns])
     return this
