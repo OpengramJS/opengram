@@ -35,6 +35,12 @@ class BaseScene extends Composer {
     return this
   }
 
+  /**
+   * Registers leave handler(s) for scene
+   *
+   * @param {MiddlewareFn} fns Middleware(s) to register
+   * @return {BaseScene}
+   */
   leave (...fns) {
     this.leaveHandler = compose([this.leaveHandler, ...fns])
     return this
