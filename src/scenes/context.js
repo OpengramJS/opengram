@@ -57,11 +57,13 @@ class SceneContext {
   }
 
   /**
-   * Enter to scene
+   * Enter to scene by name
+   *
+   * Use `initialState` to pass some initial data of `ctx.scene.state`
    *
    * @param {string} sceneId Scene name
    * @param {object} [initialState] Scene initial state
-   * @param {boolean} [silent] ???
+   * @param {boolean} [silent] If true, enters to given scene without calling `enter`handler, and without calling `leave` handler for current scene (if user currently in scene)
    * @throws {Error}
    * @return {Promise}
    */
