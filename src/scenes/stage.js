@@ -33,7 +33,7 @@ const { compose, optional, lazy, safePassThru } = Composer
  * const bot = new Opengram(process.env.BOT_TOKEN)
  * const stage = new Stage([...]) // Create Stage instance and register scenes
  *
- * bot.use(stage.middleware())
+ * bot.use(stage)
  * bot.start(async(ctx) => {
  *   await ctx.reply('Hello!')
  *   await ctx.scene.enter('name')
@@ -86,7 +86,7 @@ class Stage extends Composer {
   }
 
   /**
-   * Generates and returns stage middleware  for embedding
+   * Generates and returns stage middleware for embedding
    *
    * @return {MiddlewareFn}
    */
