@@ -1707,10 +1707,19 @@ class Composer {
     if (middlewares.length === 1) {
       return Composer.unwrap(middlewares[0])
     }
-    return (ctx, next) => {
+
+    /**
+     * @param {OpengramContext} ctx Context Object
+     * @param {Function} next Next middleware
+     */
+    function run (ctx, next) {
       let index = -1
       return execute(0, ctx)
 
+      /**
+       * @param {number} i Middleware index
+       * @param {OpengramContext} context Next middleware
+       */
       async function execute (i, context) {
         if (!(context instanceof Context)) {
           throw new Error('next(ctx) called with invalid context')
@@ -1729,6 +1738,8 @@ class Composer {
         })
       }
     }
+
+    return run
   }
 }
 
