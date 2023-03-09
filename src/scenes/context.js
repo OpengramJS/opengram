@@ -16,9 +16,15 @@ class SceneContext {
     this.scenes = scenes
     /** @type {boolean} */
     this.leaving = false
+    /** @type {StageOptions} */
     this.options = options
   }
 
+  /**
+   * Getter returns current scene session object
+   *
+   * @return {object}
+  */
   get session () {
     const sessionName = this.options.sessionName
     let session = this.ctx[sessionName].__scenes || {}
@@ -29,11 +35,21 @@ class SceneContext {
     return session
   }
 
+  /**
+   * Getter returns state of current scene
+   *
+   * @return {object}
+   */
   get state () {
     this.session.state = this.session.state || {}
     return this.session.state
   }
 
+  /**
+   * Setter sets state of current scene
+   *
+   * @param {object} value New state value
+   */
   set state (value) {
     this.session.state = { ...value }
   }
@@ -49,6 +65,8 @@ class SceneContext {
   }
 
   /**
+   * Resets scenes data
+   *
    * @return {void}
    */
   reset () {
@@ -97,10 +115,21 @@ class SceneContext {
     return await handler(this.ctx, noop)
   }
 
+  /**
+   * Used for re-entering to current scene without destroying `ctx.scene.state`
+   *
+   * @throws {Error}
+   * @return {Promise}
+   */
   reenter () {
     return this.enter(this.session.current, this.state)
   }
 
+  /**
+   * Used to exit the current scene
+   *
+   * @return {Promise<void>}
+   */
   async leave () {
     if (this.leaving) return
     debug('Leaving scene')
