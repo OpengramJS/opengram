@@ -270,7 +270,7 @@ class ApiClient {
   /**
    * @param {string} token Bot token
    * @param {TelegramOptions} [options] Options
-   * @param {object} [webhookResponse] Response object from HTTP server for reply via webhook if enabled
+   * @param {http.ServerResponse} [webhookResponse] Response object from HTTP server for reply via webhook if enabled
    */
   constructor (token, options, webhookResponse) {
     this.token = token

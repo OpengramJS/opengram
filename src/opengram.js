@@ -97,12 +97,14 @@ class Opengram extends Composer {
       ...compactOptions(options)
     }
     this.token = token
+
     this.handleError = async err => {
       console.error()
       console.error((err.stack || err.toString()).replace(/^/gm, '  '))
       console.error()
       throw err
     }
+
     this.context = {}
     this.polling = {
       offset: 0,
@@ -528,8 +530,8 @@ class Opengram extends Composer {
   /**
    * Starting processing one update
    *
-   * @param {object} [webhookResponse] Response object for send webhook reply
    * @param {Update} update Update object
+   * @param {http.ServerResponse} [webhookResponse] Response object for send webhook reply
    * @throws Error
    * @return {Promise}
    */
