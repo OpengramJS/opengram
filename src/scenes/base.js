@@ -52,10 +52,22 @@ class BaseScene extends Composer {
     return this
   }
 
+  /**
+   * Returns enter handler composed with `enter` middlewares
+   *
+   * @private
+   * @return {MiddlewareFn}
+   */
   enterMiddleware () {
     return this.enterHandler
   }
 
+  /**
+   * Returns enter handler composed with `leave` middlewares
+   *
+   * @private
+   * @return {MiddlewareFn}
+   */
   leaveMiddleware () {
     return this.leaveHandler
   }

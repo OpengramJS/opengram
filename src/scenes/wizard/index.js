@@ -28,6 +28,12 @@ class WizardScene extends BaseScene {
     this.steps = tSteps
   }
 
+  /**
+   * Returns enter handler composed with wizard middleware
+   *
+   * @private
+   * @return {MiddlewareFn}
+   */
   enterMiddleware () {
     return Composer.compose([this.enterHandler, this.middleware()])
   }
