@@ -30,6 +30,10 @@ const DEFAULT_OPTIONS = {
 const noop = () => { }
 
 /**
+ * @module Opengram
+ */
+
+/**
  * The main class that implements receiving updates and setting up the bot before starting
  *
  * A Opengram bot is an object containing an array of middlewares which are composed and executed in a stack-like
