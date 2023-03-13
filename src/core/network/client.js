@@ -50,8 +50,8 @@ const WEBHOOK_REPLY_STUB = {
  * Hides bot token in request errors
  *
  * @private
- * @return {object}
  * @param {object} error JSON to parse
+ * @return {object}
  */
 function redactToken (error) {
   error.message = error.message.replace(
@@ -65,8 +65,8 @@ function redactToken (error) {
  * Parsing JSON without error throw if invalid
  *
  * @private
- * @return {object}
  * @param {string} text JSON to parse
+ * @return {object|void}
  */
 function safeJSONParse (text) {
   try {
@@ -117,7 +117,8 @@ async function buildFormDataConfig (payload, agent) {
   }
   const boundary = crypto.randomBytes(32).toString('hex')
   const formData = new MultipartStream(boundary)
-  const tasks = Object.keys(payload).map((key) => attachFormValue(formData, key, payload[key], agent))
+  const tasks = Object.keys(payload)
+    .map((key) => attachFormValue(formData, key, payload[key], agent))
   await Promise.all(tasks)
 
   return {
