@@ -9,6 +9,21 @@ const { compose, unwrap } = Composer
  * @extends BaseScene
  */
 class WizardScene extends BaseScene {
+  /**
+   * Wizard scene constructor
+   *
+   * @constructor
+   * @param {string} id Wizard name, used for entering
+   * @param {MiddlewareFn} optionsOrStep First step
+   * @param {MiddlewareFn} steps Steps middlewares
+   *//**
+   * Wizard scene constructor
+   *
+   * @constructor
+   * @param {string} id Wizard name, used for entering
+   * @param {object} optionsOrStep Options
+   * @param {MiddlewareFn} steps Steps middlewares
+   */
   constructor (id, optionsOrStep, ...steps) {
     let tOptions
     let tSteps
@@ -35,6 +50,11 @@ class WizardScene extends BaseScene {
     return Composer.compose([this.enterHandler, this.middleware()])
   }
 
+  /**
+   * Returns the middleware to embed
+   *
+   * @return {MiddlewareFn}
+   */
   middleware () {
     return compose([
       (ctx, next) => {
