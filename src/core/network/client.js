@@ -309,8 +309,8 @@ class ApiClient {
   }
 
   /**
-   * @typedef {object} callApiExtra
-   * @property {object} signal Optional `AbortSignal` to cancel the request
+   * @typedef {object} CallApiExtra
+   * @property {AbortSignal} signal Optional `AbortSignal` to cancel the request
    */
 
   /**
@@ -336,7 +336,7 @@ class ApiClient {
    *
    * @param {string} method Telegram API method name
    * @param {object} data Object with method parameters
-   * @param {callApiExtra} [extra] Extra parameters
+   * @param {CallApiExtra} [extra] Extra parameters
    * @return {Promise<object|boolean|number>}
    */
   async callApi (method, data = {}, extra = {}) {
