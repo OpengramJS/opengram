@@ -12,15 +12,12 @@ class WizardScene extends BaseScene {
   constructor (id, optionsOrStep, ...steps) {
     let tOptions
     let tSteps
-    if (typeof options === 'function' || 'middleware' in options) {
 
     // Make options optional
     if (typeof optionsOrStep === 'function' || 'middleware' in optionsOrStep) {
       tOptions = undefined
-      tSteps = [options, ...steps]
       tSteps = [optionsOrStep, ...steps]
     } else {
-      tOptions = options
       tOptions = optionsOrStep
       tSteps = steps
     }
