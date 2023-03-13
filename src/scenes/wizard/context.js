@@ -11,9 +11,14 @@ class WizardContext {
     this.ctx = ctx
     this.steps = steps
     this.state = ctx.scene.state
-    this.cursor = ctx.scene.session.cursor || 0
+    this.cursor = ctx.scene.session.cursor ?? 0
   }
 
+  /**
+   * Getter returns current step handler
+   *
+   * @return {MiddlewareFn|false}
+   */
   get step () {
     return this.cursor >= 0 && this.steps[this.cursor]
   }
