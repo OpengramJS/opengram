@@ -17,6 +17,10 @@ const pTimeout = require('p-timeout')
 const { compactOptions } = require('./core/helpers/compact')
 
 const botInfoPromiseSymbol = Symbol('botInfoPromise')
+
+/**
+ * @type {{handlerTimeout: number, retryAfter: number, contextType: OpengramContext}}
+ */
 const DEFAULT_OPTIONS = {
   retryAfter: 1,
   handlerTimeout: Infinity,
