@@ -443,6 +443,93 @@ class Markup {
   }
 
   /**
+   * Button will open a list of suitable users. Tapping on any user will send their identifier to the bot in a
+   * `user_shared` service message. Available in private chats only & non-inline keyboards
+   *
+   * @see https://core.telegram.org/bots/api#keyboardbuttonrequestuser
+   * @param {string} text Text of the button.
+   * @param {number} requestId Signed 32-bit identifier of the request, which will be received back in the
+   *   [UserShared](https://core.telegram.org/bots/api#usershared) object. Must be unique within the message
+   * @param {boolean} [userIsPremium] *Optional*. Pass *True* to request a bot, pass *False* to request a regular user.
+   *   If not specified, no additional restrictions are applied.
+   * @param {boolean} [hide] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
+   *   for hide button when build keyboard
+   * @return {UserRequestButton}
+   */
+  userRequest (
+    text,
+    requestId,
+    userIsPremium,
+    hide = false
+  ) {
+    return Markup.userRequest(text, requestId, userIsPremium, hide)
+  }
+
+  /**
+   * Button will open a list of suitable bots. Tapping on any bot will send their identifier to the your bot in a
+   * `user_shared` service message. Available in private chats only & non-inline keyboards
+   *
+   * @see https://core.telegram.org/bots/api#keyboardbuttonrequestuser
+   * @param {string} text Text of the button.
+   * @param {number} requestId Signed 32-bit identifier of the request, which will be received back in the
+   *   [UserShared](https://core.telegram.org/bots/api#usershared) object. Must be unique within the message
+   * @param {boolean} [hide] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
+   *   for hide button when build keyboard
+   * @return {BotRequestButton}
+   */
+  botRequest (
+    text,
+    requestId,
+    hide = false
+  ) {
+    return Markup.botRequest(text, requestId, hide)
+  }
+
+  /**
+   * Button will open a list of suitable groups. Tapping on any group will send their identifier to the your bot in a
+   * `chat_shared` service message. Available in private chats only & non-inline keyboards
+   *
+   * @see https://core.telegram.org/bots/api#keyboardbuttonrequestchat
+   * @param {string} text Text of the button.
+   * @param {number} requestId Signed 32-bit identifier of the request, which will be received back in the
+   *   [ChatShared](https://core.telegram.org/bots/api#chatshared) object. Must be unique within the message
+   * @param {GroupRequestButtonExtra} [extra] Extra parameters
+   * @param {boolean} [hide] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
+   *   for hide button when build keyboard
+   * @return {GroupRequestButton}
+   */
+  groupRequest (
+    text,
+    requestId,
+    extra,
+    hide = false
+  ) {
+    return Markup.groupRequest(text, requestId, extra, hide)
+  }
+
+  /**
+   * Button will open a list of suitable channels. Tapping on any group will send their identifier to the your bot in a
+   * `chat_shared` service message. Available in private chats only & non-inline keyboards
+   *
+   * @see https://core.telegram.org/bots/api#keyboardbuttonrequestchat
+   * @param {string} text Text of the button.
+   * @param {number} requestId Signed 32-bit identifier of the request, which will be received back in the
+   *   [UserShared](https://core.telegram.org/bots/api#chatshared) object. Must be unique within the message
+   * @param {ChannelRequestButtonExtra} extra Extra parameters
+   * @param {boolean} [hide] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
+   *   for hide button when build keyboard
+   * @return {ChannelRequestButton}
+   */
+  channelRequest (
+    text,
+    requestId,
+    extra,
+    hide = false
+  ) {
+    return Markup.channelRequest(text, requestId, extra, hide)
+  }
+
+  /**
    * Enable / Disable keyboard removing
    *
    * @see https://core.telegram.org/bots/api#replykeyboardremove
@@ -823,6 +910,232 @@ class Markup {
     return {
       text,
       web_app: { url },
+      hide
+    }
+  }
+
+  /**
+   * @typedef {object} UserRequestButtonParams
+   * @property {number} request_id Signed 32-bit identifier of the request, which will be received back in the
+   *   [UserShared](https://core.telegram.org/bots/api#usershared) object. Must be unique within the message
+   * @property {boolean} [user_is_premium] *Optional*. Pass *True* to request a bot, pass *False* to request a regular user.
+   *   If not specified, no additional restrictions are applied.
+   */
+
+  /**
+   * @typedef {object} UserRequestButton
+   * @property {string} text Text of the button.
+   * @property {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
+   *   for hide button when build keyboard
+   * @property {UserRequestButtonParams} request_user Button params object
+   */
+
+  /**
+   * Button will open a list of suitable users. Tapping on any user will send their identifier to the bot in a
+   * `user_shared` service message. Available in private chats only & non-inline keyboards
+   *
+   * @see https://core.telegram.org/bots/api#keyboardbuttonrequestuser
+   * @param {string} text Text of the button.
+   * @param {number} requestId Signed 32-bit identifier of the request, which will be received back in the
+   *   [UserShared](https://core.telegram.org/bots/api#usershared) object. Must be unique within the message
+   * @param {boolean} [userIsPremium] *Optional*. Pass *True* to request a bot, pass *False* to request a regular user.
+   *   If not specified, no additional restrictions are applied.
+   * @param {boolean} [hide] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
+   *   for hide button when build keyboard
+   * @return {UserRequestButton}
+   */
+  static userRequest (
+    text,
+    requestId,
+    userIsPremium,
+    hide = false
+  ) {
+    return { text, request_user: { request_id: requestId, user_is_premium: userIsPremium }, hide }
+  }
+
+  /**
+   * @typedef {object} BotRequestButtonParams
+   * @property {number} request_id Signed 32-bit identifier of the request, which will be received back in the
+   *   [UserShared](https://core.telegram.org/bots/api#usershared) object. Must be unique within the message
+   * @property {boolean} [user_is_bot] *Optional*. Pass *True* to request a bot, pass *False* to request a regular
+   *   user. If not specified, no additional restrictions are applied.
+   */
+
+  /**
+   * @typedef {object} BotRequestButton
+   * @property {string} text Text of the button.
+   * @property {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
+   *   for hide button when build keyboard
+   * @property {BotRequestButtonParams} request_user Button params object
+   */
+
+  /**
+   * Button will open a list of suitable bots. Tapping on any bot will send their identifier to the your bot in a
+   * `user_shared` service message. Available in private chats only & non-inline keyboards
+   *
+   * @see https://core.telegram.org/bots/api#keyboardbuttonrequestuser
+   * @param {string} text Text of the button.
+   * @param {number} requestId Signed 32-bit identifier of the request, which will be received back in the
+   *   [UserShared](https://core.telegram.org/bots/api#usershared) object. Must be unique within the message
+   * @param {boolean} [hide] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
+   *   for hide button when build keyboard
+   * @return {BotRequestButton}
+   */
+  static botRequest (
+    text,
+    requestId,
+    hide = false
+  ) {
+    return { text, request_user: { request_id: requestId, user_is_bot: true }, hide }
+  }
+
+  /**
+   * @typedef {object} GroupRequestButtonParams
+   * @property {number} request_id Signed 32-bit identifier of the request, which will be received back in the
+   *   [ChatShared](https://core.telegram.org/bots/api#chatshared) object. Must be unique within the message
+   * @property {boolean} [chat_is_channel=false] Select group `True`
+   * @property {boolean} [chat_is_forum] *Optional*. *True* to request a forum supergroup, *False* to request an
+   *   offline chat.
+   * @property {boolean} [chat_has_username] *Optional*. *True* for request a supergroup or a channel with a username,
+   *   *False* for request a chat without a username.
+   * @property {boolean} [chat_is_created] *Optional*. *True* for request a chat owned by the user.
+   * @property {ChatAdministratorRights} [user_administrator_rights] *Optional*. A JSON-serialized object listing the
+   *   required administrator rights of the user in the chat. The rights must be a superset of
+   *   *bot_administrator_rights*.
+   * @property {ChatAdministratorRights} [bot_administrator_rights] Optional. A JSON-serialized object listing the
+   *   required administrator rights of the bot in the chat. The rights must be a subset of `user_administrator_rights`.
+   * @property {boolean} [bot_is_member] *Optional*. Pass *True* to request a chat with the bot as a member.
+   */
+
+  /**
+   * @typedef {object} GroupRequestButton
+   * @property {string} text Text of the button.
+   * @property {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
+   *   for hide button when build keyboard
+   * @property {GroupRequestButtonParams} request_chat Button params object
+   */
+
+  /**
+   * @typedef {object} GroupRequestButtonExtra
+   * @property {boolean} [chat_is_forum] *Optional*. Pass *True* to request a forum supergroup, pass *False* to request
+   *   a non-forum chat. If not specified, no additional restrictions are applied.
+   * @property {boolean} [chat_has_username] *Optional*. Pass *True* to request a supergroup or a channel with
+   *   a username, pass *False* to request a chat without a username. If not specified, no additional restrictions are applied.
+   * @property {boolean} [chat_is_created] *Optional*. Pass *True* to request a chat owned by the user.
+   *   Otherwise, no additional restrictions are applied.
+   * @property {ChatAdministratorRights} [user_administrator_rights] *Optional*. A JSON-serialized object listing the
+   *   required administrator rights of the user in the chat. The rights must be a superset of
+   *   *bot_administrator_rights*.
+   *   If not specified, no additional restrictions are applied.
+   * @property {ChatAdministratorRights} [bot_administrator_rights] Optional. A JSON-serialized object listing the
+   *   required administrator rights of the bot in the chat. The rights must be a subset of `user_administrator_rights`.
+   *   If not specified, no additional restrictions are applied.
+   * @property {boolean} [bot_is_member] *Optional*. Pass *True* to request a chat with the bot as a member.
+   *   Otherwise, no additional restrictions are applied.
+   */
+
+  /**
+   * Button will open a list of suitable groups. Tapping on any group will send their identifier to the your bot in a
+   * `chat_shared` service message. Available in private chats only & non-inline keyboards
+   *
+   * @see https://core.telegram.org/bots/api#keyboardbuttonrequestchat
+   * @param {string} text Text of the button.
+   * @param {number} requestId Signed 32-bit identifier of the request, which will be received back in the
+   *   [ChatShared](https://core.telegram.org/bots/api#chatshared) object. Must be unique within the message
+   * @param {GroupRequestButtonExtra} [extra] Extra parameters
+   * @param {boolean} [hide] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
+   *   for hide button when build keyboard
+   * @return {GroupRequestButton}
+   */
+  static groupRequest (
+    text,
+    requestId,
+    extra,
+    hide = false
+  ) {
+    return {
+      text,
+      request_chat: { request_id: requestId, chat_is_channel: false, ...extra },
+      hide
+    }
+  }
+
+  /**
+   * @typedef {object} ChannelRequestButtonParams
+   * @property {number} request_id Signed 32-bit identifier of the request, which will be received back in the
+   *   [ChatShared](https://core.telegram.org/bots/api#chatshared) object. Must be unique within the message
+   * @property {boolean} [chat_is_channel=true] Select channel `True`
+   * @property {boolean} [chat_has_username] *Optional*. *True* for request a supergroup or a channel with a username,
+   *   *False* for request a chat without a username.
+   * @property {boolean} [chat_is_created] *Optional*. *True* for request a channel owned by the user.
+   * @property {ChatAdministratorRights} [user_administrator_rights] *Optional*. A JSON-serialized object listing the
+   *   required administrator rights of the user in the chat. The rights must be a superset of
+   *   *bot_administrator_rights*.
+   * @property {ChatAdministratorRights} [bot_administrator_rights] Optional. A JSON-serialized object listing the
+   *   required administrator rights of the bot in the chat. The rights must be a subset of `user_administrator_rights`.
+   * @property {boolean} [bot_is_member] *Optional*. Pass *True* to request a chat with the bot as a member.
+   */
+
+  /**
+   * @typedef {object} ChannelRequestButton
+   * @property {string} text Text of the button.
+   * @property {boolean} hide Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
+   *   for hide button when build keyboard
+   * @property {GroupRequestButtonParams} request_chat Button params object
+   */
+
+  /**
+   * @typedef {object} ChannelRequestButtonExtra
+   * @property {boolean} [chat_has_username] *Optional*. Pass *True* to request a supergroup or a channel with
+   *   a username, pass *False* to request a chat without a username. If not specified, no additional restrictions are applied.
+   * @property {boolean} [chat_is_created] *Optional*. Pass *True* to request a channel owned by the user.
+   *   Otherwise, no additional restrictions are applied.
+   * @property {ChatAdministratorRights} [user_administrator_rights] *Optional*. A JSON-serialized object listing the
+   *   required administrator rights of the user in the chat. The rights must be a superset of
+   *   *bot_administrator_rights*.
+   *   If not specified, no additional restrictions are applied.
+   * @property {ChatAdministratorRights} [bot_administrator_rights] Optional. A JSON-serialized object listing the
+   *   required administrator rights of the bot in the chat. The rights must be a subset of `user_administrator_rights`.
+   *   If not specified, no additional restrictions are applied.
+   * @property {boolean} [bot_is_member] *Optional*. Pass *True* to request a chat with the bot as a member.
+   *   Otherwise, no additional restrictions are applied.
+   */
+
+  /**
+   * Button will open a list of suitable channels. Tapping on any channel will send their identifier to the your bot in a
+   * `chat_shared` service message. Available in private chats only & non-inline keyboards
+   *
+   * @param {string} text Text of the button.
+   * @param {number} requestId Signed 32-bit identifier of the request, which will be received back in the
+   *   [ChatShared](https://core.telegram.org/bots/api#chatshared) object. Must be unique within the message
+   * @param {ChannelRequestButtonExtra} [extra] Extra parameters
+   * @param {boolean} [hide] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
+   *   for hide button when build keyboard
+   * @return {GroupRequestButton}
+   */
+
+  /**
+   * Button will open a list of suitable channels. Tapping on any group will send their identifier to the your bot in a
+   * `chat_shared` service message. Available in private chats only & non-inline keyboards
+   *
+   * @see https://core.telegram.org/bots/api#keyboardbuttonrequestchat
+   * @param {string} text Text of the button.
+   * @param {number} requestId Signed 32-bit identifier of the request, which will be received back in the
+   *   [UserShared](https://core.telegram.org/bots/api#chatshared) object. Must be unique within the message
+   * @param {ChannelRequestButtonExtra} extra Extra parameters
+   * @param {boolean} [hide] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
+   *   for hide button when build keyboard
+   * @return {ChannelRequestButton}
+   */
+  static channelRequest (
+    text,
+    requestId,
+    extra,
+    hide = false
+  ) {
+    return {
+      text,
+      request_chat: { request_id: requestId, chat_is_channel: true, ...extra },
       hide
     }
   }
