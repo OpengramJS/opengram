@@ -4,6 +4,9 @@ const { isAbsolute } = require('path')
 
 /**
  * Class which implements sugar for direct Telegram Bots API calls
+ *
+ * @class
+ * @extends ApiClient
  */
 class Telegram extends ApiClient {
   /**
@@ -191,7 +194,7 @@ class Telegram extends ApiClient {
    *
    * @see https://core.telegram.org/bots/api#setwebhook
    * @param {string} url HTTPS URL to send updates to. Use an empty string to remove webhook integration
-   * @param {setWebhookExtra} [extra] Other parameters
+   * @param {ExtraSetWebhook} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -205,7 +208,7 @@ class Telegram extends ApiClient {
    * Returns `True` on success.
    *
    * @see https://core.telegram.org/bots/api#deletewebhook
-   * @param {deleteWebhookExtra} [extra] Other parameters
+   * @param {ExtraDeleteWebhook} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -222,7 +225,7 @@ class Telegram extends ApiClient {
    * @param {string|number} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {string} text Text of the message to be sent, 1-4096 characters after entities parsing
-   * @param {MessageExtraParams|Extra} [extra] Other parameters
+   * @param {ExtraSendMessage|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -241,7 +244,7 @@ class Telegram extends ApiClient {
    * @param {string|number} fromChatId Unique identifier for the chat where the original message was sent
    * (or channel username in the format `@channelusername`)
    * @param {number} messageId Message identifier in the chat specified in `from_chat_id`
-   * @param {forwardExtraParams|Extra} [extra] Other parameters
+   * @param {ExtraForwardMessage|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -255,6 +258,12 @@ class Telegram extends ApiClient {
   }
 
   /**
+   * @typedef {object} ExtraSendChatAction
+   * @property {number} [message_thread_id] *Optional.* Unique identifier for the target message thread (topic) of the
+   *   forum; for forum supergroups only
+   */
+
+  /**
    * Use this method when you need to tell the user that something is happening on the bot's side.
    * The status is set for 5 seconds or less (when a message arrives from your bot,
    * Telegram clients clear its typing status).
@@ -266,7 +275,8 @@ class Telegram extends ApiClient {
    * the bot may use {@link sendChatAction} with `action = upload_photo`. The user will see a “sending photo”
    * status for the bot.
    *
-   * We only recommend using this method when a response from the bot will take a **noticeable** amount of time to arrive.
+   * We only recommend using this method when a response from the bot will take a **noticeable** amount of time to
+   * arrive.
    *
    * @see https://core.telegram.org/bots/api#sendchataction
    * @param {string|number} chatId Unique identifier for the target chat or username of the target channel
@@ -280,7 +290,7 @@ class Telegram extends ApiClient {
    *    `choose_sticker` for {@link sendSticker stickers},
    *    `find_location` for {@link sendLocation location data},
    *    `record_video_note` or `upload_video_note` for {@link sendVideoNote video notes}.
-   * @param {object} [extra] Other parameters
+   * @param {ExtraSendChatAction} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -316,7 +326,7 @@ class Telegram extends ApiClient {
    *    (in the format `@channelusername`)
    * @param {number} latitude Latitude of the location
    * @param {number} longitude Longitude of the location
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraLocation|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise}
    */
@@ -337,7 +347,7 @@ class Telegram extends ApiClient {
    * @param {number} longitude Longitude of the venue
    * @param {string} title Name of the venue
    * @param {string} address Address of the venue
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraVenue|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -360,8 +370,8 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#sendinvoice
    * @param {string|number} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
-   * @param {object} invoice Other invoice parameters
-   * @param {object|Extra} [extra] Other parameters
+   * @param {InvoiceParams} invoice Other invoice parameters
+   * @param {ExtraInvoice|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -379,7 +389,7 @@ class Telegram extends ApiClient {
    *    (in the format `@channelusername`)
    * @param {string} phoneNumber Contact's phone number
    * @param {string} firstName Contact's first name
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraContact|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -402,7 +412,7 @@ class Telegram extends ApiClient {
    *    The photo's width and height must not exceed 10000 in total.
    *    Width and height ratio must be at most 20.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraPhoto|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -418,7 +428,7 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#sendphoto
    * @param {string|number} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraDice|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -439,7 +449,7 @@ class Telegram extends ApiClient {
    *    on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a photo from the
    *   Internet, or upload a new photo using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraDocument|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -463,7 +473,7 @@ class Telegram extends ApiClient {
    *   the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an audio file from the
    *   Internet, or upload a new one using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraAudio|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -483,7 +493,7 @@ class Telegram extends ApiClient {
    *    the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP file from the
    *    Internet, or upload a new one using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
-   * @param {stickerExtraParams|Extra} [extra] Other parameters
+   * @param {ExtraSticker|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -506,7 +516,7 @@ class Telegram extends ApiClient {
    *    exists on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get
    *    a video from the Internet, or upload a new video using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraVideo|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -528,7 +538,7 @@ class Telegram extends ApiClient {
    *    on the Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get an animation from
    *    the Internet, or upload a new animation using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraAnimation|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -550,7 +560,7 @@ class Telegram extends ApiClient {
    *   on the Telegram servers (recommended) or upload a new video using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files).
    *    Sending video notes by a URL is currently unsupported
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraVideoNote|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -572,7 +582,7 @@ class Telegram extends ApiClient {
    * @param {InputFile|FileId} voice Audio file to send. Pass a file_id as String to send a file that exists on the
    *    Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet,
    *    or upload a new one using multipart/form-data.
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraVoice|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -590,7 +600,7 @@ class Telegram extends ApiClient {
    *    (in the format `@channelusername`)
    * @param {string} gameName Short name of the game, serves as the unique identifier for the game.
    *    Set up your games via [@BotFather](https://t.me/BotFather).
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraGame|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -610,7 +620,7 @@ class Telegram extends ApiClient {
    *    (in the format `@channelusername`)
    * @param {Array<InputMediaPhoto|InputMediaAudio|InputMediaVideo|InputMediaDocument>} media A array describing
    *    messages to be sent, must include 2-10 items
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraMediaGroup|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message[]>}
    */
@@ -628,7 +638,7 @@ class Telegram extends ApiClient {
    *    (in the format `@channelusername`)
    * @param {string} question Poll question, 1-300 characters
    * @param {string[]} options List of answer options, 2-10 strings 1-100 characters each
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraPoll|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -646,7 +656,7 @@ class Telegram extends ApiClient {
    *    (in the format `@channelusername`)
    * @param {string} question Poll question, 1-300 characters
    * @param {string[]} options List of answer options, 2-10 strings 1-100 characters each
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraQuiz|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
@@ -663,7 +673,7 @@ class Telegram extends ApiClient {
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {number} messageId Identifier of the original message with the poll
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraStopPoll|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<Poll>}
    */
@@ -762,7 +772,7 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#answerinlinequery
    * @param {string} inlineQueryId Unique identifier for the answered query
    * @param {InlineQueryResult[]} results A array of results for the inline query
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraAnswerInlineQuery} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -780,7 +790,7 @@ class Telegram extends ApiClient {
    * @param {number|string} chatId Unique identifier for the target chat or username of the target supergroup
    *    (in the format `@supergroupusername`)
    * @param {ChatPermissions} permissions A object for new default chat permissions
-   * @param {object} [extra] Other parameters
+   * @param {ExtraSetChatPermissions} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -800,7 +810,7 @@ class Telegram extends ApiClient {
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {number} userId Unique identifier of the target user
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraBanChatMember} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -811,14 +821,15 @@ class Telegram extends ApiClient {
   /**
    * Alias to {@link banChatMember}, but have different arguments
    *
+   * @deprecated Use {@link #banChatMember} instead
    * @see https://core.telegram.org/bots/api#banchatmember
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {number} userId Unique identifier of the target user
-   * @param {object} [extra] Other parameters
    * @param {number} [untilDate] Date when the user will be unbanned, unix time. If user is banned for more than 366
    *   days or less than 30 seconds from the current time they are considered to be banned forever. Applied for
    *   supergroups and channels only.
+   * @param {ExtraKickChatMember} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -837,7 +848,7 @@ class Telegram extends ApiClient {
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {number} userId Unique identifier of the target user
-   * @param {object} [extra] Other parameters
+   * @param {ExtraPromoteChatMember} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -856,7 +867,7 @@ class Telegram extends ApiClient {
    * @param {number|string} chatId Unique identifier for the target chat or username of the target supergroup
    *    (in the format `@supergroupusername`)
    * @param {number} userId Unique identifier of the target user
-   * @param {object} [extra] Other parameters
+   * @param {ExtraRestrictChatMember} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -1017,7 +1028,7 @@ class Telegram extends ApiClient {
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {number} messageId Identifier of a message to pin
-   * @param {object} [extra] Other parameters
+   * @param {ExtraPinChatMessage} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -1036,7 +1047,7 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#unpinchatmessage
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
-   * @param {object} [extra] Other parameters
+   * @param {ExtraUnPinChatMessage} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -1157,7 +1168,7 @@ class Telegram extends ApiClient {
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {number} userId Unique identifier of the target user
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraUnbanMember} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -1178,11 +1189,11 @@ class Telegram extends ApiClient {
    *
    * @see https://core.telegram.org/bots/api#answercallbackquery
    * @param {string} [callbackQueryId] Unique identifier for the query to be answered
-   * @param {object} [extra] Other parameters
    * @param {string} [text] Text of the notification. If not specified, nothing will be shown to the user, 0-200
    *   characters
    * @param {boolean} [showAlert] If True, an alert will be shown by the client instead of a notification at the top of
    *   the chat screen. Defaults to false.
+   * @param {ExtraAnswerCbQuery} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -1283,7 +1294,7 @@ class Telegram extends ApiClient {
    * @param {string} [inlineMessageId] Required if `chat_id` and `message_id` are not specified. Identifier of the
    *   inline message
    * @param {string} text New text of the message, 1-4096 characters after entities parsing
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraEditMessageText|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean|Message>}
    */
@@ -1310,7 +1321,7 @@ class Telegram extends ApiClient {
    * @param {string} [inlineMessageId] Required if `chat_id` and `message_id` are not specified.
    *    Identifier of the inline message
    * @param {string} [caption] New caption of the message, 0-1024 characters after entities parsing
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraEditMessageCaption|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean|Message>}
    */
@@ -1337,9 +1348,10 @@ class Telegram extends ApiClient {
    * @param {number|string} [chatId] Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {number} [messageId] Required if `inline_message_id` is not specified. Identifier of the message to edit
-   * @param {string} [inlineMessageId] Required if `chat_id` and `message_id` are not specified. Identifier of the inline message
+   * @param {string} [inlineMessageId] Required if `chat_id` and `message_id` are not specified. Identifier of the
+   *   inline message
    * @param {InputMedia} media Object for a new media content of the message
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraEditMessageMedia|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean|Message>}
    */
@@ -1368,9 +1380,9 @@ class Telegram extends ApiClient {
    * @param {number|string} [chatId] Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {number} [messageId] Required if `inline_message_id` is not specified. Identifier of the message to edit
-   * @param {object|Extra} [extra] Other parameters
    * @param {string} [inlineMessageId] Required if `chat_id` and `message_id` are not specified. Identifier of the
    *   inline message
+   * @param {ExtraEditMessageReplyMarkup|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean|Message>}
    */
@@ -1398,7 +1410,7 @@ class Telegram extends ApiClient {
    *    Identifier of the inline message
    * @param {number} latitude Latitude of new location
    * @param {number} longitude Longitude of new location
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraEditMessageLiveLocation|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean|Message>}
    */
@@ -1425,9 +1437,9 @@ class Telegram extends ApiClient {
    *    (in the format `@channelusername`)
    * @param {number} [messageId] Required if `inline_message_id` is not specified. Identifier of the message with
    *    live location to stop
-   * @param {object|Extra} [extra] Other parameters
    * @param {string} [inlineMessageId] Required if `chat_id` and `message_id` are not specified. Identifier of the
    *   inline message
+   * @param {ExtraStopMessageLiveLocation|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean|Message>}
    */
@@ -1529,7 +1541,7 @@ class Telegram extends ApiClient {
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *   (in the format `@channelusername`)
    * @param {string} name Topic name, 1-128 characters
-   * @param {object} [extra] Other parameters
+   * @param {ExtraCreateForumTopic} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<ForumTopic>}
    */
@@ -1548,7 +1560,7 @@ class Telegram extends ApiClient {
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *   (in the format `@channelusername`)
    * @param {number} messageThreadId Unique identifier for the target message thread of the forum topic
-   * @param {object} [extra] Other parameters
+   * @param {ExtraEditForumTopic} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -1780,16 +1792,16 @@ class Telegram extends ApiClient {
    *    can't contain consecutive underscores and must end in `"_by_<bot_username>"`. `<bot_username>`
    *    is case insensitive. 1-64 characters.
    * @param {string} title Sticker set title, 1-64 characters
-   * @param {object} stickerData Other parameters
+   * @param {ExtraCreateNewStickerSet} extra Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
-  createNewStickerSet (ownerId, name, title, stickerData) {
+  createNewStickerSet (ownerId, name, title, extra) {
     return this.callApi('createNewStickerSet', {
       name,
       title,
       user_id: ownerId,
-      ...stickerData
+      ...extra
     })
   }
 
@@ -1804,15 +1816,15 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#addstickertoset
    * @param {number} ownerId User identifier of sticker set owner
    * @param {string} name Sticker set name
-   * @param {object} stickerData Other parameters
+   * @param {ExtraAddStickerToSet} extra Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
-  addStickerToSet (ownerId, name, stickerData) {
+  addStickerToSet (ownerId, name, extra) {
     return this.callApi('addStickerToSet', {
       name,
       user_id: ownerId,
-      ...stickerData
+      ...extra
     })
   }
 
@@ -1843,14 +1855,13 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#setstickersetthumb
    * @param {string} name Sticker set name
    * @param {number} userId User identifier of the sticker set owner
-   * @param {attachmentFile} [thumb] A **PNG** image with the thumbnail, must be up to 128 kilobytes in size and have width and height
-   *    exactly 100px, or a **TGS** animation with the thumbnail up to 32 kilobytes in size;
-   *    see https://core.telegram.org/stickers#animated-sticker-requirements for animated sticker technical requirements,
-   *    or a **WEBM** video with the thumbnail up to 32 kilobytes in size;
-   *    see https://core.telegram.org/stickers#video-sticker-requirements for video sticker technical
-   *    requirements. Pass a file_id as a String to send a file that already exists on the Telegram servers,
-   *    pass an HTTP URL as a String for Telegram to get a file from the Internet, or upload a new one
-   *    using multipart/form-data.
+   * @param {InputFile|FileId} [thumb] A **PNG** image with the thumbnail, must be up to 128 kilobytes in size and have
+   *   width and height exactly 100px, or a **TGS** animation with the thumbnail up to 32 kilobytes in size; see
+   *   https://core.telegram.org/stickers#animated-sticker-requirements for animated sticker technical requirements, or
+   *   a **WEBM** video with the thumbnail up to 32 kilobytes in size; see
+   *   https://core.telegram.org/stickers#video-sticker-requirements for video sticker technical requirements. Pass a
+   *   file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for
+   *   Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files).
    *    Animated sticker set thumbnails can't be uploaded via HTTP URL.
    * @throws {TelegramError}
@@ -1880,7 +1891,7 @@ class Telegram extends ApiClient {
    * Returns Array of {@link BotCommand} on success. If commands aren't set, an empty list is returned.
    *
    * @see https://core.telegram.org/bots/api#getmycommands
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraGetMyCommands} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<BotCommand[]>}
    */
@@ -1898,7 +1909,7 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#setmycommands
    * @param {BotCommand[]} commands List of bot commands to be set as the list of the bot's commands.
    *    At most 100 commands can be specified.
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraSetMyCommands} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -1913,7 +1924,7 @@ class Telegram extends ApiClient {
    * Returns `True` on success.
    *
    * @see https://core.telegram.org/bots/api#deletemycommands
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraDeleteMyCommands} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<boolean>}
    */
@@ -1986,7 +1997,7 @@ class Telegram extends ApiClient {
    * @param {number|string} fromChatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {number} messageId Message identifier in the chat specified in `from_chat_id`
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraCopyMessage|Extra} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<MessageId>}
    */
@@ -2009,7 +2020,7 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#createchatinvitelink
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraCreateChatInviteLink} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<ChatInviteLink>}
    */
@@ -2030,7 +2041,7 @@ class Telegram extends ApiClient {
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {string} inviteLink The invite link to edit
-   * @param {object|Extra} [extra] Other parameters
+   * @param {ExtraEditChatInviteLink} [extra] Other parameters
    * @throws {TelegramError}
    * @return {Promise<ChatInviteLink>}
    */
@@ -2143,7 +2154,7 @@ class Telegram extends ApiClient {
    * Returns the created invoice link as `String` on success.
    *
    * @see https://core.telegram.org/bots/api#createinvoicelink
-   * @param {Invoice} invoice Object with invoice properties
+   * @param {InvoiceLinkParams} invoice Object with invoice properties
    * @throws {TelegramError}
    * @return {Promise<string>}
    */
