@@ -522,12 +522,13 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#answerinlinequery
    * @param {InlineQueryResult[]} results A array of results for the inline query
    * @param {ExtraAnswerInlineQuery} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  answerInlineQuery (results, extra) {
+  answerInlineQuery (results, extra, signal) {
     this.assert(this.inlineQuery, 'answerInlineQuery')
-    return this.telegram.answerInlineQuery(this.inlineQuery.id, results, extra)
+    return this.telegram.answerInlineQuery(this.inlineQuery.id, results, extra, signal)
   }
 
   /**
@@ -547,12 +548,13 @@ class OpengramContext {
    * @param {boolean} [showAlert] If True, an alert will be shown by the client instead of a notification at the top of
    *   the chat screen. Defaults to false.
    * @param {ExtraAnswerCbQuery} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  answerCbQuery (text, showAlert, extra) {
+  answerCbQuery (text, showAlert, extra, signal) {
     this.assert(this.callbackQuery, 'answerCbQuery')
-    return this.telegram.answerCbQuery(this.callbackQuery.id, text, showAlert, extra)
+    return this.telegram.answerCbQuery(this.callbackQuery.id, text, showAlert, extra, signal)
   }
 
   /**
@@ -562,12 +564,13 @@ class OpengramContext {
    * @param {string} [url] URL that will be opened by the user's client. If you have created a Game and accepted the
    *   conditions via [@BotFather](https://t.me/BotFather), specify the URL that opens your game - note that this will
    *   only work if the query comes from a `callback_game` button.
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise}
    */
-  answerGameQuery (url) {
+  answerGameQuery (url, signal) {
     this.assert(this.callbackQuery, 'answerGameQuery')
-    return this.telegram.answerGameQuery(this.callbackQuery.id, url)
+    return this.telegram.answerGameQuery(this.callbackQuery.id, url, signal)
   }
 
   /**
@@ -585,12 +588,13 @@ class OpengramContext {
    * @param {string} [errorMessage] Required if ok is False. Error message in human-readable form that explains why it
    *    is impossible to complete the order (e.g. "Sorry, delivery to your desired address is unavailable').
    *    Telegram will display this message to the user.
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  answerShippingQuery (ok, shippingOptions, errorMessage) {
+  answerShippingQuery (ok, shippingOptions, errorMessage, signal) {
     this.assert(this.shippingQuery, 'answerShippingQuery')
-    return this.telegram.answerShippingQuery(this.shippingQuery.id, ok, shippingOptions, errorMessage)
+    return this.telegram.answerShippingQuery(this.shippingQuery.id, ok, shippingOptions, errorMessage, signal)
   }
 
   /**
@@ -610,12 +614,13 @@ class OpengramContext {
    *   reason for failure to proceed with the checkout (e.g. "Sorry, somebody just bought the last of our amazing black
    *   T-shirts while you were busy filling out your payment details. Please choose a different color or garment!").
    *   Telegram will display this message to the user.
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  answerPreCheckoutQuery (ok, errorMessage) {
+  answerPreCheckoutQuery (ok, errorMessage, signal) {
     this.assert(this.preCheckoutQuery, 'answerPreCheckoutQuery')
-    return this.telegram.answerPreCheckoutQuery(this.preCheckoutQuery.id, ok, errorMessage)
+    return this.telegram.answerPreCheckoutQuery(this.preCheckoutQuery.id, ok, errorMessage, signal)
   }
 
   /**
@@ -627,10 +632,11 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#editmessagetext
    * @param {string} text New text of the message, 1-4096 characters after entities parsing
    * @param {ExtraEditMessageText|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|Message>}
    */
-  editMessageText (text, extra) {
+  editMessageText (text, extra, signal) {
     this.assert(this.callbackQuery || this.inlineMessageId, 'editMessageText')
     return this.inlineMessageId
       ? this.telegram.editMessageText(
@@ -638,14 +644,16 @@ class OpengramContext {
         undefined,
         this.inlineMessageId,
         text,
-        extra
+        extra,
+        signal
       )
       : this.telegram.editMessageText(
         this.chat.id,
         this.callbackQuery.message.message_id,
         undefined,
         text,
-        extra
+        extra,
+        signal
       )
   }
 
@@ -658,10 +666,11 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#editmessagecaption
    * @param {string} [caption] New caption of the message, 0-1024 characters after entities parsing
    * @param {ExtraEditMessageCaption|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|Message>}
    */
-  editMessageCaption (caption, extra) {
+  editMessageCaption (caption, extra, signal) {
     this.assert(this.callbackQuery || this.inlineMessageId, 'editMessageCaption')
     return this.inlineMessageId
       ? this.telegram.editMessageCaption(
@@ -669,14 +678,16 @@ class OpengramContext {
         undefined,
         this.inlineMessageId,
         caption,
-        extra
+        extra,
+        signal
       )
       : this.telegram.editMessageCaption(
         this.chat.id,
         this.callbackQuery.message.message_id,
         undefined,
         caption,
-        extra
+        extra,
+        signal
       )
   }
 
@@ -692,10 +703,11 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#editmessagemedia
    * @param {InputMedia} media Object for a new media content of the message
    * @param {ExtraEditMessageMedia|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|Message>}
    */
-  editMessageMedia (media, extra) {
+  editMessageMedia (media, extra, signal) {
     this.assert(this.callbackQuery || this.inlineMessageId, 'editMessageMedia')
     return this.inlineMessageId
       ? this.telegram.editMessageMedia(
@@ -703,14 +715,16 @@ class OpengramContext {
         undefined,
         this.inlineMessageId,
         media,
-        extra
+        extra,
+        signal
       )
       : this.telegram.editMessageMedia(
         this.chat.id,
         this.callbackQuery.message.message_id,
         undefined,
         media,
-        extra
+        extra,
+        signal
       )
   }
 
@@ -722,23 +736,26 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#editmessagereplymarkup
    * @param {{ reply_markup: InlineKeyboardMarkup }|Extra} [markup] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|Message>}
    */
-  editMessageReplyMarkup (markup) {
+  editMessageReplyMarkup (markup, signal) {
     this.assert(this.callbackQuery || this.inlineMessageId, 'editMessageReplyMarkup')
     return this.inlineMessageId
       ? this.telegram.editMessageReplyMarkup(
         undefined,
         undefined,
         this.inlineMessageId,
-        markup
+        markup,
+        signal
       )
       : this.telegram.editMessageReplyMarkup(
         this.chat.id,
         this.callbackQuery.message.message_id,
         undefined,
-        markup
+        markup,
+        signal
       )
   }
 
@@ -754,10 +771,11 @@ class OpengramContext {
    * @param {number} latitude Latitude of new location
    * @param {number} longitude Longitude of new location
    * @param {ExtraEditMessageLiveLocation|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|Message>}
    */
-  editMessageLiveLocation (latitude, longitude, extra) {
+  editMessageLiveLocation (latitude, longitude, extra, signal) {
     this.assert(this.callbackQuery || this.inlineMessageId, 'editMessageLiveLocation')
     return this.inlineMessageId
       ? this.telegram.editMessageLiveLocation(
@@ -766,7 +784,8 @@ class OpengramContext {
         this.inlineMessageId,
         latitude,
         longitude,
-        extra
+        extra,
+        signal
       )
       : this.telegram.editMessageLiveLocation(
         this.chat.id,
@@ -774,7 +793,8 @@ class OpengramContext {
         undefined,
         latitude,
         longitude,
-        extra
+        extra,
+        signal
       )
   }
 
@@ -788,23 +808,26 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#stopmessagelivelocation
    * @param {{ reply_markup: InlineKeyboardMarkup}|Extra} [markup] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|Message>}
    */
-  stopMessageLiveLocation (markup) {
+  stopMessageLiveLocation (markup, signal) {
     this.assert(this.callbackQuery || this.inlineMessageId, 'stopMessageLiveLocation')
     return this.inlineMessageId
       ? this.telegram.stopMessageLiveLocation(
         undefined,
         undefined,
         this.inlineMessageId,
-        markup
+        markup,
+        signal
       )
       : this.telegram.stopMessageLiveLocation(
         this.chat.id,
         this.callbackQuery.message.message_id,
         undefined,
-        markup
+        markup,
+        signal
       )
   }
 
@@ -816,15 +839,16 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#sendmessage
    * @param {string} text Text of the message to be sent, 1-4096 characters after entities parsing
    * @param {ExtraSendMessage|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  reply (text, extra) {
+  reply (text, extra, signal) {
     this.assert(this.chat, 'reply')
     return this.telegram.sendMessage(this.chat.id, text, {
       message_thread_id: getThreadId(this),
       ...extra
-    })
+    }, signal)
   }
 
   /**
@@ -834,12 +858,13 @@ class OpengramContext {
    * Returns a {@link Chat} object on success.
    *
    * @see https://core.telegram.org/bots/api#getchat
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Chat>}
    */
-  getChat () {
+  getChat (signal) {
     this.assert(this.chat, 'getChat')
-    return this.telegram.getChat(this.chat.id)
+    return this.telegram.getChat(this.chat.id, signal)
   }
 
   /**
@@ -855,12 +880,13 @@ class OpengramContext {
    * If your bot needs to generate a new primary invite link replacing its previous one, use exportChatInviteLink again.
    *
    * @see https://core.telegram.org/bots/api#exportchatinvitelink
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise}
    */
-  exportChatInviteLink () {
+  exportChatInviteLink (signal) {
     this.assert(this.chat, 'exportChatInviteLink')
-    return this.telegram.exportChatInviteLink(this.chat.id)
+    return this.telegram.exportChatInviteLink(this.chat.id, signal)
   }
 
   /**
@@ -874,12 +900,13 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#banchatmember
    * @param {number} userId Unique identifier of the target user
    * @param {ExtraBanChatMember} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  banChatMember (userId, extra) {
+  banChatMember (userId, extra, signal) {
     this.assert(this.chat, 'banChatMember')
-    return this.telegram.banChatMember(this.chat.id, userId, extra)
+    return this.telegram.banChatMember(this.chat.id, userId, extra, signal)
   }
 
   /**
@@ -894,12 +921,13 @@ class OpengramContext {
    *   days or less than 30 seconds from the current time they are considered to be banned forever. Applied for
    *   supergroups and channels only.
    * @param {ExtraKickChatMember} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  kickChatMember (userId, untilDate, extra) {
+  kickChatMember (userId, untilDate, extra, signal) {
     this.assert(this.chat, 'kickChatMember')
-    return this.telegram.kickChatMember(this.chat.id, userId, untilDate, extra)
+    return this.telegram.kickChatMember(this.chat.id, userId, untilDate, extra, signal)
   }
 
   /**
@@ -914,12 +942,13 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#unbanchatmember
    * @param {number} userId Unique identifier of the target user
    * @param {ExtraUnbanMember} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  unbanChatMember (userId, extra) {
+  unbanChatMember (userId, extra, signal) {
     this.assert(this.chat, 'unbanChatMember')
-    return this.telegram.unbanChatMember(this.chat.id, userId, extra)
+    return this.telegram.unbanChatMember(this.chat.id, userId, extra, signal)
   }
 
   /**
@@ -932,12 +961,13 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#restrictchatmember
    * @param {number} userId Unique identifier of the target user
    * @param {ExtraRestrictChatMember} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  restrictChatMember (userId, extra) {
+  restrictChatMember (userId, extra, signal) {
     this.assert(this.chat, 'restrictChatMember')
-    return this.telegram.restrictChatMember(this.chat.id, userId, extra)
+    return this.telegram.restrictChatMember(this.chat.id, userId, extra, signal)
   }
 
   /**
@@ -950,12 +980,13 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#promotechatmember
    * @param {number} userId Unique identifier of the target user
    * @param {ExtraPromoteChatMember} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  promoteChatMember (userId, extra) {
+  promoteChatMember (userId, extra, signal) {
     this.assert(this.chat, 'promoteChatMember')
-    return this.telegram.promoteChatMember(this.chat.id, userId, extra)
+    return this.telegram.promoteChatMember(this.chat.id, userId, extra, signal)
   }
 
   /**
@@ -968,12 +999,13 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#banchatsenderchat
    * @param {number} senderChatId Unique identifier of the target sender chat
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  banChatSenderChat (senderChatId) {
+  banChatSenderChat (senderChatId, signal) {
     this.assert(this.chat, 'banChatSenderChat')
-    return this.telegram.banChatSenderChat(this.chat.id, senderChatId)
+    return this.telegram.banChatSenderChat(this.chat.id, senderChatId, signal)
   }
 
   /**
@@ -984,12 +1016,13 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#unbanchatsenderchat
    * @param {number} senderChatId Unique identifier of the target sender chat
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  unbanChatSenderChat (senderChatId) {
+  unbanChatSenderChat (senderChatId, signal) {
     this.assert(this.chat, 'unbanChatSenderChat')
-    return this.telegram.unbanChatSenderChat(this.chat.id, senderChatId)
+    return this.telegram.unbanChatSenderChat(this.chat.id, senderChatId, signal)
   }
 
   /**
@@ -1000,12 +1033,13 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#setchatadministratorcustomtitle
    * @param {number} userId Unique identifier of the target user
    * @param {string} title New custom title for the administrator; 0-16 characters, emoji are not allowed
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  setChatAdministratorCustomTitle (userId, title) {
+  setChatAdministratorCustomTitle (userId, title, signal) {
     this.assert(this.chat, 'setChatAdministratorCustomTitle')
-    return this.telegram.setChatAdministratorCustomTitle(this.chat.id, userId, title)
+    return this.telegram.setChatAdministratorCustomTitle(this.chat.id, userId, title, signal)
   }
 
   /**
@@ -1016,12 +1050,13 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#setchatphoto
    * @param {InputFile} photo New chat photo, uploaded using multipart/form-data
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  setChatPhoto (photo) {
+  setChatPhoto (photo, signal) {
     this.assert(this.chat, 'setChatPhoto')
-    return this.telegram.setChatPhoto(this.chat.id, photo)
+    return this.telegram.setChatPhoto(this.chat.id, photo, signal)
   }
 
   /**
@@ -1031,12 +1066,13 @@ class OpengramContext {
    * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#deletechatphoto
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  deleteChatPhoto () {
+  deleteChatPhoto (signal) {
     this.assert(this.chat, 'deleteChatPhoto')
-    return this.telegram.deleteChatPhoto(this.chat.id)
+    return this.telegram.deleteChatPhoto(this.chat.id, signal)
   }
 
   /**
@@ -1047,12 +1083,13 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#setchattitle
    * @param {string} title New chat title, 1-255 characters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  setChatTitle (title) {
+  setChatTitle (title, signal) {
     this.assert(this.chat, 'setChatTitle')
-    return this.telegram.setChatTitle(this.chat.id, title)
+    return this.telegram.setChatTitle(this.chat.id, title, signal)
   }
 
   /**
@@ -1063,12 +1100,13 @@ class OpengramContext {
    * https://core.telegram.org/bots/api#setchatdescription
    *
    * @param {string} [description] New chat description, 0-255 characters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  setChatDescription (description) {
+  setChatDescription (description, signal) {
     this.assert(this.chat, 'setChatDescription')
-    return this.telegram.setChatDescription(this.chat.id, description)
+    return this.telegram.setChatDescription(this.chat.id, description, signal)
   }
 
   /**
@@ -1081,12 +1119,13 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#pinchatmessage
    * @param {number} messageId Identifier of a message to pin
    * @param {ExtraPinChatMessage|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  pinChatMessage (messageId, extra) {
+  pinChatMessage (messageId, extra, signal) {
     this.assert(this.chat, 'pinChatMessage')
-    return this.telegram.pinChatMessage(this.chat.id, messageId, extra)
+    return this.telegram.pinChatMessage(this.chat.id, messageId, extra, signal)
   }
 
   /**
@@ -1099,12 +1138,13 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#unpinchatmessage
    * @param {ExtraUnPinChatMessage} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  unpinChatMessage (extra) {
+  unpinChatMessage (extra, signal) {
     this.assert(this.chat, 'unpinChatMessage')
-    return this.telegram.unpinChatMessage(this.chat.id, extra)
+    return this.telegram.unpinChatMessage(this.chat.id, extra, signal)
   }
 
   /**
@@ -1116,12 +1156,13 @@ class OpengramContext {
    * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#unpinallchatmessages
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  unpinAllChatMessages () {
+  unpinAllChatMessages (signal) {
     this.assert(this.chat, 'unpinAllChatMessages')
-    return this.telegram.unpinAllChatMessages(this.chat.id)
+    return this.telegram.unpinAllChatMessages(this.chat.id, signal)
   }
 
   /**
@@ -1130,12 +1171,13 @@ class OpengramContext {
    * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#leavechat
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  leaveChat () {
+  leaveChat (signal) {
     this.assert(this.chat, 'leaveChat')
-    return this.telegram.leaveChat(this.chat.id)
+    return this.telegram.leaveChat(this.chat.id, signal)
   }
 
   /**
@@ -1147,12 +1189,13 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#setchatpermissions
    * @param {ChatPermissions} permissions A object for new default chat permissions
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  setChatPermissions (permissions) {
+  setChatPermissions (permissions, signal) {
     this.assert(this.chat, 'setChatPermissions')
-    return this.telegram.setChatPermissions(this.chat.id, permissions)
+    return this.telegram.setChatPermissions(this.chat.id, permissions, signal)
   }
 
   /**
@@ -1163,12 +1206,13 @@ class OpengramContext {
    * or a supergroup and no administrators were appointed, only the creator will be returned.
    *
    * @see https://core.telegram.org/bots/api#getchatadministrators
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<ChatMember[]>}
    */
-  getChatAdministrators () {
+  getChatAdministrators (signal) {
     this.assert(this.chat, 'getChatAdministrators')
-    return this.telegram.getChatAdministrators(this.chat.id)
+    return this.telegram.getChatAdministrators(this.chat.id, signal)
   }
 
   /**
@@ -1179,12 +1223,13 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#getchatmember
    * @param {number|string} userId Unique identifier of the target user
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<ChatMember>}
    */
-  getChatMember (userId) {
+  getChatMember (userId, signal) {
     this.assert(this.chat, 'getChatMember')
-    return this.telegram.getChatMember(this.chat.id, userId)
+    return this.telegram.getChatMember(this.chat.id, userId, signal)
   }
 
   /**
@@ -1194,12 +1239,13 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#getchatmembercount
    * @deprecated Use {@link getChatMemberCount}
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<number>}
    */
-  getChatMembersCount () {
+  getChatMembersCount (signal) {
     this.assert(this.chat, 'getChatMembersCount')
-    return this.telegram.getChatMemberCount(this.chat.id)
+    return this.telegram.getChatMemberCount(this.chat.id, signal)
   }
 
   /**
@@ -1208,12 +1254,13 @@ class OpengramContext {
    * Returns `Int` on success.
    *
    * @see https://core.telegram.org/bots/api#getchatmembercount
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<number>}
    */
-  getChatMemberCount () {
+  getChatMemberCount (signal) {
     this.assert(this.chat, 'getChatMemberCount')
-    return this.telegram.getChatMemberCount(this.chat.id)
+    return this.telegram.getChatMemberCount(this.chat.id, signal)
   }
 
   /**
@@ -1223,12 +1270,13 @@ class OpengramContext {
    * Returns {@link MenuButton} on success.
    *
    * @see https://core.telegram.org/bots/api#getchatmenubutton
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<MenuButton>}
    */
-  getChatMenuButton () {
+  getChatMenuButton (signal) {
     this.assert(this.chat, 'getChatMenuButton')
-    return this.telegram.getChatMenuButton(this.chat.id)
+    return this.telegram.getChatMenuButton(this.chat.id, signal)
   }
 
   /**
@@ -1239,12 +1287,13 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#setchatmenubutton
    * @param {MenuButton} [menuButton] Unique identifier for the target private chat.
    *    If not specified, default bot's menu button will be changed
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  setChatMenuButton (menuButton) {
+  setChatMenuButton (menuButton, signal) {
     this.assert(this.chat, 'setChatMenuButton')
-    return this.telegram.setChatMenuButton(this.chat.id, menuButton)
+    return this.telegram.setChatMenuButton(this.chat.id, menuButton, signal)
   }
 
   /**
@@ -1259,11 +1308,12 @@ class OpengramContext {
    * If not specified, the default administrator rights will be cleared.
    * @param {boolean} [forChannels] Pass True to change the default administrator rights of the bot in channels.
    *    Otherwise, the default administrator rights of the bot for groups and supergroups will be changed.
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  setMyDefaultAdministratorRights (rights, forChannels) {
-    return this.telegram.setMyDefaultAdministratorRights(rights, forChannels)
+  setMyDefaultAdministratorRights (rights, forChannels, signal) {
+    return this.telegram.setMyDefaultAdministratorRights(rights, forChannels, signal)
   }
 
   /**
@@ -1274,11 +1324,12 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#getmydefaultadministratorrights
    * @param {boolean} [forChannels] Pass True to get default administrator rights of the bot in channels.
    *    Otherwise, default administrator rights of the bot for groups and supergroups will be returned.
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<ChatAdministratorRights>}
    */
-  getMyDefaultAdministratorRights (forChannels) {
-    return this.telegram.getMyDefaultAdministratorRights(forChannels)
+  getMyDefaultAdministratorRights (forChannels, signal) {
+    return this.telegram.getMyDefaultAdministratorRights(forChannels, signal)
   }
 
   /**
@@ -1294,12 +1345,13 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#setpassportdataerrors
    * @param {PassportElementError[]} errors Array describing the errors
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  setPassportDataErrors (errors) {
+  setPassportDataErrors (errors, signal) {
     this.assert(this.chat, 'setPassportDataErrors')
-    return this.telegram.setPassportDataErrors(this.from.id, errors)
+    return this.telegram.setPassportDataErrors(this.from.id, errors, signal)
   }
 
   /**
@@ -1316,15 +1368,16 @@ class OpengramContext {
    *    Width and height ratio must be at most 20.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
    * @param {ExtraPhoto|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  replyWithPhoto (photo, extra) {
+  replyWithPhoto (photo, extra, signal) {
     this.assert(this.chat, 'replyWithPhoto')
     return this.telegram.sendPhoto(this.chat.id, photo, {
       message_thread_id: getThreadId(this),
       ...extra
-    })
+    }, signal)
   }
 
   /**
@@ -1338,15 +1391,16 @@ class OpengramContext {
    * @param {Array<InputMediaPhoto|InputMediaAudio|InputMediaVideo|InputMediaDocument>} media A array describing
    *    messages to be sent, must include 2-10 items
    * @param {ExtraMediaGroup|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message[]>}
    */
-  replyWithMediaGroup (media, extra) {
+  replyWithMediaGroup (media, extra, signal) {
     this.assert(this.chat, 'replyWithMediaGroup')
     return this.telegram.sendMediaGroup(this.chat.id, media, {
       message_thread_id: getThreadId(this),
       ...extra
-    })
+    }, signal)
   }
 
   /**
@@ -1365,15 +1419,16 @@ class OpengramContext {
    *   Internet, or upload a new one using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
    * @param {ExtraAudio|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  replyWithAudio (audio, extra) {
+  replyWithAudio (audio, extra, signal) {
     this.assert(this.chat, 'replyWithAudio')
     return this.telegram.sendAudio(this.chat.id, audio, {
       message_thread_id: getThreadId(this),
       ...extra
-    })
+    }, signal)
   }
 
   /**
@@ -1383,15 +1438,16 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#senddice
    * @param {ExtraDice|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  replyWithDice (extra) {
+  replyWithDice (extra, signal) {
     this.assert(this.chat, 'replyWithDice')
     return this.telegram.sendDice(this.chat.id, {
       message_thread_id: getThreadId(this),
       ...extra
-    })
+    }, signal)
   }
 
   /**
@@ -1406,15 +1462,16 @@ class OpengramContext {
    *   Internet, or upload a new photo using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
    * @param {ExtraDocument|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  replyWithDocument (document, extra) {
+  replyWithDocument (document, extra, signal) {
     this.assert(this.chat, 'replyWithDocument')
     return this.telegram.sendDocument(this.chat.id, document, {
       message_thread_id: getThreadId(this),
       ...extra
-    })
+    }, signal)
   }
 
   /**
@@ -1428,15 +1485,16 @@ class OpengramContext {
    *    Internet, or upload a new one using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
    * @param {ExtraSticker|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  replyWithSticker (sticker, extra) {
+  replyWithSticker (sticker, extra, signal) {
     this.assert(this.chat, 'replyWithSticker')
     return this.telegram.sendSticker(this.chat.id, sticker, {
       message_thread_id: getThreadId(this),
       ...extra
-    })
+    }, signal)
   }
 
   /**
@@ -1453,15 +1511,16 @@ class OpengramContext {
    *    a video from the Internet, or upload a new video using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
    * @param {ExtraVideo|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  replyWithVideo (video, extra) {
+  replyWithVideo (video, extra, signal) {
     this.assert(this.chat, 'replyWithVideo')
     return this.telegram.sendVideo(this.chat.id, video, {
       message_thread_id: getThreadId(this),
       ...extra
-    })
+    }, signal)
   }
 
   /**
@@ -1477,15 +1536,16 @@ class OpengramContext {
    *    the Internet, or upload a new animation using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
    * @param {ExtraAnimation|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  replyWithAnimation (animation, extra) {
+  replyWithAnimation (animation, extra, signal) {
     this.assert(this.chat, 'replyWithAnimation')
     return this.telegram.sendAnimation(this.chat.id, animation, {
       message_thread_id: getThreadId(this),
       ...extra
-    })
+    }, signal)
   }
 
   /**
@@ -1501,15 +1561,16 @@ class OpengramContext {
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files).
    *    Sending video notes by a URL is currently unsupported
    * @param {ExtraVideoNote|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  replyWithVideoNote (videoNote, extra) {
+  replyWithVideoNote (videoNote, extra, signal) {
     this.assert(this.chat, 'replyWithVideoNote')
     return this.telegram.sendVideoNote(this.chat.id, videoNote, {
       message_thread_id: getThreadId(this),
       ...extra
-    })
+    }, signal)
   }
 
   /**
@@ -1520,15 +1581,16 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#sendinvoice
    * @param {object} invoice Other invoice parameters
    * @param {ExtraInvoice|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  replyWithInvoice (invoice, extra) {
+  replyWithInvoice (invoice, extra, signal) {
     this.assert(this.chat, 'replyWithInvoice')
     return this.telegram.sendInvoice(this.chat.id, invoice, {
       message_thread_id: getThreadId(this),
       ...extra
-    })
+    }, signal)
   }
 
   /**
@@ -1540,15 +1602,16 @@ class OpengramContext {
    * @param {string} gameName Short name of the game, serves as the unique identifier for the game.
    *    Set up your games via [@BotFather](https://t.me/BotFather).
    * @param {ExtraGame|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  replyWithGame (gameName, extra) {
+  replyWithGame (gameName, extra, signal) {
     this.assert(this.chat, 'replyWithGame')
     return this.telegram.sendGame(this.chat.id, gameName, {
       message_thread_id: getThreadId(this),
       ...extra
-    })
+    }, signal)
   }
 
   /**
@@ -1565,15 +1628,16 @@ class OpengramContext {
    *    Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet,
    *    or upload a new one using multipart/form-data.
    * @param {ExtraVoice|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  replyWithVoice (voice, extra) {
+  replyWithVoice (voice, extra, signal) {
     this.assert(this.chat, 'replyWithVoice')
     return this.telegram.sendVoice(this.chat.id, voice, {
       message_thread_id: getThreadId(this),
       ...extra
-    })
+    }, signal)
   }
 
   /**
@@ -1585,15 +1649,16 @@ class OpengramContext {
    * @param {string} question Poll question, 1-300 characters
    * @param {string[]} options List of answer options, 2-10 strings 1-100 characters each
    * @param {ExtraPoll|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  replyWithPoll (question, options, extra) {
+  replyWithPoll (question, options, extra, signal) {
     this.assert(this.chat, 'replyWithPoll')
     return this.telegram.sendPoll(this.chat.id, question, options, {
       message_thread_id: getThreadId(this),
       ...extra
-    })
+    }, signal)
   }
 
   /**
@@ -1605,15 +1670,16 @@ class OpengramContext {
    * @param {string} question Poll question, 1-300 characters
    * @param {string[]} options List of answer options, 2-10 strings 1-100 characters each
    * @param {ExtraQuiz|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  replyWithQuiz (question, options, extra) {
+  replyWithQuiz (question, options, extra, signal) {
     this.assert(this.chat, 'replyWithQuiz')
     return this.telegram.sendQuiz(this.chat.id, question, options, {
       message_thread_id: getThreadId(this),
       ...extra
-    })
+    }, signal)
   }
 
   /**
@@ -1624,12 +1690,13 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#stoppoll
    * @param {number} messageId Identifier of the original message with the poll
    * @param {ExtraStopPoll|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Poll>}
    */
-  stopPoll (messageId, extra) {
+  stopPoll (messageId, extra, signal) {
     this.assert(this.chat, 'stopPoll')
-    return this.telegram.stopPoll(this.chat.id, messageId, extra)
+    return this.telegram.stopPoll(this.chat.id, messageId, extra, signal)
   }
 
   /**
@@ -1657,14 +1724,15 @@ class OpengramContext {
    *    `choose_sticker` for {@link replyWithSticker stickers},
    *    `find_location` for {@link replyWithLocation location data},
    *    `record_video_note` or `upload_video_note` for {@link replyWithVideoNote video notes}.
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  replyWithChatAction (action) {
+  replyWithChatAction (action, signal) {
     this.assert(this.chat, 'replyWithChatAction')
     return this.telegram.sendChatAction(this.chat.id, action, {
       message_thread_id: getThreadId(this)
-    })
+    }, signal)
   }
 
   /**
@@ -1676,15 +1744,16 @@ class OpengramContext {
    * @param {number} latitude Latitude of the location
    * @param {number} longitude Longitude of the location
    * @param {ExtraLocation|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise}
    */
-  replyWithLocation (latitude, longitude, extra) {
+  replyWithLocation (latitude, longitude, extra, signal) {
     this.assert(this.chat, 'replyWithLocation')
     return this.telegram.sendLocation(this.chat.id, latitude, longitude, {
       message_thread_id: getThreadId(this),
       ...extra
-    })
+    }, signal)
   }
 
   /**
@@ -1698,15 +1767,16 @@ class OpengramContext {
    * @param {string} title Name of the venue
    * @param {string} address Address of the venue
    * @param {ExtraVenue|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  replyWithVenue (latitude, longitude, title, address, extra) {
+  replyWithVenue (latitude, longitude, title, address, extra, signal) {
     this.assert(this.chat, 'replyWithVenue')
     return this.telegram.sendVenue(this.chat.id, latitude, longitude, title, address, {
       message_thread_id: getThreadId(this),
       ...extra
-    })
+    }, signal)
   }
 
   /**
@@ -1718,15 +1788,16 @@ class OpengramContext {
    * @param {string} phoneNumber Contact's phone number
    * @param {string} firstName Contact's first name
    * @param {ExtraContact|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  replyWithContact (phoneNumber, firstName, extra) {
+  replyWithContact (phoneNumber, firstName, extra, signal) {
     this.assert(this.from, 'replyWithContact')
     return this.telegram.sendContact(this.chat.id, phoneNumber, firstName, {
       message_thread_id: getThreadId(this),
       ...extra
-    })
+    }, signal)
   }
 
   /**
@@ -1736,11 +1807,12 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#getstickerset
    * @param {string} name Name of the sticker set
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<StickerSet>}
    */
-  getStickerSet (name) {
-    return this.telegram.getStickerSet(name)
+  getStickerSet (name, signal) {
+    return this.telegram.getStickerSet(name, signal)
   }
 
   /**
@@ -1753,12 +1825,13 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#setchatstickerset
    * @param {string} setName Name of the sticker set to be set as the group sticker set
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  setChatStickerSet (setName) {
+  setChatStickerSet (setName, signal) {
     this.assert(this.chat, 'setChatStickerSet')
-    return this.telegram.setChatStickerSet(this.chat.id, setName)
+    return this.telegram.setChatStickerSet(this.chat.id, setName, signal)
   }
 
   /**
@@ -1769,12 +1842,13 @@ class OpengramContext {
    * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#deletechatstickerset
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  deleteChatStickerSet () {
+  deleteChatStickerSet (signal) {
     this.assert(this.chat, 'deleteChatStickerSet')
-    return this.telegram.deleteChatStickerSet(this.chat.id)
+    return this.telegram.deleteChatStickerSet(this.chat.id, signal)
   }
 
   /**
@@ -1786,12 +1860,13 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#createforumtopic
    * @param {string} name Topic name, 1-128 characters
    * @param {ExtraCreateForumTopic} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<ForumTopic>}
    */
-  createForumTopic (name, extra) {
+  createForumTopic (name, extra, signal) {
     this.assert(this.chat, 'createForumTopic')
-    return this.telegram.createForumTopic(this.chat.id, name, extra)
+    return this.telegram.createForumTopic(this.chat.id, name, extra, signal)
   }
 
   /**
@@ -1805,16 +1880,17 @@ class OpengramContext {
    * @param {string} [name] Topic name, 1-128 characters
    * @param {string} [iconCustomEmojiId] New unique identifier of the custom emoji shown as the topic icon.
    *   Use {@link getForumTopicIconStickers} to get all allowed custom emoji identifiers.
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  editForumTopic (name, iconCustomEmojiId) {
+  editForumTopic (name, iconCustomEmojiId, signal) {
     this.assert(this.chat, 'editForumTopic')
     this.assert(this.message?.message_thread_id, 'editForumTopic')
     return this.telegram.editForumTopic(this.chat.id, this.message.message_thread_id, {
       name,
       icon_custom_emoji_id: iconCustomEmojiId
-    })
+    }, signal)
   }
 
   /**
@@ -1824,13 +1900,14 @@ class OpengramContext {
    * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#closeforumtopic
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  closeForumTopic () {
+  closeForumTopic (signal) {
     this.assert(this.chat, 'closeForumTopic')
     this.assert(this.message?.message_thread_id, 'closeForumTopic')
-    return this.telegram.closeForumTopic(this.chat.id, this.message.message_thread_id)
+    return this.telegram.closeForumTopic(this.chat.id, this.message.message_thread_id, signal)
   }
 
   /**
@@ -1841,12 +1918,13 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#editgeneralforumtopic
    * @param {string} name New topic name, 1-128 characters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  editGeneralForumTopic (name) {
+  editGeneralForumTopic (name, signal) {
     this.assert(this.chat, 'editGeneralForumTopic')
-    return this.telegram.editGeneralForumTopic(this.chat.id, name)
+    return this.telegram.editGeneralForumTopic(this.chat.id, name, signal)
   }
 
   /**
@@ -1856,12 +1934,13 @@ class OpengramContext {
    * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#closegeneralforumtopic
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  closeGeneralForumTopic () {
+  closeGeneralForumTopic (signal) {
     this.assert(this.chat, 'closeGeneralForumTopic')
-    return this.telegram.closeGeneralForumTopic(this.chat.id)
+    return this.telegram.closeGeneralForumTopic(this.chat.id, signal)
   }
 
   /**
@@ -1872,12 +1951,13 @@ class OpengramContext {
    * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#reopengeneralforumtopic
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  reopenGeneralForumTopic () {
+  reopenGeneralForumTopic (signal) {
     this.assert(this.chat, 'reopenGeneralForumTopic')
-    return this.telegram.reopenGeneralForumTopic(this.chat.id)
+    return this.telegram.reopenGeneralForumTopic(this.chat.id, signal)
   }
 
   /**
@@ -1888,12 +1968,13 @@ class OpengramContext {
    * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#hidegeneralforumtopic
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  hideGeneralForumTopic () {
+  hideGeneralForumTopic (signal) {
     this.assert(this.chat, 'hideGeneralForumTopic')
-    return this.telegram.hideGeneralForumTopic(this.chat.id)
+    return this.telegram.hideGeneralForumTopic(this.chat.id, signal)
   }
 
   /**
@@ -1903,12 +1984,13 @@ class OpengramContext {
    * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#unhidegeneralforumtopic
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  unhideGeneralForumTopic () {
+  unhideGeneralForumTopic (signal) {
     this.assert(this.chat, 'unhideGeneralForumTopic')
-    return this.telegram.unhideGeneralForumTopic(this.chat.id)
+    return this.telegram.unhideGeneralForumTopic(this.chat.id, signal)
   }
 
   /**
@@ -1918,14 +2000,15 @@ class OpengramContext {
    * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#reopenforumtopic
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  reopenForumTopic () {
+  reopenForumTopic (signal) {
     this.assert(this.chat, 'reopenForumTopic')
     this.assert(this.message?.message_thread_id, 'reopenForumTopic')
 
-    return this.telegram.reopenForumTopic(this.chat.id, this.message.message_thread_id)
+    return this.telegram.reopenForumTopic(this.chat.id, this.message.message_thread_id, signal)
   }
 
   /**
@@ -1935,14 +2018,15 @@ class OpengramContext {
    * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#deleteforumtopic
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  deleteForumTopic () {
+  deleteForumTopic (signal) {
     this.assert(this.chat, 'deleteForumTopic')
     this.assert(this.message?.message_thread_id, 'deleteForumTopic')
 
-    return this.telegram.deleteForumTopic(this.chat.id, this.message.message_thread_id)
+    return this.telegram.deleteForumTopic(this.chat.id, this.message.message_thread_id, signal)
   }
 
   /**
@@ -1952,14 +2036,15 @@ class OpengramContext {
    * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#unpinallforumtopicmessages
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  unpinAllForumTopicMessages () {
+  unpinAllForumTopicMessages (signal) {
     this.assert(this.chat, 'unpinAllForumTopicMessages')
     this.assert(this.message?.message_thread_id, 'unpinAllForumTopicMessages')
 
-    return this.telegram.unpinAllForumTopicMessages(this.chat.id, this.message.message_thread_id)
+    return this.telegram.unpinAllForumTopicMessages(this.chat.id, this.message.message_thread_id, signal)
   }
 
   /**
@@ -1970,11 +2055,12 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#setstickerpositioninset
    * @param {string} sticker File identifier of the sticker
    * @param {number} position New sticker position in the set, zero-based
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  setStickerPositionInSet (sticker, position) {
-    return this.telegram.setStickerPositionInSet(sticker, position)
+  setStickerPositionInSet (sticker, position, signal) {
+    return this.telegram.setStickerPositionInSet(sticker, position, signal)
   }
 
   /**
@@ -1995,11 +2081,12 @@ class OpengramContext {
    *   Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files).
    *    Animated sticker set thumbnails can't be uploaded via HTTP URL.
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  setStickerSetThumb (name, userId, thumb) {
-    return this.telegram.setStickerSetThumb(name, userId, thumb)
+  setStickerSetThumb (name, userId, thumb, signal) {
+    return this.telegram.setStickerSetThumb(name, userId, thumb, signal)
   }
 
   /**
@@ -2009,11 +2096,12 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#deletestickerfromset
    * @param {string} sticker File identifier of the sticker
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  deleteStickerFromSet (sticker) {
-    return this.telegram.deleteStickerFromSet(sticker)
+  deleteStickerFromSet (sticker, signal) {
+    return this.telegram.deleteStickerFromSet(sticker, signal)
   }
 
   /**
@@ -2027,12 +2115,13 @@ class OpengramContext {
    * @param {InputFile} stickerFile **PNG** image with the sticker, must be up to 512 kilobytes in size,
    *    dimensions must not exceed 512px, and either width or height must be exactly 512px.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files).
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<File>}
    */
-  uploadStickerFile (stickerFile) {
+  uploadStickerFile (stickerFile, signal) {
     this.assert(this.from, 'uploadStickerFile')
-    return this.telegram.uploadStickerFile(this.from.id, stickerFile)
+    return this.telegram.uploadStickerFile(this.from.id, stickerFile, signal)
   }
 
   /**
@@ -2048,12 +2137,13 @@ class OpengramContext {
    *    is case insensitive. 1-64 characters.
    * @param {string} title Sticker set title, 1-64 characters
    * @param {object} stickerData Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  createNewStickerSet (name, title, stickerData) {
+  createNewStickerSet (name, title, stickerData, signal) {
     this.assert(this.from, 'createNewStickerSet')
-    return this.telegram.createNewStickerSet(this.from.id, name, title, stickerData)
+    return this.telegram.createNewStickerSet(this.from.id, name, title, stickerData, signal)
   }
 
   /**
@@ -2067,12 +2157,13 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#addstickertoset
    * @param {string} name Sticker set name
    * @param {object} stickerData Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  addStickerToSet (name, stickerData) {
+  addStickerToSet (name, stickerData, signal) {
     this.assert(this.from, 'addStickerToSet')
-    return this.telegram.addStickerToSet(this.from.id, name, stickerData)
+    return this.telegram.addStickerToSet(this.from.id, name, stickerData, signal)
   }
 
   /**
@@ -2082,11 +2173,12 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#getmycommands
    * @param {ExtraGetMyCommands} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<BotCommand[]>}
    */
-  getMyCommands (extra) {
-    return this.telegram.getMyCommands(extra)
+  getMyCommands (extra, signal) {
+    return this.telegram.getMyCommands(extra, signal)
   }
 
   /**
@@ -2100,11 +2192,12 @@ class OpengramContext {
    * @param {BotCommand[]} commands List of bot commands to be set as the list of the bot's commands.
    *    At most 100 commands can be specified.
    * @param {ExtraSetMyCommands} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  setMyCommands (commands, extra) {
-    return this.telegram.setMyCommands(commands, extra)
+  setMyCommands (commands, extra, signal) {
+    return this.telegram.setMyCommands(commands, extra, signal)
   }
 
   /**
@@ -2115,11 +2208,12 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#deletemycommands
    * @param {ExtraDeleteMyCommands} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  deleteMyCommands (extra) {
-    return this.telegram.deleteMyCommands(extra)
+  deleteMyCommands (extra, signal) {
+    return this.telegram.deleteMyCommands(extra, signal)
   }
 
   /**
@@ -2130,11 +2224,12 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#sendmessage
    * @param {string} markdown Text with Markdown of the message to be sent, 1-4096 characters after entities parsing
    * @param {ExtraSendMessage|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  replyWithMarkdown (markdown, extra) {
-    return this.reply(markdown, { parse_mode: 'Markdown', ...extra })
+  replyWithMarkdown (markdown, extra, signal) {
+    return this.reply(markdown, { parse_mode: 'Markdown', ...extra }, signal)
   }
 
   /**
@@ -2145,11 +2240,12 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#sendmessage
    * @param {string} markdown Text with MarkdownV2 of the message to be sent, 1-4096 characters after entities parsing
    * @param {ExtraSendMessage|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  replyWithMarkdownV2 (markdown, extra) {
-    return this.reply(markdown, { parse_mode: 'MarkdownV2', ...extra })
+  replyWithMarkdownV2 (markdown, extra, signal) {
+    return this.reply(markdown, { parse_mode: 'MarkdownV2', ...extra }, signal)
   }
 
   /**
@@ -2160,11 +2256,12 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#sendmessage
    * @param {string} html Text with HTML of the message to be sent, 1-4096 characters after entities parsing
    * @param {ExtraSendMessage|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  replyWithHTML (html, extra) {
-    return this.reply(html, { parse_mode: 'HTML', ...extra })
+  replyWithHTML (html, extra, signal) {
+    return this.reply(html, { parse_mode: 'HTML', ...extra }, signal)
   }
 
   /**
@@ -2182,17 +2279,18 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#deletemessage
    * @param {number} messageId Identifier of the message to delete
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  deleteMessage (messageId) {
+  deleteMessage (messageId, signal) {
     this.assert(this.chat, 'deleteMessage')
     if (typeof messageId !== 'undefined') {
-      return this.telegram.deleteMessage(this.chat.id, messageId)
+      return this.telegram.deleteMessage(this.chat.id, messageId, signal)
     }
     const message = getMessageFromAnySource(this)
     this.assert(message, 'deleteMessage')
-    return this.telegram.deleteMessage(this.chat.id, message.message_id)
+    return this.telegram.deleteMessage(this.chat.id, message.message_id, signal)
   }
 
   /**
@@ -2204,16 +2302,17 @@ class OpengramContext {
    * @param {string|number} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {ExtraForwardMessage|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  forwardMessage (chatId, extra) {
+  forwardMessage (chatId, extra, signal) {
     this.assert(this.chat, 'forwardMessage')
     const message = getMessageFromAnySource(this)
     this.assert(message, 'forwardMessage')
     return this.telegram.forwardMessage(chatId, this.chat.id, message.message_id, {
       ...extra
-    })
+    }, signal)
   }
 
   /**
@@ -2227,13 +2326,14 @@ class OpengramContext {
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {ExtraCopyMessage|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<MessageId>}
    */
-  copyMessage (chatId, extra) {
+  copyMessage (chatId, extra, signal) {
     const message = getMessageFromAnySource(this)
     this.assert(message, 'copyMessage')
-    return this.telegram.copyMessage(chatId, message.chat.id, message.message_id, extra)
+    return this.telegram.copyMessage(chatId, message.chat.id, message.message_id, extra, signal)
   }
 
   /**
@@ -2246,12 +2346,13 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#createchatinvitelink
    * @param {ExtraCreateChatInviteLink} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<ChatInviteLink>}
    */
-  createChatInviteLink (extra) {
+  createChatInviteLink (extra, signal) {
     this.assert(this.chat, 'createChatInviteLink')
-    return this.telegram.createChatInviteLink(this.chat.id, extra)
+    return this.telegram.createChatInviteLink(this.chat.id, extra, signal)
   }
 
   /**
@@ -2264,12 +2365,13 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#editchatinvitelink
    * @param {string} inviteLink The invite link to edit
    * @param {ExtraEditChatInviteLink} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<ChatInviteLink>}
    */
-  editChatInviteLink (inviteLink, extra) {
+  editChatInviteLink (inviteLink, extra, signal) {
     this.assert(this.chat, 'editChatInviteLink')
-    return this.telegram.editChatInviteLink(this.chat.id, inviteLink, extra)
+    return this.telegram.editChatInviteLink(this.chat.id, inviteLink, extra, signal)
   }
 
   /**
@@ -2282,12 +2384,13 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#revokechatinvitelink
    * @param {string} inviteLink The invite link to revoke
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<ChatInviteLink>}
    */
-  revokeChatInviteLink (inviteLink) {
+  revokeChatInviteLink (inviteLink, signal) {
     this.assert(this.chat, 'revokeChatInviteLink')
-    return this.telegram.revokeChatInviteLink(this.chat.id, inviteLink)
+    return this.telegram.revokeChatInviteLink(this.chat.id, inviteLink, signal)
   }
 
   /**
@@ -2299,12 +2402,13 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#approvechatjoinrequest
    * @param {number} userId Unique identifier of the target user
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  approveChatJoinRequest (userId) {
+  approveChatJoinRequest (userId, signal) {
     this.assert(this.chat, 'approveChatJoinRequest')
-    return this.telegram.approveChatJoinRequest(this.chat.id, userId)
+    return this.telegram.approveChatJoinRequest(this.chat.id, userId, signal)
   }
 
   /**
@@ -2316,12 +2420,13 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#declinechatjoinrequest
    * @param {number} userId Unique identifier of the target user
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  declineChatJoinRequest (userId) {
+  declineChatJoinRequest (userId, signal) {
     this.assert(this.chat, 'declineChatJoinRequest')
-    return this.telegram.declineChatJoinRequest(this.chat.id, userId)
+    return this.telegram.declineChatJoinRequest(this.chat.id, userId, signal)
   }
 
   /**
@@ -2332,11 +2437,12 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#getcustomemojistickers
    * @param {string[]} customEmojiIds List of custom emoji identifiers. At most 200 custom emoji identifiers can be
    *    specified.
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Sticker[]>}
    */
-  getCustomEmojiStickers (customEmojiIds) {
-    return this.telegram.getCustomEmojiStickers(customEmojiIds)
+  getCustomEmojiStickers (customEmojiIds, signal) {
+    return this.telegram.getCustomEmojiStickers(customEmojiIds, signal)
   }
 
   /**
@@ -2346,11 +2452,12 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#createinvoicelink
    * @param {InvoiceLinkParams} invoice Object with invoice properties
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<string>}
    */
-  createInvoiceLink (invoice) {
-    return this.telegram.createInvoiceLink(invoice)
+  createInvoiceLink (invoice, signal) {
+    return this.telegram.createInvoiceLink(invoice, signal)
   }
 }
 

@@ -15,11 +15,12 @@ class Telegram extends ApiClient {
    * Returns basic information about the bot in form of a {@link User} object.
    *
    * @see https://core.telegram.org/bots/api#getme
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<User>}
    */
-  getMe () {
-    return this.callApi('getMe')
+  getMe (signal) {
+    return this.callApi('getMe', {}, { signal })
   }
 
   /**
@@ -34,11 +35,12 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#getfile
    * @param {string} fileId File identifier to get information about.
    *    For example `AgACAgIAAx0CQjQWAgABBL1TYuJg8dI5tgABhPn_grF1nRzR-aMtAAJRvDEbb9cQSzO9zjdgGjp1AQADAgADcwADKQQ`
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<File>}
    */
-  getFile (fileId) {
-    return this.callApi('getFile', { file_id: fileId })
+  getFile (fileId, signal) {
+    return this.callApi('getFile', { file_id: fileId }, { signal })
   }
 
   /**
@@ -48,14 +50,15 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#file
    * @param {string|File} fileId File identifier to get information about.
    *    For example `AgACAgIAAx0CQjQWAgABBL1TYuJg8dI5tgABhPn_grF1nRzR-aMtAAJRvDEbb9cQSzO9zjdgGjp1AQADAgADcwADKQQ`
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<URL>}
    */
-  async getFileLink (fileId) {
+  async getFileLink (fileId, signal) {
     if (typeof fileId === 'string') {
-      fileId = await this.getFile(fileId)
+      fileId = await this.getFile(fileId, signal)
     } else if (fileId.file_path === undefined) {
-      fileId = await this.getFile(fileId.file_id)
+      fileId = await this.getFile(fileId.file_id, signal)
     }
 
     // Local bot API instances return the absolute path to the file
@@ -98,14 +101,15 @@ class Telegram extends ApiClient {
    *     If not specified, the previous setting will be used.
    *
    *     Please note that this parameter doesn't affect updates created before
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Update[]>}
    */
-  getUpdates (timeout, limit, offset, allowedUpdates) {
+  getUpdates (timeout, limit, offset, allowedUpdates, signal) {
     const url = `getUpdates?offset=${offset}&limit=${limit}&timeout=${timeout}`
     return this.callApi(url, {
       allowed_updates: allowedUpdates
-    })
+    }, { signal })
   }
 
   /**
@@ -115,11 +119,12 @@ class Telegram extends ApiClient {
    * If the bot is using {@link getUpdates}, will return an object with the *url* field empty.
    *
    * @see https://core.telegram.org/bots/api#getwebhookinfo
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<WebhookInfo>}
    */
-  getWebhookInfo () {
-    return this.callApi('getWebhookInfo')
+  getWebhookInfo (signal) {
+    return this.callApi('getWebhookInfo', {}, { signal })
   }
 
   /**
@@ -135,16 +140,17 @@ class Telegram extends ApiClient {
    * @param {number} [chatId] Required if `inline_message_id` is not specified. Identifier of the sent message
    * @param {number} [messageId] Required if `chat_id` and `message_id` are not specified. Identifier of the inline
    *   message
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<GameHighScore[]>}
    */
-  getGameHighScores (userId, inlineMessageId, chatId, messageId) {
+  getGameHighScores (userId, inlineMessageId, chatId, messageId, signal) {
     return this.callApi('getGameHighScores', {
       user_id: userId,
       inline_message_id: inlineMessageId,
       chat_id: chatId,
       message_id: messageId
-    })
+    }, { signal })
   }
 
   /**
@@ -165,10 +171,11 @@ class Telegram extends ApiClient {
    *    the current scoreboard
    * @param {boolean} [force] Pass True, if the high score is allowed to decrease.
    *    This can be useful when fixing mistakes or banning cheaters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|Message>}
    */
-  setGameScore (userId, score, inlineMessageId, chatId, messageId, editMessage = true, force) {
+  setGameScore (userId, score, inlineMessageId, chatId, messageId, editMessage = true, force, signal) {
     return this.callApi('setGameScore', {
       force,
       score,
@@ -177,7 +184,7 @@ class Telegram extends ApiClient {
       chat_id: chatId,
       message_id: messageId,
       disable_edit_message: !editMessage
-    })
+    }, { signal })
   }
 
   /**
@@ -195,11 +202,12 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#setwebhook
    * @param {string} url HTTPS URL to send updates to. Use an empty string to remove webhook integration
    * @param {ExtraSetWebhook} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  setWebhook (url, extra) {
-    return this.callApi('setWebhook', { url, ...extra })
+  setWebhook (url, extra, signal) {
+    return this.callApi('setWebhook', { url, ...extra }, { signal })
   }
 
   /**
@@ -209,11 +217,12 @@ class Telegram extends ApiClient {
    *
    * @see https://core.telegram.org/bots/api#deletewebhook
    * @param {ExtraDeleteWebhook} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  deleteWebhook (extra) {
-    return this.callApi('deleteWebhook', extra)
+  deleteWebhook (extra, signal) {
+    return this.callApi('deleteWebhook', extra, { signal })
   }
 
   /**
@@ -226,11 +235,12 @@ class Telegram extends ApiClient {
    *    (in the format `@channelusername`)
    * @param {string} text Text of the message to be sent, 1-4096 characters after entities parsing
    * @param {ExtraSendMessage|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  sendMessage (chatId, text, extra) {
-    return this.callApi('sendMessage', { chat_id: chatId, text, ...extra })
+  sendMessage (chatId, text, extra, signal) {
+    return this.callApi('sendMessage', { chat_id: chatId, text, ...extra }, { signal })
   }
 
   /**
@@ -245,16 +255,17 @@ class Telegram extends ApiClient {
    * (or channel username in the format `@channelusername`)
    * @param {number} messageId Message identifier in the chat specified in `from_chat_id`
    * @param {ExtraForwardMessage|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  forwardMessage (chatId, fromChatId, messageId, extra) {
+  forwardMessage (chatId, fromChatId, messageId, extra, signal) {
     return this.callApi('forwardMessage', {
       chat_id: chatId,
       from_chat_id: fromChatId,
       message_id: messageId,
       ...extra
-    })
+    }, { signal })
   }
 
   /**
@@ -291,11 +302,12 @@ class Telegram extends ApiClient {
    *    `find_location` for {@link sendLocation location data},
    *    `record_video_note` or `upload_video_note` for {@link sendVideoNote video notes}.
    * @param {ExtraSendChatAction} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  sendChatAction (chatId, action, extra) {
-    return this.callApi('sendChatAction', { chat_id: chatId, action, ...extra })
+  sendChatAction (chatId, action, extra, signal) {
+    return this.callApi('sendChatAction', { chat_id: chatId, action, ...extra }, { signal })
   }
 
   /**
@@ -308,11 +320,12 @@ class Telegram extends ApiClient {
    * @param {number} [offset] Sequential number of the first photo to be returned. By default, all photos are returned.
    * @param {number} [limit] Limits the number of photos to be retrieved. Values between 1-100 are accepted.
    *    Defaults to 100.
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<UserProfilePhotos>}
    */
-  getUserProfilePhotos (userId, offset, limit) {
-    return this.callApi('getUserProfilePhotos', { user_id: userId, offset, limit })
+  getUserProfilePhotos (userId, offset, limit, signal) {
+    return this.callApi('getUserProfilePhotos', { user_id: userId, offset, limit }, { signal })
   }
 
   /**
@@ -327,11 +340,12 @@ class Telegram extends ApiClient {
    * @param {number} latitude Latitude of the location
    * @param {number} longitude Longitude of the location
    * @param {ExtraLocation|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise}
    */
-  sendLocation (chatId, latitude, longitude, extra) {
-    return this.callApi('sendLocation', { chat_id: chatId, latitude, longitude, ...extra })
+  sendLocation (chatId, latitude, longitude, extra, signal) {
+    return this.callApi('sendLocation', { chat_id: chatId, latitude, longitude, ...extra }, { signal })
   }
 
   /**
@@ -348,10 +362,11 @@ class Telegram extends ApiClient {
    * @param {string} title Name of the venue
    * @param {string} address Address of the venue
    * @param {ExtraVenue|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  sendVenue (chatId, latitude, longitude, title, address, extra) {
+  sendVenue (chatId, latitude, longitude, title, address, extra, signal) {
     return this.callApi('sendVenue', {
       latitude,
       longitude,
@@ -359,7 +374,7 @@ class Telegram extends ApiClient {
       address,
       chat_id: chatId,
       ...extra
-    })
+    }, { signal })
   }
 
   /**
@@ -372,11 +387,12 @@ class Telegram extends ApiClient {
    *    (in the format `@channelusername`)
    * @param {InvoiceParams} invoice Other invoice parameters
    * @param {ExtraInvoice|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  sendInvoice (chatId, invoice, extra) {
-    return this.callApi('sendInvoice', { chat_id: chatId, ...invoice, ...extra })
+  sendInvoice (chatId, invoice, extra, signal) {
+    return this.callApi('sendInvoice', { chat_id: chatId, ...invoice, ...extra }, { signal })
   }
 
   /**
@@ -390,11 +406,12 @@ class Telegram extends ApiClient {
    * @param {string} phoneNumber Contact's phone number
    * @param {string} firstName Contact's first name
    * @param {ExtraContact|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  sendContact (chatId, phoneNumber, firstName, extra) {
-    return this.callApi('sendContact', { chat_id: chatId, phone_number: phoneNumber, first_name: firstName, ...extra })
+  sendContact (chatId, phoneNumber, firstName, extra, signal) {
+    return this.callApi('sendContact', { chat_id: chatId, phone_number: phoneNumber, first_name: firstName, ...extra }, { signal })
   }
 
   /**
@@ -413,11 +430,12 @@ class Telegram extends ApiClient {
    *    Width and height ratio must be at most 20.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
    * @param {ExtraPhoto|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  sendPhoto (chatId, photo, extra) {
-    return this.callApi('sendPhoto', { chat_id: chatId, photo, ...extra })
+  sendPhoto (chatId, photo, extra, signal) {
+    return this.callApi('sendPhoto', { chat_id: chatId, photo, ...extra }, { signal })
   }
 
   /**
@@ -429,11 +447,12 @@ class Telegram extends ApiClient {
    * @param {string|number} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {ExtraDice|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  sendDice (chatId, extra) {
-    return this.callApi('sendDice', { chat_id: chatId, ...extra })
+  sendDice (chatId, extra, signal) {
+    return this.callApi('sendDice', { chat_id: chatId, ...extra }, { signal })
   }
 
   /**
@@ -450,11 +469,12 @@ class Telegram extends ApiClient {
    *   Internet, or upload a new photo using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
    * @param {ExtraDocument|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  sendDocument (chatId, document, extra) {
-    return this.callApi('sendDocument', { chat_id: chatId, document, ...extra })
+  sendDocument (chatId, document, extra, signal) {
+    return this.callApi('sendDocument', { chat_id: chatId, document, ...extra }, { signal })
   }
 
   /**
@@ -474,11 +494,12 @@ class Telegram extends ApiClient {
    *   Internet, or upload a new one using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
    * @param {ExtraAudio|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  sendAudio (chatId, audio, extra) {
-    return this.callApi('sendAudio', { chat_id: chatId, audio, ...extra })
+  sendAudio (chatId, audio, extra, signal) {
+    return this.callApi('sendAudio', { chat_id: chatId, audio, ...extra }, { signal })
   }
 
   /**
@@ -494,11 +515,12 @@ class Telegram extends ApiClient {
    *    Internet, or upload a new one using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
    * @param {ExtraSticker|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  sendSticker (chatId, sticker, extra) {
-    return this.callApi('sendSticker', { chat_id: chatId, sticker, ...extra })
+  sendSticker (chatId, sticker, extra, signal) {
+    return this.callApi('sendSticker', { chat_id: chatId, sticker, ...extra }, { signal })
   }
 
   /**
@@ -517,11 +539,12 @@ class Telegram extends ApiClient {
    *    a video from the Internet, or upload a new video using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
    * @param {ExtraVideo|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  sendVideo (chatId, video, extra) {
-    return this.callApi('sendVideo', { chat_id: chatId, video, ...extra })
+  sendVideo (chatId, video, extra, signal) {
+    return this.callApi('sendVideo', { chat_id: chatId, video, ...extra }, { signal })
   }
 
   /**
@@ -539,11 +562,12 @@ class Telegram extends ApiClient {
    *    the Internet, or upload a new animation using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
    * @param {ExtraAnimation|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  sendAnimation (chatId, animation, extra) {
-    return this.callApi('sendAnimation', { chat_id: chatId, animation, ...extra })
+  sendAnimation (chatId, animation, extra, signal) {
+    return this.callApi('sendAnimation', { chat_id: chatId, animation, ...extra }, { signal })
   }
 
   /**
@@ -561,11 +585,12 @@ class Telegram extends ApiClient {
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files).
    *    Sending video notes by a URL is currently unsupported
    * @param {ExtraVideoNote|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  sendVideoNote (chatId, videoNote, extra) {
-    return this.callApi('sendVideoNote', { chat_id: chatId, video_note: videoNote, ...extra })
+  sendVideoNote (chatId, videoNote, extra, signal) {
+    return this.callApi('sendVideoNote', { chat_id: chatId, video_note: videoNote, ...extra }, { signal })
   }
 
   /**
@@ -583,11 +608,12 @@ class Telegram extends ApiClient {
    *    Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a file from the Internet,
    *    or upload a new one using multipart/form-data.
    * @param {ExtraVoice|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  sendVoice (chatId, voice, extra) {
-    return this.callApi('sendVoice', { chat_id: chatId, voice, ...extra })
+  sendVoice (chatId, voice, extra, signal) {
+    return this.callApi('sendVoice', { chat_id: chatId, voice, ...extra }, { signal })
   }
 
   /**
@@ -601,11 +627,12 @@ class Telegram extends ApiClient {
    * @param {string} gameName Short name of the game, serves as the unique identifier for the game.
    *    Set up your games via [@BotFather](https://t.me/BotFather).
    * @param {ExtraGame|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  sendGame (chatId, gameName, extra) {
-    return this.callApi('sendGame', { chat_id: chatId, game_short_name: gameName, ...extra })
+  sendGame (chatId, gameName, extra, signal) {
+    return this.callApi('sendGame', { chat_id: chatId, game_short_name: gameName, ...extra }, { signal })
   }
 
   /**
@@ -621,11 +648,12 @@ class Telegram extends ApiClient {
    * @param {Array<InputMediaPhoto|InputMediaAudio|InputMediaVideo|InputMediaDocument>} media A array describing
    *    messages to be sent, must include 2-10 items
    * @param {ExtraMediaGroup|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message[]>}
    */
-  sendMediaGroup (chatId, media, extra) {
-    return this.callApi('sendMediaGroup', { chat_id: chatId, media, ...extra })
+  sendMediaGroup (chatId, media, extra, signal) {
+    return this.callApi('sendMediaGroup', { chat_id: chatId, media, ...extra }, { signal })
   }
 
   /**
@@ -639,11 +667,12 @@ class Telegram extends ApiClient {
    * @param {string} question Poll question, 1-300 characters
    * @param {string[]} options List of answer options, 2-10 strings 1-100 characters each
    * @param {ExtraPoll|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  sendPoll (chatId, question, options, extra) {
-    return this.callApi('sendPoll', { chat_id: chatId, type: 'regular', question, options, ...extra })
+  sendPoll (chatId, question, options, extra, signal) {
+    return this.callApi('sendPoll', { chat_id: chatId, type: 'regular', question, options, ...extra }, { signal })
   }
 
   /**
@@ -657,11 +686,12 @@ class Telegram extends ApiClient {
    * @param {string} question Poll question, 1-300 characters
    * @param {string[]} options List of answer options, 2-10 strings 1-100 characters each
    * @param {ExtraQuiz|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Message>}
    */
-  sendQuiz (chatId, question, options, extra) {
-    return this.callApi('sendPoll', { chat_id: chatId, type: 'quiz', question, options, ...extra })
+  sendQuiz (chatId, question, options, extra, signal) {
+    return this.callApi('sendPoll', { chat_id: chatId, type: 'quiz', question, options, ...extra }, { signal })
   }
 
   /**
@@ -674,11 +704,12 @@ class Telegram extends ApiClient {
    *    (in the format `@channelusername`)
    * @param {number} messageId Identifier of the original message with the poll
    * @param {ExtraStopPoll|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Poll>}
    */
-  stopPoll (chatId, messageId, extra) {
-    return this.callApi('stopPoll', { chat_id: chatId, message_id: messageId, ...extra })
+  stopPoll (chatId, messageId, extra, signal) {
+    return this.callApi('stopPoll', { chat_id: chatId, message_id: messageId, ...extra }, { signal })
   }
 
   /**
@@ -690,11 +721,12 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#getchat
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Chat>}
    */
-  getChat (chatId) {
-    return this.callApi('getChat', { chat_id: chatId })
+  getChat (chatId, signal) {
+    return this.callApi('getChat', { chat_id: chatId }, { signal })
   }
 
   /**
@@ -707,11 +739,12 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#getchatadministrators
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<ChatMember[]>}
    */
-  getChatAdministrators (chatId) {
-    return this.callApi('getChatAdministrators', { chat_id: chatId })
+  getChatAdministrators (chatId, signal) {
+    return this.callApi('getChatAdministrators', { chat_id: chatId }, { signal })
   }
 
   /**
@@ -725,11 +758,12 @@ class Telegram extends ApiClient {
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {number} userId Unique identifier of the target user
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<ChatMember>}
    */
-  getChatMember (chatId, userId) {
-    return this.callApi('getChatMember', { chat_id: chatId, user_id: userId })
+  getChatMember (chatId, userId, signal) {
+    return this.callApi('getChatMember', { chat_id: chatId, user_id: userId }, { signal })
   }
 
   /**
@@ -741,11 +775,12 @@ class Telegram extends ApiClient {
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @deprecated Use {@link getChatMemberCount}
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<number>}
    */
-  getChatMembersCount (chatId) {
-    return this.callApi('getChatMemberCount', { chat_id: chatId })
+  getChatMembersCount (chatId, signal) {
+    return this.callApi('getChatMemberCount', { chat_id: chatId }, { signal })
   }
 
   /**
@@ -756,11 +791,12 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#getchatmembercount
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<number>}
    */
-  getChatMemberCount (chatId) {
-    return this.callApi('getChatMemberCount', { chat_id: chatId })
+  getChatMemberCount (chatId, signal) {
+    return this.callApi('getChatMemberCount', { chat_id: chatId }, { signal })
   }
 
   /**
@@ -773,11 +809,12 @@ class Telegram extends ApiClient {
    * @param {string} inlineQueryId Unique identifier for the answered query
    * @param {InlineQueryResult[]} results A array of results for the inline query
    * @param {ExtraAnswerInlineQuery} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  answerInlineQuery (inlineQueryId, results, extra) {
-    return this.callApi('answerInlineQuery', { inline_query_id: inlineQueryId, results, ...extra })
+  answerInlineQuery (inlineQueryId, results, extra, signal) {
+    return this.callApi('answerInlineQuery', { inline_query_id: inlineQueryId, results, ...extra }, { signal })
   }
 
   /**
@@ -791,11 +828,12 @@ class Telegram extends ApiClient {
    *    (in the format `@supergroupusername`)
    * @param {ChatPermissions} permissions A object for new default chat permissions
    * @param {ExtraSetChatPermissions} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  setChatPermissions (chatId, permissions, extra) {
-    return this.callApi('setChatPermissions', { chat_id: chatId, permissions, ...extra })
+  setChatPermissions (chatId, permissions, extra, signal) {
+    return this.callApi('setChatPermissions', { chat_id: chatId, permissions, ...extra }, { signal })
   }
 
   /**
@@ -811,11 +849,12 @@ class Telegram extends ApiClient {
    *    (in the format `@channelusername`)
    * @param {number} userId Unique identifier of the target user
    * @param {ExtraBanChatMember} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  banChatMember (chatId, userId, extra) {
-    return this.callApi('banChatMember', { chat_id: chatId, user_id: userId, ...extra })
+  banChatMember (chatId, userId, extra, signal) {
+    return this.callApi('banChatMember', { chat_id: chatId, user_id: userId, ...extra }, { signal })
   }
 
   /**
@@ -832,11 +871,12 @@ class Telegram extends ApiClient {
    *   days or less than 30 seconds from the current time they are considered to be banned forever. Applied for
    *   supergroups and channels only.
    * @param {ExtraKickChatMember} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  kickChatMember (chatId, userId, untilDate, extra) {
-    return this.callApi('banChatMember', { chat_id: chatId, user_id: userId, until_date: untilDate, ...extra })
+  kickChatMember (chatId, userId, untilDate, extra, signal) {
+    return this.callApi('banChatMember', { chat_id: chatId, user_id: userId, until_date: untilDate, ...extra }, { signal })
   }
 
   /**
@@ -851,11 +891,12 @@ class Telegram extends ApiClient {
    *    (in the format `@channelusername`)
    * @param {number} userId Unique identifier of the target user
    * @param {ExtraPromoteChatMember} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  promoteChatMember (chatId, userId, extra) {
-    return this.callApi('promoteChatMember', { chat_id: chatId, user_id: userId, ...extra })
+  promoteChatMember (chatId, userId, extra, signal) {
+    return this.callApi('promoteChatMember', { chat_id: chatId, user_id: userId, ...extra }, { signal })
   }
 
   /**
@@ -870,11 +911,12 @@ class Telegram extends ApiClient {
    *    (in the format `@supergroupusername`)
    * @param {number} userId Unique identifier of the target user
    * @param {ExtraRestrictChatMember} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  restrictChatMember (chatId, userId, extra) {
-    return this.callApi('restrictChatMember', { chat_id: chatId, user_id: userId, ...extra })
+  restrictChatMember (chatId, userId, extra, signal) {
+    return this.callApi('restrictChatMember', { chat_id: chatId, user_id: userId, ...extra }, { signal })
   }
 
   /**
@@ -889,11 +931,12 @@ class Telegram extends ApiClient {
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {number} senderChatId Unique identifier of the target sender chat
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  banChatSenderChat (chatId, senderChatId) {
-    return this.callApi('banChatSenderChat', { chat_id: chatId, sender_chat_id: senderChatId })
+  banChatSenderChat (chatId, senderChatId, signal) {
+    return this.callApi('banChatSenderChat', { chat_id: chatId, sender_chat_id: senderChatId }, { signal })
   }
 
   /**
@@ -906,11 +949,12 @@ class Telegram extends ApiClient {
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {number} senderChatId Unique identifier of the target sender chat
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  unbanChatSenderChat (chatId, senderChatId) {
-    return this.callApi('unbanChatSenderChat', { chat_id: chatId, sender_chat_id: senderChatId })
+  unbanChatSenderChat (chatId, senderChatId, signal) {
+    return this.callApi('unbanChatSenderChat', { chat_id: chatId, sender_chat_id: senderChatId }, { signal })
   }
 
   /**
@@ -923,11 +967,12 @@ class Telegram extends ApiClient {
    *    (in the format `@supergroupusername`)
    * @param {number} userId Unique identifier of the target user
    * @param {string} title New custom title for the administrator; 0-16 characters, emoji are not allowed
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  setChatAdministratorCustomTitle (chatId, userId, title) {
-    return this.callApi('setChatAdministratorCustomTitle', { chat_id: chatId, user_id: userId, custom_title: title })
+  setChatAdministratorCustomTitle (chatId, userId, title, signal) {
+    return this.callApi('setChatAdministratorCustomTitle', { chat_id: chatId, user_id: userId, custom_title: title }, { signal })
   }
 
   /**
@@ -945,11 +990,12 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#exportchatinvitelink
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise}
    */
-  exportChatInviteLink (chatId) {
-    return this.callApi('exportChatInviteLink', { chat_id: chatId })
+  exportChatInviteLink (chatId, signal) {
+    return this.callApi('exportChatInviteLink', { chat_id: chatId }, { signal })
   }
 
   /**
@@ -962,11 +1008,12 @@ class Telegram extends ApiClient {
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {InputFile} photo New chat photo, uploaded using multipart/form-data
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  setChatPhoto (chatId, photo) {
-    return this.callApi('setChatPhoto', { chat_id: chatId, photo })
+  setChatPhoto (chatId, photo, signal) {
+    return this.callApi('setChatPhoto', { chat_id: chatId, photo }, { signal })
   }
 
   /**
@@ -978,11 +1025,12 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#deletechatphoto
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  deleteChatPhoto (chatId) {
-    return this.callApi('deleteChatPhoto', { chat_id: chatId })
+  deleteChatPhoto (chatId, signal) {
+    return this.callApi('deleteChatPhoto', { chat_id: chatId }, { signal })
   }
 
   /**
@@ -995,11 +1043,12 @@ class Telegram extends ApiClient {
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {string} title New chat title, 1-255 characters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  setChatTitle (chatId, title) {
-    return this.callApi('setChatTitle', { chat_id: chatId, title })
+  setChatTitle (chatId, title, signal) {
+    return this.callApi('setChatTitle', { chat_id: chatId, title }, { signal })
   }
 
   /**
@@ -1012,11 +1061,12 @@ class Telegram extends ApiClient {
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {string} [description] New chat description, 0-255 characters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  setChatDescription (chatId, description) {
-    return this.callApi('setChatDescription', { chat_id: chatId, description })
+  setChatDescription (chatId, description, signal) {
+    return this.callApi('setChatDescription', { chat_id: chatId, description }, signal)
   }
 
   /**
@@ -1031,11 +1081,12 @@ class Telegram extends ApiClient {
    *    (in the format `@channelusername`)
    * @param {number} messageId Identifier of a message to pin
    * @param {ExtraPinChatMessage} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  pinChatMessage (chatId, messageId, extra) {
-    return this.callApi('pinChatMessage', { chat_id: chatId, message_id: messageId, ...extra })
+  pinChatMessage (chatId, messageId, extra, signal) {
+    return this.callApi('pinChatMessage', { chat_id: chatId, message_id: messageId, ...extra }, { signal })
   }
 
   /**
@@ -1050,11 +1101,12 @@ class Telegram extends ApiClient {
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {ExtraUnPinChatMessage} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  unpinChatMessage (chatId, extra) {
-    return this.callApi('unpinChatMessage', { chat_id: chatId, ...extra })
+  unpinChatMessage (chatId, extra, signal) {
+    return this.callApi('unpinChatMessage', { chat_id: chatId, ...extra }, { signal })
   }
 
   /**
@@ -1068,11 +1120,12 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#unpinallchatmessages
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  unpinAllChatMessages (chatId) {
-    return this.callApi('unpinAllChatMessages', { chat_id: chatId })
+  unpinAllChatMessages (chatId, signal) {
+    return this.callApi('unpinAllChatMessages', { chat_id: chatId }, { signal })
   }
 
   /**
@@ -1084,11 +1137,12 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#getchatmenubutton
    * @param {number|string} [chatId] Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<MenuButton>}
    */
-  getChatMenuButton (chatId) {
-    return this.callApi('getChatMenuButton', { chat_id: chatId })
+  getChatMenuButton (chatId, signal) {
+    return this.callApi('getChatMenuButton', { chat_id: chatId }, { signal })
   }
 
   /**
@@ -1101,11 +1155,12 @@ class Telegram extends ApiClient {
    *    (in the format `@channelusername`)
    * @param {MenuButton} [menuButton] Unique identifier for the target private chat.
    *    If not specified, default bot's menu button will be changed
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  setChatMenuButton (chatId, menuButton) {
-    return this.callApi('setChatMenuButton', { chat_id: chatId, menu_button: menuButton })
+  setChatMenuButton (chatId, menuButton, signal) {
+    return this.callApi('setChatMenuButton', { chat_id: chatId, menu_button: menuButton }, { signal })
   }
 
   /**
@@ -1120,11 +1175,12 @@ class Telegram extends ApiClient {
    * If not specified, the default administrator rights will be cleared.
    * @param {boolean} [forChannels] Pass True to change the default administrator rights of the bot in channels.
    *    Otherwise, the default administrator rights of the bot for groups and supergroups will be changed.
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  setMyDefaultAdministratorRights (rights, forChannels) {
-    return this.callApi('setMyDefaultAdministratorRights', { rights, for_channels: forChannels })
+  setMyDefaultAdministratorRights (rights, forChannels, signal) {
+    return this.callApi('setMyDefaultAdministratorRights', { rights, for_channels: forChannels }, { signal })
   }
 
   /**
@@ -1135,11 +1191,12 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#getmydefaultadministratorrights
    * @param {boolean} [forChannels] Pass True to get default administrator rights of the bot in channels.
    *    Otherwise, default administrator rights of the bot for groups and supergroups will be returned.
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<ChatAdministratorRights>}
    */
-  getMyDefaultAdministratorRights (forChannels) {
-    return this.callApi('getMyDefaultAdministratorRights', { for_channels: forChannels })
+  getMyDefaultAdministratorRights (forChannels, signal) {
+    return this.callApi('getMyDefaultAdministratorRights', { for_channels: forChannels }, { signal })
   }
 
   /**
@@ -1150,11 +1207,12 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#leavechat
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  leaveChat (chatId) {
-    return this.callApi('leaveChat', { chat_id: chatId })
+  leaveChat (chatId, signal) {
+    return this.callApi('leaveChat', { chat_id: chatId }, { signal })
   }
 
   /**
@@ -1171,11 +1229,12 @@ class Telegram extends ApiClient {
    *    (in the format `@channelusername`)
    * @param {number} userId Unique identifier of the target user
    * @param {ExtraUnbanMember} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  unbanChatMember (chatId, userId, extra) {
-    return this.callApi('unbanChatMember', { chat_id: chatId, user_id: userId, ...extra })
+  unbanChatMember (chatId, userId, extra, signal) {
+    return this.callApi('unbanChatMember', { chat_id: chatId, user_id: userId, ...extra }, { signal })
   }
 
   /**
@@ -1196,16 +1255,17 @@ class Telegram extends ApiClient {
    * @param {boolean} [showAlert] If True, an alert will be shown by the client instead of a notification at the top of
    *   the chat screen. Defaults to false.
    * @param {ExtraAnswerCbQuery} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  answerCbQuery (callbackQueryId, text, showAlert, extra) {
+  answerCbQuery (callbackQueryId, text, showAlert, extra, signal) {
     return this.callApi('answerCallbackQuery', {
       text,
       show_alert: showAlert,
       callback_query_id: callbackQueryId,
       ...extra
-    })
+    }, { signal })
   }
 
   /**
@@ -1216,14 +1276,15 @@ class Telegram extends ApiClient {
    * @param {string} [url] URL that will be opened by the user's client. If you have created a Game and accepted the
    *   conditions via [@BotFather](https://t.me/BotFather), specify the URL that opens your game - note that this will
    *   only work if the query comes from a `callback_game` button.
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise}
    */
-  answerGameQuery (callbackQueryId, url) {
+  answerGameQuery (callbackQueryId, url, signal) {
     return this.callApi('answerCallbackQuery', {
       url,
       callback_query_id: callbackQueryId
-    })
+    }, { signal })
   }
 
   /**
@@ -1242,16 +1303,17 @@ class Telegram extends ApiClient {
    * @param {string} [errorMessage] Required if ok is False. Error message in human-readable form that explains why it
    *    is impossible to complete the order (e.g. "Sorry, delivery to your desired address is unavailable").
    *    Telegram will display this message to the user.
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  answerShippingQuery (shippingQueryId, ok, shippingOptions, errorMessage) {
+  answerShippingQuery (shippingQueryId, ok, shippingOptions, errorMessage, signal) {
     return this.callApi('answerShippingQuery', {
       ok,
       shipping_query_id: shippingQueryId,
       shipping_options: shippingOptions,
       error_message: errorMessage
-    })
+    }, { signal })
   }
 
   /**
@@ -1272,15 +1334,16 @@ class Telegram extends ApiClient {
    *   reason for failure to proceed with the checkout (e.g. "Sorry, somebody just bought the last of our amazing black
    *   T-shirts while you were busy filling out your payment details. Please choose a different color or garment!").
    *   Telegram will display this message to the user.
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  answerPreCheckoutQuery (preCheckoutQueryId, ok, errorMessage) {
+  answerPreCheckoutQuery (preCheckoutQueryId, ok, errorMessage, signal) {
     return this.callApi('answerPreCheckoutQuery', {
       ok,
       pre_checkout_query_id: preCheckoutQueryId,
       error_message: errorMessage
-    })
+    }, { signal })
   }
 
   /**
@@ -1297,17 +1360,18 @@ class Telegram extends ApiClient {
    *   inline message
    * @param {string} text New text of the message, 1-4096 characters after entities parsing
    * @param {ExtraEditMessageText|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|Message>}
    */
-  editMessageText (chatId, messageId, inlineMessageId, text, extra) {
+  editMessageText (chatId, messageId, inlineMessageId, text, extra, signal) {
     return this.callApi('editMessageText', {
       text,
       chat_id: chatId,
       message_id: messageId,
       inline_message_id: inlineMessageId,
       ...extra
-    })
+    }, { signal })
   }
 
   /**
@@ -1327,14 +1391,14 @@ class Telegram extends ApiClient {
    * @throws {TelegramError}
    * @return {Promise<boolean|Message>}
    */
-  editMessageCaption (chatId, messageId, inlineMessageId, caption, extra) {
+  editMessageCaption (chatId, messageId, inlineMessageId, caption, extra, signal) {
     return this.callApi('editMessageCaption', {
       caption,
       chat_id: chatId,
       message_id: messageId,
       inline_message_id: inlineMessageId,
       ...extra
-    })
+    }, { signal })
   }
 
   /**
@@ -1354,10 +1418,11 @@ class Telegram extends ApiClient {
    *   inline message
    * @param {InputMedia} media Object for a new media content of the message
    * @param {ExtraEditMessageMedia|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|Message>}
    */
-  editMessageMedia (chatId, messageId, inlineMessageId, media, extra = {}) {
+  editMessageMedia (chatId, messageId, inlineMessageId, media, extra = {}, signal) {
     return this.callApi('editMessageMedia', {
       chat_id: chatId,
       message_id: messageId,
@@ -1369,7 +1434,7 @@ class Telegram extends ApiClient {
         caption_entities: extra.caption_entities
       },
       reply_markup: extra.reply_markup
-    })
+    }, { signal })
   }
 
   /**
@@ -1385,16 +1450,17 @@ class Telegram extends ApiClient {
    * @param {string} [inlineMessageId] Required if `chat_id` and `message_id` are not specified. Identifier of the
    *   inline message
    * @param {ExtraEditMessageReplyMarkup|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|Message>}
    */
-  editMessageReplyMarkup (chatId, messageId, inlineMessageId, extra) {
+  editMessageReplyMarkup (chatId, messageId, inlineMessageId, extra, signal) {
     return this.callApi('editMessageReplyMarkup', {
       chat_id: chatId,
       message_id: messageId,
       inline_message_id: inlineMessageId,
       ...extra
-    })
+    }, { signal })
   }
 
   /**
@@ -1413,10 +1479,11 @@ class Telegram extends ApiClient {
    * @param {number} latitude Latitude of new location
    * @param {number} longitude Longitude of new location
    * @param {ExtraEditMessageLiveLocation|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|Message>}
    */
-  editMessageLiveLocation (chatId, messageId, inlineMessageId, latitude, longitude, extra) {
+  editMessageLiveLocation (chatId, messageId, inlineMessageId, latitude, longitude, extra, signal) {
     return this.callApi('editMessageLiveLocation', {
       chat_id: chatId,
       message_id: messageId,
@@ -1424,7 +1491,7 @@ class Telegram extends ApiClient {
       latitude,
       longitude,
       ...extra
-    })
+    }, { signal })
   }
 
   /**
@@ -1442,16 +1509,17 @@ class Telegram extends ApiClient {
    * @param {string} [inlineMessageId] Required if `chat_id` and `message_id` are not specified. Identifier of the
    *   inline message
    * @param {ExtraStopMessageLiveLocation|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|Message>}
    */
-  stopMessageLiveLocation (chatId, messageId, inlineMessageId, extra) {
+  stopMessageLiveLocation (chatId, messageId, inlineMessageId, extra, signal) {
     return this.callApi('stopMessageLiveLocation', {
       chat_id: chatId,
       message_id: messageId,
       inline_message_id: inlineMessageId,
       ...extra
-    })
+    }, { signal })
   }
 
   /**
@@ -1470,14 +1538,15 @@ class Telegram extends ApiClient {
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {number} messageId Identifier of the message to delete
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  deleteMessage (chatId, messageId) {
+  deleteMessage (chatId, messageId, signal) {
     return this.callApi('deleteMessage', {
       chat_id: chatId,
       message_id: messageId
-    })
+    }, { signal })
   }
 
   /**
@@ -1492,14 +1561,15 @@ class Telegram extends ApiClient {
    * @param {string|number} chatId Unique identifier for the target chat or username of the target supergroup
    *    (in the format `@supergroupusername`)
    * @param {string} setName Name of the sticker set to be set as the group sticker set
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  setChatStickerSet (chatId, setName) {
+  setChatStickerSet (chatId, setName, signal) {
     return this.callApi('setChatStickerSet', {
       chat_id: chatId,
       sticker_set_name: setName
-    })
+    }, { signal })
   }
 
   /**
@@ -1512,11 +1582,12 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#deletechatstickerset
    * @param {number|string} chatId Unique identifier for the target chat or username of the target supergroup
    *    (in the format `@supergroupusername`)
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  deleteChatStickerSet (chatId) {
-    return this.callApi('deleteChatStickerSet', { chat_id: chatId })
+  deleteChatStickerSet (chatId, signal) {
+    return this.callApi('deleteChatStickerSet', { chat_id: chatId }, { signal })
   }
 
   /**
@@ -1526,11 +1597,12 @@ class Telegram extends ApiClient {
    * Returns an Array of {@link Sticker} objects.
    *
    * @see https://core.telegram.org/bots/api#getforumtopiciconstickers
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Sticker[]>}
    */
-  getForumTopicIconStickers () {
-    return this.callApi('getForumTopicIconStickers', {})
+  getForumTopicIconStickers (signal) {
+    return this.callApi('getForumTopicIconStickers', {}, { signal })
   }
 
   /**
@@ -1544,11 +1616,12 @@ class Telegram extends ApiClient {
    *   (in the format `@channelusername`)
    * @param {string} name Topic name, 1-128 characters
    * @param {ExtraCreateForumTopic} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<ForumTopic>}
    */
-  createForumTopic (chatId, name, extra) {
-    return this.callApi('createForumTopic', { chat_id: chatId, name, ...extra })
+  createForumTopic (chatId, name, extra, signal) {
+    return this.callApi('createForumTopic', { chat_id: chatId, name, ...extra }, { signal })
   }
 
   /**
@@ -1563,15 +1636,16 @@ class Telegram extends ApiClient {
    *   (in the format `@channelusername`)
    * @param {number} messageThreadId Unique identifier for the target message thread of the forum topic
    * @param {ExtraEditForumTopic} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  editForumTopic (chatId, messageThreadId, extra) {
+  editForumTopic (chatId, messageThreadId, extra, signal) {
     return this.callApi('editForumTopic', {
       chat_id: chatId,
       message_thread_id: messageThreadId,
       ...extra
-    })
+    }, { signal })
   }
 
   /**
@@ -1584,14 +1658,15 @@ class Telegram extends ApiClient {
    * @param {number|string} chatId Unique identifier for the target chat or username of the target supergroup
    *   (in the format `@supergroupusername`)
    * @param {string} name New topic name, 1-128 characters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  editGeneralForumTopic (chatId, name) {
+  editGeneralForumTopic (chatId, name, signal) {
     return this.callApi('editGeneralForumTopic', {
       chat_id: chatId,
       name
-    })
+    }, { signal })
   }
 
   /**
@@ -1603,13 +1678,14 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#closegeneralforumtopic
    * @param {number|string} chatId Unique identifier for the target chat or username of the target supergroup
    *   (in the format `@supergroupusername`)
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  closeGeneralForumTopic (chatId) {
+  closeGeneralForumTopic (chatId, signal) {
     return this.callApi('closeGeneralForumTopic', {
       chat_id: chatId
-    })
+    }, { signal })
   }
 
   /**
@@ -1622,13 +1698,14 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#reopengeneralforumtopic
    * @param {number|string} chatId Unique identifier for the target chat or username of the target supergroup
    *   (in the format `@supergroupusername`)
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  reopenGeneralForumTopic (chatId) {
+  reopenGeneralForumTopic (chatId, signal) {
     return this.callApi('reopenGeneralForumTopic', {
       chat_id: chatId
-    })
+    }, { signal })
   }
 
   /**
@@ -1641,13 +1718,14 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#hidegeneralforumtopic
    * @param {number|string} chatId Unique identifier for the target chat or username of the target supergroup
    *   (in the format `@supergroupusername`)
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  hideGeneralForumTopic (chatId) {
+  hideGeneralForumTopic (chatId, signal) {
     return this.callApi('hideGeneralForumTopic', {
       chat_id: chatId
-    })
+    }, { signal })
   }
 
   /**
@@ -1659,13 +1737,14 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#unhidegeneralforumtopic
    * @param {number|string} chatId Unique identifier for the target chat or username of the target supergroup
    *   (in the format `@supergroupusername`)
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  unhideGeneralForumTopic (chatId) {
+  unhideGeneralForumTopic (chatId, signal) {
     return this.callApi('unhideGeneralForumTopic', {
       chat_id: chatId
-    })
+    }, { signal })
   }
 
   /**
@@ -1678,14 +1757,15 @@ class Telegram extends ApiClient {
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *   (in the format @channelusername)
    * @param {number} messageThreadId Unique identifier for the target message thread of the forum topic
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  closeForumTopic (chatId, messageThreadId) {
+  closeForumTopic (chatId, messageThreadId, signal) {
     return this.callApi('closeForumTopic', {
       chat_id: chatId,
       message_thread_id: messageThreadId
-    })
+    }, { signal })
   }
 
   /**
@@ -1698,14 +1778,15 @@ class Telegram extends ApiClient {
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *   (in the format @channelusername)
    * @param {number} messageThreadId Unique identifier for the target message thread of the forum topic
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  reopenForumTopic (chatId, messageThreadId) {
+  reopenForumTopic (chatId, messageThreadId, signal) {
     return this.callApi('reopenForumTopic', {
       chat_id: chatId,
       message_thread_id: messageThreadId
-    })
+    }, { signal })
   }
 
   /**
@@ -1718,14 +1799,15 @@ class Telegram extends ApiClient {
    *   (in the format @channelusername)
    * @param {number} messageThreadId Unique identifier for the target message thread of the forum topic
    * @see https://core.telegram.org/bots/api#deleteforumtopic
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  deleteForumTopic (chatId, messageThreadId) {
+  deleteForumTopic (chatId, messageThreadId, signal) {
     return this.callApi('deleteForumTopic', {
       chat_id: chatId,
       message_thread_id: messageThreadId
-    })
+    }, { signal })
   }
 
   /**
@@ -1738,14 +1820,15 @@ class Telegram extends ApiClient {
    *   (in the format @channelusername)
    * @param {number} messageThreadId Unique identifier for the target message thread of the forum topic
    * @see https://core.telegram.org/bots/api#unpinallforumtopicmessages
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  unpinAllForumTopicMessages (chatId, messageThreadId) {
+  unpinAllForumTopicMessages (chatId, messageThreadId, signal) {
     return this.callApi('unpinAllForumTopicMessages', {
       chat_id: chatId,
       message_thread_id: messageThreadId
-    })
+    }, { signal })
   }
 
   /**
@@ -1755,11 +1838,12 @@ class Telegram extends ApiClient {
    *
    * @see https://core.telegram.org/bots/api#getstickerset
    * @param {string} name Name of the sticker set
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<StickerSet>}
    */
-  getStickerSet (name) {
-    return this.callApi('getStickerSet', { name })
+  getStickerSet (name, signal) {
+    return this.callApi('getStickerSet', { name }, { signal })
   }
 
   /**
@@ -1774,14 +1858,15 @@ class Telegram extends ApiClient {
    * @param {InputFile} stickerFile **PNG** image with the sticker, must be up to 512 kilobytes in size,
    *    dimensions must not exceed 512px, and either width or height must be exactly 512px.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files).
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<File>}
    */
-  uploadStickerFile (ownerId, stickerFile) {
+  uploadStickerFile (ownerId, stickerFile, signal) {
     return this.callApi('uploadStickerFile', {
       user_id: ownerId,
       png_sticker: stickerFile
-    })
+    }, { signal })
   }
 
   /**
@@ -1798,16 +1883,17 @@ class Telegram extends ApiClient {
    *    is case insensitive. 1-64 characters.
    * @param {string} title Sticker set title, 1-64 characters
    * @param {ExtraCreateNewStickerSet} extra Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  createNewStickerSet (ownerId, name, title, extra) {
+  createNewStickerSet (ownerId, name, title, extra, signal) {
     return this.callApi('createNewStickerSet', {
       name,
       title,
       user_id: ownerId,
       ...extra
-    })
+    }, { signal })
   }
 
   /**
@@ -1822,15 +1908,16 @@ class Telegram extends ApiClient {
    * @param {number} ownerId User identifier of sticker set owner
    * @param {string} name Sticker set name
    * @param {ExtraAddStickerToSet} extra Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  addStickerToSet (ownerId, name, extra) {
+  addStickerToSet (ownerId, name, extra, signal) {
     return this.callApi('addStickerToSet', {
       name,
       user_id: ownerId,
       ...extra
-    })
+    }, { signal })
   }
 
   /**
@@ -1841,14 +1928,15 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#setstickerpositioninset
    * @param {string} sticker File identifier of the sticker
    * @param {number} position New sticker position in the set, zero-based
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  setStickerPositionInSet (sticker, position) {
+  setStickerPositionInSet (sticker, position, signal) {
     return this.callApi('setStickerPositionInSet', {
       sticker,
       position
-    })
+    }, { signal })
   }
 
   /**
@@ -1869,11 +1957,12 @@ class Telegram extends ApiClient {
    *   Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files).
    *    Animated sticker set thumbnails can't be uploaded via HTTP URL.
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  setStickerSetThumb (name, userId, thumb) {
-    return this.callApi('setStickerSetThumb', { name, user_id: userId, thumb })
+  setStickerSetThumb (name, userId, thumb, signal) {
+    return this.callApi('setStickerSetThumb', { name, user_id: userId, thumb }, { signal })
   }
 
   /**
@@ -1883,11 +1972,12 @@ class Telegram extends ApiClient {
    *
    * @see https://core.telegram.org/bots/api#deletestickerfromset
    * @param {string} sticker File identifier of the sticker
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  deleteStickerFromSet (sticker) {
-    return this.callApi('deleteStickerFromSet', { sticker })
+  deleteStickerFromSet (sticker, signal) {
+    return this.callApi('deleteStickerFromSet', { sticker }, { signal })
   }
 
   /**
@@ -1897,11 +1987,12 @@ class Telegram extends ApiClient {
    *
    * @see https://core.telegram.org/bots/api#getmycommands
    * @param {ExtraGetMyCommands} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<BotCommand[]>}
    */
-  getMyCommands (extra) {
-    return this.callApi('getMyCommands', extra)
+  getMyCommands (extra, signal) {
+    return this.callApi('getMyCommands', extra, { signal })
   }
 
   /**
@@ -1915,11 +2006,12 @@ class Telegram extends ApiClient {
    * @param {BotCommand[]} commands List of bot commands to be set as the list of the bot's commands.
    *    At most 100 commands can be specified.
    * @param {ExtraSetMyCommands} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  setMyCommands (commands, extra) {
-    return this.callApi('setMyCommands', { commands, ...extra })
+  setMyCommands (commands, extra, signal) {
+    return this.callApi('setMyCommands', { commands, ...extra }, { signal })
   }
 
   /**
@@ -1932,11 +2024,12 @@ class Telegram extends ApiClient {
    *   description for the given language.
    * @param {string} [languageCode] A two-letter ISO 639-1 language code. If empty, the description will be applied to
    *   all users for whose language there is no dedicated description.
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  setMyDescription (description, languageCode) {
-    return this.callApi('setMyDescription', { description, language_code: languageCode })
+  setMyDescription (description, languageCode, signal) {
+    return this.callApi('setMyDescription', { description, language_code: languageCode }, { signal })
   }
 
   /**
@@ -1947,11 +2040,12 @@ class Telegram extends ApiClient {
    *
    * @see https://core.telegram.org/bots/api#deletemycommands
    * @param {ExtraDeleteMyCommands} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  deleteMyCommands (extra) {
-    return this.callApi('deleteMyCommands', extra)
+  deleteMyCommands (extra, signal) {
+    return this.callApi('deleteMyCommands', extra, { signal })
   }
 
   /**
@@ -1968,14 +2062,15 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#setpassportdataerrors
    * @param {number} userId User identifier
    * @param {PassportElementError[]} errors Array describing the errors
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  setPassportDataErrors (userId, errors) {
+  setPassportDataErrors (userId, errors, signal) {
     return this.callApi('setPassportDataErrors', {
       user_id: userId,
       errors
-    })
+    }, { signal })
   }
 
   /**
@@ -1984,10 +2079,11 @@ class Telegram extends ApiClient {
    *    (in the format `@channelusername`)
    * @param {Message} message Message object
    * @param {object|Extra} [extra] Extra parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise}
    */
-  sendCopy (chatId, message, extra) {
+  sendCopy (chatId, message, extra, signal) {
     if (!message) {
       throw new Error('Message is required')
     }
@@ -2003,7 +2099,7 @@ class Telegram extends ApiClient {
       ...replicators[type](message),
       ...extra
     }
-    return this.callApi(replicators.copyMethods[type], opts)
+    return this.callApi(replicators.copyMethods[type], opts, { signal })
   }
 
   /**
@@ -2020,16 +2116,17 @@ class Telegram extends ApiClient {
    *    (in the format `@channelusername`)
    * @param {number} messageId Message identifier in the chat specified in `from_chat_id`
    * @param {ExtraCopyMessage|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<MessageId>}
    */
-  copyMessage (chatId, fromChatId, messageId, extra) {
+  copyMessage (chatId, fromChatId, messageId, extra, signal) {
     return this.callApi('copyMessage', {
       chat_id: chatId,
       from_chat_id: fromChatId,
       message_id: messageId,
       ...extra
-    })
+    }, { signal })
   }
 
   /**
@@ -2043,14 +2140,15 @@ class Telegram extends ApiClient {
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {ExtraCreateChatInviteLink} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<ChatInviteLink>}
    */
-  createChatInviteLink (chatId, extra) {
+  createChatInviteLink (chatId, extra, signal) {
     return this.callApi('createChatInviteLink', {
       chat_id: chatId,
       ...extra
-    })
+    }, { signal })
   }
 
   /**
@@ -2064,15 +2162,16 @@ class Telegram extends ApiClient {
    *    (in the format `@channelusername`)
    * @param {string} inviteLink The invite link to edit
    * @param {ExtraEditChatInviteLink} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<ChatInviteLink>}
    */
-  editChatInviteLink (chatId, inviteLink, extra) {
+  editChatInviteLink (chatId, inviteLink, extra, signal) {
     return this.callApi('editChatInviteLink', {
       chat_id: chatId,
       invite_link: inviteLink,
       ...extra
-    })
+    }, { signal })
   }
 
   /**
@@ -2086,14 +2185,15 @@ class Telegram extends ApiClient {
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {string} inviteLink The invite link to revoke
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<ChatInviteLink>}
    */
-  revokeChatInviteLink (chatId, inviteLink) {
+  revokeChatInviteLink (chatId, inviteLink, signal) {
     return this.callApi('revokeChatInviteLink', {
       chat_id: chatId,
       invite_link: inviteLink
-    })
+    }, { signal })
   }
 
   /**
@@ -2106,14 +2206,15 @@ class Telegram extends ApiClient {
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {number} userId Unique identifier of the target user
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  approveChatJoinRequest (chatId, userId) {
+  approveChatJoinRequest (chatId, userId, signal) {
     return this.callApi('approveChatJoinRequest', {
       chat_id: chatId,
       user_id: userId
-    })
+    }, { signal })
   }
 
   /**
@@ -2126,14 +2227,15 @@ class Telegram extends ApiClient {
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {number} userId Unique identifier of the target user
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  declineChatJoinRequest (chatId, userId) {
+  declineChatJoinRequest (chatId, userId, signal) {
     return this.callApi('declineChatJoinRequest', {
       chat_id: chatId,
       user_id: userId
-    })
+    }, { signal })
   }
 
   /**
@@ -2144,13 +2246,15 @@ class Telegram extends ApiClient {
    *
    * @param {string} webAppQueryId Unique identifier for the query to be answered
    * @param {InlineQueryResult} result A JSON-serialized object describing the message to be sent
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
+   * @throws {TelegramError}
    * @return {Promise<SentWebAppMessage>}
    */
-  answerWebAppQuery (webAppQueryId, result) {
+  answerWebAppQuery (webAppQueryId, result, signal) {
     return this.callApi('answerWebAppQuery', {
       web_app_query_id: webAppQueryId,
       result
-    })
+    }, { signal })
   }
 
   /**
@@ -2161,13 +2265,14 @@ class Telegram extends ApiClient {
    * @see https://core.telegram.org/bots/api#getcustomemojistickers
    * @param {string[]} customEmojiIds List of custom emoji identifiers. At most 200 custom emoji identifiers can be
    *    specified.
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<Sticker[]>}
    */
-  getCustomEmojiStickers (customEmojiIds) {
+  getCustomEmojiStickers (customEmojiIds, signal) {
     return this.callApi('getCustomEmojiStickers', {
       custom_emoji_ids: customEmojiIds
-    })
+    }, { signal })
   }
 
   /**
@@ -2177,13 +2282,14 @@ class Telegram extends ApiClient {
    *
    * @see https://core.telegram.org/bots/api#createinvoicelink
    * @param {InvoiceLinkParams} invoice Object with invoice properties
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<string>}
    */
-  createInvoiceLink (invoice) {
+  createInvoiceLink (invoice, signal) {
     return this.callApi('createInvoiceLink', {
       ...invoice
-    })
+    }, { signal })
   }
 }
 
