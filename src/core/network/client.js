@@ -76,6 +76,13 @@ function safeJSONParse (text) {
   }
 }
 
+/**
+ * Checks objects for media in props
+ *
+ * @private
+ * @param {object} payload Parameters object to check
+ * @return {boolean}
+ */
 function includesMedia (payload) {
   return Object.keys(payload).some(
     (key) => {
@@ -92,6 +99,14 @@ function includesMedia (payload) {
   )
 }
 
+/**
+ * Creates config object for API calls which not contains media with given payload
+ *
+ * @private
+ * @param {object} payload Parameters object
+ * @return {Promise<{headers: {'content-type': string, connection: string}, method: string, compress: boolean, body:
+ *   string}>}
+ */
 function buildJSONConfig (payload) {
   return Promise.resolve({
     method: 'POST',
@@ -109,6 +124,15 @@ const FORM_DATA_JSON_FIELDS = [
   'errors'
 ]
 
+/**
+ * Creates config object for API calls which contains media with given payload
+ *
+ * @private
+ * @param {object} payload Parameters object
+ * @param {http.Agent} [agent] HTTP Agent
+ * @return {Promise<{headers: {'content-type': string, connection: string}, method: string, compress: boolean, body:
+ *   MultipartStream}>}
+ */
 async function buildFormDataConfig (payload, agent) {
   for (const field of FORM_DATA_JSON_FIELDS) {
     if (field in payload && typeof payload[field] !== 'string') {
@@ -129,11 +153,22 @@ async function buildFormDataConfig (payload, agent) {
   }
 }
 
+/**
+ * Used to attach primitive values & media to form
+ *
+ * @param {MultipartStream} form MultipartStream instance
+ * @param {*} id Form field name
+ * @param {string|boolean|number|object} value Value to attach
+ * @param {http.Agent} [agent] HTTP Agent
+ * @return {Promise<void>}
+ */
 async function attachFormValue (form, id, value, agent) {
   if (!value) {
     return
   }
+
   const valueType = typeof value
+
   if (valueType === 'string' || valueType === 'boolean' || valueType === 'number') {
     form.addPart({
       headers: { 'content-disposition': `form-data; name="${id}"` },
@@ -141,6 +176,7 @@ async function attachFormValue (form, id, value, agent) {
     })
     return
   }
+
   if (id === 'thumb') {
     const attachmentId = crypto.randomBytes(16).toString('hex')
     await attachFormMedia(form, value, attachmentId, agent)
@@ -150,6 +186,7 @@ async function attachFormValue (form, id, value, agent) {
     })
     return
   }
+
   if (Array.isArray(value)) {
     const items = await Promise.all(
       value.map(async item => {
@@ -169,6 +206,7 @@ async function attachFormValue (form, id, value, agent) {
 
     return
   }
+
   if (typeof value.media !== 'undefined' && typeof value.type !== 'undefined') {
     const attachmentId = crypto.randomBytes(16).toString('hex')
     await attachFormMedia(form, value.media, attachmentId, agent)
@@ -184,6 +222,15 @@ async function attachFormValue (form, id, value, agent) {
   return attachFormMedia(form, value, id, agent)
 }
 
+/**
+ * Used to attach media to form
+ *
+ * @param {MultipartStream} form MultipartStream instance
+ * @param {string|boolean|number|{url?: string, filename: string, source?: Stream|string|Buffer}} media Value to attach
+ * @param {*} id Form field name
+ * @param {http.Agent} [agent] HTTP Agent
+ * @return {Promise<void>}
+ */
 async function attachFormMedia (form, media, id, agent) {
   let fileName = media.filename || `${id}.${DEFAULT_EXTENSIONS[id] || 'dat'}`
   if (media.url !== undefined) {
@@ -194,11 +241,13 @@ async function attachFormMedia (form, media, id, agent) {
     })
     return
   }
+
   if (media.source) {
     if (fs.existsSync(media.source)) {
       fileName = media.filename || path.basename(media.source)
       media.source = fs.createReadStream(media.source)
     }
+
     if (isStream(media.source) || Buffer.isBuffer(media.source)) {
       form.addPart({
         headers: { 'content-disposition': `form-data; name="${id}"; filename="${fileName}"` },
@@ -212,13 +261,27 @@ async function attachFormMedia (form, media, id, agent) {
  * Checking if response object belongs to KoaJs
  *
  * @private
- * @param {object} response Response object
+ * @param {http.ServerResponse} response Response object
  * @return {boolean}
  */
 function isKoaResponse (response) {
   return typeof response.set === 'function' && typeof response.header === 'object'
 }
 
+/**
+ * @typedef {object} AnswerToWebhookOptions
+ * @property {http.Agent} [attachmentAgent] HTTP Agent used for attachments
+ */
+
+/**
+ * Answers to webhook
+ *
+ * @private
+ * @param {http.ServerResponse} response Server response object
+ * @param {object} payload Payload for API request
+ * @param {object} options Options
+ * @return {Promise<{webhook: boolean, details: string}>}
+ */
 async function answerToWebhook (response, payload = {}, options) {
   if (!includesMedia(payload)) {
     if (isKoaResponse(response)) {
@@ -279,9 +342,11 @@ class ApiClient {
       ...DEFAULT_OPTIONS,
       ...compactOptions(options)
     }
+
     if (this.options.apiRoot.startsWith('http://')) {
       this.options.agent = null
     }
+
     this.response = webhookResponse
   }
 
@@ -335,7 +400,7 @@ class ApiClient {
    * [Read more about request aborts](https://developer.mozilla.org/en-US/docs/Web/API/AbortController/signal)
    *
    * @param {string} method Telegram API method name
-   * @param {object} data Object with method parameters
+   * @param {object} [data] Object with method parameters
    * @param {CallApiExtra} [extra] Extra parameters
    * @return {Promise<object|boolean|number>}
    */
@@ -378,7 +443,7 @@ class ApiClient {
     }
 
     const text = await res.text()
-    const responseData = safeJSONParse(text) || {
+    const responseData = safeJSONParse(text) ?? {
       error_code: 500,
       description: 'Unsupported http response from Telegram',
       response: text
