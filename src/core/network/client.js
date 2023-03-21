@@ -40,6 +40,7 @@ const DEFAULT_OPTIONS = {
   testEnv: false
 }
 
+/** @type {WebhookResponse} */
 const WEBHOOK_REPLY_STUB = {
   webhook: true,
   details: 'https://core.telegram.org/bots/api#making-requests-when-getting-updates'
@@ -280,7 +281,7 @@ function isKoaResponse (response) {
  * @param {http.ServerResponse} response Server response object
  * @param {object} payload Payload for API request
  * @param {object} options Options
- * @return {Promise<{webhook: boolean, details: string}>}
+ * @return {Promise<WebhookResponse>}
  */
 async function answerToWebhook (response, payload = {}, options) {
   if (!includesMedia(payload)) {

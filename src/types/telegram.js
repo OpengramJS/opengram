@@ -3019,3 +3019,9 @@
 /**
  * @typedef {string} FileId
  */
+
+/**
+ * @typedef {object} WebhookResponse
+ * @property {true} webhook Always `true`
+ * @property {'https://core.telegram.org/bots/api#making-requests-when-getting-updates'} details Link to telegram docs
+ */
