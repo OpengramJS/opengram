@@ -11,11 +11,16 @@ const { compactOptions } = require('../helpers/compact')
 const { isStream } = MultipartStream
 
 const WEBHOOK_REPLY_METHOD_ALLOWLIST = new Set([
-  'answerCallbackQuery',
-  'answerInlineQuery',
-  'deleteMessage',
-  'leaveChat',
-  'sendChatAction'
+  'setWebhook', 'deleteWebhook', 'sendChatAction', 'answerInlineQuery', 'setChatPermissions', 'banChatMember',
+  'promoteChatMember', 'restrictChatMember', 'banChatSenderChat', 'unbanChatSenderChat',
+  'setChatAdministratorCustomTitle', 'setChatPhoto', 'deleteChatPhoto', 'setChatTitle', 'setChatDescription',
+  'pinChatMessage', 'unpinChatMessage', 'unpinAllChatMessages', 'setChatMenuButton', 'setMyDefaultAdministratorRights',
+  'leaveChat', 'unbanChatMember', 'answerCallbackQuery', 'answerShippingQuery', 'answerPreCheckoutQuery',
+  'deleteMessage', 'setChatStickerSet', 'deleteChatStickerSet', 'editForumTopic', 'editGeneralForumTopic',
+  'closeGeneralForumTopic', 'reopenGeneralForumTopic', 'hideGeneralForumTopic', 'unhideGeneralForumTopic',
+  'closeForumTopic', 'reopenForumTopic', 'deleteForumTopic', 'unpinAllForumTopicMessages', 'createNewStickerSet',
+  'addStickerToSet', 'setStickerPositionInSet', 'setStickerSetThumb', 'deleteStickerFromSet', 'setMyCommands',
+  'deleteMyCommands', 'setPassportDataErrors', 'approveChatJoinRequest', 'declineChatJoinRequest'
 ])
 
 const DEFAULT_EXTENSIONS = {
