@@ -1931,7 +1931,7 @@ class Telegram extends ApiClient {
    * @return {Promise<boolean>}
    */
   setMyDescription (description, languageCode) {
-    return this.callApi('deleteMyCommands', { description, language_code: languageCode })
+    return this.callApi('setMyDescription', { description, language_code: languageCode })
   }
 
   /**
