@@ -186,7 +186,7 @@ class Telegram extends ApiClient {
    * containing a JSON-serialized {@link Update}.
    * In case of an unsuccessful request, we will give up after a reasonable amount of attempts.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * If you'd like to make sure that the webhook was set by you, you can specify secret data in the parameter
    * `secret_token`. If specified, the request will contain a header `X-Telegram-Bot-Api-Secret-Token` with
@@ -196,7 +196,7 @@ class Telegram extends ApiClient {
    * @param {string} url HTTPS URL to send updates to. Use an empty string to remove webhook integration
    * @param {ExtraSetWebhook} [extra] Other parameters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   setWebhook (url, extra) {
     return this.callApi('setWebhook', { url, ...extra })
@@ -205,12 +205,12 @@ class Telegram extends ApiClient {
   /**
    * Use this method to remove webhook integration if you decide to switch back to {@link Telegram#getUpdates}.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#deletewebhook
    * @param {ExtraDeleteWebhook} [extra] Other parameters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   deleteWebhook (extra) {
     return this.callApi('deleteWebhook', extra)
@@ -268,7 +268,7 @@ class Telegram extends ApiClient {
    * The status is set for 5 seconds or less (when a message arrives from your bot,
    * Telegram clients clear its typing status).
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * Example: The [ImageBot](https://t.me/imagebot) needs some time to process a request and upload the image.
    * Instead of sending a text message along the lines of “Retrieving image, please wait…”,
@@ -292,7 +292,7 @@ class Telegram extends ApiClient {
    *    `record_video_note` or `upload_video_note` for {@link sendVideoNote video notes}.
    * @param {ExtraSendChatAction} [extra] Other parameters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   sendChatAction (chatId, action, extra) {
     return this.callApi('sendChatAction', { chat_id: chatId, action, ...extra })
@@ -766,7 +766,7 @@ class Telegram extends ApiClient {
   /**
    * Use this method to send answers to an inline query.
    *
-   * On success, `True` is returned.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    * No more than **50** results per query are allowed.
    *
    * @see https://core.telegram.org/bots/api#answerinlinequery
@@ -774,7 +774,7 @@ class Telegram extends ApiClient {
    * @param {InlineQueryResult[]} results A array of results for the inline query
    * @param {ExtraAnswerInlineQuery} [extra] Other parameters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   answerInlineQuery (inlineQueryId, results, extra) {
     return this.callApi('answerInlineQuery', { inline_query_id: inlineQueryId, results, ...extra })
@@ -784,7 +784,7 @@ class Telegram extends ApiClient {
    * Use this method to set default chat permissions for all members. The bot must be an administrator in the group
    * or a supergroup for this to work and must have the `can_restrict_members` administrator rights.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#setchatpermissions
    * @param {number|string} chatId Unique identifier for the target chat or username of the target supergroup
@@ -792,7 +792,7 @@ class Telegram extends ApiClient {
    * @param {ChatPermissions} permissions A object for new default chat permissions
    * @param {ExtraSetChatPermissions} [extra] Other parameters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   setChatPermissions (chatId, permissions, extra) {
     return this.callApi('setChatPermissions', { chat_id: chatId, permissions, ...extra })
@@ -804,7 +804,7 @@ class Telegram extends ApiClient {
    * unless {@link unbanChatMember unbanned} first.
    * The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#banchatmember
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
@@ -812,7 +812,7 @@ class Telegram extends ApiClient {
    * @param {number} userId Unique identifier of the target user
    * @param {ExtraBanChatMember} [extra] Other parameters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   banChatMember (chatId, userId, extra) {
     return this.callApi('banChatMember', { chat_id: chatId, user_id: userId, ...extra })
@@ -820,6 +820,8 @@ class Telegram extends ApiClient {
 
   /**
    * Alias to {@link banChatMember}, but have different arguments
+   *
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @deprecated Use {@link #banChatMember} instead
    * @see https://core.telegram.org/bots/api#banchatmember
@@ -831,7 +833,7 @@ class Telegram extends ApiClient {
    *   supergroups and channels only.
    * @param {ExtraKickChatMember} [extra] Other parameters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   kickChatMember (chatId, userId, untilDate, extra) {
     return this.callApi('banChatMember', { chat_id: chatId, user_id: userId, until_date: untilDate, ...extra })
@@ -842,7 +844,7 @@ class Telegram extends ApiClient {
    * in the chat for this to work and must have the appropriate administrator rights. Pass `False` for all boolean
    * parameters to demote a user.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#promotechatmember
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
@@ -850,7 +852,7 @@ class Telegram extends ApiClient {
    * @param {number} userId Unique identifier of the target user
    * @param {ExtraPromoteChatMember} [extra] Other parameters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   promoteChatMember (chatId, userId, extra) {
     return this.callApi('promoteChatMember', { chat_id: chatId, user_id: userId, ...extra })
@@ -861,7 +863,7 @@ class Telegram extends ApiClient {
    * for this to work and must have the appropriate administrator rights. Pass True for all permissions to lift
    * restrictions from a user.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#restrictchatmember
    * @param {number|string} chatId Unique identifier for the target chat or username of the target supergroup
@@ -869,7 +871,7 @@ class Telegram extends ApiClient {
    * @param {number} userId Unique identifier of the target user
    * @param {ExtraRestrictChatMember} [extra] Other parameters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   restrictChatMember (chatId, userId, extra) {
     return this.callApi('restrictChatMember', { chat_id: chatId, user_id: userId, ...extra })
@@ -881,14 +883,14 @@ class Telegram extends ApiClient {
    * of **any of their channels**. The bot must be an administrator in the supergroup or channel for this
    * to work and must have the appropriate administrator rights.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#banchatsenderchat
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {number} senderChatId Unique identifier of the target sender chat
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   banChatSenderChat (chatId, senderChatId) {
     return this.callApi('banChatSenderChat', { chat_id: chatId, sender_chat_id: senderChatId })
@@ -898,14 +900,14 @@ class Telegram extends ApiClient {
    * Use this method to unban a previously banned channel chat in a supergroup or channel.
    * The bot must be an administrator for this to work and must have the appropriate administrator rights.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#unbanchatsenderchat
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {number} senderChatId Unique identifier of the target sender chat
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   unbanChatSenderChat (chatId, senderChatId) {
     return this.callApi('unbanChatSenderChat', { chat_id: chatId, sender_chat_id: senderChatId })
@@ -914,7 +916,7 @@ class Telegram extends ApiClient {
   /**
    * Use this method to set a custom title for an administrator in a supergroup promoted by the bot.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#setchatadministratorcustomtitle
    * @param {number|string} chatId Unique identifier for the target chat or username of the target supergroup
@@ -922,7 +924,7 @@ class Telegram extends ApiClient {
    * @param {number} userId Unique identifier of the target user
    * @param {string} title New custom title for the administrator; 0-16 characters, emoji are not allowed
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   setChatAdministratorCustomTitle (chatId, userId, title) {
     return this.callApi('setChatAdministratorCustomTitle', { chat_id: chatId, user_id: userId, custom_title: title })
@@ -954,14 +956,14 @@ class Telegram extends ApiClient {
    * Use this method to set a new profile photo for the chat. Photos can't be changed for private chats.
    * The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#setchatphoto
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {InputFile} photo New chat photo, uploaded using multipart/form-data
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   setChatPhoto (chatId, photo) {
     return this.callApi('setChatPhoto', { chat_id: chatId, photo })
@@ -971,13 +973,13 @@ class Telegram extends ApiClient {
    * Use this method to delete a chat photo. Photos can't be changed for private chats. The bot must be an
    * administrator in the chat for this to work and must have the appropriate administrator rights.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#deletechatphoto
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   deleteChatPhoto (chatId) {
     return this.callApi('deleteChatPhoto', { chat_id: chatId })
@@ -987,14 +989,14 @@ class Telegram extends ApiClient {
    * Use this method to change the title of a chat. Titles can't be changed for private chats.
    * The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#setchattitle
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {string} title New chat title, 1-255 characters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   setChatTitle (chatId, title) {
     return this.callApi('setChatTitle', { chat_id: chatId, title })
@@ -1004,14 +1006,14 @@ class Telegram extends ApiClient {
    * Use this method to change the description of a group, a supergroup or a channel.
    * The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    * https://core.telegram.org/bots/api#setchatdescription
    *
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {string} [description] New chat description, 0-255 characters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   setChatDescription (chatId, description) {
     return this.callApi('setChatDescription', { chat_id: chatId, description })
@@ -1022,7 +1024,7 @@ class Telegram extends ApiClient {
    * the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' administrator
    * right in a supergroup or 'can_edit_messages' administrator right in a channel.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#pinchatmessage
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
@@ -1030,7 +1032,7 @@ class Telegram extends ApiClient {
    * @param {number} messageId Identifier of a message to pin
    * @param {ExtraPinChatMessage} [extra] Other parameters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   pinChatMessage (chatId, messageId, extra) {
     return this.callApi('pinChatMessage', { chat_id: chatId, message_id: messageId, ...extra })
@@ -1042,14 +1044,14 @@ class Telegram extends ApiClient {
    * the 'can_pin_messages' administrator right in a supergroup or 'can_edit_messages' administrator
    * right in a channel.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#unpinchatmessage
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {ExtraUnPinChatMessage} [extra] Other parameters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   unpinChatMessage (chatId, extra) {
     return this.callApi('unpinChatMessage', { chat_id: chatId, ...extra })
@@ -1061,13 +1063,13 @@ class Telegram extends ApiClient {
    * have the 'can_pin_messages' administrator right in a supergroup or 'can_edit_messages' administrator
    * right in a channel.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#unpinallchatmessages
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   unpinAllChatMessages (chatId) {
     return this.callApi('unpinAllChatMessages', { chat_id: chatId })
@@ -1092,7 +1094,7 @@ class Telegram extends ApiClient {
   /**
    * Use this method to change the bot's menu button in a private chat, or the default menu button.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#setchatmenubutton
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
@@ -1100,7 +1102,7 @@ class Telegram extends ApiClient {
    * @param {MenuButton} [menuButton] Unique identifier for the target private chat.
    *    If not specified, default bot's menu button will be changed
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   setChatMenuButton (chatId, menuButton) {
     return this.callApi('setChatMenuButton', { chat_id: chatId, menu_button: menuButton })
@@ -1111,7 +1113,7 @@ class Telegram extends ApiClient {
    * an administrator to groups or channels. These rights will be suggested to users, but they are free to modify
    * the list before adding the bot.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    * https://core.telegram.org/bots/api#setmydefaultadministratorrights
    *
    * @param {ChatAdministratorRights} [rights] Object describing new default administrator rights.
@@ -1119,7 +1121,7 @@ class Telegram extends ApiClient {
    * @param {boolean} [forChannels] Pass True to change the default administrator rights of the bot in channels.
    *    Otherwise, the default administrator rights of the bot for groups and supergroups will be changed.
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   setMyDefaultAdministratorRights (rights, forChannels) {
     return this.callApi('setMyDefaultAdministratorRights', { rights, for_channels: forChannels })
@@ -1143,13 +1145,13 @@ class Telegram extends ApiClient {
   /**
    * Use this method for your bot to leave a group, supergroup or channel.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#leavechat
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   leaveChat (chatId) {
     return this.callApi('leaveChat', { chat_id: chatId })
@@ -1162,7 +1164,7 @@ class Telegram extends ApiClient {
    * but will be able to join it. So if the user is a member of the chat they will also be **removed** from the chat.
    * If you don't want this, use the parameter `only_if_banned`.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#unbanchatmember
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
@@ -1170,7 +1172,7 @@ class Telegram extends ApiClient {
    * @param {number} userId Unique identifier of the target user
    * @param {ExtraUnbanMember} [extra] Other parameters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   unbanChatMember (chatId, userId, extra) {
     return this.callApi('unbanChatMember', { chat_id: chatId, user_id: userId, ...extra })
@@ -1181,7 +1183,7 @@ class Telegram extends ApiClient {
    * [inline keyboards](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating).
    * The answer will be displayed to the user as a notification at the top of the chat screen or as an alert.
    *
-   * On success, `True` is returned.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first
    * create a game for your bot via [@BotFather](https://t.me/BotFather) and accept the terms.
@@ -1195,7 +1197,7 @@ class Telegram extends ApiClient {
    *   the chat screen. Defaults to false.
    * @param {ExtraAnswerCbQuery} [extra] Other parameters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   answerCbQuery (callbackQueryId, text, showAlert, extra) {
     return this.callApi('answerCallbackQuery', {
@@ -1229,7 +1231,7 @@ class Telegram extends ApiClient {
    * the Bot API will send an Update with a `shipping_query` field to the bot. Use this method to reply to shipping
    * queries.
    *
-   * On success, `True` is returned.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#answershippingquery
    * @param {string} shippingQueryId Unique identifier for the query to be answered
@@ -1241,7 +1243,7 @@ class Telegram extends ApiClient {
    *    is impossible to complete the order (e.g. "Sorry, delivery to your desired address is unavailable").
    *    Telegram will display this message to the user.
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   answerShippingQuery (shippingQueryId, ok, shippingOptions, errorMessage) {
     return this.callApi('answerShippingQuery', {
@@ -1257,7 +1259,7 @@ class Telegram extends ApiClient {
    * form of an {@link Update} with the field `pre_checkout_query`.
    * Use this method to respond to such pre-checkout queries.
    *
-   * On success, `True` is returned.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * **Note:** The Bot API must receive an answer within 10 seconds after
    * the pre-checkout query was sent.
@@ -1271,7 +1273,7 @@ class Telegram extends ApiClient {
    *   T-shirts while you were busy filling out your payment details. Please choose a different color or garment!").
    *   Telegram will display this message to the user.
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   answerPreCheckoutQuery (preCheckoutQueryId, ok, errorMessage) {
     return this.callApi('answerPreCheckoutQuery', {
@@ -1462,14 +1464,14 @@ class Telegram extends ApiClient {
    * - If the bot is an administrator of a group, it can delete any message there.
    * - If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#deletemessage
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {number} messageId Identifier of the message to delete
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   deleteMessage (chatId, messageId) {
     return this.callApi('deleteMessage', {
@@ -1484,14 +1486,14 @@ class Telegram extends ApiClient {
    * Use the field `can_set_sticker_set` optionally returned in {@link getChat} requests to check if the
    * bot can use this method.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#setchatstickerset
    * @param {string|number} chatId Unique identifier for the target chat or username of the target supergroup
    *    (in the format `@supergroupusername`)
    * @param {string} setName Name of the sticker set to be set as the group sticker set
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   setChatStickerSet (chatId, setName) {
     return this.callApi('setChatStickerSet', {
@@ -1505,13 +1507,13 @@ class Telegram extends ApiClient {
    * this to work and must have the appropriate administrator rights. Use the field `can_set_sticker_set` optionally
    * returned in {@link getChat} requests to check if the bot can use this method.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#deletechatstickerset
    * @param {number|string} chatId Unique identifier for the target chat or username of the target supergroup
    *    (in the format `@supergroupusername`)
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   deleteChatStickerSet (chatId) {
     return this.callApi('deleteChatStickerSet', { chat_id: chatId })
@@ -1554,7 +1556,7 @@ class Telegram extends ApiClient {
    * the chat for this to work and must have can_manage_topics administrator rights, unless it is the creator of the
    * topic.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#editforumtopic
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
@@ -1562,7 +1564,7 @@ class Telegram extends ApiClient {
    * @param {number} messageThreadId Unique identifier for the target message thread of the forum topic
    * @param {ExtraEditForumTopic} [extra] Other parameters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   editForumTopic (chatId, messageThreadId, extra) {
     return this.callApi('editForumTopic', {
@@ -1576,14 +1578,14 @@ class Telegram extends ApiClient {
    * Use this method to edit the name of the 'General' topic in a forum supergroup chat. The bot must be an
    * administrator in the chat for this to work and must have `can_manage_topics` administrator rights.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#editgeneralforumtopic
    * @param {number|string} chatId Unique identifier for the target chat or username of the target supergroup
    *   (in the format `@supergroupusername`)
    * @param {string} name New topic name, 1-128 characters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   editGeneralForumTopic (chatId, name) {
     return this.callApi('editGeneralForumTopic', {
@@ -1596,13 +1598,13 @@ class Telegram extends ApiClient {
    * Use this method to close an open 'General' topic in a forum supergroup chat. The bot must be an administrator in
    * the chat for this to work and must have the `can_manage_topics` administrator rights.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#closegeneralforumtopic
    * @param {number|string} chatId Unique identifier for the target chat or username of the target supergroup
    *   (in the format `@supergroupusername`)
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   closeGeneralForumTopic (chatId) {
     return this.callApi('closeGeneralForumTopic', {
@@ -1615,13 +1617,13 @@ class Telegram extends ApiClient {
    * in the chat for this to work and must have the `can_manage_topics` administrator rights.
    * The topic will be automatically unhidden if it was hidden.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#reopengeneralforumtopic
    * @param {number|string} chatId Unique identifier for the target chat or username of the target supergroup
    *   (in the format `@supergroupusername`)
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   reopenGeneralForumTopic (chatId) {
     return this.callApi('reopenGeneralForumTopic', {
@@ -1634,13 +1636,13 @@ class Telegram extends ApiClient {
    * chat for this to work and must have the `can_manage_topics` administrator rights.
    * The topic will be automatically closed if it was open.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#hidegeneralforumtopic
    * @param {number|string} chatId Unique identifier for the target chat or username of the target supergroup
    *   (in the format `@supergroupusername`)
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   hideGeneralForumTopic (chatId) {
     return this.callApi('hideGeneralForumTopic', {
@@ -1652,13 +1654,13 @@ class Telegram extends ApiClient {
    * Use this method to unhide the 'General' topic in a forum supergroup chat. The bot must be an administrator
    * in the chat for this to work and must have the `can_manage_topics` administrator rights.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#unhidegeneralforumtopic
    * @param {number|string} chatId Unique identifier for the target chat or username of the target supergroup
    *   (in the format `@supergroupusername`)
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   unhideGeneralForumTopic (chatId) {
     return this.callApi('unhideGeneralForumTopic', {
@@ -1670,14 +1672,14 @@ class Telegram extends ApiClient {
    * Use this method to close an open topic in a forum supergroup chat. The bot must be an administrator in the chat
    * for this to work and must have the `can_manage_topics` administrator rights, unless it is the creator of the topic.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#closeforumtopic
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *   (in the format @channelusername)
    * @param {number} messageThreadId Unique identifier for the target message thread of the forum topic
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   closeForumTopic (chatId, messageThreadId) {
     return this.callApi('closeForumTopic', {
@@ -1690,14 +1692,14 @@ class Telegram extends ApiClient {
    * Use this method to reopen a closed topic in a forum supergroup chat. The bot must be an administrator in the chat
    * for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic.
    *
-   * Returns True on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#reopenforumtopic
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *   (in the format @channelusername)
    * @param {number} messageThreadId Unique identifier for the target message thread of the forum topic
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   reopenForumTopic (chatId, messageThreadId) {
     return this.callApi('reopenForumTopic', {
@@ -1709,14 +1711,15 @@ class Telegram extends ApiClient {
   /**
    * Use this method to delete a forum topic along with all its messages in a forum supergroup chat. The bot must be an
    * administrator in the chat for this to work and must have the can_delete_messages administrator rights.
-   * Returns True on success.
+   *
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *   (in the format @channelusername)
    * @param {number} messageThreadId Unique identifier for the target message thread of the forum topic
    * @see https://core.telegram.org/bots/api#deleteforumtopic
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   deleteForumTopic (chatId, messageThreadId) {
     return this.callApi('deleteForumTopic', {
@@ -1727,14 +1730,16 @@ class Telegram extends ApiClient {
 
   /**
    * Use this method to clear the list of pinned messages in a forum topic. The bot must be an administrator in the chat
-   * for this to work and must have the can_pin_messages administrator right in the supergroup. Returns True on success.
+   * for this to work and must have the can_pin_messages administrator right in the supergroup.
+   *
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *   (in the format @channelusername)
    * @param {number} messageThreadId Unique identifier for the target message thread of the forum topic
    * @see https://core.telegram.org/bots/api#unpinallforumtopicmessages
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   unpinAllForumTopicMessages (chatId, messageThreadId) {
     return this.callApi('unpinAllForumTopicMessages', {
@@ -1783,7 +1788,7 @@ class Telegram extends ApiClient {
    * Use this method to create a new sticker set owned by a user. The bot will be able to edit the sticker set
    * thus created. You must use exactly one of the fields `png_sticker`, `tgs_sticker`, or `webm_sticker`.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#createnewstickerset
    * @param {number} ownerId User identifier of created sticker set owner
@@ -1794,7 +1799,7 @@ class Telegram extends ApiClient {
    * @param {string} title Sticker set title, 1-64 characters
    * @param {ExtraCreateNewStickerSet} extra Other parameters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   createNewStickerSet (ownerId, name, title, extra) {
     return this.callApi('createNewStickerSet', {
@@ -1811,14 +1816,14 @@ class Telegram extends ApiClient {
    * Animated stickers can be added to animated sticker sets and only to them.
    * Animated sticker sets can have up to 50 stickers. Static sticker sets can have up to 120 stickers.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#addstickertoset
    * @param {number} ownerId User identifier of sticker set owner
    * @param {string} name Sticker set name
    * @param {ExtraAddStickerToSet} extra Other parameters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   addStickerToSet (ownerId, name, extra) {
     return this.callApi('addStickerToSet', {
@@ -1831,13 +1836,13 @@ class Telegram extends ApiClient {
   /**
    * Use this method to move a sticker in a set created by the bot to a specific position.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#setstickerpositioninset
    * @param {string} sticker File identifier of the sticker
    * @param {number} position New sticker position in the set, zero-based
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   setStickerPositionInSet (sticker, position) {
     return this.callApi('setStickerPositionInSet', {
@@ -1850,7 +1855,7 @@ class Telegram extends ApiClient {
    * Use this method to set the thumbnail of a sticker set. Animated thumbnails can be set for animated sticker
    * sets only. Video thumbnails can be set only for video sticker sets only.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#setstickersetthumb
    * @param {string} name Sticker set name
@@ -1865,7 +1870,7 @@ class Telegram extends ApiClient {
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files).
    *    Animated sticker set thumbnails can't be uploaded via HTTP URL.
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   setStickerSetThumb (name, userId, thumb) {
     return this.callApi('setStickerSetThumb', { name, user_id: userId, thumb })
@@ -1874,12 +1879,12 @@ class Telegram extends ApiClient {
   /**
    * Use this method to delete a sticker from a set created by the bot.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#deletestickerfromset
    * @param {string} sticker File identifier of the sticker
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   deleteStickerFromSet (sticker) {
     return this.callApi('deleteStickerFromSet', { sticker })
@@ -1904,14 +1909,14 @@ class Telegram extends ApiClient {
    * [https://core.telegram.org/bots#commands](https://core.telegram.org/bots#commands) for more details
    * about bot commands.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#setmycommands
    * @param {BotCommand[]} commands List of bot commands to be set as the list of the bot's commands.
    *    At most 100 commands can be specified.
    * @param {ExtraSetMyCommands} [extra] Other parameters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   setMyCommands (commands, extra) {
     return this.callApi('setMyCommands', { commands, ...extra })
@@ -1920,15 +1925,15 @@ class Telegram extends ApiClient {
   /**
    * Use this method to change the bot's description, which is shown in the chat with the bot if the chat is empty.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#setmydescription
    * @param {string} [description] New bot description; 0-512 characters. Pass an empty string to remove the dedicated
    *   description for the given language.
-   * @param {string} [languageCode] A two-letter ISO 639-1 language code. If empty, the description will be applied to all users
-   *   for whose language there is no dedicated description.
+   * @param {string} [languageCode] A two-letter ISO 639-1 language code. If empty, the description will be applied to
+   *   all users for whose language there is no dedicated description.
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   setMyDescription (description, languageCode) {
     return this.callApi('setMyDescription', { description, language_code: languageCode })
@@ -1938,12 +1943,12 @@ class Telegram extends ApiClient {
    * Use this method to delete the list of the bot's commands for the given scope and user language.
    * After deletion, higher level commands will be shown to affected users.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#deletemycommands
    * @param {ExtraDeleteMyCommands} [extra] Other parameters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   deleteMyCommands (extra) {
     return this.callApi('deleteMyCommands', extra)
@@ -1954,7 +1959,7 @@ class Telegram extends ApiClient {
    * The user will not be able to re-submit their Passport to you until the errors are fixed
    * (the contents of the field for which you returned the error must change).
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * Use this if the data submitted by the user doesn't satisfy the standards your service requires for any reason.
    * For example, if a birthday date seems invalid, a submitted document is blurry, a scan shows evidence of tampering,
@@ -1964,7 +1969,7 @@ class Telegram extends ApiClient {
    * @param {number} userId User identifier
    * @param {PassportElementError[]} errors Array describing the errors
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   setPassportDataErrors (userId, errors) {
     return this.callApi('setPassportDataErrors', {
@@ -2095,14 +2100,14 @@ class Telegram extends ApiClient {
    * Use this method to approve a chat join request. The bot must be an administrator in the chat for this to work
    * and must have the `can_invite_users` administrator right.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#approvechatjoinrequest
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {number} userId Unique identifier of the target user
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   approveChatJoinRequest (chatId, userId) {
     return this.callApi('approveChatJoinRequest', {
@@ -2115,14 +2120,14 @@ class Telegram extends ApiClient {
    * Use this method to decline a chat join request. The bot must be an administrator in the chat for this to work
    * and must have the `can_invite_users` administrator right.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#declinechatjoinrequest
    * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
    *    (in the format `@channelusername`)
    * @param {number} userId Unique identifier of the target user
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   declineChatJoinRequest (chatId, userId) {
     return this.callApi('declineChatJoinRequest', {

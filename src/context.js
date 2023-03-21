@@ -516,14 +516,14 @@ class OpengramContext {
   /**
    * Use this method to send answers to current inline query.
    *
-   * On success, `True` is returned.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    * No more than **50** results per query are allowed.
    *
    * @see https://core.telegram.org/bots/api#answerinlinequery
    * @param {InlineQueryResult[]} results A array of results for the inline query
    * @param {ExtraAnswerInlineQuery} [extra] Other parameters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   answerInlineQuery (results, extra) {
     this.assert(this.inlineQuery, 'answerInlineQuery')
@@ -535,7 +535,7 @@ class OpengramContext {
    * [inline keyboards](https://core.telegram.org/bots#inline-keyboards-and-on-the-fly-updating).
    * The answer will be displayed to the user as a notification at the top of the chat screen or as an alert.
    *
-   * On success, `True` is returned.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * Alternatively, the user can be redirected to the specified Game URL. For this option to work, you must first
    * create a game for your bot via [@BotFather](https://t.me/BotFather) and accept the terms.
@@ -548,7 +548,7 @@ class OpengramContext {
    *   the chat screen. Defaults to false.
    * @param {ExtraAnswerCbQuery} [extra] Other parameters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   answerCbQuery (text, showAlert, extra) {
     this.assert(this.callbackQuery, 'answerCbQuery')
@@ -575,7 +575,7 @@ class OpengramContext {
    * the Bot API will send an Update with a `shipping_query` field to the bot. Use this method to reply to cvurrent
    * shipping queries.
    *
-   * On success, `True` is returned.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#answershippingquery
    * @param {boolean} ok Specify True if delivery to the specified address is possible and False if there are any
@@ -586,7 +586,7 @@ class OpengramContext {
    *    is impossible to complete the order (e.g. "Sorry, delivery to your desired address is unavailable').
    *    Telegram will display this message to the user.
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   answerShippingQuery (ok, shippingOptions, errorMessage) {
     this.assert(this.shippingQuery, 'answerShippingQuery')
@@ -598,7 +598,7 @@ class OpengramContext {
    * form of an {@link Update} with the field `pre_checkout_query`.
    * Use this method to respond to current pre-checkout queries.
    *
-   * On success, `True` is returned.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * **Note:** The Bot API must receive an answer within 10 seconds after
    * the pre-checkout query was sent.
@@ -611,7 +611,7 @@ class OpengramContext {
    *   T-shirts while you were busy filling out your payment details. Please choose a different color or garment!").
    *   Telegram will display this message to the user.
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   answerPreCheckoutQuery (ok, errorMessage) {
     this.assert(this.preCheckoutQuery, 'answerPreCheckoutQuery')
@@ -869,13 +869,13 @@ class OpengramContext {
    * unless {@link unbanChatMember unbanned} first.
    * The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#banchatmember
    * @param {number} userId Unique identifier of the target user
    * @param {ExtraBanChatMember} [extra] Other parameters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   banChatMember (userId, extra) {
     this.assert(this.chat, 'banChatMember')
@@ -886,6 +886,8 @@ class OpengramContext {
    * Alias to {@link banChatMember}, but have different arguments
    * (Deprecated after [Bots API 5.3](https://core.telegram.org/bots/api-changelog#june-25-2021))
    *
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
+   *
    * @see https://core.telegram.org/bots/api#banchatmember
    * @param {number} userId Unique identifier of the target user
    * @param {number} [untilDate] Date when the user will be unbanned, unix time. If user is banned for more than 366
@@ -893,7 +895,7 @@ class OpengramContext {
    *   supergroups and channels only.
    * @param {ExtraKickChatMember} [extra] Other parameters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   kickChatMember (userId, untilDate, extra) {
     this.assert(this.chat, 'kickChatMember')
@@ -907,13 +909,13 @@ class OpengramContext {
    * but will be able to join it. So if the user is a member of the chat they will also be **removed** from the chat.
    * If you don't want this, use the parameter `only_if_banned`.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#unbanchatmember
    * @param {number} userId Unique identifier of the target user
    * @param {ExtraUnbanMember} [extra] Other parameters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   unbanChatMember (userId, extra) {
     this.assert(this.chat, 'unbanChatMember')
@@ -925,13 +927,13 @@ class OpengramContext {
    * for this to work and must have the appropriate administrator rights. Pass True for all permissions to lift
    * restrictions from a user.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#restrictchatmember
    * @param {number} userId Unique identifier of the target user
    * @param {ExtraRestrictChatMember} [extra] Other parameters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   restrictChatMember (userId, extra) {
     this.assert(this.chat, 'restrictChatMember')
@@ -943,13 +945,13 @@ class OpengramContext {
    * in the chat for this to work and must have the appropriate administrator rights. Pass `False` for all boolean
    * parameters to demote a user.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#promotechatmember
    * @param {number} userId Unique identifier of the target user
    * @param {ExtraPromoteChatMember} [extra] Other parameters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   promoteChatMember (userId, extra) {
     this.assert(this.chat, 'promoteChatMember')
@@ -962,12 +964,12 @@ class OpengramContext {
    * of **any of their channels**. The bot must be an administrator in the supergroup or channel for this
    * to work and must have the appropriate administrator rights.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#banchatsenderchat
    * @param {number} senderChatId Unique identifier of the target sender chat
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   banChatSenderChat (senderChatId) {
     this.assert(this.chat, 'banChatSenderChat')
@@ -978,12 +980,12 @@ class OpengramContext {
    * Use this method to unban a previously banned channel chat in current supergroup or channel.
    * The bot must be an administrator for this to work and must have the appropriate administrator rights.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#unbanchatsenderchat
    * @param {number} senderChatId Unique identifier of the target sender chat
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   unbanChatSenderChat (senderChatId) {
     this.assert(this.chat, 'unbanChatSenderChat')
@@ -993,13 +995,13 @@ class OpengramContext {
   /**
    * Use this method to set a custom title for an administrator in current supergroup promoted by the bot.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#setchatadministratorcustomtitle
    * @param {number} userId Unique identifier of the target user
    * @param {string} title New custom title for the administrator; 0-16 characters, emoji are not allowed
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   setChatAdministratorCustomTitle (userId, title) {
     this.assert(this.chat, 'setChatAdministratorCustomTitle')
@@ -1010,12 +1012,12 @@ class OpengramContext {
    * Use this method to set a new profile photo for current chat. Photos can't be changed for private chats.
    * The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#setchatphoto
    * @param {InputFile} photo New chat photo, uploaded using multipart/form-data
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   setChatPhoto (photo) {
     this.assert(this.chat, 'setChatPhoto')
@@ -1026,11 +1028,11 @@ class OpengramContext {
    * Use this method to delete current chat photo. Photos can't be changed for private chats. The bot must be an
    * administrator in the chat for this to work and must have the appropriate administrator rights.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#deletechatphoto
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   deleteChatPhoto () {
     this.assert(this.chat, 'deleteChatPhoto')
@@ -1041,12 +1043,12 @@ class OpengramContext {
    * Use this method to change the title of a chat. Titles can't be changed for current private chats.
    * The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#setchattitle
    * @param {string} title New chat title, 1-255 characters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   setChatTitle (title) {
     this.assert(this.chat, 'setChatTitle')
@@ -1057,12 +1059,12 @@ class OpengramContext {
    * Use this method to change the description of current group, a supergroup or a channel.
    * The bot must be an administrator in the chat for this to work and must have the appropriate administrator rights.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    * https://core.telegram.org/bots/api#setchatdescription
    *
    * @param {string} [description] New chat description, 0-255 characters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   setChatDescription (description) {
     this.assert(this.chat, 'setChatDescription')
@@ -1074,13 +1076,13 @@ class OpengramContext {
    * the bot must be an administrator in the chat for this to work and must have the 'can_pin_messages' administrator
    * right in a supergroup or 'can_edit_messages' administrator right in a channel.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#pinchatmessage
    * @param {number} messageId Identifier of a message to pin
    * @param {ExtraPinChatMessage|Extra} [extra] Other parameters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   pinChatMessage (messageId, extra) {
     this.assert(this.chat, 'pinChatMessage')
@@ -1093,12 +1095,12 @@ class OpengramContext {
    * the 'can_pin_messages' administrator right in a supergroup or 'can_edit_messages' administrator
    * right in a channel.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#unpinchatmessage
    * @param {ExtraUnPinChatMessage} [extra] Other parameters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   unpinChatMessage (extra) {
     this.assert(this.chat, 'unpinChatMessage')
@@ -1111,11 +1113,11 @@ class OpengramContext {
    * have the 'can_pin_messages' administrator right in a supergroup or 'can_edit_messages' administrator
    * right in a channel.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#unpinallchatmessages
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   unpinAllChatMessages () {
     this.assert(this.chat, 'unpinAllChatMessages')
@@ -1125,11 +1127,11 @@ class OpengramContext {
   /**
    * Use this method for your bot to leave from group, supergroup or channel from current update.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#leavechat
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   leaveChat () {
     this.assert(this.chat, 'leaveChat')
@@ -1141,12 +1143,12 @@ class OpengramContext {
    * The bot must be an administrator in the group
    * or a supergroup for this to work and must have the `can_restrict_members` administrator rights.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#setchatpermissions
    * @param {ChatPermissions} permissions A object for new default chat permissions
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   setChatPermissions (permissions) {
     this.assert(this.chat, 'setChatPermissions')
@@ -1232,13 +1234,13 @@ class OpengramContext {
   /**
    * Use this method to change the bot's menu button in private chat from current update, or the default menu button.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#setchatmenubutton
    * @param {MenuButton} [menuButton] Unique identifier for the target private chat.
    *    If not specified, default bot's menu button will be changed
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   setChatMenuButton (menuButton) {
     this.assert(this.chat, 'setChatMenuButton')
@@ -1250,7 +1252,7 @@ class OpengramContext {
    * an administrator to groups or channels. These rights will be suggested to users, but they are free to modify
    * the list before adding the bot.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    * https://core.telegram.org/bots/api#setmydefaultadministratorrights
    *
    * @param {ChatAdministratorRights} [rights] Object describing new default administrator rights.
@@ -1258,7 +1260,7 @@ class OpengramContext {
    * @param {boolean} [forChannels] Pass True to change the default administrator rights of the bot in channels.
    *    Otherwise, the default administrator rights of the bot for groups and supergroups will be changed.
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   setMyDefaultAdministratorRights (rights, forChannels) {
     return this.telegram.setMyDefaultAdministratorRights(rights, forChannels)
@@ -1284,7 +1286,7 @@ class OpengramContext {
    * The user will not be able to re-submit their Passport to you until the errors are fixed
    * (the contents of the field for which you returned the error must change).
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * Use this if the data submitted by the user doesn't satisfy the standards your service requires for any reason.
    * For example, if a birthday date seems invalid, a submitted document is blurry, a scan shows evidence of tampering,
@@ -1293,7 +1295,7 @@ class OpengramContext {
    * @see https://core.telegram.org/bots/api#setpassportdataerrors
    * @param {PassportElementError[]} errors Array describing the errors
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   setPassportDataErrors (errors) {
     this.assert(this.chat, 'setPassportDataErrors')
@@ -1635,7 +1637,7 @@ class OpengramContext {
    * The status is set for 5 seconds or less (when a message arrives from your bot,
    * Telegram clients clear its typing status).
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * Example: The [ImageBot](https://t.me/imagebot) needs some time to process a request and upload the image.
    * Instead of sending a text message along the lines of “Retrieving image, please wait…”,
@@ -1656,7 +1658,7 @@ class OpengramContext {
    *    `find_location` for {@link replyWithLocation location data},
    *    `record_video_note` or `upload_video_note` for {@link replyWithVideoNote video notes}.
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   replyWithChatAction (action) {
     this.assert(this.chat, 'replyWithChatAction')
@@ -1747,12 +1749,12 @@ class OpengramContext {
    * Use the field `can_set_sticker_set` optionally returned in {@link getChat} requests to check if the
    * bot can use this method.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#setchatstickerset
    * @param {string} setName Name of the sticker set to be set as the group sticker set
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   setChatStickerSet (setName) {
     this.assert(this.chat, 'setChatStickerSet')
@@ -1764,11 +1766,11 @@ class OpengramContext {
    * chat for this to work and must have the appropriate administrator rights. Use the field `can_set_sticker_set`
    * optionally returned in {@link getChat} requests to check if the bot can use this method.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#deletechatstickerset
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   deleteChatStickerSet () {
     this.assert(this.chat, 'deleteChatStickerSet')
@@ -1797,14 +1799,14 @@ class OpengramContext {
    * the chat for this to work and must have can_manage_topics administrator rights, unless it is the creator of the
    * topic.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#editforumtopic
    * @param {string} [name] Topic name, 1-128 characters
    * @param {string} [iconCustomEmojiId] New unique identifier of the custom emoji shown as the topic icon.
    *   Use {@link getForumTopicIconStickers} to get all allowed custom emoji identifiers.
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   editForumTopic (name, iconCustomEmojiId) {
     this.assert(this.chat, 'editForumTopic')
@@ -1818,11 +1820,12 @@ class OpengramContext {
   /**
    * Use this method to close an open topic in a forum supergroup chat. The bot must be an administrator in the chat
    * for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic.
-   * Returns `True` on success.
+   *
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#closeforumtopic
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   closeForumTopic () {
     this.assert(this.chat, 'closeForumTopic')
@@ -1834,12 +1837,12 @@ class OpengramContext {
    * Use this method to edit the name of the 'General' topic in a forum supergroup chat. The bot must be an
    * administrator in the chat for this to work and must have `can_manage_topics` administrator rights.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#editgeneralforumtopic
    * @param {string} name New topic name, 1-128 characters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   editGeneralForumTopic (name) {
     this.assert(this.chat, 'editGeneralForumTopic')
@@ -1850,11 +1853,11 @@ class OpengramContext {
    * Use this method to close an open 'General' topic in a forum supergroup chat. The bot must be an administrator in
    * the chat for this to work and must have the `can_manage_topics` administrator rights.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#closegeneralforumtopic
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   closeGeneralForumTopic () {
     this.assert(this.chat, 'closeGeneralForumTopic')
@@ -1866,11 +1869,11 @@ class OpengramContext {
    * in the chat for this to work and must have the `can_manage_topics` administrator rights.
    * The topic will be automatically unhidden if it was hidden.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#reopengeneralforumtopic
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   reopenGeneralForumTopic () {
     this.assert(this.chat, 'reopenGeneralForumTopic')
@@ -1882,11 +1885,11 @@ class OpengramContext {
    * chat for this to work and must have the `can_manage_topics` administrator rights.
    * The topic will be automatically closed if it was open.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#hidegeneralforumtopic
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   hideGeneralForumTopic () {
     this.assert(this.chat, 'hideGeneralForumTopic')
@@ -1897,11 +1900,11 @@ class OpengramContext {
    * Use this method to unhide the 'General' topic in a forum supergroup chat. The bot must be an administrator
    * in the chat for this to work and must have the `can_manage_topics` administrator rights.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#unhidegeneralforumtopic
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   unhideGeneralForumTopic () {
     this.assert(this.chat, 'unhideGeneralForumTopic')
@@ -1911,11 +1914,12 @@ class OpengramContext {
   /**
    * Use this method to reopen a closed topic in a forum supergroup chat. The bot must be an administrator in the chat
    * for this to work and must have the can_manage_topics administrator rights, unless it is the creator of the topic.
-   * Returns `True` on success.
+   *
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#reopenforumtopic
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   reopenForumTopic () {
     this.assert(this.chat, 'reopenForumTopic')
@@ -1927,11 +1931,12 @@ class OpengramContext {
   /**
    * Use this method to delete a forum topic along with all its messages in a forum supergroup chat. The bot must be an
    * administrator in the chat for this to work and must have the can_delete_messages administrator rights.
-   * Returns `True` on success.
+   *
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#deleteforumtopic
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   deleteForumTopic () {
     this.assert(this.chat, 'deleteForumTopic')
@@ -1944,9 +1949,11 @@ class OpengramContext {
    * Use this method to clear the list of pinned messages in a forum topic. The bot must be an administrator in the chat
    * for this to work and must have the can_pin_messages administrator right in the supergroup. Returns True on success.
    *
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
+   *
    * @see https://core.telegram.org/bots/api#unpinallforumtopicmessages
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   unpinAllForumTopicMessages () {
     this.assert(this.chat, 'unpinAllForumTopicMessages')
@@ -1958,13 +1965,13 @@ class OpengramContext {
   /**
    * Use this method to move a sticker in a set created by the bot to a specific position.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#setstickerpositioninset
    * @param {string} sticker File identifier of the sticker
    * @param {number} position New sticker position in the set, zero-based
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   setStickerPositionInSet (sticker, position) {
     return this.telegram.setStickerPositionInSet(sticker, position)
@@ -1974,7 +1981,7 @@ class OpengramContext {
    * Use this method to set the thumbnail of a sticker set. Animated thumbnails can be set for animated sticker
    * sets only. Video thumbnails can be set only for video sticker sets only.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#setstickersetthumb
    * @param {string} name Sticker set name
@@ -1989,7 +1996,7 @@ class OpengramContext {
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files).
    *    Animated sticker set thumbnails can't be uploaded via HTTP URL.
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   setStickerSetThumb (name, userId, thumb) {
     return this.telegram.setStickerSetThumb(name, userId, thumb)
@@ -1998,12 +2005,12 @@ class OpengramContext {
   /**
    * Use this method to delete a sticker from a set created by the bot.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#deletestickerfromset
    * @param {string} sticker File identifier of the sticker
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   deleteStickerFromSet (sticker) {
     return this.telegram.deleteStickerFromSet(sticker)
@@ -2032,7 +2039,7 @@ class OpengramContext {
    * Use this method to create a new sticker set owned by current user. The bot will be able to edit the sticker set
    * thus created. You must use exactly one of the fields `png_sticker`, `tgs_sticker`, or `webm_sticker`.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#createnewstickerset
    * @param {string} name Short name of sticker set, to be used in `t.me/addstickers/` URLs (e.g., *animals*).
@@ -2042,7 +2049,7 @@ class OpengramContext {
    * @param {string} title Sticker set title, 1-64 characters
    * @param {object} stickerData Other parameters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   createNewStickerSet (name, title, stickerData) {
     this.assert(this.from, 'createNewStickerSet')
@@ -2055,13 +2062,13 @@ class OpengramContext {
    * Animated stickers can be added to animated sticker sets and only to them.
    * Animated sticker sets can have up to 50 stickers. Static sticker sets can have up to 120 stickers.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#addstickertoset
    * @param {string} name Sticker set name
    * @param {object} stickerData Other parameters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   addStickerToSet (name, stickerData) {
     this.assert(this.from, 'addStickerToSet')
@@ -2087,14 +2094,14 @@ class OpengramContext {
    * [https://core.telegram.org/bots#commands](https://core.telegram.org/bots#commands) for more details
    * about bot commands.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#setmycommands
    * @param {BotCommand[]} commands List of bot commands to be set as the list of the bot's commands.
    *    At most 100 commands can be specified.
    * @param {ExtraSetMyCommands} [extra] Other parameters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   setMyCommands (commands, extra) {
     return this.telegram.setMyCommands(commands, extra)
@@ -2104,12 +2111,12 @@ class OpengramContext {
    * Use this method to delete the list of the bot's commands for the given scope and user language.
    * After deletion, higher level commands will be shown to affected users.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#deletemycommands
    * @param {ExtraDeleteMyCommands} [extra] Other parameters
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   deleteMyCommands (extra) {
     return this.telegram.deleteMyCommands(extra)
@@ -2171,12 +2178,12 @@ class OpengramContext {
    * - If the bot is an administrator of a group, it can delete any message there.
    * - If the bot has can_delete_messages permission in a supergroup or a channel, it can delete any message there.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#deletemessage
    * @param {number} messageId Identifier of the message to delete
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   deleteMessage (messageId) {
     this.assert(this.chat, 'deleteMessage')
@@ -2288,12 +2295,12 @@ class OpengramContext {
    * The bot must be an administrator in the chat for this to work and must have
    * the `can_invite_users` administrator right.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#approvechatjoinrequest
    * @param {number} userId Unique identifier of the target user
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   approveChatJoinRequest (userId) {
     this.assert(this.chat, 'approveChatJoinRequest')
@@ -2305,12 +2312,12 @@ class OpengramContext {
    * The bot must be an administrator in the chat for this to work and must have
    * the `can_invite_users` administrator right.
    *
-   * Returns `True` on success.
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
    * @see https://core.telegram.org/bots/api#declinechatjoinrequest
    * @param {number} userId Unique identifier of the target user
    * @throws {TelegramError}
-   * @return {Promise<boolean>}
+   * @return {Promise<boolean|WebhookResponse>}
    */
   declineChatJoinRequest (userId) {
     this.assert(this.chat, 'declineChatJoinRequest')
