@@ -15,7 +15,7 @@ class Composer {
    * middleware is given, the composer instance will simply make all context
    * objects pass through without touching them.
    *
-   * @param {MiddlewareFn} fns The middlewares to compose as arguments
+   * @param {Middleware} fns The middlewares to compose as arguments
    */
   constructor (...fns) {
     this.handler = Composer.compose(fns)
@@ -50,7 +50,7 @@ class Composer {
    *
    * This method returns a new instance of {@link Composer}.
    *
-   * @param {MiddlewareFn} fns The middleware(s) to register as arguments
+   * @param {Middleware} fns The middleware(s) to register as arguments
    * @return {Composer}
    */
   use (...fns) {
@@ -88,7 +88,7 @@ class Composer {
    *
    * @param {UpdateType|UpdateSubtype|Array<UpdateType|UpdateSubtype>} updateTypes The update type or array of update types to use,
    *    may also be an array or string
-   * @param {MiddlewareFn} fns The middleware(s) to register with the given types as argument(s)
+   * @param {Middleware} fns The middleware(s) to register with the given types as argument(s)
    * @return {Composer}
    */
   on (updateTypes, ...fns) {
@@ -147,7 +147,7 @@ class Composer {
    *
    * @param {Trigger|Trigger[]} triggers The text / array of
    * texts / regex / function to look for
-   * @param {MiddlewareFn} fns The middleware(s) to register as argument(s)
+   * @param {Middleware} fns The middleware(s) to register as argument(s)
    */
   hears (triggers, ...fns) {
     return this.use(Composer.hears(triggers, ...fns))
@@ -216,7 +216,7 @@ class Composer {
    * > when `channelMode` enabled. You can add additional chat type check for this case
    *
    * @param {string|string[]|'start'|'settings'|'help'} commands The command or array of commands to look for
-   * @param {MiddlewareFn} fns The middleware(s) to register as arguments
+   * @param {Middleware} fns The middleware(s) to register as arguments
    */
   command (commands, ...fns) {
     return this.use(Composer.command(commands, ...fns))
@@ -290,7 +290,7 @@ class Composer {
    *
    * @param {Trigger|Trigger[]} triggers One or an array of
    * regular expressions / strings to search in the payload
-   * @param {MiddlewareFn} fns The middleware(s) to register as arguments
+   * @param {Middleware} fns The middleware(s) to register as arguments
    * @return {Composer}
    */
   action (triggers, ...fns) {
@@ -367,7 +367,7 @@ class Composer {
    *
    * @param {Trigger|Trigger[]} triggers The inline query text
    *   or array of text to match
-   * @param {MiddlewareFn} fns The middleware(s) to register
+   * @param {Middleware} fns The middleware(s) to register
    * @return {Composer}
    */
   inlineQuery (triggers, ...fns) {
@@ -388,7 +388,7 @@ class Composer {
    * })
    * ```
    *
-   * @param {MiddlewareFn} fns The middleware to register as arguments
+   * @param {Middleware} fns The middleware to register as arguments
    * @return {Composer}
    */
   gameQuery (...fns) {
@@ -452,7 +452,7 @@ class Composer {
    * This method matches entity in channel post, message and media caption
    *
    * @param {EntityPredicate} predicate The predicate to check. Can be async, returns boolean or Promise with boolean
-   * @param {MiddlewareFn} fns The middleware(s) to register
+   * @param {Middleware} fns The middleware(s) to register
    * @return {Composer}
    */
   entity (predicate, ...fns) {
@@ -466,7 +466,7 @@ class Composer {
    *
    * This method matches entity in channel post, message and media caption
    *
-   * @param {MiddlewareFn} args The middleware(s) to register
+   * @param {Middleware} args The middleware(s) to register
    * @return {Composer}
    */
   customEmoji (...args) {
@@ -480,7 +480,7 @@ class Composer {
    *
    * This method matches entity in channel post, message and media caption
    *
-   * @param {MiddlewareFn} args The middleware(s) to register
+   * @param {Middleware} args The middleware(s) to register
    * @return {Composer}
    */
   email (...args) {
@@ -494,7 +494,7 @@ class Composer {
    *
    * This method matches entity in channel post, message and media caption
    *
-   * @param {MiddlewareFn} args The middleware(s) to register
+   * @param {Middleware} args The middleware(s) to register
    * @return {Composer}
    */
   phone (...args) {
@@ -508,7 +508,7 @@ class Composer {
    *
    * This method matches entity in channel post, message and media caption
    *
-   * @param {MiddlewareFn} args The middleware(s) to register
+   * @param {Middleware} args The middleware(s) to register
    * @return {Composer}
    */
   url (...args) {
@@ -522,7 +522,7 @@ class Composer {
    *
    * This method matches entity in channel post, message and media caption
    *
-   * @param {MiddlewareFn} args The middleware(s) to register
+   * @param {Middleware} args The middleware(s) to register
    * @return {Composer}
    */
   textLink (...args) {
@@ -536,7 +536,7 @@ class Composer {
    *
    * This method matches entity in channel post, message and media caption
    *
-   * @param {MiddlewareFn} args The middleware(s) to register
+   * @param {Middleware} args The middleware(s) to register
    * @return {Composer}
    */
   textMention (...args) {
@@ -550,7 +550,7 @@ class Composer {
    *
    * This method matches entity in channel post, message and media caption
    *
-   * @param {MiddlewareFn} args The middleware(s) to register
+   * @param {Middleware} args The middleware(s) to register
    * @return {Composer}
    */
   mention (...args) {
@@ -564,7 +564,7 @@ class Composer {
    *
    * This method matches entity in channel post, message and media caption
    *
-   * @param {MiddlewareFn} args The middleware(s) to register
+   * @param {Middleware} args The middleware(s) to register
    * @return {Composer}
    */
   hashtag (...args) {
@@ -578,7 +578,7 @@ class Composer {
    *
    * This method matches entity in channel post, message and media caption
    *
-   * @param {MiddlewareFn} args The middleware(s) to register
+   * @param {Middleware} args The middleware(s) to register
    * @return {Composer}
    */
   cashtag (...args) {
@@ -592,7 +592,7 @@ class Composer {
    *
    * This method matches entity in channel post, message and media caption
    *
-   * @param {MiddlewareFn} args The middleware(s) to register
+   * @param {Middleware} args The middleware(s) to register
    * @return {Composer}
    */
   spoiler (...args) {
@@ -613,8 +613,8 @@ class Composer {
    * bot.start(ctx => ctx.reply(`Start payload: ${ctx.startPayload}`)) // Reply with "Start payload: 1234"
    * ```
    *
-   * @param {MiddlewareFn} fns The middleware(s) to register
-   * @return {MiddlewareFn}
+   * @param {Middleware} fns The middleware(s) to register
+   * @return {Middleware}
    */
   start (...fns) {
     return this.command('start', Composer.tap((ctx) => {
@@ -628,8 +628,8 @@ class Composer {
    *
    * Shortcut to `Composer.command('help', ...)`
    *
-   * @param {MiddlewareFn} fns The middleware(s) to register
-   * @return {MiddlewareFn}
+   * @param {Middleware} fns The middleware(s) to register
+   * @return {Middleware}
    */
   help (...fns) {
     return this.command('help', ...fns)
@@ -640,8 +640,8 @@ class Composer {
    *
    * Shortcut to `Composer.command('settings', ...)`
    *
-   * @param {MiddlewareFn} fns The middleware(s) to register
-   * @return {MiddlewareFn}
+   * @param {Middleware} fns The middleware(s) to register
+   * @return {Middleware}
    */
   settings (...fns) {
     return this.command('settings', ...fns)
@@ -650,7 +650,7 @@ class Composer {
   /**
    * Returns the middleware to embed
    *
-   * @return {MiddlewareFn}
+   * @return {Middleware}
    */
   middleware () {
     return this.handler
@@ -672,7 +672,7 @@ class Composer {
    * @param {string} text Text of the message to be sent, 1-4096 characters after entities parsing
    * @param {ExtraSendMessage|Extra} [extra] Other parameters
    * @throws {TelegramError}
-   * @return {MiddlewareFn<Promise<Message>>}
+   * @return {Middleware<Promise<Message>>}
    */
   static reply (text, extra) {
     return (ctx) => ctx.reply(text, extra)
@@ -681,8 +681,8 @@ class Composer {
   /**
    * Generates middleware that catches all errors in the middleware(s) given to it and outputs them to the console
    *
-   * @param {MiddlewareFn} fns Middlewares
-   * @return {MiddlewareFn}
+   * @param {Middleware} fns Middlewares
+   * @return {Middleware}
    */
   static catchAll (...fns) {
     return Composer.catch((err) => {
@@ -696,8 +696,8 @@ class Composer {
    * Generates middleware that catches all errors in the middleware(s) given to it and calls given error handler
    *
    * @param {Function} errorHandler Error handler which takes error and context object as arguments
-   * @param {MiddlewareFn} fns Middleware(s)
-   * @return {MiddlewareFn}
+   * @param {Middleware} fns Middleware(s)
+   * @return {Middleware}
    */
   static catch (errorHandler, ...fns) {
     const handler = Composer.compose(fns)
@@ -714,8 +714,8 @@ class Composer {
    *
    * > ❗️ If you call next in this middleware, then nothing will happen, it will be ignored
    *
-   * @param {MiddlewareFn} middleware The middleware to run concurrently
-   * @return {MiddlewareFn}
+   * @param {Middleware} middleware The middleware to run concurrently
+   * @return {Middleware}
    */
   static fork (middleware) {
     const handler = Composer.unwrap(middleware)
@@ -729,8 +729,8 @@ class Composer {
    * Middleware that calls a middleware or chain of middleware and calls the `next`, whether it called `next` or not.
    * Allows you to execute some code and continue execution regardless of its result.
    *
-   * @param {MiddlewareFn} middleware The middleware to run without access to next
-   * @return {MiddlewareFn}
+   * @param {Middleware} middleware The middleware to run without access to next
+   * @return {Middleware}
    */
   static tap (middleware) {
     const handler = Composer.unwrap(middleware)
@@ -747,7 +747,7 @@ class Composer {
    *
    * For example, you can use it with {@link Composer.branch} or other to skip middleware (make middleware optional)
    *
-   * @return {MiddlewareFn}
+   * @return {Middleware}
    */
   static passThru () {
     return (ctx, next) => next(ctx)
@@ -759,7 +759,7 @@ class Composer {
    *
    * This method is similar to `Composer.passThru()`, but calls `next` if exists, otherwise returns resolved promise
    *
-   * @return {MiddlewareFn}
+   * @return {Middleware}
    */
   static safePassThru () {
     return (ctx, next) => typeof next === 'function' ? next(ctx) : Promise.resolve()
@@ -781,7 +781,7 @@ class Composer {
    *
    * @param {Function} factoryFn The factory function creating the middleware
    * @throws {TypeError}
-   * @return {MiddlewareFn<Promise>}
+   * @return {Middleware<Promise>}
    */
   static lazy (factoryFn) {
     if (typeof factoryFn !== 'function') {
@@ -805,7 +805,7 @@ class Composer {
    * ```
    *
    * @param {Function} logFn Custom log function
-   * @return {MiddlewareFn}
+   * @return {Middleware}
    */
   static log (logFn = console.log) {
     return Composer.fork((ctx) => logFn(JSON.stringify(ctx.update, null, 2)))
@@ -831,9 +831,9 @@ class Composer {
    * ```
    *
    * @param {PredicateFn} predicate The predicate to check. Can be async, returns boolean or Promise with boolean
-   * @param {MiddlewareFn} trueMiddleware The middleware for the `true` case
-   * @param {MiddlewareFn} falseMiddleware The middleware for the `false` case
-   * @return {MiddlewareFn}
+   * @param {Middleware} trueMiddleware The middleware for the `true` case
+   * @param {Middleware} falseMiddleware The middleware for the `false` case
+   * @return {Middleware}
    */
   static branch (predicate, trueMiddleware, falseMiddleware) {
     if (typeof predicate !== 'function') {
@@ -867,8 +867,8 @@ class Composer {
    * ```
    *
    * @param {PredicateFn} predicate The predicate to check. Can be async, returns boolean or Promise with boolean
-   * @param {MiddlewareFn} fns Middleware(s)
-   * @return {MiddlewareFn}
+   * @param {Middleware} fns Middleware(s)
+   * @return {Middleware}
    */
   static optional (predicate, ...fns) {
     return Composer.branch(predicate, Composer.compose(fns), Composer.safePassThru())
@@ -895,7 +895,7 @@ class Composer {
    * ```
    *
    * @param {PredicateFn} predicate The predicate to check. Can be async, returns boolean or Promise with boolean
-   * @return {MiddlewareFn}
+   * @return {Middleware}
    */
   static filter (predicate) {
     return Composer.branch(predicate, Composer.safePassThru(), () => { })
@@ -923,7 +923,7 @@ class Composer {
    * ```
    *
    * @param {PredicateFn} predicate The predicate to check. Can be async, returns boolean or Promise with boolean
-   * @return {MiddlewareFn}
+   * @return {Middleware}
    */
   static drop (predicate) {
     return Composer.branch(predicate, () => { }, Composer.safePassThru())
@@ -978,8 +978,8 @@ class Composer {
    *
    * @param {UpdateType|UpdateSubtype|Array<UpdateType|UpdateSubtype>} updateType The update type or array of update types to use,
    *    may also be an array or string
-   * @param {MiddlewareFn} fns The middleware(s) to register with the given types as argument(s)
-   * @return {MiddlewareFn}
+   * @param {Middleware} fns The middleware(s) to register with the given types as argument(s)
+   * @return {Middleware}
    */
   static mount (updateType, ...fns) {
     const updateTypes = normalizeTextArguments(updateType)
@@ -1000,8 +1000,8 @@ class Composer {
    *
    * @param {EntityPredicate} predicate The predicate to check. Entity name or predicate function.
    *   If function provided, it can be sync only and returns boolean
-   * @param {MiddlewareFn} fns The middleware(s) to register
-   * @return {MiddlewareFn}
+   * @param {Middleware} fns The middleware(s) to register
+   * @return {Middleware}
    */
   static entity (predicate, ...fns) {
     if (typeof predicate !== 'function') {
@@ -1106,7 +1106,7 @@ class Composer {
    *
    * @param {Trigger|Trigger[]} triggers The text / array of
    * texts / regex / function to look for
-   * @param {MiddlewareFn} fns The middleware(s) to register as argument(s)
+   * @param {Middleware} fns The middleware(s) to register as argument(s)
    */
   static match (triggers, ...fns) {
     return Composer.optional((ctx) => {
@@ -1180,7 +1180,7 @@ class Composer {
    *
    * @param {Trigger|Trigger[]} triggers The text / array of
    * texts / regex / function to look for
-   * @param {MiddlewareFn} fns The middleware(s) to register as argument(s)
+   * @param {Middleware} fns The middleware(s) to register as argument(s)
    */
   static hears (triggers, ...fns) {
     return Composer.mount('text', Composer.match(normalizeTriggers(triggers), ...fns))
@@ -1255,7 +1255,7 @@ class Composer {
    * > when `channelMode` enabled. You can add additional chat type check for this case
    *
    * @param {string|string[]|'start'|'settings'|'help'} command The command or array of commands to look for
-   * @param {MiddlewareFn} fns The middleware(s) to register as arguments
+   * @param {Middleware} fns The middleware(s) to register as arguments
    */
   static command (command, ...fns) {
     if (fns.length === 0) {
@@ -1353,8 +1353,8 @@ class Composer {
    *
    * @param {Trigger|Trigger[]} triggers One or an array of
    * regular expressions / strings to search in the payload
-   * @param {MiddlewareFn} fns The middleware(s) to register as arguments
-   * @return {MiddlewareFn}
+   * @param {Middleware} fns The middleware(s) to register as arguments
+   * @return {Middleware}
    */
   static action (triggers, ...fns) {
     return Composer.mount('callback_query', Composer.match(normalizeTriggers(triggers), ...fns))
@@ -1434,8 +1434,8 @@ class Composer {
    *
    * @param {Trigger|Trigger[]} triggers The inline query text
    *   or array of text to match
-   * @param {MiddlewareFn} fns The middleware(s) to register
-   * @return {MiddlewareFn}
+   * @param {Middleware} fns The middleware(s) to register
+   * @return {Middleware}
    */
   static inlineQuery (triggers, ...fns) {
     return Composer.mount('inline_query', Composer.match(normalizeTriggers(triggers), ...fns))
@@ -1478,8 +1478,8 @@ class Composer {
    * ```
    *
    * @param {PredicateFn|number|number[]} userId The predicate to check or user id / array of user id's
-   * @param {MiddlewareFn} fns The middleware(s) to register
-   * @return {MiddlewareFn}
+   * @param {Middleware} fns The middleware(s) to register
+   * @return {Middleware}
    */
   static acl (userId, ...fns) {
     if (typeof userId === 'function') {
@@ -1504,8 +1504,8 @@ class Composer {
    * ```
    *
    * @param {ChatMemberStatus[]|ChatMemberStatus} status Member status of array of statuses
-   * @param {MiddlewareFn} fns The middleware(s) to register
-   * @return {MiddlewareFn}
+   * @param {Middleware} fns The middleware(s) to register
+   * @return {Middleware}
    */
   static memberStatus (status, ...fns) {
     const statuses = Array.isArray(status) ? status : [status]
@@ -1527,8 +1527,8 @@ class Composer {
    * )
    * ```
    *
-   * @param {MiddlewareFn} fns The middleware(s) to register
-   * @return {MiddlewareFn}
+   * @param {Middleware} fns The middleware(s) to register
+   * @return {Middleware}
    */
   static admin (...fns) {
     return Composer.memberStatus(['administrator', 'creator'], ...fns)
@@ -1546,8 +1546,8 @@ class Composer {
    * )
    * ```
    *
-   * @param {MiddlewareFn} fns The middleware(s) to register
-   * @return {MiddlewareFn}
+   * @param {Middleware} fns The middleware(s) to register
+   * @return {Middleware}
    */
   static creator (...fns) {
     return Composer.memberStatus('creator', ...fns)
@@ -1592,8 +1592,8 @@ class Composer {
    * ```
    *
    * @param {ChatType[]|ChatType} type Chat type or array of shat types
-   * @param {MiddlewareFn} fns The middleware(s) to register
-   * @return {MiddlewareFn}
+   * @param {Middleware} fns The middleware(s) to register
+   * @return {Middleware}
    */
   static chatType (type, ...fns) {
     const types = Array.isArray(type) ? type : [type]
@@ -1626,8 +1626,8 @@ class Composer {
    * )
    * ```
    *
-   * @param {MiddlewareFn} fns The middleware(s) to register
-   * @return {MiddlewareFn}
+   * @param {Middleware} fns The middleware(s) to register
+   * @return {Middleware}
    */
   static privateChat (...fns) {
     return Composer.chatType('private', ...fns)
@@ -1656,8 +1656,8 @@ class Composer {
    * )
    * ```
    *
-   * @param {MiddlewareFn} fns The middleware(s) to register
-   * @return {MiddlewareFn}
+   * @param {Middleware} fns The middleware(s) to register
+   * @return {Middleware}
    */
   static groupChat (...fns) {
     return Composer.chatType(['group', 'supergroup'], ...fns)
@@ -1677,9 +1677,9 @@ class Composer {
    * This method used in some other {@link Composer} methods, like {@link Composer.compose}, {@link Composer.lazy} and
    * other
    *
-   * @param {MiddlewareFn} handler The middleware for unwrap
+   * @param {Middleware} handler The middleware for unwrap
    * @throws {Error}
-   * @return {MiddlewareFn}
+   * @return {Middleware}
    */
   static unwrap (handler) {
     if (!handler) {
@@ -1693,9 +1693,9 @@ class Composer {
   /**
    * Used for compose array of middlewares
    *
-   * @param {MiddlewareFn[]} middlewares The middlewares for compose
+   * @param {Middleware[]} middlewares The middlewares for compose
    * @throws {Error|TypeError}
-   * @return {MiddlewareFn}
+   * @return {Middleware}
    */
   static compose (middlewares) {
     if (!Array.isArray(middlewares)) {

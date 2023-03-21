@@ -72,7 +72,7 @@ class Session {
   /**
    * Returns session middleware
    *
-   * @return {MiddlewareFn}
+   * @return {Middleware}
    */
   middleware () {
     const method = this[storeSetMethodSym]

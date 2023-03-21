@@ -1,5 +1,9 @@
 /**
- * @typedef {Function|object} MiddlewareFn
+ * @typedef {Function} MiddlewareFn
+ */
+
+/**
+ * @typedef {MiddlewareFn|object} Middleware
  */
 
 /**

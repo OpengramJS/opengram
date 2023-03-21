@@ -88,7 +88,7 @@ class Stage extends Composer {
   /**
    * Generates and returns stage middleware for embedding
    *
-   * @return {MiddlewareFn}
+   * @return {Middleware}
    */
   middleware () {
     const handler = compose([
@@ -110,7 +110,7 @@ class Stage extends Composer {
    * @param {boolean} [silent] ???
    * @throws {Error}
    * @return {Promise}
-   * @return {MiddlewareFn}
+   * @return {Middleware}
   */
   static enter (sceneId, initialState, silent) {
     return (ctx) => ctx.scene.enter(sceneId, initialState, silent)
@@ -119,7 +119,7 @@ class Stage extends Composer {
   /**
    * Generates middleware which call `ctx.scene.reenter` with given arguments
    *
-   * @return {MiddlewareFn}
+   * @return {Middleware}
    */
   static reenter () {
     return (ctx) => ctx.scene.reenter()
@@ -128,7 +128,7 @@ class Stage extends Composer {
   /**
    * Generates middleware which call `ctx.scene.leave` with given arguments
    *
-   * @return {MiddlewareFn}
+   * @return {Middleware}
    */
   static leave () {
     return (ctx) => ctx.scene.leave()

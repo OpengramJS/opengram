@@ -5,7 +5,7 @@
 class WizardContext {
   /**
    * @param {OpengramContext} ctx Context
-   * @param {MiddlewareFn[]} steps Steps
+   * @param {Middleware[]} steps Steps
    */
   constructor (ctx, steps) {
     this.ctx = ctx
@@ -17,7 +17,7 @@ class WizardContext {
   /**
    * Getter returns current step handler
    *
-   * @return {MiddlewareFn|false}
+   * @return {Middleware|false}
    */
   get step () {
     return this.cursor >= 0 && this.steps[this.cursor]

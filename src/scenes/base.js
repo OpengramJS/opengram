@@ -86,7 +86,7 @@ class BaseScene extends Composer {
   /**
    * Registers enter handler(s) for scene
    *
-   * @param {MiddlewareFn} fns Middleware(s) to register
+   * @param {Middleware} fns Middleware(s) to register
    * @return {BaseScene}
    */
   enter (...fns) {
@@ -97,7 +97,7 @@ class BaseScene extends Composer {
   /**
    * Registers leave handler(s) for scene
    *
-   * @param {MiddlewareFn} fns Middleware(s) to register
+   * @param {Middleware} fns Middleware(s) to register
    * @return {BaseScene}
    */
   leave (...fns) {
@@ -109,7 +109,7 @@ class BaseScene extends Composer {
    * Returns enter handler composed with `enter` middlewares
    *
    * @private
-   * @return {MiddlewareFn}
+   * @return {Middleware}
    */
   enterMiddleware () {
     return this.enterHandler
@@ -119,7 +119,7 @@ class BaseScene extends Composer {
    * Returns enter handler composed with `leave` middlewares
    *
    * @private
-   * @return {MiddlewareFn}
+   * @return {Middleware}
    */
   leaveMiddleware () {
     return this.leaveHandler

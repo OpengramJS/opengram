@@ -41,7 +41,7 @@ class Router {
    * Note that you can always install more middlewares on the router by calling {@link Router#on}.
    *
    * @param {Function} routeFn A routing function that decides which middleware to run
-   * @param {Map<MiddlewareFn>} [routeHandlers] Map object with middlewares
+   * @param {Map<Middleware>} [routeHandlers] Map object with middlewares
    */
   constructor (routeFn, routeHandlers = new Map()) {
     if (typeof routeFn !== 'function') {
@@ -58,7 +58,7 @@ class Router {
    * middleware for execution for an incoming update.
    *
    * @param {string} route The route for which to register the middleware
-   * @param {MiddlewareFn} fns Middleware(s) to register
+   * @param {Middleware} fns Middleware(s) to register
    * @throws {TypeError}
    * @return {Router}
    */
@@ -76,7 +76,7 @@ class Router {
    * called, then the router will simply pass through all requests to the
    * downstream middleware.
    *
-   * @param {MiddlewareFn} fns Middleware(s) to run if no route matches
+   * @param {Middleware} fns Middleware(s) to run if no route matches
    * @throws {TypeError}
    */
   otherwise (...fns) {

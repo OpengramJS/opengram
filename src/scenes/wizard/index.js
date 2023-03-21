@@ -14,15 +14,15 @@ class WizardScene extends BaseScene {
    *
    * @constructor
    * @param {string} id Wizard name, used for entering
-   * @param {MiddlewareFn} optionsOrStep First step
-   * @param {MiddlewareFn} steps Steps middlewares
+   * @param {Middleware} optionsOrStep First step
+   * @param {Middleware} steps Steps middlewares
    *//**
    * Wizard scene constructor
    *
    * @constructor
    * @param {string} id Wizard name, used for entering
    * @param {object} optionsOrStep Options
-   * @param {MiddlewareFn} steps Steps middlewares
+   * @param {Middleware} steps Steps middlewares
    */
   constructor (id, optionsOrStep, ...steps) {
     let tOptions
@@ -44,7 +44,7 @@ class WizardScene extends BaseScene {
    * Returns enter handler composed with wizard middleware
    *
    * @private
-   * @return {MiddlewareFn}
+   * @return {Middleware}
    */
   enterMiddleware () {
     return Composer.compose([this.enterHandler, this.middleware()])
@@ -53,7 +53,7 @@ class WizardScene extends BaseScene {
   /**
    * Returns the middleware to embed
    *
-   * @return {MiddlewareFn}
+   * @return {Middleware}
    */
   middleware () {
     return compose([
