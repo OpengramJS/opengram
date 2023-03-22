@@ -1582,7 +1582,7 @@ class OpengramContext {
    * On success, the sent {@link Message} is returned.
    *
    * @see https://core.telegram.org/bots/api#sendinvoice
-   * @param {object} invoice Other invoice parameters
+   * @param {InvoiceParams} invoice Other invoice parameters
    * @param {ExtraInvoice|Extra} [extra] Other parameters
    * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
@@ -2139,14 +2139,14 @@ class OpengramContext {
    *    can't contain consecutive underscores and must end in `"_by_<bot_username>"`. `<bot_username>`
    *    is case insensitive. 1-64 characters.
    * @param {string} title Sticker set title, 1-64 characters
-   * @param {object} stickerData Other parameters
+   * @param {ExtraCreateNewStickerSet} extra Other parameters
    * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  createNewStickerSet (name, title, stickerData, signal) {
+  createNewStickerSet (name, title, extra, signal) {
     this.assert(this.from, 'createNewStickerSet')
-    return this.telegram.createNewStickerSet(this.from.id, name, title, stickerData, signal)
+    return this.telegram.createNewStickerSet(this.from.id, name, title, extra, signal)
   }
 
   /**
@@ -2159,14 +2159,14 @@ class OpengramContext {
    *
    * @see https://core.telegram.org/bots/api#addstickertoset
    * @param {string} name Sticker set name
-   * @param {object} stickerData Other parameters
+   * @param {ExtraAddStickerToSet} extra Other parameters
    * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  addStickerToSet (name, stickerData, signal) {
+  addStickerToSet (name, extra, signal) {
     this.assert(this.from, 'addStickerToSet')
-    return this.telegram.addStickerToSet(this.from.id, name, stickerData, signal)
+    return this.telegram.addStickerToSet(this.from.id, name, extra, signal)
   }
 
   /**
