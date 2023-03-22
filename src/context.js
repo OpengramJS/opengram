@@ -64,6 +64,8 @@ const MessageSubTypesMapping = {
   forward_date: 'forward'
 }
 
+const stateSymbol = Symbol('contextState')
+
 /**
  * When your bot receives a message, Telegram sends an update object to your
  * bot. The update contains information about the chat, the user, and of course
@@ -459,10 +461,11 @@ class OpengramContext {
    * @return {object}
    */
   get state () {
-    if (!this.contextState) {
-      this.contextState = {}
+    if (!this[stateSymbol]) {
+      this[stateSymbol] = {}
     }
-    return this.contextState
+
+    return this[stateSymbol]
   }
 
   /**
@@ -473,7 +476,7 @@ class OpengramContext {
    * @return {void}
    */
   set state (value) {
-    this.contextState = { ...value }
+    this[stateSymbol] = { ...value }
   }
 
   /**
