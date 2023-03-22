@@ -1701,7 +1701,7 @@
   * This object represents the contents of a file to be uploaded. Must be posted using
   * multipart/form-data in the usual way that files are uploaded via the browser.
   *
-  * @typedef {*} InputFile
+  * @typedef {Buffer|ReadableStream|string} InputFile
   * @see https://core.telegram.org/bots/api/#inputfile
 */
 
@@ -3025,5 +3025,3 @@
  * @property {true} webhook Always `true`
  * @property {'https://core.telegram.org/bots/api#making-requests-when-getting-updates'} details Link to telegram docs
  */
-
-/** @typedef {Buffer|ReadableStream|string} InputFile **/
