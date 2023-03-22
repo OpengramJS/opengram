@@ -3025,3 +3025,5 @@
  * @property {true} webhook Always `true`
  * @property {'https://core.telegram.org/bots/api#making-requests-when-getting-updates'} details Link to telegram docs
  */
+
+/** @typedef {Buffer|ReadableStream|string} InputFile **/
