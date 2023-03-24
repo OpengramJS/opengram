@@ -59,21 +59,17 @@
  * @typedef {object} ExtraCreateNewStickerSet
  * @see https://core.telegram.org/bots/api#createnewstickerset
  * @see https://core.telegram.org/stickers#animated-sticker-requirements
- * @property {InputFile|FileId} [png_sticker] *Optional*. **PNG** image with the sticker, must be up to 512 kilobytes
- *   in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a *file_id* as a
- *   String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get
- *   a file from the Internet, or upload a new one using multipart/form-data.
- *   [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
- * @property {InputFile} [tgs_sticker] *Optional*. **TGS** animation with the sticker, uploaded using
- *   multipart/form-data. See https://core.telegram.org/stickers#animated-sticker-requirements for technical
- *   requirements
- * @property {InputFile} [webm_sticker] *Optional*. **WEBM** video with the sticker, uploaded using multipart/form-data.
- *   See https://core.telegram.org/stickers#video-sticker-requirements for technical requirements
- * @property {string} [sticker_type] *Optional*. Type of stickers in the set, pass "regular" or "mask". Custom emoji
- *   sticker sets can't be created via the Bot API at the moment. By default, a regular sticker set is created.
- * @property {string} emojis One or more emoji corresponding to the sticker
- * @property {MaskPosition} [mask_position] *Optional*. A JSON-serialized object for position where the mask should be
- *   placed on faces
+ * @see https://core.telegram.org/bots/api#inputsticker
+ * @property {InputSticker[]} stickers A JSON-serialized list of 1-50 initial stickers to be added to the sticker set
+ * @property {'static'|'animated'|'video'} sticker_format Format of stickers in the set, must be one of
+ *   `static`, `animated`, `video`
+ * @property {'regular'|'mask'|'custom_emoji'} [sticker_type] *Optional*. Type of stickers in the set, pass
+ *   `regular`, `mask`, or `custom_emoji`.
+ *   By default, a regular sticker set is created.
+ * @property {boolean} [needs_repainting] *Optional*. Pass *True* to request a chat with the bot as a member.
+ *   Otherwise, no additional restrictions are applied.Pass *True* if stickers in the sticker set must be repainted to
+ *   the color of text when used in messages, the accent color if used as emoji status, white on chat photos, or
+ *   another appropriate color based on context; for custom emoji sticker sets only
  */
 
 /**
@@ -202,7 +198,7 @@
  *   belongs; for supergroups only
  * @property {string} [foursquare_id] *Optional*. Foursquare identifier of the venue
  * @property {string} [foursquare_type] *Optional*. Foursquare type of the venue, if known.
- *   (For example, “arts_entertainment/default”, “arts_entertainment/aquarium” or “food/icecream”.)
+ *   (For example, `arts_entertainment/default`, `arts_entertainment/aquarium` or `food/icecream`.)
  * @property {string} [google_place_id] *Optional*. Google Places identifier of the venue
  * @property {string} [google_place_type] *Optional*. Google Places type of the venue.
  *   (See [supported types](https://developers.google.com/places/web-service/supported_types).)
@@ -254,19 +250,15 @@
  * @typedef {object} ExtraAddStickerToSet
  * @see https://core.telegram.org/bots/api#addstickertoset
  * @see https://core.telegram.org/stickers#animated-sticker-requirements
- * @property {InputFile|string} [png_sticker] *Optional*. **PNG** image with the sticker, must be up to 512 kilobytes
- *   in size, dimensions must not exceed 512px, and either width or height must be exactly 512px. Pass a *file_id* as a
- *   String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get
- *   a file from the Internet, or upload a new one using multipart/form-data.
- *   [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
- * @property {InputFile} [tgs_sticker] *Optional*. **TGS** animation with the sticker, uploaded using
- *   multipart/form-data. See https://core.telegram.org/stickers#animated-sticker-requirements for technical
- *   requirements
- * @property {InputFile} [webm_sticker] *Optional*. **WEBM** video with the sticker, uploaded using multipart/form-data.
- *   See https://core.telegram.org/stickers#video-sticker-requirements for technical requirements
- * @property {string} emojis One or more emoji corresponding to the sticker
- * @property {MaskPosition} [mask_position] *Optional*. A JSON-serialized object for position where the mask should be
- *   placed on faces
+ * @see https://core.telegram.org/bots/api#inputsticker
+ * @property {InputSticker} sticker A JSON-serialized object with information about the added sticker.
+ *   If exactly the same sticker had already been added to the set, then the set isn't changed.
+ */
+
+/**
+ * @typedef {object} ExtraUploadStickerFile
+ * @see https://core.telegram.org/bots/api#uploadstickerfile
+ * @property {'static'|'animated'|'video'} sticker_format Format of the sticker, must be one of `static`, `animated`, `video`
  */
 
 /**
@@ -506,6 +498,7 @@
  *   Telegram servers (recommended), pass an HTTP URL as a String for Telegram to get a .WEBP file from the Internet,
  *   or upload a new one using multipart/form-data.
  *   [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files)
+ * @property {string} [emoji] *Optional*. Emoji associated with the sticker; only for just uploaded stickers
  * @property {boolean} [disable_notification] *Optional*. Sends the message
  *   [silently](https://telegram.org/blog/channels-2-0#silent-messages). Users will receive a notification with no
  *   sound.
@@ -531,7 +524,7 @@
  * @property {number} [duration] *Optional*. Duration of sent video in seconds
  * @property {number} [width] *Optional*. Video width
  * @property {number} [height] *Optional*. Video height
- * @property {InputFile|FileId} [thumb] Thumbnail of the file sent; can be ignored if thumbnail generation for the file
+ * @property {InputFile|FileId} [thumbnail] Thumbnail of the file sent; can be ignored if thumbnail generation for the file
  *   is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width
  *   and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't
  *   be reused and can be only uploaded as a new file, so you can pass "attach://<file_attach_name>" if the thumbnail
@@ -675,7 +668,7 @@
  * @property {number} [duration] *Optional*. Duration of sent animation in seconds
  * @property {number} [width] *Optional*. Animation width
  * @property {number} [height] *Optional*. Animation height
- * @property {InputFile|FileId} [thumb] Thumbnail of the file sent; can be ignored if thumbnail generation for the file
+ * @property {InputFile|FileId} [thumbnail] Thumbnail of the file sent; can be ignored if thumbnail generation for the file
  *   is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width
  *   and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't
  *   be reused and can be only uploaded as a new file, so you can pass "attach://<file_attach_name>" if the thumbnail
@@ -714,7 +707,7 @@
  * @property {string} [performer] Performer
  * @property {string} [title] Track name
  * @property {number} [duration] *Optional*. Duration of sent audio in seconds
- * @property {InputFile|FileId} [thumb] Thumbnail of the file sent; can be ignored if thumbnail generation for the file
+ * @property {InputFile|FileId} [thumbnail] Thumbnail of the file sent; can be ignored if thumbnail generation for the file
  *   is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A thumbnail's width
  *   and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails can't
  *   be reused and can be only uploaded as a new file, so you can pass "attach://<file_attach_name>" if the thumbnail
@@ -787,7 +780,7 @@
  * @see https://core.telegram.org/bots/api#senddocument
  * @property {number} [message_thread_id] *Optional*. Unique identifier for the target message thread (topic)
  *   of the forum; for forum supergroups only
- * @property {InputFile|FileId} [thumb] *Optional*. Thumbnail of the file sent; can be ignored if thumbnail generation
+ * @property {InputFile|FileId} [thumbnail] *Optional*. Thumbnail of the file sent; can be ignored if thumbnail generation
  *   for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size.
  *   A thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data.
  *   Thumbnails can't be reused and can be only uploaded as a new file, so you can pass "attach://<file_attach_name>"
@@ -957,7 +950,7 @@
  *   of the forum; for forum supergroups only
  * @property {number} [duration] *Optional*. Duration of sent video in seconds
  * @property {number} [length] *Optional*. Video width and height, i.e. diameter of the video message
- * @property {InputFile|FileId} [thumb] *Optional*. Thumbnail of the file sent; can be ignored if thumbnail generation
+ * @property {InputFile|FileId} [thumbnail] *Optional*. Thumbnail of the file sent; can be ignored if thumbnail generation
  *   for the file is supported server-side. The thumbnail should be in JPEG format and less than 200 kB in size. A
  *   thumbnail's width and height should not exceed 320. Ignored if the file is not uploaded using multipart/form-data.
  *   Thumbnails can't be reused and can be only uploaded as a new file, so you can pass "attach://<file_attach_name>"

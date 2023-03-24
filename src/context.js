@@ -2072,10 +2072,11 @@ class OpengramContext {
    *
    * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
-   * @see https://core.telegram.org/bots/api#setstickersetthumb
+   * @see https://core.telegram.org/bots/api#setstickersetthumbnail
+   * @deprecated Use {@link OpengramContext#setStickerSetThumbnail}. Renamed after Bots API 6.6
    * @param {string} name Sticker set name
    * @param {number} userId User identifier of the sticker set owner
-   * @param {InputFile|FileId} [thumb] A **PNG** image with the thumbnail, must be up to 128 kilobytes in size and have
+   * @param {InputFile|FileId} [thumbnail] A **PNG** image with the thumbnail, must be up to 128 kilobytes in size and have
    *   width and height exactly 100px, or a **TGS** animation with the thumbnail up to 32 kilobytes in size; see
    *   https://core.telegram.org/stickers#animated-sticker-requirements for animated sticker technical requirements, or
    *   a **WEBM** video with the thumbnail up to 32 kilobytes in size; see
@@ -2088,8 +2089,34 @@ class OpengramContext {
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  setStickerSetThumb (name, userId, thumb, signal) {
-    return this.telegram.setStickerSetThumb(name, userId, thumb, signal)
+  setStickerSetThumb (name, userId, thumbnail, signal) {
+    return this.telegram.setStickerSetThumb(name, userId, thumbnail, signal)
+  }
+
+  /**
+   * Use this method to set the thumbnail of a sticker set. Animated thumbnails can be set for animated sticker
+   * sets only. Video thumbnails can be set only for video sticker sets only.
+   *
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
+   *
+   * @see https://core.telegram.org/bots/api#setstickersetthumbnail
+   * @param {string} name Sticker set name
+   * @param {number} userId User identifier of the sticker set owner
+   * @param {InputFile|FileId} [thumbnail] A **PNG** image with the thumbnail, must be up to 128 kilobytes in size and have
+   *   width and height exactly 100px, or a **TGS** animation with the thumbnail up to 32 kilobytes in size; see
+   *   https://core.telegram.org/stickers#animated-sticker-requirements for animated sticker technical requirements, or
+   *   a **WEBM** video with the thumbnail up to 32 kilobytes in size; see
+   *   https://core.telegram.org/stickers#video-sticker-requirements for video sticker technical requirements. Pass a
+   *   file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for
+   *   Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
+   *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files).
+   *    Animated sticker set thumbnails can't be uploaded via HTTP URL.
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
+   * @throws {TelegramError}
+   * @return {Promise<boolean|WebhookResponse>}
+   */
+  setStickerSetThumbnail (name, userId, thumbnail, signal) {
+    return this.telegram.setStickerSetThumbnail(name, userId, thumbnail, signal)
   }
 
   /**
@@ -2115,16 +2142,17 @@ class OpengramContext {
    * Returns the uploaded {@link File} on success.
    *
    * @see https://core.telegram.org/bots/api#uploadstickerfile
-   * @param {InputFile} stickerFile **PNG** image with the sticker, must be up to 512 kilobytes in size,
+   * @param {InputSticker} sticker **PNG** image with the sticker, must be up to 512 kilobytes in size,
    *    dimensions must not exceed 512px, and either width or height must be exactly 512px.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files).
+   * @param {ExtraUploadStickerFile} extra Other parameters
    * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<File>}
    */
-  uploadStickerFile (stickerFile, signal) {
+  uploadStickerFile (sticker, extra, signal) {
     this.assert(this.from, 'uploadStickerFile')
-    return this.telegram.uploadStickerFile(this.from.id, stickerFile, signal)
+    return this.telegram.uploadStickerFile(this.from.id, sticker, extra, signal)
   }
 
   /**

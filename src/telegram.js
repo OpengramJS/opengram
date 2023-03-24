@@ -1855,18 +1855,124 @@ class Telegram extends ApiClient {
    *
    * @see https://core.telegram.org/bots/api#uploadstickerfile
    * @param {number} ownerId User identifier of sticker file owner
-   * @param {InputFile} stickerFile **PNG** image with the sticker, must be up to 512 kilobytes in size,
+   * @param {InputSticker} sticker **PNG** image with the sticker, must be up to 512 kilobytes in size,
    *    dimensions must not exceed 512px, and either width or height must be exactly 512px.
    *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files).
+   * @param {ExtraUploadStickerFile} extra Other parameters
    * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<File>}
    */
-  uploadStickerFile (ownerId, stickerFile, signal) {
+  uploadStickerFile (ownerId, sticker, extra, signal) {
     return this.callApi('uploadStickerFile', {
       user_id: ownerId,
-      png_sticker: stickerFile
+      sticker,
+      ...extra
     }, { signal })
+  }
+
+  /**
+   * Use this method to set the thumbnail of a custom emoji sticker set.
+   *
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
+   *
+   * @see https://core.telegram.org/bots/api#setcustomemojistickersetthumbnail
+   * @param {string} name Sticker set name
+   * @param {string} [customEmojiId] Custom emoji identifier of a sticker from the sticker set; pass an empty string
+   *   to drop the thumbnail and use the first sticker as the thumbnail.
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
+   * @throws {TelegramError}
+   * @return {Promise<boolean|WebhookResponse>}
+   */
+  setCustomEmojiStickerSetThumbnail (name, customEmojiId, signal) {
+    return this.callApi('setCustomEmojiStickerSetThumbnail', {
+      name,
+      custom_emoji_id: customEmojiId
+    }, { signal })
+  }
+
+  /**
+   * Use this method to set the title of a created sticker set.
+   *
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
+   *
+   * @see https://core.telegram.org/bots/api#setstickersettitle
+   * @param {string} name Sticker set name
+   * @param {string} title Sticker set title, 1-64 characters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
+   * @throws {TelegramError}
+   * @return {Promise<boolean|WebhookResponse>}
+   */
+  setStickerSetTitle (name, title, signal) {
+    return this.callApi('setStickerSetTitle', { name, title }, { signal })
+  }
+
+  /**
+   * Use this method to delete a sticker set that was created by the bot.
+   *
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
+   *
+   * @see https://core.telegram.org/bots/api#deletestickerset
+   * @param {string} name Sticker set name
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
+   * @throws {TelegramError}
+   * @return {Promise<boolean|WebhookResponse>}
+   */
+  deleteStickerSet (name, signal) {
+    return this.callApi('deleteStickerSet', { name }, { signal })
+  }
+
+  /**
+   * Use this method to change the list of emoji assigned to a regular or custom emoji sticker.
+   * The sticker must belong to a sticker set created by the bot.
+   *
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
+   *
+   * @see https://core.telegram.org/bots/api#setstickeremojilist
+   * @param {FileId} sticker File identifier of the sticker
+   * @param {string[]} emojiList A JSON-serialized list of 1-20 emoji associated with the sticker
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
+   * @throws {TelegramError}
+   * @return {Promise<boolean|WebhookResponse>}
+   */
+  setStickerEmojiList (sticker, emojiList, signal) {
+    return this.callApi('setStickerEmojiList', { sticker, emoji_list: emojiList }, { signal })
+  }
+
+  /**
+   * Use this method to change search keywords assigned to a regular or custom emoji sticker.
+   * The sticker must belong to a sticker set created by the bot.
+   *
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
+   *
+   * @see https://core.telegram.org/bots/api#setstickerkeywords
+   * @param {FileId} sticker File identifier of the sticker
+   * @param {string[]} [keywords] A JSON-serialized list of 0-20 search keywords for the sticker with total
+   *   length of up to 64 characters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
+   * @throws {TelegramError}
+   * @return {Promise<boolean|WebhookResponse>}
+   */
+  setStickerKeywords (sticker, keywords, signal) {
+    return this.callApi('setStickerKeywords', { sticker, keywords }, { signal })
+  }
+
+  /**
+   * Use this method to change the [mask position](https://core.telegram.org/bots/api#maskposition) of a mask sticker.
+   * The sticker must belong to a sticker set that was created by the bot.
+   *
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
+   *
+   * @see https://core.telegram.org/bots/api#setstickermaskposition
+   * @param {FileId} sticker File identifier of the sticker
+   * @param {MaskPosition} [maskPosition] A JSON-serialized object with the position where the mask should be
+   *   placed on faces. Omit the parameter to remove the mask position.
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
+   * @throws {TelegramError}
+   * @return {Promise<boolean|WebhookResponse>}
+   */
+  setStickerMaskPosition (sticker, maskPosition, signal) {
+    return this.callApi('setStickerMaskPosition', { sticker, mask_position: maskPosition }, { signal })
   }
 
   /**
@@ -1945,10 +2051,11 @@ class Telegram extends ApiClient {
    *
    * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
    *
-   * @see https://core.telegram.org/bots/api#setstickersetthumb
+   * @see https://core.telegram.org/bots/api#setstickersetthumbnail
+   * @deprecated Use {@link Telegram#setStickerSetThumbnail}. Renamed after Bots API 6.6
    * @param {string} name Sticker set name
    * @param {number} userId User identifier of the sticker set owner
-   * @param {InputFile|FileId} [thumb] A **PNG** image with the thumbnail, must be up to 128 kilobytes in size and have
+   * @param {InputFile|FileId} [thumbnail] A **PNG** image with the thumbnail, must be up to 128 kilobytes in size and have
    *   width and height exactly 100px, or a **TGS** animation with the thumbnail up to 32 kilobytes in size; see
    *   https://core.telegram.org/stickers#animated-sticker-requirements for animated sticker technical requirements, or
    *   a **WEBM** video with the thumbnail up to 32 kilobytes in size; see
@@ -1961,8 +2068,34 @@ class Telegram extends ApiClient {
    * @throws {TelegramError}
    * @return {Promise<boolean|WebhookResponse>}
    */
-  setStickerSetThumb (name, userId, thumb, signal) {
-    return this.callApi('setStickerSetThumb', { name, user_id: userId, thumb }, { signal })
+  setStickerSetThumb (name, userId, thumbnail, signal) {
+    return this.setStickerSetThumbnail(name, userId, thumbnail, signal)
+  }
+
+  /**
+   * Use this method to set the thumbnail of a sticker set. Animated thumbnails can be set for animated sticker
+   * sets only. Video thumbnails can be set only for video sticker sets only.
+   *
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
+   *
+   * @see https://core.telegram.org/bots/api#setstickersetthumbnail
+   * @param {string} name Sticker set name
+   * @param {number} userId User identifier of the sticker set owner
+   * @param {InputFile|FileId} [thumbnail] A **PNG** image with the thumbnail, must be up to 128 kilobytes in size and have
+   *   width and height exactly 100px, or a **TGS** animation with the thumbnail up to 32 kilobytes in size; see
+   *   https://core.telegram.org/stickers#animated-sticker-requirements for animated sticker technical requirements, or
+   *   a **WEBM** video with the thumbnail up to 32 kilobytes in size; see
+   *   https://core.telegram.org/stickers#video-sticker-requirements for video sticker technical requirements. Pass a
+   *   file_id as a String to send a file that already exists on the Telegram servers, pass an HTTP URL as a String for
+   *   Telegram to get a file from the Internet, or upload a new one using multipart/form-data.
+   *    [More information on Sending Files »](https://core.telegram.org/bots/api#sending-files).
+   *    Animated sticker set thumbnails can't be uploaded via HTTP URL.
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
+   * @throws {TelegramError}
+   * @return {Promise<boolean|WebhookResponse>}
+   */
+  setStickerSetThumbnail (name, userId, thumbnail, signal) {
+    return this.callApi('setStickerSetThumbnail', { name, user_id: userId, thumbnail }, { signal })
   }
 
   /**
@@ -2030,6 +2163,56 @@ class Telegram extends ApiClient {
    */
   setMyDescription (description, languageCode, signal) {
     return this.callApi('setMyDescription', { description, language_code: languageCode }, { signal })
+  }
+
+  /**
+   * Use this method to get the current bot description for the given user language.
+   * Returns {@link BotDescription}` on success
+   *
+   * @see https://core.telegram.org/bots/api#getmydescription
+   * @param {string} [languageCode] A two-letter ISO 639-1 language code or an empty string
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
+   * @throws {TelegramError}
+   * @return {Promise<BotDescription>}
+   */
+  getMyDescription (languageCode, signal) {
+    return this.callApi('getMyDescription', { language_code: languageCode }, { signal })
+  }
+
+  /**
+   * Use this method to change the bot's short description, which is shown on the bot's profile page and is sent
+   * together with the link when users share the bot.
+   *
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
+   *
+   * @see https://core.telegram.org/bots/api#setmyshortdescription
+   * @param {string} [shortDescription] New short description for the bot; 0-120 characters. Pass an empty string to
+   *   remove the dedicated short description for the given language.
+   * @param {string} [languageCode] A two-letter ISO 639-1 language code. If empty, the short description will be
+   *   applied to all users for whose language there is no dedicated short description.
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
+   * @throws {TelegramError}
+   * @return {Promise<boolean|WebhookResponse>}
+   */
+  setMyShortDescription (shortDescription, languageCode, signal) {
+    return this.callApi('setMyShortDescription', {
+      short_description: shortDescription,
+      language_code: languageCode
+    }, { signal })
+  }
+
+  /**
+   * Use this method to get the current bot short description for the given user language.
+   * Returns {@link BotShortDescription}` on success
+   *
+   * @see https://core.telegram.org/bots/api#getmyshortdescription
+   * @param {string} [languageCode] A two-letter ISO 639-1 language code or an empty string
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
+   * @throws {TelegramError}
+   * @return {Promise<BotShortDescription>}
+   */
+  getMyShortDescription (languageCode, signal) {
+    return this.callApi('getMyShortDescription', { language_code: languageCode }, { signal })
   }
 
   /**

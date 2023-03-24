@@ -374,7 +374,7 @@
   * @property {number} width Video width as defined by sender
   * @property {number} height Video height as defined by sender
   * @property {number} duration Duration of the video in seconds as defined by sender
-  * @property {PhotoSize} [thumb] *Optional*. Animation thumbnail as defined by sender
+  * @property {PhotoSize} [thumbnail] *Optional*. Animation thumbnail as defined by sender
   * @property {string} [file_name] *Optional*. Original animation filename as defined by sender
   * @property {string} [mime_type] *Optional*. MIME type of the file as defined by sender
   * @property {number} [file_size] *Optional*. File size in bytes. It can be bigger than 2^31 and some programming
@@ -400,7 +400,7 @@
   *   languages may have difficulty/silent defects in interpreting it. But it has at
   *   most 52 significant bits, so a signed 64-bit integer or double-precision float
   *   type are safe for storing this value.
-  * @property {PhotoSize} [thumb] *Optional*. Thumbnail of the album cover to which the music file belongs
+  * @property {PhotoSize} [thumbnail] *Optional*. Thumbnail of the album cover to which the music file belongs
   * @see https://core.telegram.org/bots/api/#audio
 */
 
@@ -415,7 +415,7 @@
   * @property {string} file_id Identifier for this file, which can be used to download or reuse the file
   * @property {string} file_unique_id Unique identifier for this file, which is supposed to be the same over time and
   *   for different bots. Can't be used to download or reuse the file.
-  * @property {PhotoSize} [thumb] *Optional*. Document thumbnail as defined by sender
+  * @property {PhotoSize} [thumbnail] *Optional*. Document thumbnail as defined by sender
   * @property {string} [file_name] *Optional*. Original filename as defined by sender
   * @property {string} [mime_type] *Optional*. MIME type of the file as defined by sender
   * @property {number} [file_size] *Optional*. File size in bytes. It can be bigger than 2^31 and some programming
@@ -435,7 +435,7 @@
   * @property {number} width Video width as defined by sender
   * @property {number} height Video height as defined by sender
   * @property {number} duration Duration of the video in seconds as defined by sender
-  * @property {PhotoSize} [thumb] *Optional*. Video thumbnail
+  * @property {PhotoSize} [thumbnail] *Optional*. Video thumbnail
   * @property {string} [file_name] *Optional*. Original filename as defined by sender
   * @property {string} [mime_type] *Optional*. MIME type of the file as defined by sender
   * @property {number} [file_size] *Optional*. File size in bytes. It can be bigger than 2^31 and some programming
@@ -457,7 +457,7 @@
   *   for different bots. Can't be used to download or reuse the file.
   * @property {number} length Video width and height (diameter of the video message) as defined by sender
   * @property {number} duration Duration of the video in seconds as defined by sender
-  * @property {PhotoSize} [thumb] *Optional*. Video thumbnail
+  * @property {PhotoSize} [thumbnail] *Optional*. Video thumbnail
   * @property {number} [file_size] *Optional*. File size in bytes
   * @see https://core.telegram.org/bots/api/#videonote
 */
@@ -849,6 +849,7 @@
 /**
  * This object defines the criteria used to request a suitable user. The identifier of the selected
  * user will be shared with the bot when the corresponding button is pressed.
+ * [More about requesting users »](https://core.telegram.org/bots/features#chat-and-user-selection)
  *
  * @typedef {object} KeyboardButtonRequestUser
  * @property {number} request_id Signed 32-bit identifier of the request, which will be received back in the
@@ -864,6 +865,7 @@
 /**
  * This object defines the criteria used to request a suitable chat. The identifier of the selected
  * chat will be shared with the bot when the corresponding button is pressed.
+ * [More about requesting chats »](https://core.telegram.org/bots/features#chat-and-user-selection)
  *
  * @typedef {object} KeyboardButtonRequestChat
  * @property {number} request_id Signed 32-bit identifier of the request, which will be received back in the
@@ -1473,6 +1475,22 @@
 */
 
 /**
+ * This object represents the bot's description.
+ *
+ * @typedef {object} BotDescription
+ * @property {string} description The bot's description
+ * @see https://core.telegram.org/bots/api/#botdescription
+ */
+
+/**
+ * This object represents the bot's short description.
+ *
+ * @typedef {object} BotShortDescription
+ * @property {string} short_description The bot's short description
+ * @see https://core.telegram.org/bots/api/#botshortdescription
+ */
+
+/**
   * This object describes the bot's menu button in a private chat. It should be one of
   *
   * [MenuButtonCommands](https://core.telegram.org/bots/api/#menubuttoncommands)
@@ -1579,7 +1597,7 @@
   *   pass “attach://\<file\_attach\_name\>” to upload a new one using
   *   multipart/form-data under \<file\_attach\_name\> name. [More information on
   *   Sending Files »](https://core.telegram.org/bots/api/#sending-files)
-  * @property {InputFile|FileId} [thumb] *Optional*. Thumbnail of the file sent; can be ignored if thumbnail generation
+  * @property {InputFile|FileId} [thumbnail] *Optional*. Thumbnail of the file sent; can be ignored if thumbnail generation
   *   for the file is supported server-side. The thumbnail should be in JPEG format
   *   and less than 200 kB in size. A thumbnail's width and height should not exceed
   *   320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails
@@ -1612,7 +1630,7 @@
   *   pass “attach://\<file\_attach\_name\>” to upload a new one using
   *   multipart/form-data under \<file\_attach\_name\> name. [More information on
   *   Sending Files »](https://core.telegram.org/bots/api/#sending-files)
-  * @property {InputFile|FileId} [thumb] *Optional*. Thumbnail of the file sent; can be ignored if thumbnail generation
+  * @property {InputFile|FileId} [thumbnail] *Optional*. Thumbnail of the file sent; can be ignored if thumbnail generation
   *   for the file is supported server-side. The thumbnail should be in JPEG format
   *   and less than 200 kB in size. A thumbnail's width and height should not exceed
   *   320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails
@@ -1645,7 +1663,7 @@
   *   pass “attach://\<file\_attach\_name\>” to upload a new one using
   *   multipart/form-data under \<file\_attach\_name\> name. [More information on
   *   Sending Files »](https://core.telegram.org/bots/api/#sending-files)
-  * @property {InputFile|FileId} [thumb] *Optional*. Thumbnail of the file sent; can be ignored if thumbnail generation
+  * @property {InputFile|FileId} [thumbnail] *Optional*. Thumbnail of the file sent; can be ignored if thumbnail generation
   *   for the file is supported server-side. The thumbnail should be in JPEG format
   *   and less than 200 kB in size. A thumbnail's width and height should not exceed
   *   320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails
@@ -1676,7 +1694,7 @@
   *   pass “attach://\<file\_attach\_name\>” to upload a new one using
   *   multipart/form-data under \<file\_attach\_name\> name. [More information on
   *   Sending Files »](https://core.telegram.org/bots/api/#sending-files)
-  * @property {InputFile|FileId} [thumb] *Optional*. Thumbnail of the file sent; can be ignored if thumbnail generation
+  * @property {InputFile|FileId} [thumbnail] *Optional*. Thumbnail of the file sent; can be ignored if thumbnail generation
   *   for the file is supported server-side. The thumbnail should be in JPEG format
   *   and less than 200 kB in size. A thumbnail's width and height should not exceed
   *   320. Ignored if the file is not uploaded using multipart/form-data. Thumbnails
@@ -1721,7 +1739,7 @@
   *   [animated](https://telegram.org/blog/animated-stickers)
   * @property {boolean} is_video *True*, if the sticker is a [video
   *   sticker](https://telegram.org/blog/video-stickers-better-reactions)
-  * @property {PhotoSize} [thumb] *Optional*. Sticker thumbnail in the .WEBP or .JPG format
+  * @property {PhotoSize} [thumbnail] *Optional*. Sticker thumbnail in the .WEBP or .JPG format
   * @property {string} [emoji] *Optional*. Emoji associated with the sticker
   * @property {string} [set_name] *Optional*. Name of the sticker set to which the sticker belongs
   * @property {File} [premium_animation] *Optional*. For premium regular stickers, premium animation for the sticker
@@ -1729,6 +1747,9 @@
   *   placed
   * @property {string} [custom_emoji_id] *Optional*. For custom emoji stickers, unique identifier of the custom emoji
   * @property {number} [file_size] *Optional*. File size in bytes
+  * @property {true} [needs_repainting] *Optional*. *True*, if the sticker must be repainted to a text color in
+ *   messages, the color of the Telegram Premium badge in emoji status, white color on chat photos, or another
+ *   appropriate color in other places
   * @see https://core.telegram.org/bots/api/#sticker
 */
 
@@ -1745,7 +1766,7 @@
   * @property {boolean} is_video *True*, if the sticker set contains [video
   *   stickers](https://telegram.org/blog/video-stickers-better-reactions)
   * @property {Sticker[]} stickers List of all set stickers
-  * @property {PhotoSize} [thumb] *Optional*. Sticker set thumbnail in the .WEBP, .TGS, or .WEBM format
+  * @property {PhotoSize} [thumbnail] *Optional*. Sticker set thumbnail in the .WEBP, .TGS, or .WEBM format
   * @see https://core.telegram.org/bots/api/#stickerset
 */
 
@@ -1765,6 +1786,25 @@
   * @property {number} scale Mask scaling coefficient. For example, 2.0 means double size.
   * @see https://core.telegram.org/bots/api/#maskposition
 */
+
+/**
+ * This object describes a sticker to be added to a sticker set.
+ *
+ * @typedef {object} InputSticker
+ * @property {InputFile} sticker The added sticker. Pass a *file\_id* as a String to send a file that already
+ *   exists on the Telegram servers, pass an HTTP URL as a String for Telegram to get
+ *   a file from the Internet, upload a new one using multipart/form-data, or pass
+ *   “attach://\<file\_attach\_name\>” to upload a new one using multipart/form-data
+ *   under \<file\_attach\_name\> name. Animated and video stickers can't be uploaded
+ *   via HTTP URL. [More information on Sending Files
+ *   »](https://core.telegram.org/bots/api/#sending-files)
+ * @property {string[]} emoji_list List of 1-20 emoji associated with the sticker
+ * @property {MaskPosition} [mask_position] *Optional*. Position where the mask should be placed on faces. For “mask”
+ *   stickers only.
+ * @property {string[]} [keywords] *Optional*. List of 0-20 search keywords for the sticker with total length of up
+ *   to 64 characters. For “regular” and “custom\_emoji” stickers only.
+ * @see https://core.telegram.org/bots/api/#inputsticker
+ */
 
 /**
   * This object represents an incoming inline query. When the user sends an empty query, your bot could
@@ -1855,9 +1895,9 @@
   * @property {string} [url] *Optional*. URL of the result
   * @property {boolean} [hide_url] *Optional*. Pass *True* if you don't want the URL to be shown in the message
   * @property {string} [description] *Optional*. Short description of the result
-  * @property {string} [thumb_url] *Optional*. Url of the thumbnail for the result
-  * @property {number} [thumb_width] *Optional*. Thumbnail width
-  * @property {number} [thumb_height] *Optional*. Thumbnail height
+  * @property {string} [thumbnail_url] *Optional*. Url of the thumbnail for the result
+  * @property {number} [thumbnail_width] *Optional*. Thumbnail width
+  * @property {number} [thumbnail_height] *Optional*. Thumbnail height
   * @see https://core.telegram.org/bots/api/#inlinequeryresultarticle
 */
 
@@ -1871,7 +1911,7 @@
   * @property {string} id Unique identifier for this result, 1-64 bytes
   * @property {string} photo_url A valid URL of the photo. Photo must be in **JPEG** format. Photo size must not
   *   exceed 5MB
-  * @property {string} thumb_url URL of the thumbnail for the photo
+  * @property {string} thumbnail_url URL of the thumbnail for the photo
   * @property {number} [photo_width] *Optional*. Width of the photo
   * @property {number} [photo_height] *Optional*. Height of the photo
   * @property {string} [title] *Optional*. Title for the result
@@ -1903,8 +1943,8 @@
   * @property {number} [gif_width] *Optional*. Width of the GIF
   * @property {number} [gif_height] *Optional*. Height of the GIF
   * @property {number} [gif_duration] *Optional*. Duration of the GIF in seconds
-  * @property {string} thumb_url URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result
-  * @property {'image/jpeg'|'image/gif'|'video/mp4'} [thumb_mime_type=image/jpeg] *Optional*. MIME type of the
+  * @property {string} thumbnail_url URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result
+  * @property {'image/jpeg'|'image/gif'|'video/mp4'} [thumbnail_mime_type=image/jpeg] *Optional*. MIME type of the
   *   thumbnail, must be one of “image/jpeg”,
   *   “image/gif”, or “video/mp4”. Defaults to “image/jpeg”
   * @property {string} [title] *Optional*. Title for the result
@@ -1935,8 +1975,8 @@
   * @property {number} [mpeg4_width] *Optional*. Video width
   * @property {number} [mpeg4_height] *Optional*. Video height
   * @property {number} [mpeg4_duration] *Optional*. Video duration in seconds
-  * @property {string} thumb_url URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result
-  * @property {'image/jpeg'|'image/gif'|'video/mp4'} [thumb_mime_type=image/jpeg] *Optional*. MIME type of the
+  * @property {string} thumbnail_url URL of the static (JPEG or GIF) or animated (MPEG4) thumbnail for the result
+  * @property {'image/jpeg'|'image/gif'|'video/mp4'} [thumbnail_mime_type=image/jpeg] *Optional*. MIME type of the
   *   thumbnail, must be one of “image/jpeg”,
   *   “image/gif”, or “video/mp4”. Defaults to “image/jpeg”
   * @property {string} [title] *Optional*. Title for the result
@@ -1968,7 +2008,7 @@
   * @property {string} id Unique identifier for this result, 1-64 bytes
   * @property {string} video_url A valid URL for the embedded video player or video file
   * @property {'text/html'|'video/mp4'} mime_type MIME type of the content of the video URL, “text/html” or “video/mp4”
-  * @property {string} thumb_url URL of the thumbnail (JPEG only) for the video
+  * @property {string} thumbnail_url URL of the thumbnail (JPEG only) for the video
   * @property {string} title Title for the result
   * @property {string} [caption] *Optional*. Caption of the video to be sent, 0-1024 characters after entities
   *   parsing
@@ -2066,9 +2106,9 @@
   * @property {InlineKeyboardMarkup} [reply_markup] *Optional*. Inline keyboard attached to the message
   * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of
   *   the file
-  * @property {string} [thumb_url] *Optional*. URL of the thumbnail (JPEG only) for the file
-  * @property {number} [thumb_width] *Optional*. Thumbnail width
-  * @property {number} [thumb_height] *Optional*. Thumbnail height
+  * @property {string} [thumbnail_url] *Optional*. URL of the thumbnail (JPEG only) for the file
+  * @property {number} [thumbnail_width] *Optional*. Thumbnail width
+  * @property {number} [thumbnail_height] *Optional*. Thumbnail height
   * @see https://core.telegram.org/bots/api/#inlinequeryresultdocument
 */
 
@@ -2097,9 +2137,9 @@
   *   the message
   * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of
   *   the location
-  * @property {string} [thumb_url] *Optional*. Url of the thumbnail for the result
-  * @property {number} [thumb_width] *Optional*. Thumbnail width
-  * @property {number} [thumb_height] *Optional*. Thumbnail height
+  * @property {string} [thumbnail_url] *Optional*. Url of the thumbnail for the result
+  * @property {number} [thumbnail_width] *Optional*. Thumbnail width
+  * @property {number} [thumbnail_height] *Optional*. Thumbnail height
   * @see https://core.telegram.org/bots/api/#inlinequeryresultlocation
 */
 
@@ -2126,9 +2166,9 @@
   *   the message
   * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of
   *   the venue
-  * @property {string} [thumb_url] *Optional*. Url of the thumbnail for the result
-  * @property {number} [thumb_width] *Optional*. Thumbnail width
-  * @property {number} [thumb_height] *Optional*. Thumbnail height
+  * @property {string} [thumbnail_url] *Optional*. Url of the thumbnail for the result
+  * @property {number} [thumbnail_width] *Optional*. Thumbnail width
+  * @property {number} [thumbnail_height] *Optional*. Thumbnail height
   * @see https://core.telegram.org/bots/api/#inlinequeryresultvenue
 */
 
@@ -2150,9 +2190,9 @@
   *   the message
   * @property {InputMessageContent} [input_message_content] *Optional*. Content of the message to be sent instead of
   *   the contact
-  * @property {string} [thumb_url] *Optional*. Url of the thumbnail for the result
-  * @property {number} [thumb_width] *Optional*. Thumbnail width
-  * @property {number} [thumb_height] *Optional*. Thumbnail height
+  * @property {string} [thumbnail_url] *Optional*. Url of the thumbnail for the result
+  * @property {number} [thumbnail_width] *Optional*. Thumbnail width
+  * @property {number} [thumbnail_height] *Optional*. Thumbnail height
   * @see https://core.telegram.org/bots/api/#inlinequeryresultcontact
 */
 
