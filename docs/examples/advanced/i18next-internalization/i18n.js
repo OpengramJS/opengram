@@ -2,7 +2,7 @@
  * Middleware factory function
  *
  * @param {object} i18next I18next instance
- * @return {MiddlewareFn}
+ * @return {Middleware}
  */
 function i18n (i18next) {
   async function i18nextMiddleware (ctx, next) {
@@ -50,7 +50,7 @@ function match (resourceKey, templateData) {
  * Create middleware which replies with i18next string by key
  *
  * @param {string} resourceKey I18next key
- * @param {object} [extra] Other params for `ctx.reply`
+ * @param {ExtraSendMessage|Extra} [extra] Other params for `ctx.reply`
  * @return {Function<Promise>}
  */
 function reply (resourceKey, extra) {
