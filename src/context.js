@@ -17,6 +17,14 @@ const UpdateTypes = [
   'chat_join_request'
 ]
 
+const deprecatedMessageSubTypes = [
+  // Bot API 6.0
+  'voice_chat_scheduled',
+  'voice_chat_started',
+  'voice_chat_ended',
+  'voice_chat_participants_invited'
+]
+
 const MessageSubTypes = [
   'voice',
   'video_note',
@@ -57,7 +65,8 @@ const MessageSubTypes = [
   'web_app_data',
   'forum_topic_created',
   'forum_topic_closed',
-  'forum_topic_reopened'
+  'forum_topic_reopened',
+  ...deprecatedMessageSubTypes
 ]
 
 const MessageSubTypesMapping = {
