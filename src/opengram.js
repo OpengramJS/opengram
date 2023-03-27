@@ -15,8 +15,47 @@ const { URL } = require('url')
 const { TelegramError, isTelegramError } = require('./core/error')
 const pTimeout = require('p-timeout')
 const { compactOptions } = require('./core/helpers/compact')
+const { showWarning } = require('./core/helpers/utils')
 
 const botInfoPromiseSymbol = Symbol('botInfoPromise')
+
+const WARN_SESSION_UNAVAILABLE = `
+Looks like you try to access session object, but session not available in this context.
+
+There are several reasons why this error occurs:
+- session registration occurs below the handler in which you want to access, for example like this:
+
+bot.on('message', ctx => ...)
+bot.use(session())
+
+If this is the case, all you need to do is move the session up:
+
+bot.use(session())
+bot.on('message', ctx => ...)
+
+- The session is not registered. In this case, following the example of the first paragraph,
+you need to connect the session, having previously exported it from the package
+`
+
+const WARN_STAGE_UNAVAILABLE = `
+Looks like you try to enter to scene, but Stage not available in this context.
+
+There are several reasons why this error occurs:
+- stage registration occurs below the handler in which you want to access, for example like this:
+
+bot.on('message', ctx => ...)
+bot.use(new Stage([...]))
+
+If this is the case, all you need to do is move the Stage up:
+
+bot.use(new Stage([...]))
+bot.on('message', ctx => ...)
+
+- The Stage is not registered. In this case, following the example of the first paragraph,
+you need to register the Stage, having previously exported it from the package.
+
+Do not forget to register session, because Stage uses session to store data.
+`
 
 /**
  * @type {{handlerTimeout: number, retryAfter: number, contextType: OpengramContext}}
@@ -547,6 +586,19 @@ class Opengram extends Composer {
     const tg = new Telegram(this.token, this.telegram.options, webhookResponse)
     const OpengramContext = this.options.contextType
     const ctx = new OpengramContext(update, tg, this.options)
+
+    ctx.session = new Proxy({}, {
+      set: () => { showWarning(WARN_SESSION_UNAVAILABLE) },
+      get () { showWarning(WARN_SESSION_UNAVAILABLE) },
+      deleteProperty: () => { showWarning(WARN_SESSION_UNAVAILABLE) }
+    })
+
+    ctx.scene = new Proxy({}, {
+      set: () => { showWarning(WARN_STAGE_UNAVAILABLE) },
+      get () { showWarning(WARN_STAGE_UNAVAILABLE) },
+      deleteProperty: () => { showWarning(WARN_STAGE_UNAVAILABLE) }
+    })
+
     Object.assign(ctx, this.context)
 
     try {
