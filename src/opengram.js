@@ -13,7 +13,6 @@ const generateCallback = require('./core/network/webhook')
 const crypto = require('crypto')
 const { URL } = require('url')
 const { TelegramError, isTelegramError } = require('./core/error')
-const pTimeout = require('p-timeout')
 const { compactOptions } = require('./core/helpers/compact')
 const { showWarning } = require('./core/helpers/utils')
 
@@ -62,7 +61,7 @@ Do not forget to register session, because Stage uses session to store data.
  */
 const DEFAULT_OPTIONS = {
   retryAfter: 1,
-  handlerTimeout: Infinity,
+  handlerTimeout: 2000,
   contextType: Context
 }
 
@@ -119,8 +118,9 @@ class Opengram extends Composer {
    *    see more [here](https://core.telegram.org/bots/webapps#testing-web-apps)
    * @property {boolean} [webhookReply=true] Enable / disable webhook reply
    * @property {number} [retryAfter=1] Interval for retrying long-polling requests in seconds
-   * @property {Infinity|number} handlerTimeout Maximum interval for update processing,
-   *    after which throwing `TimeoutError`
+   * @property {Infinity|number} [handlerTimeout=2000] Maximum interval waiting update processing with long-polling,
+   *   before getting new updates. Pass `Infinity` to always wait for processing complete. Pass `0` (zero) for
+   *   disable waiting
    * @property {OpengramContext} contextType Custom context class
    */
 
@@ -559,11 +559,29 @@ class Opengram extends Composer {
    * @throws Error
    * @return {Promise}
    */
-  handleUpdates (updates) {
+  async handleUpdates (updates) {
     if (!Array.isArray(updates)) {
       throw new Error('Updates must be an array')
     }
-    return Promise.all(updates.map((update) => this.handleUpdate(update)))
+
+    const { handlerTimeout } = this.options
+    const promises = updates.map((update) => this.handleUpdate(update))
+    const processAll = Promise.all(promises)
+
+    // Always wait for first updates | getMe error handling for first updates
+    if (this.context.botInfo === undefined || handlerTimeout === Infinity) {
+      return processAll
+    }
+
+    // Don't wait for processing to complete
+    if (handlerTimeout === 0) {
+      return
+    }
+
+    await Promise.race([
+      processAll,
+      new Promise(resolve => setTimeout(resolve, handlerTimeout))
+    ])
   }
 
   /**
@@ -571,7 +589,7 @@ class Opengram extends Composer {
    *
    * @param {Update} update Update object
    * @param {http.ServerResponse} [webhookResponse] Response object for send webhook reply
-   * @throws Error
+   * @throws {Error|TelegramError}
    * @return {Promise}
    */
   async handleUpdate (update, webhookResponse) {
@@ -582,6 +600,7 @@ class Opengram extends Composer {
       this.options.username = botInfo.username
       this.context.botInfo = botInfo
     }
+
     debug('Processing update', update.update_id)
     const tg = new Telegram(this.token, this.telegram.options, webhookResponse)
     const OpengramContext = this.options.contextType
@@ -602,10 +621,7 @@ class Opengram extends Composer {
     Object.assign(ctx, this.context)
 
     try {
-      await pTimeout(
-        this.middleware()(ctx),
-        this.options.handlerTimeout
-      )
+      await this.middleware()(ctx)
     } catch (err) {
       return await this.handleError(err, ctx)
     } finally {

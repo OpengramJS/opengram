@@ -43,7 +43,6 @@
   "dependencies": {
     "debug": "^4.3.4",
     "node-fetch": "^2.6.9",
-    "p-timeout": "^4.1.0",
     "sandwich-stream": "^2.0.2"
   },
   "devDependencies": {
