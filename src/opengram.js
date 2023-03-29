@@ -1,18 +1,10 @@
 const debug = require('debug')('opengram:core')
 const Telegram = require('./telegram')
-const Extra = require('./extra')
 const Composer = require('./composer')
-const Markup = require('./markup')
-const session = require('./session')
-const Router = require('./router')
-const { Stage } = require('./scenes')
-const { BaseScene } = require('./scenes')
-const { WizardScene } = require('./scenes')
 const { OpengramContext: Context } = require('./context')
 const generateCallback = require('./core/network/webhook')
 const crypto = require('crypto')
 const { URL } = require('url')
-const { TelegramError, isTelegramError } = require('./core/error')
 const { compactOptions } = require('./core/helpers/compact')
 const { showWarning } = require('./core/helpers/utils')
 
@@ -675,36 +667,5 @@ class Opengram extends Composer {
     this.fetchUpdates()
   }
 }
-
-/** @type {Opengram} */
-Opengram.default = Opengram
-/** @type {Opengram} */
-Opengram.Opengram = Opengram
-/** @type {Context} */
-Opengram.Context = Context
-/** @type {TelegramError} */
-Opengram.TelegramError = TelegramError
-/** @type {isTelegramError} */
-Opengram.isTelegramError = isTelegramError
-/** @type {Composer} */
-Opengram.Composer = Composer
-/** @type {Extra} */
-Opengram.Extra = Extra
-/** @type {Markup} */
-Opengram.Markup = Markup
-/** @type {Router} */
-Opengram.Router = Router
-/** @type {Telegram} */
-Opengram.Telegram = Telegram
-/** @type {Scenes.BaseScene} */
-Opengram.BaseScene = BaseScene
-/** @type {Scenes.WizardScene} */
-Opengram.WizardScene = WizardScene
-/** @type {Scenes.Stage} */
-Opengram.Stage = Stage
-/** @type {{WizardScene: Scenes.WizardScene, BaseScene: Scenes.BaseScene, Stage: Scenes.Stage}} */
-Opengram.Scenes = { BaseScene, WizardScene, Stage }
-
-Opengram.session = session
 
 module.exports = Opengram

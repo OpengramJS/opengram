@@ -1,7 +1,6 @@
 const test = require('ava')
-const Opengram = require('../')
+const { session } = require('../')
 const { createBot } = require('./utils')
-const { session } = Opengram
 
 class MockResponse {
   constructor () {

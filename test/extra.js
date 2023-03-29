@@ -1,6 +1,5 @@
 const test = require('ava')
-const Opengram = require('../')
-const { Extra, Markup } = Opengram
+const { Extra, Markup } = require('../')
 
 test('should generate default options from contructor', t => {
   const extra = { ...new Extra({ parse_mode: 'LaTeX' }) }

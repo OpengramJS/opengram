@@ -1,6 +1,5 @@
 const test = require('ava')
-const Opengram = require('../')
-const { Markup } = Opengram
+const { Markup } = require('../')
 
 test('should generate removeKeyboard markup', t => {
   const markup = { ...Markup.removeKeyboard() }

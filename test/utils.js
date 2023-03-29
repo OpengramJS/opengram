@@ -1,4 +1,4 @@
-const { Opengram } = require('../src/opengram')
+const { Opengram } = require('../src')
 
 function createBot (token, options) {
   const bot = new Opengram(token, options)

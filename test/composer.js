@@ -1,7 +1,6 @@
 const test = require('ava')
-const Opengram = require('../')
+const { Opengram, Composer } = require('../')
 const { createBot } = require('./utils')
-const { Composer } = Opengram
 
 const baseMessage = { chat: { id: 1 }, from: { id: 42, username: 'opengram' } }
 const baseGroupMessage = { chat: { id: 1, type: 'group' } }
