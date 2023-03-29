@@ -32,7 +32,7 @@
   },
   "type": "commonjs",
   "engines": {
-    "node": ">=12.18"
+    "node": ">=16"
   },
   "ava": {
     "files": [
