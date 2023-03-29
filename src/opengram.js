@@ -700,7 +700,9 @@ Opengram.Telegram = Telegram
 Opengram.BaseScene = BaseScene
 /** @type {Scenes.WizardScene} */
 Opengram.WizardScene = WizardScene
-/** @type {{WizardScene: Scenes.WizardScene, BaseScene: Scenes.BaseScene, Stage: Stage}} */
+/** @type {Scenes.Stage} */
+Opengram.Stage = Stage
+/** @type {{WizardScene: Scenes.WizardScene, BaseScene: Scenes.BaseScene, Stage: Scenes.Stage}} */
 Opengram.Scenes = { BaseScene, WizardScene, Stage }
 
 Opengram.session = session
