@@ -8,6 +8,9 @@ end_of_line = lf
 charset = utf-8
 trim_trailing_whitespace = true
 insert_final_newline = true
+ij_javascript_spaces_within_object_literal_braces = true
+ij_javascript_enforce_trailing_comma = remove
+ij_javascript_space_before_function_left_parenth = true
 
 [*.md]
 trim_trailing_whitespace = false
