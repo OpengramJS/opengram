@@ -7,7 +7,11 @@ async function renderException (name, inherits) {
   return await ejs.renderFile('./templates/exception.ejs', { inherits, name })
 }
 
-let result = 'const { TelegramError } = require("../src")\n'
+let result = 'const { TelegramError } = require(\'./error\')\n'
+
+function checkIsLowercase (str) {
+  return str === str.toLowerCase()
+}
 
 async function main () {
   const exceptionsExports = new Set()
@@ -17,6 +21,10 @@ async function main () {
       result += await renderException(exceptionType, baseError)
       exceptionsExports.add(exceptionType)
       for (const exception in exceptionsList[baseError][exceptionType]) {
+        if (!checkIsLowercase(exceptionsList[baseError][exceptionType][exception].match)) {
+          throw new Error(`${baseError}::${exceptionType}::${exception} contains uppercase symbols`)
+        }
+
         result += await renderException(exception, exceptionType)
         exceptionsExports.add(exception)
       }
@@ -29,7 +37,7 @@ async function main () {
   }
 }`
   result += '\n'
-  fs.writeFileSync('../core/exceptions.js', prettier.format(result, {
+  fs.writeFileSync('../src/core/exceptions.js', prettier.format(result, {
     arrowParens: 'always',
     bracketSameLine: true,
     bracketSpacing: true,
