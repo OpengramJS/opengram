@@ -8,6 +8,8 @@ const util = require('util')
 const { TelegramError } = require('../error')
 const MultipartStream = require('./multipart-stream')
 const { compactOptions } = require('../helpers/compact')
+const { matchExceptionType, exceptionsHTTPCodes } = require('../exeptionsList')
+const { Exceptions } = require('../exceptions')
 const { isStream } = MultipartStream
 
 const WEBHOOK_REPLY_METHOD_ALLOWLIST = new Set([
@@ -49,6 +51,23 @@ const DEFAULT_OPTIONS = {
 const WEBHOOK_REPLY_STUB = {
   webhook: true,
   details: 'https://core.telegram.org/bots/api#making-requests-when-getting-updates'
+}
+
+function createError (err, on) {
+  const type = matchExceptionType(err)
+  if (type) {
+    return new Exceptions[type](err, on)
+  }
+
+  if (err.error_code) {
+    const type = exceptionsHTTPCodes[err.error_code]
+
+    if (type) {
+      return new Exceptions[type](err, on)
+    }
+  }
+
+  return new TelegramError(err, on)
 }
 
 // eslint-disable-next-line jsdoc/require-throws
@@ -424,7 +443,7 @@ class ApiClient {
     }
 
     if (!token) {
-      throw new TelegramError({ error_code: 401, description: 'Bot Token is required' })
+      throw createError({ error_code: 401, description: 'Bot Token is required' })
     }
 
     debug('HTTP call', method, payload)
@@ -445,7 +464,7 @@ class ApiClient {
         error_code: res.status,
         description: res.statusText
       }
-      throw new TelegramError(errorPayload, { method, payload })
+      throw createError(errorPayload, { method, payload })
     }
 
     const text = await res.text()
@@ -457,7 +476,7 @@ class ApiClient {
 
     if (!responseData.ok) {
       debug('API call failed', responseData)
-      throw new TelegramError(responseData, { method, payload })
+      throw createError(responseData, { method, payload })
     }
     return responseData.result
   }

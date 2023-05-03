@@ -88,4 +88,31 @@ const exceptionsList = {
   }
 }
 
-module.exports = { exceptionsList }
+const exceptionsHTTPCodes = {
+  400: 'BadRequest',
+  409: 'ConflictError',
+  403: 'ForbiddenError'
+}
+
+const exceptionsHTTPCodesReverse = Object.fromEntries(
+  Object.entries(exceptionsHTTPCodes)
+    .map(a => a.reverse())
+)
+
+const exceptionsToMatch = Object.fromEntries(
+  Object.entries(exceptionsList.TelegramError)
+    .map(([name, value]) => [exceptionsHTTPCodesReverse[name], value])
+)
+
+function matchExceptionType (err) {
+  const [errName] = Object.entries(exceptionsToMatch[err.error_code])
+    .find(
+      ([, meta]) => err.description
+        .toLowerCase()
+        .includes(meta.match.toLowerCase())
+    ) ?? []
+
+  return errName
+}
+
+module.exports = { exceptionsList, matchExceptionType, exceptionsHTTPCodes, exceptionsHTTPCodesReverse }
