@@ -1,21 +1,21 @@
 const ejs = require('ejs')
 const fs = require('fs')
+const path = require('path')
 const prettier = require('prettier')
 const { exceptionsList } = require('../src/core/exeptionsList')
 
 function escapeQuotes (str) {
   return str.replace(/['']/g, '\\\'')
 }
-
 async function renderException (name, inherits) {
-  return await ejs.renderFile('./templates/exception.ejs', {
+  return await ejs.renderFile(path.join(__dirname, 'templates', 'exception.ejs'), {
     inherits: escapeQuotes(inherits),
     name: escapeQuotes(name)
   })
 }
 
 async function renderExceptionTest (name, inherits, match) {
-  return await ejs.renderFile('./templates/exception.test.ejs', {
+  return await ejs.renderFile(path.join(__dirname, 'templates', 'exception.test.ejs'), {
     inherits: escapeQuotes(inherits),
     name: escapeQuotes(name),
     match: escapeQuotes(match)
@@ -61,7 +61,7 @@ async function main () {
   result += '\n'
   resultTest += '\n'
 
-  fs.writeFileSync('../test/exceptions.js', prettier.format(resultTest, {
+  fs.writeFileSync(path.join(__dirname, '..', 'test', 'exceptions.js'), prettier.format(resultTest, {
     arrowParens: 'always',
     bracketSameLine: true,
     bracketSpacing: true,
@@ -82,7 +82,7 @@ async function main () {
     vueIndentScriptAndStyle: false
   }))
 
-  fs.writeFileSync('../src/core/exceptions.js', prettier.format(result, {
+  fs.writeFileSync(path.join(__dirname, '..', 'src', 'core', 'exceptions.js'), prettier.format(result, {
     arrowParens: 'always',
     bracketSameLine: true,
     bracketSpacing: true,
