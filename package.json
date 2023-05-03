@@ -24,6 +24,7 @@
     "lint": "eslint .",
     "test": "ava",
     "cover": "c8 npm test",
+    "generate-exceptions": "node ./scripts/generate-exceptions.js",
     "precommit": "npm run lint && npm test && npm run remark",
     "remark": "npx remark README.md --use remark-preset-lint-consistent --use remark-preset-lint-recommended",
     "docs": "jsdoc --configure .jsdoc.json",
