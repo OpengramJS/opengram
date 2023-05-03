@@ -3,8 +3,16 @@ const fs = require('fs')
 const prettier = require('prettier')
 const { exceptionsList } = require('../src/core/exeptionsList')
 
+function escapeQuotes (str) {
+  return str.replace(/['']/g, '\\\'')
+}
+
 async function renderException (name, inherits) {
-  return await ejs.renderFile('./templates/exception.ejs', { inherits, name })
+  return await ejs.renderFile('./templates/exception.ejs', {
+    inherits: escapeQuotes(inherits),
+    name: escapeQuotes(name)
+  })
+}
 }
 
 let result = 'const { TelegramError } = require(\'./error\')\n'
