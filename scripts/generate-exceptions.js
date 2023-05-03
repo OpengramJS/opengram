@@ -13,9 +13,21 @@ async function renderException (name, inherits) {
     name: escapeQuotes(name)
   })
 }
+
+async function renderExceptionTest (name, inherits, match) {
+  return await ejs.renderFile('./templates/exception.test.ejs', {
+    inherits: escapeQuotes(inherits),
+    name: escapeQuotes(name),
+    match: escapeQuotes(match)
+  })
 }
 
 let result = 'const { TelegramError } = require(\'./error\')\n'
+let resultTest = 'const test = require(\'ava\')\n'
+resultTest += 'const { createError } = require(\'./utils\')\n'
+resultTest += 'const { Exceptions } = require(\'../src/core/exceptions\')\n'
+resultTest += 'const { TelegramError } = require(\'../src/core/error\')\n'
+resultTest += 'const { matchExceptionType, exceptionsHTTPCodesReverse } = require(\'../src/core/exeptionsList\')\n\n'
 
 function checkIsLowercase (str) {
   return str === str.toLowerCase()
@@ -29,11 +41,13 @@ async function main () {
       result += await renderException(exceptionType, baseError)
       exceptionsExports.add(exceptionType)
       for (const exception in exceptionsList[baseError][exceptionType]) {
-        if (!checkIsLowercase(exceptionsList[baseError][exceptionType][exception].match)) {
+        const { match } = exceptionsList[baseError][exceptionType][exception]
+        if (!checkIsLowercase(match)) {
           throw new Error(`${baseError}::${exceptionType}::${exception} contains uppercase symbols`)
         }
 
         result += await renderException(exception, exceptionType)
+        resultTest += await renderExceptionTest(exception, exceptionType, match)
         exceptionsExports.add(exception)
       }
     }
@@ -45,6 +59,29 @@ async function main () {
   }
 }`
   result += '\n'
+  resultTest += '\n'
+
+  fs.writeFileSync('../test/exceptions.js', prettier.format(resultTest, {
+    arrowParens: 'always',
+    bracketSameLine: true,
+    bracketSpacing: true,
+    embeddedLanguageFormatting: 'auto',
+    endOfLine: 'lf',
+    htmlWhitespaceSensitivity: 'css',
+    insertPragma: false,
+    jsxSingleQuote: false,
+    printWidth: 80,
+    proseWrap: 'preserve',
+    quoteProps: 'as-needed',
+    requirePragma: false,
+    semi: false,
+    singleQuote: true,
+    tabWidth: 2,
+    trailingComma: 'none',
+    useTabs: false,
+    vueIndentScriptAndStyle: false
+  }))
+
   fs.writeFileSync('../src/core/exceptions.js', prettier.format(result, {
     arrowParens: 'always',
     bracketSameLine: true,

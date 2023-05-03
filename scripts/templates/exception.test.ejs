@@ -1,0 +1,11 @@
+test('should match "<%-match%>"', t => {
+    const dummyError = createError(exceptionsHTTPCodesReverse.<%-inherits%>, '<%-match%>')
+
+    const exceptionType = matchExceptionType(dummyError)
+    const err = new Exceptions.<%-name%>()
+
+    t.is(err instanceof TelegramError, true)
+    t.is(err instanceof Exceptions.<%-inherits%>, true)
+    t.is(exceptionType, '<%-name%>')
+})
+
