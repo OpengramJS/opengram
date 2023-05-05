@@ -3,6 +3,7 @@ const Composer = require('./composer')
 const Telegram = require('./telegram')
 const { OpengramContext: Context } = require('./context')
 const { TelegramError, isTelegramError } = require('./core/error')
+const { Exceptions } = require('./core/exceptions')
 const Markup = require('./markup')
 const Extra = require('./extra')
 const Router = require('./router')
@@ -17,6 +18,7 @@ module.exports = {
   TelegramError,
   isTelegramError,
   Extra,
+  Exceptions,
   Markup,
   Router,
   Telegram,
