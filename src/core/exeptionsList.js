@@ -105,12 +105,14 @@ const exceptionsToMatch = Object.fromEntries(
 )
 
 function matchExceptionType (err) {
+  if (!err.description || !err.error_code || !exceptionsToMatch[err.error_code]) return null
+
   const [errName] = Object.entries(exceptionsToMatch[err.error_code])
     .find(
       ([, meta]) => err.description
         .toLowerCase()
         .includes(meta.match.toLowerCase())
-    ) ?? []
+    ) ?? [null]
 
   return errName
 }
