@@ -229,10 +229,17 @@ async function attachFormValue (form, id, value, agent) {
 }
 
 /**
+ * @typedef {object} FileToAttach
+ * @property {string} [url] URL of file
+ * @property {string} filename Name of file
+ * @property {Stream|string|Buffer} source Path to file / Stream / Buffer
+ */
+
+/**
  * Used to attach media to form
  *
  * @param {MultipartStream} form MultipartStream instance
- * @param {string|boolean|number|{url?: string, filename: string, source?: Stream|string|Buffer}} media Value to attach
+ * @param {string|boolean|number|FileToAttach} media Value to attach
  * @param {*} id Form field name
  * @param {http.Agent} [agent] HTTP Agent
  * @return {Promise<void>}
