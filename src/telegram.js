@@ -1388,6 +1388,7 @@ class Telegram extends ApiClient {
    *    Identifier of the inline message
    * @param {string} [caption] New caption of the message, 0-1024 characters after entities parsing
    * @param {ExtraEditMessageCaption|Extra} [extra] Other parameters
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
    * @throws {TelegramError}
    * @return {Promise<boolean|Message>}
    */
