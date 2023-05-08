@@ -113,7 +113,7 @@ class Opengram extends Composer {
    * @property {Infinity|number} [handlerTimeout=2000] Maximum interval waiting update processing with long-polling,
    *   before getting new updates. Pass `Infinity` to always wait for processing complete. Pass `0` (zero) for
    *   disable waiting
-   * @property {OpengramContext} contextType Custom context class
+   * @property {OpengramContext} [contextType] Custom context class
    */
 
   /**
