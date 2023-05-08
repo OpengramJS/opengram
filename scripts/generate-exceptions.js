@@ -23,6 +23,10 @@ async function renderExceptionTest (name, inherits, match) {
 }
 
 let result = 'const { TelegramError } = require(\'./error\')\n'
+result += '/**\n' +
+  ' @namespace Exceptions\n' +
+  ' @description This namespace contains exception classes\n' +
+  ' */\n'
 let resultTest = 'const test = require(\'ava\')\n'
 resultTest += 'const { createError } = require(\'./utils\')\n'
 resultTest += 'const { Exceptions } = require(\'../src/core/exceptions\')\n'
