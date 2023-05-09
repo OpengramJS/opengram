@@ -6,6 +6,21 @@
  *
  * You can check is error belongs to {@link TelegramError} by using {@link isTelegramError}
  *
+ *
+ * Also, **Opengram** provides exception's classes for most Bots API errors, you can use it to discriminate exceptions.
+ *
+ * Example:
+ * ```js
+ * const { Exceptions, TelegramError } = require('opengram')
+ * // ...
+ * // error = 400: Bad Request: message is too long
+ * console.log(err instanceof TelegramError) // true
+ * console.log(err instanceof Exceptions.BadRequest) // true
+ * console.log(err instanceof Exceptions.MessageIsTooLong) // true
+ * ```
+ *
+ * You can find available exceptions classes here - {@link Exceptions}
+ *
  * @extends Error
  */
 class TelegramError extends Error {
