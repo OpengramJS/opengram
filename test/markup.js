@@ -167,6 +167,56 @@ test('should generate webApp button markup', t => {
   t.deepEqual(markup, { text: 'Order food', web_app: { url: 'https://example.com' }, hide: false })
 })
 
+test('should generate userRequest button markup', t => {
+  const markup = { ...Markup.userRequest('Select user', 123, true) }
+  t.deepEqual(markup, { text: 'Select user', request_user: { user_is_premium: true, request_id: 123 }, hide: false })
+})
+
+test('should generate botRequest button markup', t => {
+  const markup = { ...Markup.botRequest('Select bot', 123) }
+  t.deepEqual(markup, { text: 'Select bot', request_user: { request_id: 123, user_is_bot: true }, hide: false })
+})
+
+test('should generate groupRequest button markup', t => {
+  const markup = { ...Markup.groupRequest('Select group', 123, true) }
+  t.deepEqual(markup, {
+    text: 'Select group',
+    request_chat: { request_id: 123, chat_is_channel: false },
+    hide: false
+  })
+})
+
+test('should generate channelRequest button markup', t => {
+  const markup = { ...Markup.channelRequest('Select channel', 123, true) }
+  t.deepEqual(markup, {
+    text: 'Select channel',
+    request_chat: { request_id: 123, chat_is_channel: true },
+    hide: false
+  })
+})
+
+test('should generate switchToChosenChatButton button markup', t => {
+  const markup = {
+    ...Markup.switchToChosenChatButton('Switch', '123', {
+      allow_bot_chats: true,
+      allow_channel_chats: true,
+      allow_group_chats: true,
+      allow_user_chats: true
+    })
+  }
+  t.deepEqual(markup, {
+    text: 'Switch',
+    switch_inline_query_chosen_chat: {
+      query: '123',
+      allow_bot_chats: true,
+      allow_channel_chats: true,
+      allow_group_chats: true,
+      allow_user_chats: true
+    },
+    hide: false
+  })
+})
+
 test('should generate markup', t => {
   const markup = Markup.formatHTML('strike', [
     {
