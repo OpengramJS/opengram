@@ -378,6 +378,21 @@ class Markup {
   }
 
   /**
+   * Returns inline button that switches the current user to inline mode in a chosen chat with an optional default inline query.
+   *
+   * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
+   * @param {string} text The text to display
+   * @param {string} value Query value
+   * @param {SwitchInlineQueryChosenChatAllowList} allowList Object contains the list of allowed chat types to choose
+   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for
+   *   hide button when build keyboard
+   * @return {{ text: string, switch_inline_query_chosen_chat: SwitchInlineQueryChosenChat, hide:boolean }}
+   */
+  switchToChosenChatButton (text, value, allowList, hide = false) {
+    return Markup.switchToChosenChatButton(text, value, allowList, hide)
+  }
+
+  /**
    * Adds a new game query button
    *
    * @see https://core.telegram.org/bots/api#games
@@ -830,6 +845,33 @@ class Markup {
    */
   static switchToCurrentChatButton (text, value, hide = false) {
     return { text, switch_inline_query_current_chat: value, hide }
+  }
+
+  /**
+   * This object represents an inline button that switches the current user to inline mode in a chosen
+   * chat, with an optional default inline query.
+   *
+   * @typedef {object} SwitchInlineQueryChosenChatAllowList
+   * @property {boolean} [allow_user_chats] *Optional*. True, if private chats with users can be chosen
+   * @property {boolean} [allow_bot_chats] *Optional*. True, if private chats with bots can be chosen
+   * @property {boolean} [allow_group_chats] *Optional*. True, if group and supergroup chats can be chosen
+   * @property {boolean} [allow_channel_chats] *Optional*. True, if channel chats can be chosen
+   * @see https://core.telegram.org/bots/api/#switchinlinequerychosenchat
+   */
+
+  /**
+   * Returns inline button that switches the current user to inline mode in a chosen chat with an optional default inline query.
+   *
+   * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
+   * @param {string} text The text to display
+   * @param {string} value Query value
+   * @param {SwitchInlineQueryChosenChatAllowList} allowList Object contains the list of allowed chat types to choose
+   * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for
+   *   hide button when build keyboard
+   * @return {{ text: string, switch_inline_query_chosen_chat: SwitchInlineQueryChosenChat, hide:boolean }}
+   */
+  static switchToChosenChatButton (text, value, allowList, hide = false) {
+    return { text, switch_inline_query_chosen_chat: { query: value, ...allowList }, hide }
   }
 
   /**

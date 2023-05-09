@@ -24,6 +24,39 @@ class Telegram extends ApiClient {
   }
 
   /**
+   * Use this method to get the current bot name for the given user language.
+   *
+   * Returns {@link BotName} on success.
+   *
+   * @see https://core.telegram.org/bots/api#getmyname
+   * @param {string} [languageCode] A two-letter ISO 639-1 language code. If empty, the description will be applied to
+   *   all users for whose language there is no dedicated description.
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
+   * @throws {TelegramError}
+   * @return {Promise<BotName>}
+   */
+  getMyName (languageCode, signal) {
+    return this.callApi('getMyName', { language_code: languageCode }, { signal })
+  }
+
+  /**
+   * Use this method to get the current bot name for the given user language.
+   *
+   * Returns {@link BotName} on success.
+   *
+   * @see https://core.telegram.org/bots/api#setmyname
+   * @param {string} [name] New bot name; 0-64 characters. Pass an empty string to remove the dedicated name for the given language.
+   * @param {string} [languageCode] A two-letter ISO 639-1 language code. If empty, the description will be applied to
+   *   all users for whose language there is no dedicated description.
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
+   * @throws {TelegramError}
+   * @return {Promise<boolean>}
+   */
+  setMyName (name, languageCode, signal) {
+    return this.callApi('setMyName', { name, language_code: languageCode }, { signal })
+  }
+
+  /**
    * Use this method to get basic information about a file and prepare it for downloading.
    * For the moment, bots can download files of up to 20MB in size.
    *

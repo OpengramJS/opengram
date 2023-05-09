@@ -700,10 +700,11 @@
  */
 
 /**
- * This object represents a service message about a user allowing a bot added to the attachment menu to
- * write messages. Currently holds no information.
+ * This object represents a service message about a user allowing a bot to write messages after adding
+ * the bot to the attachment menu or launching a Web App from a link.
  *
- * @typedef {*} WriteAccessAllowed
+ * @typedef {object} WriteAccessAllowed
+ * @property {string} [web_app_name] *Optional*. Name of the Web App which was launched from a link
  * @see https://core.telegram.org/bots/api/#writeaccessallowed
  */
 
@@ -983,6 +984,9 @@
   *
   *   **NOTE:** This type of button **must** always be the first button in the first
   *   row.
+  * @property {SwitchInlineQueryChosenChat} [switch_inline_query_chosen_chat] *Optional*. If set, pressing the button
+  *   will prompt the user to select one of their chats of the specified type, open that chat and insert the bot's
+  *   username and the specified inline query in the input field
   * @property {boolean} [pay] *Optional*. Specify *True*, to send a [Pay
   *   button](https://core.telegram.org/bots/api/#payments).
   *
@@ -1287,6 +1291,7 @@
   * @property {ChatMember} new_chat_member New information about the chat member
   * @property {ChatInviteLink} [invite_link] *Optional*. Chat invite link, which was used by the user to join the chat;
   *   for joining by invite link events only.
+  * @property {boolean} [via_chat_folder_invite_link] *Optional*. True, if the user joined the chat via a chat folder invite link
   * @see https://core.telegram.org/bots/api/#chatmemberupdated
 */
 
@@ -2994,6 +2999,55 @@
   * @property {number} score Score
   * @see https://core.telegram.org/bots/api/#gamehighscore
 */
+
+/**
+ * This object represents a button to be shown above inline query results. You **must** use exactly one
+ * of the optional fields.
+ *
+ * @typedef {object} InlineQueryResultsButton
+ * @property {string} text Label text on the button
+ * @property {WebAppInfo} [web_app] *Optional*. Description of the [Web App](https://core.telegram.org/bots/webapps)
+ *   that will be launched when the user presses the button. The Web App will be able
+ *   to switch back to the inline mode using the method
+ *   [switchInlineQuery](https://core.telegram.org/bots/webapps#initializing-web-apps)
+ *   inside the Web App.
+ * @property {string} [start_parameter] *Optional*. [Deep-linking](https://core.telegram.org/bots/features#deep-linking)
+ *   parameter for the /start message sent to the bot when a user presses the button.
+ *   1-64 characters, only `A-Z`, `a-z`, `0-9`, `_` and `-` are allowed.
+ *
+ *   *Example:* An inline bot that sends YouTube videos can ask the user to connect
+ *   the bot to their YouTube account to adapt search results accordingly. To do
+ *   this, it displays a 'Connect your YouTube account' button above the results, or
+ *   even before showing any. The user presses the button, switches to a private chat
+ *   with the bot and, in doing so, passes a start parameter that instructs the bot
+ *   to return an OAuth link. Once done, the bot can offer a
+ *   [*switch\_inline*](https://core.telegram.org/bots/api/#inlinekeyboardmarkup)
+ *   button so that the user can easily return to the chat where they wanted to use
+ *   the bot's inline capabilities.
+ * @see https://core.telegram.org/bots/api/#inlinequeryresultsbutton
+ */
+
+/**
+ * This object represents an inline button that switches the current user to inline mode in a chosen
+ * chat, with an optional default inline query.
+ *
+ * @typedef {object} SwitchInlineQueryChosenChat
+ * @property {string} [query] *Optional*. The default inline query to be inserted in the input field. If left
+ *   empty, only the bot's username will be inserted
+ * @property {boolean} [allow_user_chats] *Optional*. True, if private chats with users can be chosen
+ * @property {boolean} [allow_bot_chats] *Optional*. True, if private chats with bots can be chosen
+ * @property {boolean} [allow_group_chats] *Optional*. True, if group and supergroup chats can be chosen
+ * @property {boolean} [allow_channel_chats] *Optional*. True, if channel chats can be chosen
+ * @see https://core.telegram.org/bots/api/#switchinlinequerychosenchat
+ */
+
+/**
+ * This object represents the bot's name.
+ *
+ * @typedef {object} BotName
+ * @property {string} name The bot's name
+ * @see https://core.telegram.org/bots/api/#botname
+ */
 
 /* other */
 
