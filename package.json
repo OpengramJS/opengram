@@ -25,7 +25,7 @@
     "test": "ava",
     "cover": "c8 npm test",
     "precommit": "npm run lint && npm test && npm run remark",
-    "remark": "npx remark README.md --use remark-preset-lint-consistent --use remark-preset-lint-recommended",
+    "remark": "npx remark README.md",
     "docs": "jsdoc --configure .jsdoc.json",
     "json-docs": "jsdoc --template ./node_modules/jsdoc-json --destination docs/docs.json --recurse src",
     "prepare": "husky install"
