@@ -1,6 +1,6 @@
 'use strict'
 
-const { Opengram } = require('opengram')
+const { Opengram, isTelegramError } = require('opengram')
 
 if (process.env.BOT_TOKEN === undefined) {
   throw new TypeError('BOT_TOKEN must be provided!')
@@ -16,12 +16,16 @@ bot.on('text', async ctx => {
 
 // Register error handler, for preventing bot crashes
 bot.catch((error, ctx) => {
-  console.error(error, ctx) // Print error and context
+  if (isTelegramError(error)) {
+    console.error(error, ctx) // Print error and context
+    return
+  }
+  throw error
 })
 
 // Start bot using long-polling
 bot.launch()
-  .then(() => console.log(`Bot ${bot.context.botInfo.username} started`))
+  .then(() => console.log('Bot started'))
 
 // Enable graceful stop
 process.once('SIGINT', () => bot.stop())

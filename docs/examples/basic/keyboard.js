@@ -1,6 +1,6 @@
 'use strict'
 
-const { Opengram, Markup, Extra } = require('opengram')
+const { Opengram, Markup, Extra, isTelegramError } = require('opengram')
 
 // Create Opengram instance with BOT TOKEN given by http://t.me/BotFather
 const bot = new Opengram(process.env.BOT_TOKEN)
@@ -186,13 +186,17 @@ bot.start(ctx => {
 
 // Register error handler, for preventing bot crashes
 bot.catch((error, ctx) => {
-  console.error(error, ctx) // Print error and context
+  if (isTelegramError(error)) {
+    console.error(error, ctx) // Print error and context
+    return
+  }
+  throw error
 })
 
 // Set commands list in bot menu
 bot.telegram.setMyCommands(commandsList)
   .then(() => bot.launch()) // Start bot using long-polling
-  .then(() => console.log(`Bot ${bot.context.botInfo.username} started`))
+  .then(() => console.log('Bot started'))
 
 // Enable graceful stop
 process.once('SIGINT', () => bot.stop())
