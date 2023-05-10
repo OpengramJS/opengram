@@ -27,9 +27,9 @@ Bots are special Telegram accounts designed to handle messages automatically. Us
 
 -   Visit @BotFather and create a new bot. You will obtain a bot token.
 -   Install opengram:
-      - pnpm: `pnpm install opengram`
-      - yarn: `yarn add opengram`
-      - npm: `npm i opengram`
+    -   pnpm: `pnpm install opengram`
+    -   yarn: `yarn add opengram`
+    -   npm: `npm i opengram`
 -   Create `bot.js` file and paste code
     ```js
     const { Opengram, isTelegramError } = require('opengram')
@@ -72,9 +72,9 @@ For more examples, check [docs/examples](https://github.com/OpengramJS/opengram/
 -   API Reference
 -   [GitHub Discussions](https://github.com/opengramjs/opengram/discussions)
 -   Chats:
-    - [Russian-speaking chat](https://t.me/opengramjs)
-    - [English chat](https://t.me/opengram_en)
-- [News channel](https://t.me/opengram_news)
+    -   [Russian-speaking chat](https://t.me/opengramjs)
+    -   [English chat](https://t.me/opengram_en)
+-   [News channel](https://t.me/opengram_news)
 
 ## License
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FOpengramJS%2Fopengram.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FOpengramJS%2Fopengram?ref=badge_large)
