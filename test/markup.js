@@ -1,5 +1,6 @@
 const test = require('ava')
 const { Markup } = require('../')
+const { hideSymbol } = require('../src/markup')
 
 test('should generate removeKeyboard markup', t => {
   const markup = { ...Markup.removeKeyboard() }
@@ -119,62 +120,62 @@ test('should generate extra from keyboard markup', t => {
 
 test('should generate standart button markup', t => {
   const markup = { ...Markup.button('foo') }
-  t.deepEqual(markup, { text: 'foo', hide: false })
+  t.deepEqual(markup, { text: 'foo', [hideSymbol]: false })
 })
 
 test('should generate cb button markup', t => {
   const markup = { ...Markup.callbackButton('foo', 'bar') }
-  t.deepEqual(markup, { text: 'foo', callback_data: 'bar', hide: false })
+  t.deepEqual(markup, { text: 'foo', callback_data: 'bar', [hideSymbol]: false })
 })
 
 test('should generate url button markup', t => {
   const markup = { ...Markup.urlButton('foo', 'https://bar.tld') }
-  t.deepEqual(markup, { text: 'foo', url: 'https://bar.tld', hide: false })
+  t.deepEqual(markup, { text: 'foo', url: 'https://bar.tld', [hideSymbol]: false })
 })
 
 test('should generate location request button markup', t => {
   const markup = { ...Markup.locationRequestButton('send location') }
-  t.deepEqual(markup, { text: 'send location', request_location: true, hide: false })
+  t.deepEqual(markup, { text: 'send location', request_location: true, [hideSymbol]: false })
 })
 
 test('should generate contact request button markup', t => {
   const markup = { ...Markup.contactRequestButton('send contact') }
-  t.deepEqual(markup, { text: 'send contact', request_contact: true, hide: false })
+  t.deepEqual(markup, { text: 'send contact', request_contact: true, [hideSymbol]: false })
 })
 
 test('should generate switch inline query button markup', t => {
   const markup = { ...Markup.switchToChatButton('play now', 'foo') }
-  t.deepEqual(markup, { text: 'play now', switch_inline_query: 'foo', hide: false })
+  t.deepEqual(markup, { text: 'play now', switch_inline_query: 'foo', [hideSymbol]: false })
 })
 
 test('should generate switch inline query button markup for chat', t => {
   const markup = { ...Markup.switchToCurrentChatButton('play now', 'foo') }
-  t.deepEqual(markup, { text: 'play now', switch_inline_query_current_chat: 'foo', hide: false })
+  t.deepEqual(markup, { text: 'play now', switch_inline_query_current_chat: 'foo', [hideSymbol]: false })
 })
 
 test('should generate game button markup', t => {
   const markup = { ...Markup.gameButton('play') }
-  t.deepEqual(markup, { text: 'play', callback_game: {}, hide: false })
+  t.deepEqual(markup, { text: 'play', callback_game: {}, [hideSymbol]: false })
 })
 
 test('should generate hidden game button markup', t => {
   const markup = { ...Markup.gameButton('play again', true) }
-  t.deepEqual(markup, { text: 'play again', callback_game: {}, hide: true })
+  t.deepEqual(markup, { text: 'play again', callback_game: {}, [hideSymbol]: true })
 })
 
 test('should generate webApp button markup', t => {
   const markup = { ...Markup.webApp('Order food', 'https://example.com') }
-  t.deepEqual(markup, { text: 'Order food', web_app: { url: 'https://example.com' }, hide: false })
+  t.deepEqual(markup, { text: 'Order food', web_app: { url: 'https://example.com' }, [hideSymbol]: false })
 })
 
 test('should generate userRequest button markup', t => {
   const markup = { ...Markup.userRequest('Select user', 123, true) }
-  t.deepEqual(markup, { text: 'Select user', request_user: { user_is_premium: true, request_id: 123 }, hide: false })
+  t.deepEqual(markup, { text: 'Select user', request_user: { user_is_premium: true, request_id: 123 }, [hideSymbol]: false })
 })
 
 test('should generate botRequest button markup', t => {
   const markup = { ...Markup.botRequest('Select bot', 123) }
-  t.deepEqual(markup, { text: 'Select bot', request_user: { request_id: 123, user_is_bot: true }, hide: false })
+  t.deepEqual(markup, { text: 'Select bot', request_user: { request_id: 123, user_is_bot: true }, [hideSymbol]: false })
 })
 
 test('should generate groupRequest button markup', t => {
@@ -182,7 +183,7 @@ test('should generate groupRequest button markup', t => {
   t.deepEqual(markup, {
     text: 'Select group',
     request_chat: { request_id: 123, chat_is_channel: false },
-    hide: false
+    [hideSymbol]: false
   })
 })
 
@@ -191,7 +192,7 @@ test('should generate channelRequest button markup', t => {
   t.deepEqual(markup, {
     text: 'Select channel',
     request_chat: { request_id: 123, chat_is_channel: true },
-    hide: false
+    [hideSymbol]: false
   })
 })
 
@@ -213,7 +214,7 @@ test('should generate switchToChosenChatButton button markup', t => {
       allow_group_chats: true,
       allow_user_chats: true
     },
-    hide: false
+    [hideSymbol]: false
   })
 })
 
