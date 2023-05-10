@@ -1,12 +1,159 @@
-const { escapeHTML } = require('./core/helpers/escape')
 const hideSymbol = Symbol('hide')
 
 /**
  * @module Markup
  */
 
-/** Class for building keyboard markup */
+const ESCAPE_LIST = {
+  // https://core.telegram.org/bots/api#markdown-style
+  md: ['_', '*', '`', '['],
+  // https://core.telegram.org/bots/api#markdownv2-style
+  md2: ['_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!'],
+  // https://core.telegram.org/bots/api#html-style
+  html: { '&': '&amp;', '<': '&lt;', '>': '&gt;' }
+}
+
+const htmlKeys = Object.keys(ESCAPE_LIST.html)
+
+/** Class for building keyboard / HTML / Markdown / MarkdownV2 markup */
 class Markup {
+  /**
+   * Escape string for HTML
+   *
+   * @see https://core.telegram.org/bots/api#html-style
+   * @param {string} text String to escape
+   * @return {string}
+   */
+  static escapeHTML (text) {
+    return htmlKeys.reduce(
+      (prevText, charToEscape) => prevText.replaceAll(charToEscape, ESCAPE_LIST.html[charToEscape]),
+      text
+    )
+  }
+
+  /**
+   * Escape string for Markdown V2
+   *
+   * @see https://core.telegram.org/bots/api#markdownv2-style
+   * @param {string} text String to escape
+   * @return {string}
+   */
+  static escapeMarkdownV2 (text) {
+    return ESCAPE_LIST.md2.reduce(
+      (prevText, charToEscape) => prevText.replaceAll(charToEscape, `\\${charToEscape}`),
+      text
+    )
+  }
+
+  /**
+   * Escape string for Markdown
+   *
+   * @see https://core.telegram.org/bots/api#markdown-style
+   * @param {string} text String to escape
+   * @return {string}
+   */
+  static escapeMarkdown (text) {
+    return ESCAPE_LIST.md.reduce(
+      (prevText, charToEscape) => prevText.replaceAll(charToEscape, `\\${charToEscape}`),
+      text
+    )
+  }
+
+  /**
+   * Returns build HTML given text and entities object
+   *
+   * @param {string} text Message text
+   * @param {MessageEntity[]} entities Array of message entities
+   * @return {string}
+   */
+  static formatHTML (text = '', entities = []) {
+    const chars = text
+    const available = [...entities]
+    const opened = []
+    const result = []
+    for (let offset = 0; offset < chars.length; offset++) {
+      while (true) {
+        const index = available.findIndex((entity) => entity.offset === offset)
+        if (index === -1) {
+          break
+        }
+        const entity = available[index]
+        switch (entity.type) {
+          case 'bold':
+            result.push('<b>')
+            break
+          case 'italic':
+            result.push('<i>')
+            break
+          case 'code':
+            result.push('<code>')
+            break
+          case 'pre':
+            if (entity.language) {
+              result.push(`<pre><code class="language-${entity.language}">`)
+            } else {
+              result.push('<pre>')
+            }
+            break
+          case 'strikethrough':
+            result.push('<s>')
+            break
+          case 'underline':
+            result.push('<u>')
+            break
+          case 'text_mention':
+            result.push(`<a href="tg://user?id=${entity.user.id}">`)
+            break
+          case 'text_link':
+            result.push(`<a href="${entity.url}">`)
+            break
+        }
+        opened.unshift(entity)
+        available.splice(index, 1)
+      }
+
+      result.push(Markup.escapeHTML(chars[offset]))
+
+      while (true) {
+        const index = opened.findIndex((entity) => entity.offset + entity.length - 1 === offset)
+        if (index === -1) {
+          break
+        }
+        const entity = opened[index]
+        switch (entity.type) {
+          case 'bold':
+            result.push('</b>')
+            break
+          case 'italic':
+            result.push('</i>')
+            break
+          case 'code':
+            result.push('</code>')
+            break
+          case 'pre':
+            if (entity.language) {
+              result.push('</code></pre>')
+            } else {
+              result.push('</pre>')
+            }
+            break
+          case 'strikethrough':
+            result.push('</s>')
+            break
+          case 'underline':
+            result.push('</u>')
+            break
+          case 'text_mention':
+          case 'text_link':
+            result.push('</a>')
+            break
+        }
+        opened.splice(index, 1)
+      }
+    }
+    return result.join('')
+  }
+
   /**
    * Adding force reply option to markup
    *
@@ -1173,102 +1320,6 @@ class Markup {
       [hideSymbol]: hide
     }
   }
-
-  /**
-   * Returns build HTML given text and entities object
-   *
-   * @param {string} text Message text
-   * @param {MessageEntity[]} entities Array of message entities
-   * @deprecated Prefer to pass entities direct when send / edit message, it is available after Bot API 5.0
-   * @return {string}
-   */
-  static formatHTML (text = '', entities = []) {
-    const chars = text
-    const available = [...entities]
-    const opened = []
-    const result = []
-    for (let offset = 0; offset < chars.length; offset++) {
-      while (true) {
-        const index = available.findIndex((entity) => entity.offset === offset)
-        if (index === -1) {
-          break
-        }
-        const entity = available[index]
-        switch (entity.type) {
-          case 'bold':
-            result.push('<b>')
-            break
-          case 'italic':
-            result.push('<i>')
-            break
-          case 'code':
-            result.push('<code>')
-            break
-          case 'pre':
-            if (entity.language) {
-              result.push(`<pre><code class="language-${entity.language}">`)
-            } else {
-              result.push('<pre>')
-            }
-            break
-          case 'strikethrough':
-            result.push('<s>')
-            break
-          case 'underline':
-            result.push('<u>')
-            break
-          case 'text_mention':
-            result.push(`<a href="tg://user?id=${entity.user.id}">`)
-            break
-          case 'text_link':
-            result.push(`<a href="${entity.url}">`)
-            break
-        }
-        opened.unshift(entity)
-        available.splice(index, 1)
-      }
-
-      result.push(escapeHTML(chars[offset]))
-
-      while (true) {
-        const index = opened.findIndex((entity) => entity.offset + entity.length - 1 === offset)
-        if (index === -1) {
-          break
-        }
-        const entity = opened[index]
-        switch (entity.type) {
-          case 'bold':
-            result.push('</b>')
-            break
-          case 'italic':
-            result.push('</i>')
-            break
-          case 'code':
-            result.push('</code>')
-            break
-          case 'pre':
-            if (entity.language) {
-              result.push('</code></pre>')
-            } else {
-              result.push('</pre>')
-            }
-            break
-          case 'strikethrough':
-            result.push('</s>')
-            break
-          case 'underline':
-            result.push('</u>')
-            break
-          case 'text_mention':
-          case 'text_link':
-            result.push('</a>')
-            break
-        }
-        opened.splice(index, 1)
-      }
-    }
-    return result.join('')
-  }
 }
 
 /**
@@ -1305,5 +1356,40 @@ function buildKeyboard (buttons, options) {
   }
   return result
 }
+
+/**
+ * @callback TagEscapeFunction
+ * @param {TemplateStringsArray} template
+ * @param {...string} substitutions
+ * @returns {string}
+ */
+
+/**
+ * @callback EscapeFunction
+ * @param {string} text
+ * @returns {string}
+ */
+
+/**
+ * @private
+ * @param {EscapeFunction} escape Escape function
+ * @private
+ * @returns {TagEscapeFunction} Returns tag escape function
+ */
+function escapeFactory (escape) {
+  return (template, ...substitutions) =>
+    String.raw(
+      template,
+      ...substitutions.map((substitution) =>
+        escape(
+          String(substitution ?? (substitution === null ? 'null' : 'undefined'))
+        )
+      )
+    )
+}
+
+Markup.HTML = escapeFactory(Markup.escapeHTML)
+Markup.mdv2 = escapeFactory(Markup.escapeMarkdownV2)
+Markup.md = escapeFactory(Markup.escapeMarkdown)
 
 module.exports = { Markup, hideSymbol }

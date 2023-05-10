@@ -338,3 +338,33 @@ test('should generate correct HTML with HTML-reserved characters', (t) => {
   const markup = Markup.formatHTML('<b>123</b>', [{ offset: 1, length: 3, type: 'underline' }])
   t.deepEqual(markup, '&lt;<u>b&gt;1</u>23&lt;/b&gt;')
 })
+
+test('should escape HTML characters', (t) => {
+  const markup = Markup.escapeHTML('<>&')
+  t.deepEqual(markup, '&lt;&gt;&amp;')
+})
+
+test('should escape Markdown characters', (t) => {
+  const markup = Markup.escapeMarkdown('_*[`')
+  t.deepEqual(markup, '\\_\\*\\[\\`')
+})
+
+test('should escape MarkdownV2 characters', (t) => {
+  const markup = Markup.escapeMarkdownV2('_*[]()~`>#+-=|{}.!')
+  t.deepEqual(markup, '\\_\\*\\[\\]\\(\\)\\~\\`\\>\\#\\+\\-\\=\\|\\{\\}\\.\\!')
+})
+
+test('should escape HTML characters with template string', (t) => {
+  const markup = Markup.HTML`${'<>&'}`
+  t.deepEqual(markup, '&lt;&gt;&amp;')
+})
+
+test('should escape Markdown characters with template string', (t) => {
+  const markup = Markup.md`${'_*[`'}`
+  t.deepEqual(markup, '\\_\\*\\[\\`')
+})
+
+test('should escape MarkdownV2 characters with template string', (t) => {
+  const markup = Markup.mdv2`${'_*[]()~`>#+-=|{}.!'}`
+  t.deepEqual(markup, '\\_\\*\\[\\]\\(\\)\\~\\`\\>\\#\\+\\-\\=\\|\\{\\}\\.\\!')
+})
