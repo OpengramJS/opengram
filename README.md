@@ -69,7 +69,7 @@ Bots are special Telegram accounts designed to handle messages automatically. Us
 For more examples, check [docs/examples](https://github.com/OpengramJS/opengram/tree/master/docs/examples) in repository
 
 ## Resources
--   API Reference
+-   [API Reference](https://reference.opengram.dev)
 -   [GitHub Discussions](https://github.com/opengramjs/opengram/discussions)
 -   Chats:
     -   [Russian-speaking chat](https://t.me/opengramjs)
