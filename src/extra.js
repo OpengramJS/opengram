@@ -1,4 +1,4 @@
-const Markup = require('./markup')
+const { Markup } = require('./markup')
 
 /**
  * Class for building extra parameters of messages

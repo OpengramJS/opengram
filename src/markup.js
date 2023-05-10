@@ -1,4 +1,5 @@
 const { escapeHTML } = require('./core/helpers/escape')
+const hideSymbol = Symbol('hide')
 
 /**
  * @module Markup
@@ -226,7 +227,7 @@ class Markup {
    * @param {string} text The text to display and send
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for
    *   hide button when build keyboard
-   * @return {{ text: string, hide:boolean }}
+   * @return {{ text: string }}
    */
   button (text, hide) {
     return Markup.button(text, hide)
@@ -246,7 +247,7 @@ class Markup {
    * @param {string} text The text to display
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
    *   for hide button when build keyboard
-   * @return {{ text: string, request_contact: true, hide:boolean }}
+   * @return {{ text: string, request_contact: true }}
    */
   contactRequestButton (text, hide) {
     return Markup.contactRequestButton(text, hide)
@@ -266,7 +267,7 @@ class Markup {
    * @param {string} text The text to display
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
    *   for hide button when build keyboard
-   * @return {{text: string, request_location: true, hide: boolean}}
+   * @return {{text: string, request_location: true }}
    */
   locationRequestButton (text, hide) {
     return Markup.locationRequestButton(text, hide)
@@ -283,7 +284,7 @@ class Markup {
    *   type
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for
    *   hide button when build keyboard
-   * @return {{text: string, request_poll: {type: ("quiz" | "regular")}, hide: boolean}}
+   * @return {{text: string, request_poll: {type: ("quiz" | "regular")}}}
    */
   pollRequestButton (text, type, hide) {
     return Markup.pollRequestButton(text, type, hide)
@@ -299,7 +300,7 @@ class Markup {
    *   can be used to mention a user by their ID without using a username, if this is allowed by their privacy settings.
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
    *   for hide button when build keyboard
-   * @return {{text: string, url: string, hide: boolean}}
+   * @return {{text: string, url: string}}
    */
   urlButton (text, url, hide) {
     return Markup.urlButton(text, url, hide)
@@ -326,7 +327,7 @@ class Markup {
    * @param {string} data Data to be sent in a callback query to the bot when button is pressed, 1-64 bytes
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
    *   for hide button when build keyboard
-   * @return {{text: string, callback_data: string, hide: boolean}}
+   * @return {{text: string, callback_data: string}}
    */
   callbackButton (text, data, hide) {
     return Markup.callbackButton(text, data, hide)
@@ -349,7 +350,7 @@ class Markup {
    * @param {string} value Value
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
    *   for hide button when build keyboard
-   * @return {{text: string, switch_inline_query: string, hide: boolean}}
+   * @return {{text: string, switch_inline_query: string}}
    */
   switchToChatButton (text, value, hide) {
     return Markup.switchToChatButton(text, value, hide)
@@ -371,7 +372,7 @@ class Markup {
    * @param {string} value Value
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
    *   for hide button when build keyboard
-   * @return {{text: string, switch_inline_query_current_chat: string, hide: boolean}}
+   * @return {{text: string, switch_inline_query_current_chat: string}}
    */
   switchToCurrentChatButton (text, value, hide) {
     return Markup.switchToCurrentChatButton(text, value, hide)
@@ -386,7 +387,7 @@ class Markup {
    * @param {SwitchInlineQueryChosenChatAllowList} allowList Object contains the list of allowed chat types to choose
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for
    *   hide button when build keyboard
-   * @return {{ text: string, switch_inline_query_chosen_chat: SwitchInlineQueryChosenChat, hide:boolean }}
+   * @return {{ text: string, switch_inline_query_chosen_chat: SwitchInlineQueryChosenChat }}
    */
   switchToChosenChatButton (text, value, allowList, hide = false) {
     return Markup.switchToChosenChatButton(text, value, allowList, hide)
@@ -400,7 +401,7 @@ class Markup {
    * @param {string} text The text to display
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for
    *   hide button when build keyboard
-   * @return {{text: string, callback_game: object, hide: boolean}}
+   * @return {{text: string, callback_game: object}}
    */
   gameButton (text, hide) {
     return Markup.gameButton(text, hide)
@@ -414,7 +415,7 @@ class Markup {
    * @param {string} text The text to display
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
    *   for hide button when build keyboard
-   * @return {{text: string, pay: true, hide: boolean}}
+   * @return {{text: string, pay: true}}
    */
   payButton (text, hide) {
     return Markup.payButton(text, hide)
@@ -433,7 +434,7 @@ class Markup {
    * @param {LoginButtonOptions} [opts] Login options
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
    *   for hide button when build keyboard
-   * @return {{text: string, login_url: {url: string, forward_text: string, bot_username: string, request_write_access: boolean}, hide: boolean}}
+   * @return {{text: string, login_url: {url: string, forward_text: string, bot_username: string, request_write_access: boolean}}}
    */
   loginButton (text, url, opts, hide) {
     return Markup.loginButton(text, url, opts, hide)
@@ -451,7 +452,7 @@ class Markup {
    * @param {string} url An HTTPS URL of a Web App to be opened with additional data
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
    *   for hide button when build keyboard
-   * @return {{text: string, web_app: {url: string}, hide: boolean}}
+   * @return {{text: string, web_app: {url: string}}}
    */
   webApp (text, url, hide) {
     return Markup.webApp(text, url, hide)
@@ -695,10 +696,10 @@ class Markup {
    * @param {string} text The text to display and send
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for
    *   hide button when build keyboard
-   * @return {{ text: string, hide:boolean }}
+   * @return {{ text: string }}
    */
   static button (text, hide = false) {
-    return { text, hide }
+    return { text, [hideSymbol]: hide }
   }
 
   /**
@@ -715,10 +716,10 @@ class Markup {
    * @param {string} text The text to display
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
    *   for hide button when build keyboard
-   * @return {{ text: string, request_contact: true, hide:boolean }}
+   * @return {{ text: string, request_contact: true}}
    */
   static contactRequestButton (text, hide = false) {
-    return { text, request_contact: true, hide }
+    return { text, request_contact: true, [hideSymbol]: hide }
   }
 
   /**
@@ -735,10 +736,10 @@ class Markup {
    * @param {string} text The text to display
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for
    *   hide button when build keyboard
-   * @return {{ text: string, request_location: true, hide:boolean }}
+   * @return {{ text: string, request_location: true }}
    */
   static locationRequestButton (text, hide = false) {
-    return { text, request_location: true, hide }
+    return { text, request_location: true, [hideSymbol]: hide }
   }
 
   /**
@@ -753,10 +754,10 @@ class Markup {
    *   type
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for
    *   hide button when build keyboard
-   * @return {{ text: string, request_poll: { type: 'quiz'|'regular' }, hide:boolean }}
+   * @return {{ text: string, request_poll: { type: 'quiz'|'regular' } }}
    */
   static pollRequestButton (text, type, hide = false) {
-    return { text, request_poll: { type }, hide }
+    return { text, request_poll: { type }, [hideSymbol]: hide }
   }
 
   /**
@@ -769,10 +770,10 @@ class Markup {
    *   can be used to mention a user by their ID without using a username, if this is allowed by their privacy settings.
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for
    *   hide button when build keyboard
-   * @return {{ text: string, url: string, hide:boolean }}
+   * @return {{ text: string, url: string }}
    */
   static urlButton (text, url, hide = false) {
-    return { text, url, hide }
+    return { text, url, [hideSymbol]: hide }
   }
 
   /**
@@ -796,10 +797,10 @@ class Markup {
    * @param {string} data Data to be sent in a callback query to the bot when button is pressed, 1-64 bytes
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for
    *   hide button when build keyboard
-   * @return {{ text: string, callback_data: string, hide:boolean }}
+   * @return {{ text: string, callback_data: string }}
    */
   static callbackButton (text, data, hide = false) {
-    return { text, callback_data: data, hide }
+    return { text, callback_data: data, [hideSymbol]: hide }
   }
 
   /**
@@ -819,10 +820,10 @@ class Markup {
    * @param {string} value Value
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for
    *   hide button when build keyboard
-   * @return {{ text: string, switch_inline_query: string, hide:boolean }}
+   * @return {{ text: string, switch_inline_query: string }}
    */
   static switchToChatButton (text, value, hide = false) {
-    return { text, switch_inline_query: value, hide }
+    return { text, switch_inline_query: value, [hideSymbol]: hide }
   }
 
   /**
@@ -841,10 +842,10 @@ class Markup {
    * @param {string} value Value
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for
    *   hide button when build keyboard
-   * @return {{ text: string, switch_inline_query_current_chat: string, hide:boolean }}
+   * @return {{ text: string, switch_inline_query_current_chat: string }}
    */
   static switchToCurrentChatButton (text, value, hide = false) {
-    return { text, switch_inline_query_current_chat: value, hide }
+    return { text, switch_inline_query_current_chat: value, [hideSymbol]: hide }
   }
 
   /**
@@ -868,10 +869,10 @@ class Markup {
    * @param {SwitchInlineQueryChosenChatAllowList} allowList Object contains the list of allowed chat types to choose
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for
    *   hide button when build keyboard
-   * @return {{ text: string, switch_inline_query_chosen_chat: SwitchInlineQueryChosenChat, hide:boolean }}
+   * @return {{ text: string, switch_inline_query_chosen_chat: SwitchInlineQueryChosenChat }}
    */
   static switchToChosenChatButton (text, value, allowList, hide = false) {
-    return { text, switch_inline_query_chosen_chat: { query: value, ...allowList }, hide }
+    return { text, switch_inline_query_chosen_chat: { query: value, ...allowList }, [hideSymbol]: hide }
   }
 
   /**
@@ -882,10 +883,10 @@ class Markup {
    * @param {string} text The text to display
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for
    *   hide button when build keyboard
-   * @return {{ text: string, callback_game: object, hide:boolean }}
+   * @return {{ text: string, callback_game: object }}
    */
   static gameButton (text, hide = false) {
-    return { text, callback_game: {}, hide }
+    return { text, callback_game: {}, [hideSymbol]: hide }
   }
 
   /**
@@ -896,10 +897,10 @@ class Markup {
    * @param {string} text The text to display
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for
    *   hide button when build keyboard
-   * @return {{ text: string, pay: true, hide:boolean }}
+   * @return {{ text: string, pay: true }}
    */
   static payButton (text, hide = false) {
-    return { text, pay: true, hide }
+    return { text, pay: true, [hideSymbol]: hide }
   }
 
   /**
@@ -922,15 +923,14 @@ class Markup {
    *     forward_text: string,
    *     bot_username: string,
    *     request_write_access: boolean
-   *   },
-   *   hide:boolean
+   *   }
    * }}
    */
   static loginButton (text, url, opts = {}, hide = false) {
     return {
       text,
       login_url: { ...opts, url },
-      hide
+      [hideSymbol]: hide
     }
   }
 
@@ -946,13 +946,13 @@ class Markup {
    * @param {string} url An HTTPS URL of a Web App to be opened with additional data
    * @param {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()` for
    *   hide button when build keyboard
-   * @return {{ text: string, web_app: { url: string }, hide:boolean }}
+   * @return {{ text: string, web_app: { url: string } }}
    */
   static webApp (text, url, hide = false) {
     return {
       text,
       web_app: { url },
-      hide
+      [hideSymbol]: hide
     }
   }
 
@@ -967,8 +967,6 @@ class Markup {
   /**
    * @typedef {object} UserRequestButton
    * @property {string} text Text of the button.
-   * @property {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
-   *   for hide button when build keyboard
    * @property {UserRequestButtonParams} request_user Button params object
    */
 
@@ -992,7 +990,7 @@ class Markup {
     userIsPremium,
     hide = false
   ) {
-    return { text, request_user: { request_id: requestId, user_is_premium: userIsPremium }, hide }
+    return { text, request_user: { request_id: requestId, user_is_premium: userIsPremium }, [hideSymbol]: hide }
   }
 
   /**
@@ -1006,8 +1004,6 @@ class Markup {
   /**
    * @typedef {object} BotRequestButton
    * @property {string} text Text of the button.
-   * @property {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
-   *   for hide button when build keyboard
    * @property {BotRequestButtonParams} request_user Button params object
    */
 
@@ -1028,7 +1024,7 @@ class Markup {
     requestId,
     hide = false
   ) {
-    return { text, request_user: { request_id: requestId, user_is_bot: true }, hide }
+    return { text, request_user: { request_id: requestId, user_is_bot: true }, [hideSymbol]: hide }
   }
 
   /**
@@ -1052,8 +1048,6 @@ class Markup {
   /**
    * @typedef {object} GroupRequestButton
    * @property {string} text Text of the button.
-   * @property {boolean} [hide=false] Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
-   *   for hide button when build keyboard
    * @property {GroupRequestButtonParams} request_chat Button params object
    */
 
@@ -1098,7 +1092,7 @@ class Markup {
     return {
       text,
       request_chat: { request_id: requestId, chat_is_channel: false, ...extra },
-      hide
+      [hideSymbol]: hide
     }
   }
 
@@ -1121,8 +1115,6 @@ class Markup {
   /**
    * @typedef {object} ChannelRequestButton
    * @property {string} text Text of the button.
-   * @property {boolean} hide Used by `Markup.inlineKeyboard` / `Markup.keyboard` / `Markup.buildKeyboard()`
-   *   for hide button when build keyboard
    * @property {GroupRequestButtonParams} request_chat Button params object
    */
 
@@ -1178,7 +1170,7 @@ class Markup {
     return {
       text,
       request_chat: { request_id: requestId, chat_is_channel: true, ...extra },
-      hide
+      [hideSymbol]: hide
     }
   }
 
@@ -1293,14 +1285,14 @@ function buildKeyboard (buttons, options) {
     return result
   }
   if (buttons.find(Array.isArray)) {
-    return buttons.map(row => row.filter((button) => !button.hide))
+    return buttons.map(row => row.filter((button) => !button[hideSymbol]))
   }
   const wrapFn = options.wrap
     ? options.wrap
     : (btn, index, currentRow) => currentRow.length >= options.columns
   let currentRow = []
   let index = 0
-  for (const btn of buttons.filter((button) => !button.hide)) {
+  for (const btn of buttons.filter((button) => !button[hideSymbol])) {
     if (wrapFn(btn, index, currentRow) && currentRow.length > 0) {
       result.push(currentRow)
       currentRow = []
@@ -1314,4 +1306,4 @@ function buildKeyboard (buttons, options) {
   return result
 }
 
-module.exports = Markup
+module.exports = { Markup, hideSymbol }
