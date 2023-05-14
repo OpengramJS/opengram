@@ -1,7 +1,7 @@
 
 # Changelog
 
-# Opengram 0.3.0
+# Opengram 0.3.1
 
 * 🤖 Bots API version increased from 6.6 to 6.7
 *   <details>
