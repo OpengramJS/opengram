@@ -6,11 +6,13 @@
 * 🤖 Bots API version increased from 6.6 to 6.7
 *   <details>
      <summary><b>⚠️ BREAKING</b> <code>handlerTimeout</code> behavior changed</summary>
-     Previously in Opengram 0.1.0 - 0.2.0-beta.1, was added TimeoutError, which throwed if middleware chain executes
+
+     Previously in **Opengram 0.1.0 - 0.2.0-beta.1**, was added `TimeoutError`, which throwed if middleware chain executes
      more then `handlerTimeout`.
-     From now, opengram by default wait only 2000 ms before get new updates via polling or close webhook connectionю
+
+     From now, **Opengram** by default wait only 2000 ms before get new updates via polling or close webhook connectionю
     
-     After Opengram 0.3.0 handler timeout can be configured in 3 modes:
+     After **Opengram 0.3.0** handler timeout can be configured in 3 modes:
      ```js
      // For webhook closes webhook connection immedialtely
      // For polling - doesn't wait for updates processing and get new updates immediately
@@ -24,7 +26,7 @@
      // For polling - waits and get new updates only if all prev processed completely
      const bot = new Opengram('...', { handlerTimeout: Infinity })
      ```
-    > ⚠️⚠️⚠️ If you run your bot on serverless, you need to specify timeout in milliseconds or pass `Infinity` to prevent stoping code execution after closing webhook connection
+    > ⚠️⚠️⚠️ **If you run your bot on serverless, you need to specify timeout in milliseconds or pass `Infinity` to prevent stopping code execution after closing webhook connection**
     </details>
 *   <details>
      <summary><b>⚠️ BREAKING</b> <code>ctx.botInfo</code> now not available, use <code>ctx.me</code> (for context) and <code>bot.username</code> (for bot instance) to get bot username</summary>
@@ -94,7 +96,7 @@
     </details>
 
 *   <details>
-      <summary>📝 Added escape methos for <b>Markdown</b>, <b>MarkdownV2</b>, <b>HTML</b> to <code>Markup</code> class</summary>
+      <summary>📝 Added escape methods for <b>Markdown</b>, <b>MarkdownV2</b>, <b>HTML</b> to <code>Markup</code> class</summary>
 
     Now you can use this methods for escaping user input data and etc, example:
       ```js
@@ -195,8 +197,8 @@ setWebhook (webhookOptions, extra)
   *   Added web app button for keyboard & inline-keyboard
   *   Added `answerWebAppQuery` for sending an answer to a Web App query, which originated from an inline button of the 'web_app' type.
   *   Added event `web_app_data`
-  *   Added methods `setChatMenuButton` and `getChatMenuButton` for managing the behavior of the bot's menu button in private chats.
-  *   Added methods `setMyDefaultAdministratorRights` and `getMyDefaultAdministratorRights` for managing the bot's default administrator rights.
+  *   Added methods `setChatMenuButton` and `getChatMenuButton` for managing the behavior of the bots menu button in private chats.
+  *   Added methods `setMyDefaultAdministratorRights` and `getMyDefaultAdministratorRights` for managing the bots default administrator rights.
   *   Added support for t.me links that can be used to add the bot to groups and channels as an administrator.
 </details>
 
@@ -281,7 +283,7 @@ bot.handleUpdate(...)
 ```
 ---
 
-<b>⚠️ BREAKING</b>
+**⚠️ BREAKING**
 
 Fully remove support for passing keyboard directly to extra parameters, it was not fully removed for `editMessageCaption`, `editMessageMedia`, but removed for others in Telegraf 3.38, now it is not available:
 
