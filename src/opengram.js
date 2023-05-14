@@ -165,6 +165,24 @@ class Opengram extends Composer {
   }
 
   /**
+   * Setter for bot username
+   *
+   * @param {string} username Bot token
+   */
+  set username (username) {
+    this.context.username = this.options.username = username
+  }
+
+  /**
+   * Getter for bot username
+   *
+   * @return {string} Bot token
+   */
+  get username () {
+    return this.options.username
+  }
+
+  /**
    * Setter for enabling / disabling for webhook reply. if assigned `true` - webhook reply enabled
    *
    * @param {boolean} webhookReply Value
@@ -462,11 +480,14 @@ class Opengram extends Composer {
   async launch (config = {}) {
     debug('Connecting to Telegram')
 
-    const botInfo = await this.telegram.getMe()
+    if (this.username === undefined) {
+      const botInfoPromise = this[botInfoPromiseSymbol] ?? (this[botInfoPromiseSymbol] = this.telegram.getMe())
+      const botInfo = await botInfoPromise
+      this.context.username = this.options.username = botInfo.username
+    }
 
-    debug(`Launching @${botInfo.username}`)
-    this.options.username = botInfo.username
-    this.context.botInfo = botInfo
+    debug(`Launching @${this.username}`)
+
     if (!config.webhook) {
       const { timeout, limit, allowedUpdates, stopCallback } = config.polling || {}
       await this.telegram.deleteWebhook({ drop_pending_updates: config.dropPendingUpdates })
@@ -561,7 +582,7 @@ class Opengram extends Composer {
     const processAll = Promise.all(promises)
 
     // Always wait for first updates | getMe error handling for first updates
-    if (this.context.botInfo === undefined || handlerTimeout === Infinity) {
+    if (this.username === undefined || handlerTimeout === Infinity) {
       return processAll
     }
 
@@ -585,12 +606,11 @@ class Opengram extends Composer {
    * @return {Promise}
    */
   async handleUpdate (update, webhookResponse) {
-    if (this.context.botInfo === undefined) {
+    if (this.username === undefined) {
       debug('Update %d is waiting for `botInfo` to be initialized', update.update_id)
       const botInfoPromise = this[botInfoPromiseSymbol] ?? (this[botInfoPromiseSymbol] = this.telegram.getMe())
       const botInfo = await botInfoPromise
-      this.options.username = botInfo.username
-      this.context.botInfo = botInfo
+      this.context.username = this.options.username = botInfo.username
     }
 
     debug('Processing update', update.update_id)

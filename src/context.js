@@ -141,7 +141,7 @@ class OpengramContext {
    * @return {string}
    */
   get me () {
-    return this.botInfo && this.botInfo.username
+    return this.username
   }
 
   /**
