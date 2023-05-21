@@ -136,7 +136,7 @@ class OpengramContext {
   }
 
   /**
-   * Getter for getting bot username from bot info object
+   * Getter for getting bot username
    *
    * @return {string}
    */
