@@ -1,6 +1,13 @@
 const { Opengram } = require('../src')
 
-function createBot (token, options) {
+/**
+ * Creates mock bot instance
+ *
+ * @param {string|undefined} [token] Bot tocken
+ * @param {OpengramOptions} [options] Options
+ * @return {Opengram}
+ */
+function createBot (token = '5593542136:AAHtE-hMEkXsNjvN4ncDWKEBvA-q7ZzHTgI', options) {
   const bot = new Opengram(token, options)
   bot.username = 'bot'
   return bot

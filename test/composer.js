@@ -441,7 +441,7 @@ test('Composer.filter should work with fn', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
       const bot = createBot()
-      bot.filter(({ message }) => message.text.length < 2)
+      bot.filter((ctx) => ctx.message.text.length < 2)
       bot.use(resolve)
       bot.handleUpdate({ message: { text: '-', ...baseMessage } })
       bot.handleUpdate({ message: { text: 'hello', ...baseMessage } })
@@ -454,10 +454,10 @@ test('Composer.filter should work with async fn', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
       const bot = createBot()
-      bot.filter(({ message }) => {
+      bot.filter((ctx) => {
         return new Promise(resolve => {
           setTimeout(() => {
-            resolve(message.text.length < 2)
+            resolve(ctx.message.text.length < 2)
           }, 100)
         })
       })
@@ -472,7 +472,7 @@ test('Composer.drop should work with fn', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
       const bot = createBot()
-      bot.drop(({ message }) => message.text.length > 2)
+      bot.drop((ctx) => ctx.message.text.length > 2)
       bot.use(resolve)
       bot.handleUpdate({ message: { text: '-', ...baseMessage } })
       bot.handleUpdate({ message: { text: 'hello', ...baseMessage } })
@@ -485,10 +485,10 @@ test('Composer.drop should work with async fn', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
       const bot = createBot()
-      bot.drop(({ message }) => {
+      bot.drop((ctx) => {
         return new Promise(resolve => {
           setTimeout(() => {
-            resolve(message.text.length > 2)
+            resolve(ctx.message.text.length > 2)
           }, 100)
         })
       })
@@ -602,7 +602,7 @@ test('Composer.entity should not infer', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
       const bot = createBot()
-      bot.use(Composer.entity('command', resolve))
+      bot.use(Composer.entity('bot_command', resolve))
       bot.use(resolve)
       bot.handleUpdate({
         message: {
@@ -618,7 +618,7 @@ test('Composer.entity should work with arrays', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
       const bot = createBot()
-      bot.use(Composer.entity(['command', 'hashtag'], resolve))
+      bot.use(Composer.entity(['bot_command', 'hashtag'], resolve))
       bot.handleUpdate({
         message: {
           text: '#foo',
@@ -853,7 +853,7 @@ test('should handle settings command', async t =>
 test('should handle group command', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = createBot(null)
+      const bot = createBot()
       bot.start(resolve)
       bot.handleUpdate({
         message: {
@@ -953,7 +953,7 @@ test('should handle short command', async t => {
 test('should handle command in group', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = createBot(null)
+      const bot = createBot()
       bot.start(resolve)
       bot.handleUpdate({
         message: {
@@ -969,7 +969,7 @@ test('should handle command in group', async t =>
 test('should handle command with payload in group', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = createBot(null)
+      const bot = createBot()
       bot.start(ctx => {
         t.true('startPayload' in ctx)
         t.is('payload', ctx.startPayload)
@@ -989,7 +989,7 @@ test('should handle command with payload in group', async t =>
 test('should handle command in supergroup', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = createBot(null)
+      const bot = createBot()
       bot.start(resolve)
       bot.handleUpdate({
         message: {
@@ -1005,7 +1005,7 @@ test('should handle command in supergroup', async t =>
 test('should handle command with payload in supergroup', async t =>
   await t.notThrowsAsync(
     new Promise(resolve => {
-      const bot = createBot(null)
+      const bot = createBot()
       bot.start(ctx => {
         t.true('startPayload' in ctx)
         t.is('payload', ctx.startPayload)

@@ -313,7 +313,7 @@ test('should provide shortcuts for `inline_query` update', async t => {
 })
 
 test('should provide subtype for `channel_post` update', async t => {
-  const bot = createBot('', { channelMode: true })
+  const bot = createBot(undefined, { channelMode: true })
   bot.on('text', ctx => {
     t.is(ctx.channelPost.text, 'foo')
   })
@@ -426,7 +426,7 @@ test('should work with context extensions', async t => {
 })
 
 test('should handle webhook response', async t => {
-  const bot = createBot('token', {
+  const bot = createBot(undefined, {
     telegram: {
       webhookReply: true
     }
@@ -446,7 +446,7 @@ test('should handle webhook response', async t => {
 })
 
 test('should respect webhookReply option', async t => {
-  const bot = createBot(null, { telegram: { webhookReply: false } })
+  const bot = createBot(undefined, { telegram: { webhookReply: false } })
   bot.catch(err => { throw err }) // Disable log
   bot.on('message', async ctx => ctx.replyWithChatAction('typing'))
   const res = new MockResponse()
@@ -456,12 +456,12 @@ test('should respect webhookReply option', async t => {
 })
 
 test('should respect webhookReply runtime change', async t => {
-  const bot = createBot({ telegram: { webhookReply: true } })
+  const bot = createBot(undefined, { telegram: { webhookReply: true } })
   bot.webhookReply = false
   bot.catch((err) => { throw err }) // Disable log
   bot.on('message', async ctx => ctx.replyWithChatAction('typing'))
   const res = new MockResponse()
-  // Throws cause Bot Token is required for http call'
+  // Throws cause Bot Token is required for http call
   await t.throwsAsync(bot.handleUpdate({ message: BaseTextMessage }, res))
 
   t.true(res.writableEnded)
