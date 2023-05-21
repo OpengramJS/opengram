@@ -179,7 +179,7 @@ test('should generate botRequest button markup', t => {
 })
 
 test('should generate groupRequest button markup', t => {
-  const markup = { ...Markup.groupRequest('Select group', 123, true) }
+  const markup = { ...Markup.groupRequest('Select group', 123, {}, false) }
   t.deepEqual(markup, {
     text: 'Select group',
     request_chat: { request_id: 123, chat_is_channel: false },
@@ -188,7 +188,7 @@ test('should generate groupRequest button markup', t => {
 })
 
 test('should generate channelRequest button markup', t => {
-  const markup = { ...Markup.channelRequest('Select channel', 123, true) }
+  const markup = { ...Markup.channelRequest('Select channel', 123, {}, false) }
   t.deepEqual(markup, {
     text: 'Select channel',
     request_chat: { request_id: 123, chat_is_channel: true },
