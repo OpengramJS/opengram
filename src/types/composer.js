@@ -48,7 +48,7 @@
  */
 
 /**
- * @typedef {EntityPredicateFn|MessageEntityType} EntityPredicate
+ * @typedef {EntityPredicateFn|MessageEntityType|Array<EntityPredicateFn|MessageEntityType>} EntityPredicate
  */
 
 /**
