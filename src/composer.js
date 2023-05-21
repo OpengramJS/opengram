@@ -832,7 +832,7 @@ class Composer {
    *
    * @param {PredicateFn|boolean} predicate The predicate to check. Can be async, returns boolean or Promise with boolean
    * @param {Middleware} trueMiddleware The middleware for the `true` case
-   * @param {Middleware} falseMiddleware The middleware for the `false` case
+   * @param {Middleware} [falseMiddleware] The middleware for the `false` case
    * @return {Middleware}
    */
   static branch (predicate, trueMiddleware, falseMiddleware) {
