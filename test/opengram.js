@@ -482,8 +482,8 @@ test('should respect webhookReply runtime change (per request)', async t => {
 })
 
 test('should deterministically generate `secretPathComponent`', (t) => {
-  const foo = createBot('foo')
-  const bar = createBot('bar')
+  const foo = createBot('123:foo')
+  const bar = createBot('123:bar')
   t.deepEqual(foo.secretPathComponent(), foo.secretPathComponent())
   t.deepEqual(bar.secretPathComponent(), bar.secretPathComponent())
   t.notDeepEqual(foo.secretPathComponent(), bar.secretPathComponent())
@@ -497,7 +497,7 @@ test('should redact secret part of token when throw api calling error', async t 
     }
   })
   const error = await t.throwsAsync(bot.telegram.callApi('test'))
-  t.regex(error.message, /http:\/\/notexists\/bot\/123456789:\[REDACTED\]\/test/)
+  t.regex(error.message, /http:\/\/notexists\/bot\/123456789:\[REDACTED]\/test/)
   t.notRegex(error.message, new RegExp(token))
 })
 
@@ -510,7 +510,7 @@ test('should redact secret part of token when throw api calling error when using
     }
   })
   const error = await t.throwsAsync(bot.telegram.callApi('test'))
-  t.regex(error.message, /http:\/\/notexists\/someprefix\/123456789:\[REDACTED\]\/test/)
+  t.regex(error.message, /http:\/\/notexists\/someprefix\/123456789:\[REDACTED]\/test/)
   t.notRegex(error.message, new RegExp(token))
 })
 
@@ -553,7 +553,7 @@ test('should restrict access with wrong secret', async t => {
 test('should handle webhook update with secret', async t => {
   const bot = createBot()
   t.plan(2)
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     bot.on('message', ctx => t.is(ctx.message.text, '/start'))
     const callback = bot.webhookCallback({ path: '/anime', secret: '1234567890' })
     const res = new MockResponse()
@@ -572,7 +572,7 @@ test('should handle webhook update with secret', async t => {
 test('should handle webhook update with path', async t => {
   const bot = createBot()
   t.plan(2)
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     bot.on('message', ctx => t.is(ctx.message.text, '/start'))
     const callback = bot.webhookCallback({ path: '/anime' })
     const res = new MockResponse()
