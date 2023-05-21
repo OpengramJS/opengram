@@ -416,7 +416,7 @@ class Composer {
    * bot.on('message', () => ctx.reply('Good, update date less then 6 hours!'))
    * ```
    *
-   * @param {PredicateFn} predicate The predicate to check. Can be async, returns boolean or Promise with boolean
+   * @param {PredicateFn|boolean} predicate The predicate to check. Can be async, returns boolean or Promise with boolean
    * @return {Composer}
    */
   drop (predicate) {
@@ -439,7 +439,7 @@ class Composer {
    * bot.on('message', ctx => ctx.reply('Update id of this message is divided by two without a remainder'))
    * ```
    *
-   * @param {PredicateFn} predicate The predicate to check. Can be async, returns boolean or Promise with boolean
+   * @param {PredicateFn|boolean} predicate The predicate to check. Can be async, returns boolean or Promise with boolean
    * @return {Composer}
    */
   filter (predicate) {
@@ -830,7 +830,7 @@ class Composer {
    * )
    * ```
    *
-   * @param {PredicateFn} predicate The predicate to check. Can be async, returns boolean or Promise with boolean
+   * @param {PredicateFn|boolean} predicate The predicate to check. Can be async, returns boolean or Promise with boolean
    * @param {Middleware} trueMiddleware The middleware for the `true` case
    * @param {Middleware} falseMiddleware The middleware for the `false` case
    * @return {Middleware}
@@ -866,7 +866,7 @@ class Composer {
    * )
    * ```
    *
-   * @param {PredicateFn} predicate The predicate to check. Can be async, returns boolean or Promise with boolean
+   * @param {PredicateFn|boolean} predicate The predicate to check. Can be async, returns boolean or Promise with boolean
    * @param {Middleware} fns Middleware(s)
    * @return {Middleware}
    */
@@ -894,7 +894,7 @@ class Composer {
    * )
    * ```
    *
-   * @param {PredicateFn} predicate The predicate to check. Can be async, returns boolean or Promise with boolean
+   * @param {PredicateFn|boolean} predicate The predicate to check. Can be async, returns boolean or Promise with boolean
    * @return {Middleware}
    */
   static filter (predicate) {
@@ -922,7 +922,7 @@ class Composer {
    * bot.on('message', mw, () => ctx.reply('Good, update date less then 6 hours!'))
    * ```
    *
-   * @param {PredicateFn} predicate The predicate to check. Can be async, returns boolean or Promise with boolean
+   * @param {PredicateFn|boolean} predicate The predicate to check. Can be async, returns boolean or Promise with boolean
    * @return {Middleware}
    */
   static drop (predicate) {
