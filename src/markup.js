@@ -25,6 +25,7 @@ class Markup {
    * @return {string}
    */
   static escapeHTML (text) {
+    text = text.toString()
     return htmlKeys.reduce(
       (prevText, charToEscape) => prevText.replaceAll(charToEscape, ESCAPE_LIST.html[charToEscape]),
       text
@@ -39,6 +40,7 @@ class Markup {
    * @return {string}
    */
   static escapeMarkdownV2 (text) {
+    text = text.toString()
     return ESCAPE_LIST.md2.reduce(
       (prevText, charToEscape) => prevText.replaceAll(charToEscape, `\\${charToEscape}`),
       text
@@ -53,6 +55,7 @@ class Markup {
    * @return {string}
    */
   static escapeMarkdown (text) {
+    text = text.toString()
     return ESCAPE_LIST.md.reduce(
       (prevText, charToEscape) => prevText.replaceAll(charToEscape, `\\${charToEscape}`),
       text
