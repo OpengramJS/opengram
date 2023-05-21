@@ -735,7 +735,7 @@ class Markup {
    * ```
    *
    * @see https://core.telegram.org/bots/api#replykeyboardmarkup
-   * @param {KeyboardButton[]|KeyboardButton[][]} buttons Array of buttons
+   * @param {KeyboardButton[]|KeyboardButton[][]|string[]|string[][]} buttons Array of buttons
    * @param {KeyboardOptions} [options] You can pass here columns count or wrap function for slice buttons to columns
    * @return {Markup}
    */
@@ -776,7 +776,7 @@ class Markup {
    * ```
    *
    * @see https://core.telegram.org/bots/api#inlinekeyboardmarkup
-   * @param {InlineKeyboardButton[]|InlineKeyboardButton[][]} buttons Array of buttons
+   * @param {InlineKeyboardButton[]|InlineKeyboardButton[][]|string[]|string[][]} buttons Array of buttons
    * @param {InlineKeyboardOptions} [options] You can pass here columns count or wrap function for slice
    *   buttons to columns
    * @return {Markup}
