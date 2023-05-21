@@ -153,12 +153,9 @@ test('should route forward', async t =>
 )
 
 test('should throw error then called with undefined middleware', async t =>
-  await t.throwsAsync(
-    new Promise(() => {
-      const composer = new Composer()
-      composer.compose(() => undefined)
-    })
-  )
+  await t.throwsAsync(async () => {
+    Composer.compose(() => undefined)
+  }, { instanceOf: TypeError, message: 'Middlewares must be an array' })
 )
 
 test('should throw error then called with invalid middleware', async t =>
