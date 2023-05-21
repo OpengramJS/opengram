@@ -98,17 +98,9 @@ const noop = () => { }
 class Opengram extends Composer {
   /**
    * @typedef {object} OpengramOptions
+   * @property {TelegramOptions} telegram Telegram options
    * @property {string} [username] Bot username, used if you don't call `bot.launch()`
-   * @property {http.Agent} [attachmentAgent] HTTP Agent used for attachments
-   * @property {http.Agent} [agent] HTTP agent used for API calls. By default, it have this configuration:
-   *     `new https.Agent({ keepAlive: true, keepAliveMsecs: 10000 })`
-   * @property {string} [apiRoot] API root URL
    * @property {boolean} [channelMode=false] If `true`, channel posts can be matched as `text` update type
-   * @property {string} [apiPrefix=bot] API prefix before bot token, by default `bot`, but if you use
-   *    [TDLight](https://github.com/tdlight-team/tdlight) you maybe should change `apiPrefix` to `user`
-   * @property {boolean} [testEnv=false] Enable / disable test environment for WebApps,
-   *    see more [here](https://core.telegram.org/bots/webapps#testing-web-apps)
-   * @property {boolean} [webhookReply=true] Enable / disable webhook reply
    * @property {number} [retryAfter=1] Interval for retrying long-polling requests in seconds
    * @property {Infinity|number} [handlerTimeout=2000] Maximum interval waiting update processing with long-polling,
    *   before getting new updates. Pass `Infinity` to always wait for processing complete. Pass `0` (zero) for
