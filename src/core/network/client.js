@@ -22,7 +22,9 @@ const WEBHOOK_REPLY_METHOD_ALLOWLIST = new Set([
   'closeGeneralForumTopic', 'reopenGeneralForumTopic', 'hideGeneralForumTopic', 'unhideGeneralForumTopic',
   'closeForumTopic', 'reopenForumTopic', 'deleteForumTopic', 'unpinAllForumTopicMessages', 'createNewStickerSet',
   'addStickerToSet', 'setStickerPositionInSet', 'setStickerSetThumb', 'deleteStickerFromSet', 'setMyCommands',
-  'deleteMyCommands', 'setPassportDataErrors', 'approveChatJoinRequest', 'declineChatJoinRequest'
+  'deleteMyCommands', 'setPassportDataErrors', 'approveChatJoinRequest', 'declineChatJoinRequest', 'setMyName',
+  'setMyDescription', 'setMyShortDescription', 'setCustomEmojiStickerSetThumbnail', 'setStickerSetTitle',
+  'deleteStickerSet', 'setStickerEmojiList', 'setStickerKeywords', 'setStickerMaskPosition'
 ])
 
 const DEFAULT_EXTENSIONS = {
