@@ -123,6 +123,11 @@ class Opengram extends Composer {
 
     this.handleError = async err => {
       console.error()
+      console.error(
+        'You see this message because no error handler is registered. By default, all errors from handlers ' +
+        '(middleware) fall into the Opengram#catch handler (most known as `bot.catch`). Please register error handler ' +
+        'before start update processing.'
+      )
       console.error((err.stack || err.toString()).replace(/^/gm, '  '))
       console.error()
       throw err
