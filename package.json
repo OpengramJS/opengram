@@ -79,5 +79,8 @@
     "bot",
     "botapi",
     "bot framework"
-  ]
+  ],
+  "volta": {
+    "node": "16.20.2"
+  }
 }
