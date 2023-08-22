@@ -14,7 +14,7 @@ Bots are special Telegram accounts designed to handle messages automatically. Us
 **Opengram** is a library that makes it simple for you to develop your own Telegram bots using JavaScript.
 
 ## Features
--   Full Telegram Bot API 6.7 support
+-   Full Telegram Bot API 6.8 support
 -   JSDoc annotated
 -   Lightweight
 -   [AWS λ](https://aws.amazon.com/en/lambda/) / [Firebase](https://firebase.google.com/) / [Glitch](https://glitch.com/) / [Fly.io](https://fly.io/) / [Deta space](https://deta.space/) / Whatever ready
@@ -85,7 +85,7 @@ For more examples, check [docs/examples](https://github.com/OpengramJS/opengram/
 [license-url]: https://opensource.org/licenses/MIT
 [codacy-image]: https://app.codacy.com/project/badge/Grade/0ba3bf1b270946918b13e2730d190156
 [codacy-url]: https://www.codacy.com/gh/OpengramJS/opengram/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=OpengramJS/opengram&amp;utm_campaign=Badge_Grade
-[bots-api-image]: https://img.shields.io/badge/Bots%20API-v6.7-ff69b4
+[bots-api-image]: https://img.shields.io/badge/Bots%20API-v6.8-ff69b4
 [bots-api-url]: https://core.telegram.org/bots/api
 [ci-image]: https://github.com/OpengramJS/opengram/actions/workflows/ci.yml/badge.svg?branch=master
 [ci-url]: https://github.com/OpengramJS/opengram/actions/workflows/actions/workflows/ci.yml
