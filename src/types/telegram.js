@@ -122,6 +122,9 @@
   * @property {string} [emoji_status_custom_emoji_id] *Optional*. Custom emoji identifier of emoji status of the other
   *   party in a private chat. Returned only in
   *   [getChat](https://core.telegram.org/bots/api/#getchat).
+  * @property {number} [emoji_status_expiration_date] *Optional*. Expiration date of the emoji status of the other party in a private
+  *   chat, if any. Returned only in
+  *    [getChat](https://core.telegram.org/bots/api/#getchat).
   * @property {string} [bio] *Optional*. Bio of the other party in a private chat. Returned only in
   *   [getChat](https://core.telegram.org/bots/api/#getchat).
   * @property {boolean} [has_private_forwards] *Optional*. *True*, if privacy settings of the other party in the
@@ -225,6 +228,7 @@
   * @property {Document} [document] *Optional*. Message is a general file, information about the file
   * @property {PhotoSize[]} [photo] *Optional*. Message is a photo, available sizes of the photo
   * @property {Sticker} [sticker] *Optional*. Message is a sticker, information about the sticker
+  * @property {Story} [story] *Optional*. Message is a forwarded story
   * @property {Video} [video] *Optional*. Message is a video, information about the video
   * @property {VideoNote} [video_note] *Optional*. Message is a [video
   *   note](https://telegram.org/blog/video-messages-and-telescope), information about
@@ -426,6 +430,14 @@
 */
 
 /**
+ * This object represents a message about a forwarded story in the chat. Currently holds no
+ * information.
+ *
+ * @typedef {*} Story
+ * @see https://core.telegram.org/bots/api/#story
+ */
+
+/**
   * This object represents a video file.
   *
   * @typedef {object} Video
@@ -519,9 +531,11 @@
   *
   * @typedef {object} PollAnswer
   * @property {string} poll_id Unique poll identifier
-  * @property {User} user The user, who changed the answer to the poll
-  * @property {number[]} option_ids 0-based identifiers of answer options, chosen by the user. May be empty if the
-  *   user retracted their vote.
+  * @property {Chat} [voter_chat] *Optional*. The chat that changed the answer to the poll, if the voter is
+  *   anonymous
+  * @property {User} [user] *Optional*. The user that changed the answer to the poll, if the voter isn't
+  *   anonymous
+  * @property {number[]} option_ids 0-based identifiers of chosen answer options. May be empty if the vote was retracted.
   * @see https://core.telegram.org/bots/api/#pollanswer
 */
 
@@ -966,13 +980,6 @@
   * @property {string} [switch_inline_query] *Optional*. If set, pressing the button will prompt the user to select one
   *   of their chats, open that chat and insert the bot's username and the specified inline query in the input field.
   *   May be empty, in which case just the bot's username will be inserted.
-  *
-  *   **Note:** This offers an easy way for users to start using your bot in [inline
-  *   mode](https://core.telegram.org/bots/inline) when they are currently in a
-  *   private chat with it. Especially useful when combined with
-  *   [*switch\_pm…*](https://core.telegram.org/bots/api/#answerinlinequery) actions -
-  *   in this case the user will be automatically returned to the chat they switched
-  *   from, skipping the chat selection screen.
   * @property {string} [switch_inline_query_current_chat] *Optional*. If set, pressing the button will insert the bot's
   *   username and the specified inline query in the current chat's input field. May be empty, in which case only the
   *   bot's username will be inserted.
