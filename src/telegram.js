@@ -1162,6 +1162,24 @@ class Telegram extends ApiClient {
   }
 
   /**
+   * Use this method to clear the list of pinned messages in a General forum topic.
+   * The bot must be an administrator in the chat for this to work and must have the `can_pin_messages` administrator
+   * right in the supergroup.
+   *
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
+   *
+   * @see https://core.telegram.org/bots/api#unpinallgeneralforumtopicmessages
+   * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
+   *    (in the format `@channelusername`)
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
+   * @throws {TelegramError}
+   * @return {Promise<boolean|WebhookResponse>}
+   */
+  unpinAllGeneralForumTopicMessages (chatId, signal) {
+    return this.callApi('unpinAllGeneralForumTopicMessages', { chat_id: chatId }, { signal })
+  }
+
+  /**
    * Use this method to get the current value of the bot's menu button in a private chat,
    * or the default menu button.
    *

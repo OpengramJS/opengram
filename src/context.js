@@ -1178,6 +1178,28 @@ class OpengramContext {
   }
 
   /**
+   * Use this method to clear the list of pinned messages in a General forum topic.
+   * The bot must be an administrator in the chat for this to work and must have the `can_pin_messages` administrator
+   * right in the supergroup.
+   *
+   * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.
+   *
+   * @see https://core.telegram.org/bots/api#unpinallgeneralforumtopicmessages
+   * @param {number|string} chatId Unique identifier for the target chat or username of the target channel
+   *    (in the format `@channelusername`)
+   * @param {AbortSignal} [signal] Optional `AbortSignal` to cancel the request
+   * @throws {TelegramError}
+   * @return {Promise<boolean|WebhookResponse>}
+   */
+  unpinAllGeneralForumTopicMessages (chatId, signal) {
+    this.assert(this.chat, 'unpinAllGeneralForumTopicMessages')
+    return this.telegram.unpinAllGeneralForumTopicMessages(
+      chatId,
+      signal
+    )
+  }
+
+  /**
    * Use this method for your bot to leave from group, supergroup or channel from current update.
    *
    * Returns `True` on success or {@link WebhookResponse} when webhook response enabled.

@@ -14,7 +14,7 @@ const { isStream } = MultipartStream
 
 const WEBHOOK_REPLY_METHOD_ALLOWLIST = new Set([
   'setWebhook', 'deleteWebhook', 'sendChatAction', 'answerInlineQuery', 'setChatPermissions', 'banChatMember',
-  'promoteChatMember', 'restrictChatMember', 'banChatSenderChat', 'unbanChatSenderChat',
+  'promoteChatMember', 'restrictChatMember', 'banChatSenderChat', 'unbanChatSenderChat', 'unpinAllGeneralForumTopicMessages',
   'setChatAdministratorCustomTitle', 'setChatPhoto', 'deleteChatPhoto', 'setChatTitle', 'setChatDescription',
   'pinChatMessage', 'unpinChatMessage', 'unpinAllChatMessages', 'setChatMenuButton', 'setMyDefaultAdministratorRights',
   'leaveChat', 'unbanChatMember', 'answerCallbackQuery', 'answerShippingQuery', 'answerPreCheckoutQuery',
