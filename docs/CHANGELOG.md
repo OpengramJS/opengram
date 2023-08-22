@@ -1,7 +1,7 @@
 
 # Changelog
 
-# Opengram 0.4
+# Opengram 0.4.1
 
 * 🤖 Bots API version increased from 6.7 to 6.8
   * Added new method `unpinAllGeneralForumTopicMessages` for Telegram and Context classes
