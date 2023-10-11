@@ -91,7 +91,9 @@ const updateTypes = [
   'web_app_data',
   'forum_topic_created',
   'forum_topic_closed',
-  'forum_topic_reopened'
+  'forum_topic_reopened',
+  'user_shared',
+  'chat_shared'
 ]
 
 updateTypes.forEach(update =>

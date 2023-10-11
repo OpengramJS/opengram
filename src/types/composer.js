@@ -22,7 +22,8 @@
      "group_chat_created" | "game" | "dice" | "document" | "delete_chat_photo" | "contact" | "channel_chat_created" |
      "audio" | "connected_website" | "passport_data" | "poll" | "forward" | "message_auto_delete_timer_changed" |
      "video_chat_started" | "video_chat_ended" | "video_chat_participants_invited" | "video_chat_scheduled" |
-     "web_app_data" | "forum_topic_created" | "forum_topic_closed" | "forum_topic_reopened"
+     "web_app_data" | "forum_topic_created" | "forum_topic_closed" | "forum_topic_reopened" | "user_shared" |
+     "chat_shared"
  } UpdateSubtype
  */
 

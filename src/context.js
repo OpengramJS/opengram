@@ -66,6 +66,8 @@ const MessageSubTypes = [
   'forum_topic_created',
   'forum_topic_closed',
   'forum_topic_reopened',
+  'user_shared',
+  'chat_shared',
   ...deprecatedMessageSubTypes
 ]
 
