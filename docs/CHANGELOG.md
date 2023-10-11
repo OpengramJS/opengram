@@ -1,6 +1,13 @@
 
 # Changelog
 
+# Opengram 0.5.0
+
+* 🤖 Bots API version increased from 6.8 to 6.9
+  * Updated JSDoc annotations
+  * Added `user_shared` and `chat_shared` subtype for `message`
+  * Updated dependencies
+
 # Opengram 0.4.1
 
 * 🤖 Bots API version increased from 6.7 to 6.8
