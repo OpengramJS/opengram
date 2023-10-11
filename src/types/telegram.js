@@ -120,7 +120,7 @@
   *   for private chats, supergroups and channels. Returned only in
   *   [getChat](https://core.telegram.org/bots/api/#getchat).
   * @property {string} [emoji_status_custom_emoji_id] *Optional*. Custom emoji identifier of emoji status of the other
-  *   party in a private chat. Returned only in
+  *   party in a private chat in Unix time, if any. Returned only in
   *   [getChat](https://core.telegram.org/bots/api/#getchat).
   * @property {number} [emoji_status_expiration_date] *Optional*. Expiration date of the emoji status of the other party in a private
   *   chat, if any. Returned only in
@@ -291,8 +291,10 @@
   * @property {ForumTopicCreated} [forum_topic_created] *Optional*. Service message: forum topic created
   * @property {ForumTopicClosed} [forum_topic_closed] *Optional*. Service message: forum topic closed
   * @property {ForumTopicReopened} [forum_topic_reopened] *Optional*. Service message: forum topic reopened
-  * @property {WriteAccessAllowed} [write_access_allowed] *Optional*. Service message: the user allowed the bot added
-  *   to the attachment menu to write messages
+  * @property {WriteAccessAllowed} [write_access_allowed] *Optional*. Service message: the user allowed the bot to write messages after
+  *   adding it to the attachment or side menu, launching a Web App from a link, or
+  *   accepting an explicit request from a Web App sent by the method
+  *   [requestWriteAccess](https://core.telegram.org/bots/webapps#initializing-mini-apps)
   * @property {GeneralForumTopicUnhidden} [general_forum_topic_unhidden] *Optional*. Service message: the 'General'
   *   forum topic unhidden
   * @property {GeneralForumTopicHidden} [general_forum_topic_hidden] *Optional*. Service message: the 'General' forum
@@ -715,10 +717,18 @@
 
 /**
  * This object represents a service message about a user allowing a bot to write messages after adding
- * the bot to the attachment menu or launching a Web App from a link.
+ * it to the attachment menu, launching a Web App from a link, or accepting an explicit request from a
+ *   Web App sent by the method
+ *   [requestWriteAccess](https://core.telegram.org/bots/webapps#initializing-mini-apps)
  *
  * @typedef {object} WriteAccessAllowed
- * @property {string} [web_app_name] *Optional*. Name of the Web App which was launched from a link
+ * @property {boolean} [from_request] *Optional*. True, if the access was granted after the user accepted an explicit
+ *     request from a Web App sent by the method
+ *     [requestWriteAccess](https://core.telegram.org/bots/webapps#initializing-mini-apps)
+ * @property {string} [web_app_name] *Optional*. Name of the Web App, if the access was granted when the Web App was
+ *     launched from a link
+ * @property {boolean} [from_attachment_menu] *Optional*. True, if the access was granted when the bot was added to the
+ *   attachment or side menu
  * @see https://core.telegram.org/bots/api/#writeaccessallowed
  */
 
@@ -792,8 +802,7 @@
   *
   * @typedef {object} WebAppInfo
   * @property {string} url An HTTPS URL of a Web App to be opened with additional data as specified in
-  *   [Initializing Web
-  *   Apps](https://core.telegram.org/bots/webapps#initializing-web-apps)
+  *   [Initializing WebApps](https://core.telegram.org/bots/webapps#initializing-mini-apps)
   * @see https://core.telegram.org/bots/api/#webappinfo
 */
 
@@ -1122,25 +1131,32 @@
   *
   * @typedef {object} ChatAdministratorRights
   * @property {boolean} is_anonymous *True*, if the user's presence in the chat is hidden
-  * @property {boolean} can_manage_chat *True*, if the administrator can access the chat event log, chat statistics,
-  *   message statistics in channels, see channel members, see anonymous
+  * @property {boolean} can_manage_chat *True*, if the administrator can access the chat event log, boost list in
+  *   channels, see channel members, report spam messages, see anonymous
   *   administrators in supergroups and ignore slow mode. Implied by any other
   *   administrator privilege
   * @property {boolean} can_delete_messages *True*, if the administrator can delete messages of other users
   * @property {boolean} can_manage_video_chats *True*, if the administrator can manage video chats
-  * @property {boolean} can_restrict_members *True*, if the administrator can restrict, ban or unban chat members
+  * @property {boolean} can_restrict_members *True*, if the administrator can restrict, ban or unban chat members, or access
+  *   supergroup statistics
   * @property {boolean} can_promote_members *True*, if the administrator can add new administrators with a subset of
   *   their own privileges or demote administrators that they have promoted, directly or indirectly (promoted by
   *   administrators that were appointed by the user)
   * @property {boolean} can_change_info *True*, if the user is allowed to change the chat title, photo and other
   *   settings
   * @property {boolean} can_invite_users *True*, if the user is allowed to invite new users to the chat
-  * @property {boolean} [can_post_messages] *Optional*. *True*, if the administrator can post in the channel; channels
-  *   only
+  * @property {boolean} [can_post_messages] *Optional*. *True*, if the administrator can post messages in the channel, or
+  *   access channel statistics; channels only
   * @property {boolean} [can_edit_messages] *Optional*. *True*, if the administrator can edit messages of other users
   *   and can pin messages; channels only
   * @property {boolean} [can_pin_messages] *Optional*. *True*, if the user is allowed to pin messages; groups and
   *   supergroups only
+  * @property {boolean} [can_post_stories] *Optional*. *True*, if the administrator can post stories in the channel;
+  *   channels only
+  * @property {boolean} [can_edit_stories] *Optional*. *True*, if the administrator can edit stories posted by other users;
+  *   channels only
+  * @property {boolean} [can_delete_stories] *Optional*. *True*, if the administrator can delete stories posted by other
+  *   users; channels only
   * @property {boolean} [can_manage_topics] *Optional*. *True*, if the user is allowed to create, rename, close, and
   *   reopen forum topics; supergroups only
   * @see https://core.telegram.org/bots/api/#chatadministratorrights
@@ -1193,25 +1209,32 @@
   * @property {User} user Information about the user
   * @property {boolean} can_be_edited *True*, if the bot is allowed to edit administrator privileges of that user
   * @property {boolean} is_anonymous *True*, if the user's presence in the chat is hidden
-  * @property {boolean} can_manage_chat *True*, if the administrator can access the chat event log, chat statistics,
-  *   message statistics in channels, see channel members, see anonymous
+  * @property {boolean} can_manage_chat *True*, if the administrator can access the chat event log, boost list in
+  *    channels, see channel members, report spam messages, see anonymous
   *   administrators in supergroups and ignore slow mode. Implied by any other
   *   administrator privilege
   * @property {boolean} can_delete_messages *True*, if the administrator can delete messages of other users
   * @property {boolean} can_manage_video_chats *True*, if the administrator can manage video chats
-  * @property {boolean} can_restrict_members *True*, if the administrator can restrict, ban or unban chat members
+  * @property {boolean} can_restrict_members *True*, if the administrator can restrict, ban or unban chat members, or access
+  *   supergroup statistics
   * @property {boolean} can_promote_members *True*, if the administrator can add new administrators with a subset of
   *   their own privileges or demote administrators that they have promoted, directly or indirectly (promoted by
   *   administrators that were appointed by the user)
   * @property {boolean} can_change_info *True*, if the user is allowed to change the chat title, photo and other
   *   settings
   * @property {boolean} can_invite_users *True*, if the user is allowed to invite new users to the chat
-  * @property {boolean} [can_post_messages] *Optional*. *True*, if the administrator can post in the channel; channels
-  *   only
+  * @property {boolean} [can_post_messages] *Optional*. *True*, if the administrator can post messages in the channel, or
+  *   access channel statistics; channels only
   * @property {boolean} [can_edit_messages] *Optional*. *True*, if the administrator can edit messages of other users
   *   and can pin messages; channels only
   * @property {boolean} [can_pin_messages] *Optional*. *True*, if the user is allowed to pin messages; groups and
   *   supergroups only
+  * @property {boolean} [can_post_stories] *Optional*. *True*, if the administrator can post stories in the channel;
+  *   channels only
+  * @property {boolean} [can_edit_stories] *Optional*. *True*, if the administrator can edit stories posted by other users;
+  *   channels only
+  * @property {boolean} [can_delete_stories] *Optional*. *True*, if the administrator can delete stories posted by other
+  *   users; channels only
   * @property {boolean} [can_manage_topics] *Optional*. *True*, if the user is allowed to create, rename, close, and
   *   reopen forum topics; supergroups only
   * @property {string} [custom_title] *Optional*. Custom title for this user
@@ -1258,7 +1281,7 @@
   * @property {boolean} can_manage_topics *True*, if the user is allowed to create forum topics
   * @property {boolean} can_send_media_messages *True*, if the user is allowed to send audios, documents, photos,
   *   videos, video notes and voice notes
-  * @property {number} until_date Date when restrictions will be lifted for this user; unix time. If 0, then the
+  * @property {number} until_date Date when restrictions will be lifted for this user; Unix time. If 0, then the
   *   user is restricted forever
   * @see https://core.telegram.org/bots/api/#chatmemberrestricted
 */
@@ -1282,7 +1305,7 @@
   * @typedef {object} ChatMemberBanned
   * @property {'kicked'} status The member's status in the chat, always “kicked”
   * @property {User} user Information about the user
-  * @property {number} until_date Date when restrictions will be lifted for this user; unix time. If 0, then the
+  * @property {number} until_date Date when restrictions will be lifted for this user; Unix time. If 0, then the
   *   user is banned forever
   * @see https://core.telegram.org/bots/api/#chatmemberbanned
 */
@@ -1311,7 +1334,7 @@
   * @property {number} user_chat_id Identifier of a private chat with the user who sent the join request.
   *   This number may have more than 32 significant bits and some programming languages may have difficulty/silent
   *   defects in interpreting it. But it has at most 52 significant bits, so a 64-bit integer or double-precision
-  *   float type are safe for storing this identifier. The bot can use this identifier for 24 hours to send messages
+  *   float type are safe for storing this identifier. The bot can use this identifier for 5 minutes to send messages
   *   until the join request is processed, assuming no other administrator contacted the user.
   * @property {number} date Date the request was sent in Unix time
   * @property {string} [bio] *Optional*. Bio of the user.
@@ -3016,7 +3039,7 @@
  * @property {WebAppInfo} [web_app] *Optional*. Description of the [Web App](https://core.telegram.org/bots/webapps)
  *   that will be launched when the user presses the button. The Web App will be able
  *   to switch back to the inline mode using the method
- *   [switchInlineQuery](https://core.telegram.org/bots/webapps#initializing-web-apps)
+ *   [switchInlineQuery](https://core.telegram.org/bots/webapps#initializing-mini-apps)
  *   inside the Web App.
  * @property {string} [start_parameter] *Optional*. [Deep-linking](https://core.telegram.org/bots/features#deep-linking)
  *   parameter for the /start message sent to the bot when a user presses the button.
