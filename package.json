@@ -1,6 +1,6 @@
 {
   "name": "opengram",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "Telegram Bot Library based on Telegraf 3.x",
   "license": "MIT",
   "author": "Vitaly Domnikov <oss@vitaly.codes>",
