@@ -14,7 +14,8 @@ const UpdateTypes = [
   'poll_answer',
   'my_chat_member',
   'chat_member',
-  'chat_join_request'
+  'chat_join_request',
+  'message_reaction'
 ]
 
 const deprecatedMessageSubTypes = [
@@ -463,6 +464,10 @@ class OpengramContext {
    */
   get passportData () {
     return this.message && this.message.passport_data
+  }
+
+  get messageReaction () {
+    return this.update.message_reaction
   }
 
   /**
