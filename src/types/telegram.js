@@ -5,18 +5,29 @@
   *
   * @typedef {object} Update
   * @property {number} update_id The update's unique identifier. Update identifiers start from a certain positive
-  *   number and increase sequentially. This ID becomes especially handy if you're
-  *   using [webhooks](https://core.telegram.org/bots/api/#setwebhook), since it
-  *   allows you to ignore repeated updates or to restore the correct update sequence,
-  *   should they get out of order. If there are no new updates for at least a week,
+  *   number and increase sequentially. This identifier becomes especially handy if identifier becomes especially handy
+  *   if you're using [webhooks](https://core.telegram.org/bots/api/#setwebhook), since
+  *   it allows you to ignore repeated updates or to restore the correct update sequence, should they get out of order.
+  *   If there are no new updates for at least a week,
   *   then identifier of the next update will be chosen randomly instead of
   *   sequentially.
   * @property {Message} [message] *Optional*. New incoming message of any kind - text, photo, sticker, etc.
-  * @property {Message} [edited_message] *Optional*. New version of a message that is known to the bot and was edited
+  * @property {Message} [edited_message] *Optional*. New version of a message that is known to the bot and was edited.
+  *   This update may at times be triggered by changes to message fields that are
+  *   either unavailable or not actively used by your bot.
   * @property {Message} [channel_post] *Optional*. New incoming channel post of any kind - text, photo, sticker, etc.
   * @property {Message} [edited_channel_post] *Optional*. New version of a channel post that is known to the bot and
   *   was
-  *   edited
+  *   edited. This update may at times be triggered by changes to message fields that
+  *   are either unavailable or not actively used by your bot.
+  * @property {MessageReactionUpdated} [message_reaction] *Optional*. A reaction to a message was changed by a user. The bot must be an
+  *   administrator in the chat and must explicitly specify `"message_reaction"` in
+  *   the list of *allowed\_updates* to receive these updates. The update isn't
+  *   received for reactions set by bots.
+  * @property {MessageReactionCountUpdated} [message_reaction_count] *Optional*. Reactions to a message with anonymous reactions were changed. The
+  *   bot must be an administrator in the chat and must explicitly specify
+  *   `"message_reaction_count"` in the list of *allowed\_updates* to receive these
+  *   updates. The updates are grouped and can be sent with delay up to a few minutes.
   * @property {InlineQuery} [inline_query] *Optional*. New incoming
   *   [inline](https://core.telegram.org/bots/api/#inline-mode) query
   * @property {ChosenInlineResult} [chosen_inline_result] *Optional*. The result of an
@@ -29,15 +40,15 @@
   *   price
   * @property {PreCheckoutQuery} [pre_checkout_query] *Optional*. New incoming pre-checkout query. Contains full
   *   information about checkout
-  * @property {Poll} [poll] *Optional*. New poll state. Bots receive only updates about stopped polls and
-  *   polls, which are sent by the bot
+  * @property {Poll} [poll] *Optional*. New poll state. Bots receive only updates about manually stopped
+  *   polls and polls, which are sent by the bot
   * @property {PollAnswer} [poll_answer] *Optional*. A user changed their answer in a non-anonymous poll. Bots receive
   *   new votes only in polls that were sent by the bot itself.
   * @property {ChatMemberUpdated} [my_chat_member] *Optional*. The bot's chat member status was updated in a chat. For
   *   private chats, this update is received only when the bot is blocked or unblocked by the user.
   * @property {ChatMemberUpdated} [chat_member] *Optional*. A chat member's status was updated in a chat. The bot must
-  *   be an administrator in the chat and must explicitly specify “chat\_member” in the list of *allowed\_updates* to
-  *   receive these updates.
+  *   administrator in the chat and must explicitly specify `"chat_member"` in the
+  *   list of *allowed\_updates* to receive these updates.
   * @property {ChatJoinRequest} [chat_join_request] *Optional*. A request to join the chat has been sent. The bot must
   *   have the
   *   *can\_invite\_users* administrator right in the chat to receive these updates.
@@ -122,8 +133,28 @@
   * @property {string} [emoji_status_custom_emoji_id] *Optional*. Custom emoji identifier of emoji status of the other
   *   party in a private chat in Unix time, if any. Returned only in
   *   [getChat](https://core.telegram.org/bots/api/#getchat).
-  * @property {number} [emoji_status_expiration_date] *Optional*. Expiration date of the emoji status of the other party in a private
-  *   chat, if any. Returned only in
+  * @property {number} [accent_color_id] *Optional*. Identifier of the accent color for the chat name and backgrounds of
+  *   the chat photo, reply header, and link preview. See [accent
+  *   colors](https://core.telegram.org/bots/api/#accent-colors) for more details.
+  *   Returned only in [getChat](https://core.telegram.org/bots/api/#getchat). Always
+  *   returned in [getChat](https://core.telegram.org/bots/api/#getchat).
+  * @property {string} [background_custom_emoji_id] *Optional*. Custom emoji identifier of emoji chosen by the chat for the reply
+  *   header and link preview background. Returned only in
+  *   [getChat](https://core.telegram.org/bots/api/#getchat).
+  * @property {number} [profile_accent_color_id] *Optional*. Identifier of the accent color for the chat's profile background.
+  *   See [profile accent
+  *   colors](https://core.telegram.org/bots/api/#profile-accent-colors) for more
+  *   details. Returned only in
+  *   [getChat](https://core.telegram.org/bots/api/#getchat).
+  * @property {string} [profile_background_custom_emoji_id] *Optional*. Custom emoji identifier of the emoji chosen by the chat for its
+  *   profile background. Returned only in
+  *   [getChat](https://core.telegram.org/bots/api/#getchat).
+  * @property {ReactionType[]} [available_reactions] *Optional*. List of available reactions allowed in the chat. If omitted, then
+  *   all [emoji reactions](https://core.telegram.org/bots/api/#reactiontypeemoji) are
+  *   allowed. Returned only in
+  *   [getChat](https://core.telegram.org/bots/api/#getchat).
+  * @property {number} [emoji_status_expiration_date] *Optional*. Expiration date of the emoji status of the chat or the other party
+  *   in a private chat, in Unix time, if any. Returned only in
   *    [getChat](https://core.telegram.org/bots/api/#getchat).
   * @property {string} [bio] *Optional*. Bio of the other party in a private chat. Returned only in
   *   [getChat](https://core.telegram.org/bots/api/#getchat).
@@ -148,7 +179,11 @@
   * @property {ChatPermissions} [permissions] *Optional*. Default chat member permissions, for groups and supergroups.
   *   Returned only in [getChat](https://core.telegram.org/bots/api/#getchat).
   * @property {number} [slow_mode_delay] *Optional*. For supergroups, the minimum allowed delay between consecutive
-  *   messages sent by each unpriviledged user; in seconds. Returned only in
+  *   messages sent by each unprivileged user; in seconds. Returned only in
+  *   [getChat](https://core.telegram.org/bots/api/#getchat).
+  * @property {number} [unrestrict_boost_count] *Optional*. For supergroups, the minimum number of boosts that a
+  *   non-administrator user needs to add in order to ignore slow mode and chat
+  *   permissions. Returned only in
   *   [getChat](https://core.telegram.org/bots/api/#getchat).
   * @property {number} [message_auto_delete_time] *Optional*. The time after which all messages sent to the chat will
   *   be
@@ -161,10 +196,16 @@
   *    and administrators in the chat. Returned only in [getChat](https://core.telegram.org/bots/api/#getchat).
   * @property {boolean} [has_protected_content] *Optional*. *True*, if messages from the chat can't be forwarded to
   *   other chats. Returned only in [getChat](https://core.telegram.org/bots/api/#getchat).
+  * @property {boolean} [has_visible_history] *Optional*. *True*, if new chat members will have access to old messages;
+  *   available only to chat administrators. Returned only in
+  *   [getChat](https://core.telegram.org/bots/api/#getchat).
   * @property {string} [sticker_set_name] *Optional*. For supergroups, name of group sticker set. Returned only in
   *   [getChat](https://core.telegram.org/bots/api/#getchat).
   * @property {boolean} [can_set_sticker_set] *Optional*. *True*, if the bot can change the group sticker set. Returned
   *   only in [getChat](https://core.telegram.org/bots/api/#getchat).
+  * @property {string} [custom_emoji_sticker_set_name] *Optional*. For supergroups, the name of the group's custom emoji sticker set.
+  *   Custom emoji from this set can be used by all users and bots in the group.
+  *   Returned only in [getChat](https://core.telegram.org/bots/api/#getchat).
   * @property {number} [linked_chat_id] *Optional*. Unique identifier for the linked chat, i.e. the discussion group
   *   identifier for a channel and vice versa; for supergroups and channel chats. This
   *   identifier may be greater than 32 bits and some programming languages may have
@@ -193,24 +234,28 @@
   *   forwarded to the discussion group. For backward compatibility, the field *from*
   *   contains a fake sender user in non-channel chats, if the message was sent on
   *   behalf of a chat.
-  * @property {number} date Date the message was sent in Unix time
-  * @property {Chat} chat Conversation the message belongs to
-  * @property {User} [forward_from] *Optional*. For forwarded messages, sender of the original message
-  * @property {Chat} [forward_from_chat] *Optional*. For messages forwarded from channels or from anonymous
-  *   administrators, information about the original sender chat
-  * @property {number} [forward_from_message_id] *Optional*. For messages forwarded from channels, identifier of the
-  *   original message in the channel
-  * @property {string} [forward_signature] *Optional*. For forwarded messages that were originally sent in channels or
-  *   by an anonymous chat administrator, signature of the message sender if present
-  * @property {string} [forward_sender_name] *Optional*. Sender's name for messages forwarded from users who disallow
-  *   adding a link to their account in forwarded messages
-  * @property {number} [forward_date] *Optional*. For forwarded messages, date the original message was sent in Unix
-  *   time
+  * @property {number} [sender_boost_count] *Optional*. If the sender of the message boosted the chat, the number of boosts
+  *   added by the user
+  * @property {number} date Date the message was sent in Unix time. It is always a positive number,
+  *   representing a valid date.
+  * @property {Chat} chat Chat the message belongs to
+  * @property {MessageOrigin} [forward_origin] *Optional*. Information about the original message for forwarded messages
   * @property {boolean} [is_topic_message] *Optional*. *True*, if the message is sent to a forum topic
   * @property {boolean} [is_automatic_forward] *Optional*. *True*, if the message is a channel post that was
   *   automatically forwarded to the connected discussion group
-  * @property {Message} [reply_to_message] *Optional*. For replies, the original message. Note that the Message object
-  *   in this field will not contain further *reply\_to\_message* fields even if it itself is a reply.
+  * @property {Message} [reply_to_message] *Optional*. For replies in the same chat and message thread, the original
+  *   message. Note that the Message object in this field will not contain further
+  *   *reply\_to\_message* fields even if it itself is a reply.
+  * @property {ExternalReplyInfo} [external_reply] *Optional*. Information about the message that is being replied to, which may
+  *   come from another chat or forum topic
+  * @property {TextQuote} [quote] *Optional*. For replies that quote part of the original message, the quoted part
+  *   of the message
+  * @property {Story} [reply_to_story] *Optional*. For replies to a story, the original story
+  * @property {ExternalReplyInfo} [external_reply] *Optional*. Information about the message that is being replied to, which may
+  *   come from another chat or forum topic
+  * @property {TextQuote} [quote] *Optional*. For replies that quote part of the original message, the quoted part
+  *   of the message
+  * @property {Story} [reply_to_story] *Optional*. For replies to a story, the original story
   * @property {User} [via_bot] *Optional*. Bot through which the message was sent
   * @property {number} [edit_date] *Optional*. Date the message was last edited in Unix time
   * @property {boolean} [has_protected_content] *Optional*. *True*, if the message can't be forwarded
@@ -221,6 +266,8 @@
   * @property {string} [text] *Optional*. For text messages, the actual UTF-8 text of the message
   * @property {MessageEntity[]} [entities] *Optional*. For text messages, special entities like usernames, URLs, bot
   *   commands, etc. that appear in the text
+  * @property {LinkPreviewOptions} [link_preview_options] *Optional*. Options used for link preview generation for the message, if it is a
+  *   text message and link preview options were changed
   * @property {Animation} [animation] *Optional*. Message is an animation, information about the animation. For
   *   backward compatibility, when this field is set, the *document* field will also
   *   be set
@@ -272,8 +319,8 @@
   *   specified identifier. This number may have more than 32 significant bits and some programming languages may have
   *   difficulty/silent defects in interpreting it. But it has at most 52 significant bits, so a signed 64-bit integer
   *   or double-precision float type are safe for storing this identifier.
-  * @property {Message} [pinned_message] *Optional*. Specified message was pinned. Note that the Message object in this
-  *   field will not contain further *reply\_to\_message* fields even if it is itself
+  * @property {MaybeInaccessibleMessage} [pinned_message] *Optional*. Specified message was pinned. Note that the Message object in this
+  *   field will not contain further *reply\_to\_message* fields even if it itself is
   *   a reply.
   * @property {Invoice} [invoice] *Optional*. Message is an invoice for a
   *   [payment](https://core.telegram.org/bots/api/#payments), information about the
@@ -281,13 +328,14 @@
   * @property {SuccessfulPayment} [successful_payment] *Optional*. Message is a service message about a successful
   *   payment, information about the payment. [More about payments
   *   »](https://core.telegram.org/bots/api/#payments)
-  * @property {UserShared} [user_shared] *Optional*. Service message: a user was shared with the bot
+  * @property {UsersShared} [users_shared] *Optional*. Service message: users were shared with the bot
   * @property {ChatShared} [chat_shared] *Optional*. Service message: a chat was shared with the bot
   * @property {string} [connected_website] *Optional*. The domain name of the website on which the user has logged in.
   *   [More about Telegram Login »](https://core.telegram.org/widgets/login)
   * @property {PassportData} [passport_data] *Optional*. Telegram Passport data
   * @property {ProximityAlertTriggered} [proximity_alert_triggered] *Optional*. Service message. A user in the chat
   *   triggered another user's proximity alert while sharing Live Location.
+  * @property {ChatBoostAdded} [boost_added] *Optional*. Service message: user boosted the chat
   * @property {ForumTopicCreated} [forum_topic_created] *Optional*. Service message: forum topic created
   * @property {ForumTopicClosed} [forum_topic_closed] *Optional*. Service message: forum topic closed
   * @property {ForumTopicReopened} [forum_topic_reopened] *Optional*. Service message: forum topic reopened
@@ -300,6 +348,10 @@
   * @property {GeneralForumTopicHidden} [general_forum_topic_hidden] *Optional*. Service message: the 'General' forum
   *   topic hidden
   * @property {ForumTopicEdited} [forum_topic_edited] *Optional*. Service message: forum topic edited
+  * @property {GiveawayCreated} [giveaway_created] *Optional*. Service message: a scheduled giveaway was created
+  * @property {Giveaway} [giveaway] *Optional*. The message is a scheduled giveaway message
+  * @property {GiveawayWinners} [giveaway_winners] *Optional*. A giveaway with public winners was completed
+  * @property {GiveawayCompleted} [giveaway_completed] *Optional*. Service message: a giveaway without public winners was completed
   * @property {VideoChatScheduled} [video_chat_scheduled] *Optional*. Service message: video chat scheduled
   * @property {VideoChatStarted} [video_chat_started] *Optional*. Service message: video chat started
   * @property {VideoChatEnded} [video_chat_ended] *Optional*. Service message: video chat ended
@@ -320,13 +372,35 @@
 */
 
 /**
+ * This object describes a message that was deleted or is otherwise inaccessible to the bot.
+ *
+ * @typedef {object} InaccessibleMessage
+ * @property {Chat} chat Chat the message belonged to
+ * @property {number} message_id Unique message identifier inside the chat
+ * @property {number} date Always 0. The field can be used to differentiate regular and inaccessible
+ *   messages.
+ * @see https://core.telegram.org/bots/api/#inaccessiblemessage
+ */
+/**
+ * This object describes a message that can be inaccessible to the bot. It can be one of
+ *
+ * [Message](https://core.telegram.org/bots/api/#message)
+ *
+ * [InaccessibleMessage](https://core.telegram.org/bots/api/#inaccessiblemessage)
+ *
+ *
+ * @typedef {Message|InaccessibleMessage} MaybeInaccessibleMessage
+ * @see https://core.telegram.org/bots/api/#maybeinaccessiblemessage
+ */
+
+/**
   * This object represents one special entity in a text message. For example, hashtags, usernames, URLs,
   * etc.
   *
   * @typedef {object} MessageEntity
   * @property {
   *   'mention'|'hashtag'|'cashtag'|'bot_command'|'url'|'email'|'phone_number'|'bold'|'italic'|'underline'|
-  *   'strikethrough'|'spoiler'|'code'|'pre'|'text_link'|'text_mention'|
+  *   'strikethrough'|'spoiler'|'blockquote'|'code'|'pre'|'text_link'|'text_mention'|
   *   'custom_emoji'
   * } type
   *   Type of the entity. Currently, can be “mention” (`@username`), “hashtag”
@@ -334,10 +408,10 @@
   *   (`https://telegram.org`), “email” (`do-not-reply@telegram.org`), “phone\_number”
   *   (`+1-212-555-0123`), “bold” (**bold text**), “italic” (*italic text*),
   *   “underline” (underlined text), “strikethrough” (strikethrough text), “spoiler”
-  *   (spoiler message), “code” (monowidth string), “pre” (monowidth block),
-  *   “text\_link” (for clickable text URLs), “text\_mention” (for users [without
-  *   usernames](https://telegram.org/blog/edit#new-mentions)), “custom\_emoji” (for
-  *   inline custom emoji stickers)
+  *   (spoiler message), “blockquote” (block quotation), “code” (monowidth string),
+  *   “pre” (monowidth block), “text\_link” (for clickable text URLs), “text\_mention”
+  *   (for users [without usernames](https://telegram.org/blog/edit#new-mentions)),
+  *   “custom\_emoji” (for inline custom emoji stickers)
   * @property {number} offset Offset in [UTF-16 code
   *   units](https://core.telegram.org/api/entities#entity-length) to the start of the
   *   entity
@@ -353,6 +427,147 @@
   *   to get full information about the sticker
   * @see https://core.telegram.org/bots/api/#messageentity
 */
+
+/**
+ * This object contains information about the quoted part of a message that is replied to by the given
+ * message.
+ *
+ * @typedef {object} TextQuote
+ * @property {string} text Text of the quoted part of a message that is replied to by the given message
+ * @property {MessageEntity[]} [entities] *Optional*. Special entities that appear in the quote. Currently, only *bold*,
+ *   *italic*, *underline*, *strikethrough*, *spoiler*, and *custom\_emoji* entities
+ *   are kept in quotes.
+ * @property {number} position Approximate quote position in the original message in UTF-16 code units as
+ *   specified by the sender
+ * @property {boolean} [is_manual] *Optional*. True, if the quote was chosen manually by the message sender.
+ *   Otherwise, the quote was added automatically by the server.
+ * @see https://core.telegram.org/bots/api/#textquote
+ */
+
+/**
+ * This object contains information about a message that is being replied to, which may come from
+ * another chat or forum topic.
+ *
+ * @typedef {object} ExternalReplyInfo
+ * @property {MessageOrigin} origin Origin of the message replied to by the given message
+ * @property {Chat} [chat] *Optional*. Chat the original message belongs to. Available only if the chat is
+ *   a supergroup or a channel.
+ * @property {number} [message_id] *Optional*. Unique message identifier inside the original chat. Available only
+ *   if the original chat is a supergroup or a channel.
+ * @property {LinkPreviewOptions} [link_preview_options] *Optional*. Options used for link preview generation for the original message,
+ *   if it is a text message
+ * @property {Animation} [animation] *Optional*. Message is an animation, information about the animation
+ * @property {Audio} [audio] *Optional*. Message is an audio file, information about the file
+ * @property {Document} [document] *Optional*. Message is a general file, information about the file
+ * @property {PhotoSize[]} [photo] *Optional*. Message is a photo, available sizes of the photo
+ * @property {Sticker} [sticker] *Optional*. Message is a sticker, information about the sticker
+ * @property {Story} [story] *Optional*. Message is a forwarded story
+ * @property {Video} [video] *Optional*. Message is a video, information about the video
+ * @property {VideoNote} [video_note] *Optional*. Message is a [video
+ *   note](https://telegram.org/blog/video-messages-and-telescope), information about
+ *   the video message
+ * @property {Voice} [voice] *Optional*. Message is a voice message, information about the file
+ * @property {boolean} [has_media_spoiler] *Optional*. *True*, if the message media is covered by a spoiler animation
+ * @property {Contact} [contact] *Optional*. Message is a shared contact, information about the contact
+ * @property {Dice} [dice] *Optional*. Message is a dice with random value
+ * @property {Game} [game] *Optional*. Message is a game, information about the game. [More about games
+ *   »](https://core.telegram.org/bots/api/#games)
+ * @property {Giveaway} [giveaway] *Optional*. Message is a scheduled giveaway, information about the giveaway
+ * @property {GiveawayWinners} [giveaway_winners] *Optional*. A giveaway with public winners was completed
+ * @property {Invoice} [invoice] *Optional*. Message is an invoice for a
+ *   [payment](https://core.telegram.org/bots/api/#payments), information about the
+ *   invoice. [More about payments »](https://core.telegram.org/bots/api/#payments)
+ * @property {Location} [location] *Optional*. Message is a shared location, information about the location
+ * @property {Poll} [poll] *Optional*. Message is a native poll, information about the poll
+ * @property {Venue} [venue] *Optional*. Message is a venue, information about the venue
+ * @see https://core.telegram.org/bots/api/#externalreplyinfo
+ */
+
+/**
+ * Describes reply parameters for the message that is being sent.
+ *
+ * @typedef {object} ReplyParameters
+ * @property {number} message_id Identifier of the message that will be replied to in the current chat, or in the
+ *   chat *chat\_id* if it is specified
+ * @property {number|string} [chat_id] *Optional*. If the message to be replied to is from a different chat, unique
+ *   identifier for the chat or username of the channel (in the format
+ *   `@channelusername`)
+ * @property {boolean} [allow_sending_without_reply] *Optional*. Pass *True* if the message should be sent even if the specified
+ *   message to be replied to is not found; can be used only for replies in the same
+ *   chat and forum topic.
+ * @property {string} [quote] *Optional*. Quoted part of the message to be replied to; 0-1024 characters after
+ *   entities parsing. The quote must be an exact substring of the message to be
+ *   replied to, including *bold*, *italic*, *underline*, *strikethrough*, *spoiler*,
+ *   and *custom\_emoji* entities. The message will fail to send if the quote isn't
+ *   found in the original message.
+ * @property {string} [quote_parse_mode] *Optional*. Mode for parsing entities in the quote. See [formatting
+ *   options](https://core.telegram.org/bots/api/#formatting-options) for more
+ *   details.
+ * @property {MessageEntity[]} [quote_entities] *Optional*. A JSON-serialized list of special entities that appear in the quote.
+ *   It can be specified instead of *quote\_parse\_mode*.
+ * @property {number} [quote_position] *Optional*. Position of the quote in the original message in UTF-16 code units
+ * @see https://core.telegram.org/bots/api/#replyparameters
+ */
+
+/**
+ * This object describes the origin of a message. It can be one of
+ *
+ * [MessageOriginUser](https://core.telegram.org/bots/api/#messageoriginuser)
+ *
+ * [MessageOriginHiddenUser](https://core.telegram.org/bots/api/#messageoriginhiddenuser)
+ *
+ * [MessageOriginChat](https://core.telegram.org/bots/api/#messageoriginchat)
+ *
+ * [MessageOriginChannel](https://core.telegram.org/bots/api/#messageoriginchannel)
+ *
+ *
+ * @typedef {MessageOriginUser|MessageOriginHiddenUser|MessageOriginChat|MessageOriginChannel} MessageOrigin
+ * @see https://core.telegram.org/bots/api/#messageorigin
+ */
+
+/**
+ * The message was originally sent by a known user.
+ *
+ * @typedef {object} MessageOriginUser
+ * @property {'user'} type Type of the message origin, always “user”
+ * @property {number} date Date the message was sent originally in Unix time
+ * @property {User} sender_user User that sent the message originally
+ * @see https://core.telegram.org/bots/api/#messageoriginuser
+ */
+
+/**
+ * The message was originally sent by an unknown user.
+ *
+ * @typedef {object} MessageOriginHiddenUser
+ * @property {'hidden_user'} type Type of the message origin, always “hidden\_user”
+ * @property {number} date Date the message was sent originally in Unix time
+ * @property {string} sender_user_name Name of the user that sent the message originally
+ * @see https://core.telegram.org/bots/api/#messageoriginhiddenuser
+ */
+
+/**
+ * The message was originally sent on behalf of a chat to a group chat.
+ *
+ * @typedef {object} MessageOriginChat
+ * @property {'chat'} type Type of the message origin, always “chat”
+ * @property {number} date Date the message was sent originally in Unix time
+ * @property {Chat} sender_chat Chat that sent the message originally
+ * @property {string} [author_signature] *Optional*. For messages originally sent by an anonymous chat administrator,
+ *   original message author signature
+ * @see https://core.telegram.org/bots/api/#messageoriginchat
+ */
+
+/**
+ * The message was originally sent to a channel chat.
+ *
+ * @typedef {object} MessageOriginChannel
+ * @property {'channel'} type Type of the message origin, always “channel”
+ * @property {number} date Date the message was sent originally in Unix time
+ * @property {Chat} chat Channel chat to which the message was originally sent
+ * @property {number} message_id Unique message identifier inside the chat
+ * @property {string} [author_signature] *Optional*. Signature of the original post author
+ * @see https://core.telegram.org/bots/api/#messageoriginchannel
+ */
 
 /**
   * This object represents one size of a photo or a [file](https://core.telegram.org/bots/api/#document)
@@ -432,10 +647,11 @@
 */
 
 /**
- * This object represents a message about a forwarded story in the chat. Currently holds no
- * information.
+ * This object represents a story.
  *
- * @typedef {*} Story
+ * @typedef {object} Story
+ * @property {Chat} chat Chat that posted the story
+ * @property {number} id Unique identifier for the story in the chat
  * @see https://core.telegram.org/bots/api/#story
  */
 
@@ -632,6 +848,14 @@
 */
 
 /**
+ * This object represents a service message about a user boosting a chat.
+ *
+ * @typedef {object} ChatBoostAdded
+ * @property {number} boost_count Number of boosts added by the user
+ * @see https://core.telegram.org/bots/api/#chatboostadded
+ */
+
+/**
   * This object represents a service message about a new forum topic created in the chat.
   *
   * @typedef {object} ForumTopicCreated
@@ -684,19 +908,18 @@
  */
 
 /**
- * This object contains information about the user whose identifier was shared with the bot using a
- * [KeyboardButtonRequestUser](https://core.telegram.org/bots/api/#keyboardbuttonrequestuser)
- * button.
+ * This object contains information about the users whose identifiers were shared with the bot using a
+ * [KeyboardButtonRequestUsers](https://core.telegram.org/bots/api/#keyboardbuttonrequestusers)
  *
- * @typedef {object} UserShared
+ * @typedef {object} UsersShared
  * @property {number} request_id Identifier of the request
- * @property {number} user_id Identifier of the shared user. This number may have more than 32 significant
+ * @property {number[]} user_ids Identifiers of the shared users. These numbers may have more than 32 significant
  *   bits and some programming languages may have difficulty/silent defects in
- *   interpreting it. But it has at most 52 significant bits, so a 64-bit integer or
- *   double-precision float type are safe for storing this identifier. The bot may
- *   not have access to the user and could be unable to use this identifier, unless
- *   the user is already known to the bot by some other means.
- * @see https://core.telegram.org/bots/api/#usershared
+ *   interpreting them. But they have at most 52 significant bits, so 64-bit integers
+ *   or double-precision float types are safe for storing these identifiers. The bot
+ *   may not have access to the users and could be unable to use these identifiers,
+ *   unless the users are already known to the bot by some other means.
+ * @see https://core.telegram.org/bots/api/#usersshared
  */
 
 /**
@@ -766,6 +989,85 @@
 */
 
 /**
+ * This object represents a service message about the creation of a scheduled giveaway. Currently holds
+ * no information.
+ *
+ * @typedef {*} GiveawayCreated
+ * @see https://core.telegram.org/bots/api/#giveawaycreated
+ */
+
+/**
+ * This object represents a message about a scheduled giveaway.
+ *
+ * @typedef {object} Giveaway
+ * @property {Chat[]} chats The list of chats which the user must join to participate in the giveaway
+ * @property {number} winners_selection_date Point in time (Unix timestamp) when winners of the giveaway will be selected
+ * @property {number} winner_count The number of users which are supposed to be selected as winners of the giveaway
+ * @property {boolean} [only_new_members] *Optional*. *True*, if only users who join the chats after the giveaway started
+ *   should be eligible to win
+ * @property {boolean} [has_public_winners] *Optional*. *True*, if the list of giveaway winners will be visible to everyone
+ * @property {string} [prize_description] *Optional*. Description of additional giveaway prize
+ * @property {string[]} [country_codes] *Optional*. A list of two-letter [ISO 3166-1
+ *   alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) country codes
+ *   indicating the countries from which eligible users for the giveaway must come.
+ *   If empty, then all users can participate in the giveaway. Users with a phone
+ *   number that was bought on Fragment can always participate in giveaways.
+ * @property {number} [premium_subscription_month_count] *Optional*. The number of months the Telegram Premium subscription won from the
+ *   giveaway will be active for
+ * @see https://core.telegram.org/bots/api/#giveaway
+ */
+
+/**
+ * This object represents a message about the completion of a giveaway with public winners.
+ *
+ * @typedef {object} GiveawayWinners
+ * @property {Chat} chat The chat that created the giveaway
+ * @property {number} giveaway_message_id Identifier of the message with the giveaway in the chat
+ * @property {number} winners_selection_date Point in time (Unix timestamp) when winners of the giveaway were selected
+ * @property {number} winner_count Total number of winners in the giveaway
+ * @property {User[]} winners List of up to 100 winners of the giveaway
+ * @property {number} [additional_chat_count] *Optional*. The number of other chats the user had to join in order to be
+ *   eligible for the giveaway
+ * @property {number} [premium_subscription_month_count] *Optional*. The number of months the Telegram Premium subscription won from the
+ *   giveaway will be active for
+ * @property {number} [unclaimed_prize_count] *Optional*. Number of undistributed prizes
+ * @property {boolean} [only_new_members] *Optional*. *True*, if only users who had joined the chats after the giveaway
+ *   started were eligible to win
+ * @property {boolean} [was_refunded] *Optional*. *True*, if the giveaway was canceled because the payment for it was
+ *   refunded
+ * @property {string} [prize_description] *Optional*. Description of additional giveaway prize
+ * @see https://core.telegram.org/bots/api/#giveawaywinners
+ */
+
+/**
+ * This object represents a service message about the completion of a giveaway without public winners.
+ *
+ * @typedef {object} GiveawayCompleted
+ * @property {number} winner_count Number of winners in the giveaway
+ * @property {number} [unclaimed_prize_count] *Optional*. Number of undistributed prizes
+ * @property {Message} [giveaway_message] *Optional*. Message with the giveaway that was completed, if it wasn't deleted
+ * @see https://core.telegram.org/bots/api/#giveawaycompleted
+ */
+
+/**
+ * Describes the options used for link preview generation.
+ *
+ * @typedef {object} LinkPreviewOptions
+ * @property {boolean} [is_disabled] *Optional*. *True*, if the link preview is disabled
+ * @property {string} [url] *Optional*. URL to use for the link preview. If empty, then the first URL found
+ *   in the message text will be used
+ * @property {boolean} [prefer_small_media] *Optional*. *True*, if the media in the link preview is supposed to be shrunk;
+ *   ignored if the URL isn't explicitly specified or media size change isn't
+ *   supported for the preview
+ * @property {boolean} [prefer_large_media] *Optional*. *True*, if the media in the link preview is supposed to be enlarged;
+ *   ignored if the URL isn't explicitly specified or media size change isn't
+ *   supported for the preview
+ * @property {boolean} [show_above_text] *Optional*. *True*, if the link preview must be shown above the message text;
+ *   otherwise, the link preview will be shown below the message text
+ * @see https://core.telegram.org/bots/api/#linkpreviewoptions
+ */
+
+/**
   * This object represent a user's profile pictures.
   *
   * @typedef {object} UserProfilePhotos
@@ -830,11 +1132,11 @@
   *   *false*.
   * @property {string} [input_field_placeholder] *Optional*. The placeholder to be shown in the input field when the
   *   keyboard is active; 1-64 characters
-  * @property {boolean} [selective] *Optional*. Use this parameter if you want to show the keyboard to specific
-  *   users only. Targets: 1) users that are @mentioned in the *text* of the
+  * @property {boolean} [selective] *Optional*. Use this parameter if you want to force reply from specific users
+  *   only. Targets: 1) users that are @mentioned in the *text* of the
   *   [Message](https://core.telegram.org/bots/api/#message) object; 2) if the bot's
-  *   message is a reply (has *reply\_to\_message\_id*), sender of the original
-  *   message.
+  *   message is a reply to a message in the same chat and forum topic, sender of the
+  *   original message.
   *
   *   *Example:* A user requests to change the bot's language, bot replies to the
   *   request with a keyboard to select the new language. Other users in the group
@@ -845,15 +1147,15 @@
 /**
   * This object represents one button of the reply keyboard. For simple text buttons, *String* can be
   * used instead of this object to specify the button text. The optional fields *web\_app*,
-  * *request\_user*, *request\_chat*, *request\_contact*, *request\_location*, and *request\_poll* are
+  * *request\_users*, *request\_chat*, *request\_contact*, *request\_location*, and *request\_poll* are
   * mutually exclusive.
   *
   * @typedef {object} KeyboardButton
   * @property {string} text Text of the button. If none of the optional fields are used, it will be sent as
   *   a message when the button is pressed
-  * @property {KeyboardButtonRequestUser} [request_user] *Optional.* If specified, pressing the button will open a list
-  *   of suitable users. Tapping on any user will send their identifier to the bot in a
-  *   “user\_shared” service message. Available in private chats only.
+  * @property {KeyboardButtonRequestUsers} [request_users] *Optional.* If specified, pressing the button will open a list of suitable
+  *   users. Identifiers of selected users will be sent to the bot in a
+  *   “users\_shared” service message. Available in private chats only.
   * @property {KeyboardButtonRequestChat} [request_chat] *Optional.* If specified, pressing the button will open a list
   *   of suitable chats. Tapping on a chat will send its identifier to the bot in a “chat\_shared” service message.
   *   Available in private chats only.
@@ -871,19 +1173,20 @@
 */
 
 /**
- * This object defines the criteria used to request a suitable user. The identifier of the selected
- * user will be shared with the bot when the corresponding button is pressed.
+ * This object defines the criteria used to request suitable users. The identifiers of the selected
+ * users will be shared with the bot when the corresponding button is pressed.
  * [More about requesting users »](https://core.telegram.org/bots/features#chat-and-user-selection)
  *
- * @typedef {object} KeyboardButtonRequestUser
- * @property {number} request_id Signed 32-bit identifier of the request, which will be received back in the
- *   [UserShared](https://core.telegram.org/bots/api/#usershared) object. Must be
+ * @typedef {object} KeyboardButtonRequestUsers
+ * @property {number} request_id Signed 32-bit identifier of the request that will be received back in the
+ *   [UsersShared](https://core.telegram.org/bots/api/#usersshared) object. Must be
  *   unique within the message
- * @property {boolean} [user_is_bot] *Optional*. Pass *True* to request a bot, pass *False* to request a regular
- *   user. If not specified, no additional restrictions are applied.
- * @property {boolean} [user_is_premium] *Optional*. Pass *True* to request a premium user, pass *False* to request a
- *   non-premium user. If not specified, no additional restrictions are applied.
- * @see https://core.telegram.org/bots/api/#keyboardbuttonrequestuser
+ * @property {boolean} [user_is_bot] *Optional*. Pass *True* to request bots, pass *False* to request regular users.
+ *   If not specified, no additional restrictions are applied.
+ * @property {boolean} [user_is_premium] *Optional*. Pass *True* to request premium users, pass *False* to request
+ *   non-premium users. If not specified, no additional restrictions are applied.
+ * @property {number} [max_quantity=1] *Optional*. The maximum number of users to be selected; 1-10. Defaults to 1.
+ * @see https://core.telegram.org/bots/api/#keyboardbuttonrequestusers
  */
 
 /**
@@ -945,8 +1248,7 @@
   * @property {boolean} [selective] *Optional*. Use this parameter if you want to remove the keyboard for specific
   *   users only. Targets: 1) users that are @mentioned in the *text* of the
   *   [Message](https://core.telegram.org/bots/api/#message) object; 2) if the bot's
-  *   message is a reply (has *reply\_to\_message\_id*), sender of the original
-  *   message.
+  *   message is a reply to a message in the same chat and forum topic, sender of the original message.
   *
   *   *Example:* A user votes in a poll, bot returns confirmation message in reply to
   *   the vote and removes the keyboard for that user, while still showing the
@@ -973,8 +1275,8 @@
   * @typedef {object} InlineKeyboardButton
   * @property {string} text Label text on the button
   * @property {string} [url] *Optional*. HTTP or tg:// URL to be opened when the button is pressed. Links
-  *   `tg://user?id=<user_id>` can be used to mention a user by their ID without using
-  *   a username, if this is allowed by their privacy settings.
+  *   `tg://user?id=<user_id>` can be used to mention a user by their identifier
+  *   without using a username, if this is allowed by their privacy settings.
   * @property {string} [callback_data] *Optional*. Data to be sent in a [callback
   *   query](https://core.telegram.org/bots/api/#callbackquery) to the bot when button
   *   is pressed, 1-64 bytes
@@ -1056,9 +1358,8 @@
   * @typedef {object} CallbackQuery
   * @property {string} id Unique identifier for this query
   * @property {User} from Sender
-  * @property {Message} [message] *Optional*. Message with the callback button that originated the query. Note
-  *   that message content and message date will not be available if the message is
-  *   too old
+  * @property {MaybeInaccessibleMessage} [message] *Optional*. Message sent by the bot with the callback button that originated the
+  *   query
   * @property {string} [inline_message_id] *Optional*. Identifier of the message sent via the bot in inline mode, that
   *   originated the query.
   * @property {string} chat_instance Global identifier, uniquely corresponding to the chat to which the message with
@@ -1086,7 +1387,7 @@
   * @property {boolean} [selective] *Optional*. Use this parameter if you want to force reply from specific users
   *   only. Targets: 1) users that are @mentioned in the *text* of the
   *   [Message](https://core.telegram.org/bots/api/#message) object; 2) if the bot's
-  *   message is a reply (has *reply\_to\_message\_id*), sender of the original
+  *   message is a reply to a message in the same chat and forum topic, sender of the original
   *   message.
   * @see https://core.telegram.org/bots/api/#forcereply
 */
@@ -1131,10 +1432,9 @@
   *
   * @typedef {object} ChatAdministratorRights
   * @property {boolean} is_anonymous *True*, if the user's presence in the chat is hidden
-  * @property {boolean} can_manage_chat *True*, if the administrator can access the chat event log, boost list in
-  *   channels, see channel members, report spam messages, see anonymous
-  *   administrators in supergroups and ignore slow mode. Implied by any other
-  *   administrator privilege
+  * @property {boolean} can_manage_chat *True*, if the administrator can access the chat event log, get boost list, see
+  *   hidden supergroup and channel members, report spam messages and ignore slow
+  *   mode. Implied by any other administrator privilege.
   * @property {boolean} can_delete_messages *True*, if the administrator can delete messages of other users
   * @property {boolean} can_manage_video_chats *True*, if the administrator can manage video chats
   * @property {boolean} can_restrict_members *True*, if the administrator can restrict, ban or unban chat members, or access
@@ -1151,16 +1451,28 @@
   *   and can pin messages; channels only
   * @property {boolean} [can_pin_messages] *Optional*. *True*, if the user is allowed to pin messages; groups and
   *   supergroups only
-  * @property {boolean} [can_post_stories] *Optional*. *True*, if the administrator can post stories in the channel;
-  *   channels only
-  * @property {boolean} [can_edit_stories] *Optional*. *True*, if the administrator can edit stories posted by other users;
-  *   channels only
-  * @property {boolean} [can_delete_stories] *Optional*. *True*, if the administrator can delete stories posted by other
-  *   users; channels only
+  * @property {boolean} can_post_stories *True*, if the administrator can post stories to the chat
+  * @property {boolean} can_edit_stories *True*, if the administrator can edit stories posted by other users
+  * @property {boolean} can_delete_stories *True*, if the administrator can delete stories posted by other users
   * @property {boolean} [can_manage_topics] *Optional*. *True*, if the user is allowed to create, rename, close, and
   *   reopen forum topics; supergroups only
   * @see https://core.telegram.org/bots/api/#chatadministratorrights
 */
+
+/**
+ * This object represents changes in the status of a chat member.
+ *
+ * @typedef {object} ChatMemberUpdated
+ * @property {Chat} chat Chat the user belongs to
+ * @property {User} from Performer of the action, which resulted in the change
+ * @property {number} date Date the change was done in Unix time
+ * @property {ChatMember} old_chat_member Previous information about the chat member
+ * @property {ChatMember} new_chat_member New information about the chat member
+ * @property {ChatInviteLink} [invite_link] *Optional*. Chat invite link, which was used by the user to join the chat; for
+ *   joining by invite link events only.
+ * @property {boolean} [via_chat_folder_invite_link] *Optional*. True, if the user joined the chat via a chat folder invite link
+ * @see https://core.telegram.org/bots/api/#chatmemberupdated
+ */
 
 /**
   * This object contains information about one member of a chat. Currently, the following 6 types of
@@ -1209,10 +1521,9 @@
   * @property {User} user Information about the user
   * @property {boolean} can_be_edited *True*, if the bot is allowed to edit administrator privileges of that user
   * @property {boolean} is_anonymous *True*, if the user's presence in the chat is hidden
-  * @property {boolean} can_manage_chat *True*, if the administrator can access the chat event log, boost list in
-  *    channels, see channel members, report spam messages, see anonymous
-  *   administrators in supergroups and ignore slow mode. Implied by any other
-  *   administrator privilege
+  * @property {boolean} can_manage_chat *True*, if the administrator can access the chat event log, get boost list, see
+  *   hidden supergroup and channel members, report spam messages and ignore slow
+  *   mode. Implied by any other administrator privilege.
   * @property {boolean} can_delete_messages *True*, if the administrator can delete messages of other users
   * @property {boolean} can_manage_video_chats *True*, if the administrator can manage video chats
   * @property {boolean} can_restrict_members *True*, if the administrator can restrict, ban or unban chat members, or access
@@ -1229,12 +1540,9 @@
   *   and can pin messages; channels only
   * @property {boolean} [can_pin_messages] *Optional*. *True*, if the user is allowed to pin messages; groups and
   *   supergroups only
-  * @property {boolean} [can_post_stories] *Optional*. *True*, if the administrator can post stories in the channel;
-  *   channels only
-  * @property {boolean} [can_edit_stories] *Optional*. *True*, if the administrator can edit stories posted by other users;
-  *   channels only
-  * @property {boolean} [can_delete_stories] *Optional*. *True*, if the administrator can delete stories posted by other
-  *   users; channels only
+  * @property {boolean} can_post_stories *True*, if the administrator can post stories to the chat
+  * @property {boolean} can_edit_stories *True*, if the administrator can edit stories posted by other users
+  * @property {boolean} can_delete_stories *True*, if the administrator can delete stories posted by other users
   * @property {boolean} [can_manage_topics] *Optional*. *True*, if the user is allowed to create, rename, close, and
   *   reopen forum topics; supergroups only
   * @property {string} [custom_title] *Optional*. Custom title for this user
@@ -1261,8 +1569,8 @@
   * @property {'restricted'} status The member's status in the chat, always “restricted”
   * @property {User} user Information about the user
   * @property {boolean} is_member *True*, if the user is a member of the chat at the moment of the request
-  * @property {boolean} can_send_messages *True*, if the user is allowed to send text messages, contacts, invoices,
-  *   locations and venues
+  * @property {boolean} can_send_messages *True*, if the user is allowed to send text messages, contacts, giveaways,
+  *   giveaway winners, invoices, locations and venues
   * @property {boolean} can_send_audios *True*, if the user is allowed to send audios
   * @property {boolean} can_send_documents *True*, if the user is allowed to send documents
   * @property {boolean} can_send_photos *True*, if the user is allowed to send photos
@@ -1311,21 +1619,6 @@
 */
 
 /**
-  * This object represents changes in the status of a chat member.
-  *
-  * @typedef {object} ChatMemberUpdated
-  * @property {Chat} chat Chat the user belongs to
-  * @property {User} from Performer of the action, which resulted in the change
-  * @property {number} date Date the change was done in Unix time
-  * @property {ChatMember} old_chat_member Previous information about the chat member
-  * @property {ChatMember} new_chat_member New information about the chat member
-  * @property {ChatInviteLink} [invite_link] *Optional*. Chat invite link, which was used by the user to join the chat;
-  *   for joining by invite link events only.
-  * @property {boolean} [via_chat_folder_invite_link] *Optional*. True, if the user joined the chat via a chat folder invite link
-  * @see https://core.telegram.org/bots/api/#chatmemberupdated
-*/
-
-/**
   * Represents a join request sent to a chat.
   *
   * @typedef {object} ChatJoinRequest
@@ -1348,7 +1641,7 @@
   *
   * @typedef {object} ChatPermissions
   * @property {boolean} [can_send_messages] *Optional*. *True*, if the user is allowed to send text messages, contacts,
-  *   invoices, locations and venues
+  *   giveaways, giveaway winners, invoices, locations and venues
   * @property {boolean} [can_send_media_messages] *Optional*. *True*, if the user is allowed to send audios, documents,
   *   photos, videos, video notes and voice notes, implies can\_send\_messages
   * @property {boolean} [can_send_audios] *Optional*. *True*, if the user is allowed to send audios
@@ -1382,6 +1675,77 @@
   * @property {string} address Location address; 1-64 characters, as defined by the chat owner
   * @see https://core.telegram.org/bots/api/#chatlocation
 */
+
+/**
+ * This object describes the type of a reaction. Currently, it can be one of
+ *
+ * [ReactionTypeEmoji](https://core.telegram.org/bots/api/#reactiontypeemoji)
+ *
+ * [ReactionTypeCustomEmoji](https://core.telegram.org/bots/api/#reactiontypecustomemoji)
+ *
+ *
+ * @typedef {ReactionTypeEmoji|ReactionTypeCustomEmoji} ReactionType
+ * @see https://core.telegram.org/bots/api/#reactiontype
+ */
+
+/**
+ * The reaction is based on an emoji.
+ *
+ * @typedef {object} ReactionTypeEmoji
+ * @property {'emoji'} type Type of the reaction, always “emoji”
+ * @property {'👍'|'👎'|'❤'|'🔥'|'🥰'|'👏'|'😁'|'🤔'|'🤯'|'😱'|'🤬'|'😢'|'🎉'|'🤩'|'🤮'|'💩'|'🙏'|'👌'|'🕊'|'🤡'|'🥱'|'🥴'|'😍'|'🐳'|'❤‍🔥'|'🌚'|'🌭'|'💯'|'🤣'|'⚡'|'🍌'|'🏆'|'💔'|'🤨'|'😐'|'🍓'|'🍾'|'💋'|'🖕'|'😈'|'😴'|'😭'|'🤓'|'👻'|'👨‍💻'|'👀'|'🎃'|'🙈'|'😇'|'😨'|'🤝'|'✍'|'🤗'|'🫡'|'🎅'|'🎄'|'☃'|'💅'|'🤪'|'🗿'|'🆒'|'💘'|'🙉'|'🦄'|'😘'|'💊'|'🙊'|'😎'|'👾'|'🤷‍♂'|'🤷'|'🤷‍♀'|'😡'} emoji Reaction emoji. Currently, it can be one of "👍", "👎", "❤", "🔥", "🥰", "👏",
+ *   "😁", "🤔", "🤯", "😱", "🤬", "😢", "🎉", "🤩", "🤮", "💩", "🙏", "👌", "🕊",
+ *   "🤡", "🥱", "🥴", "😍", "🐳", "❤‍🔥", "🌚", "🌭", "💯", "🤣", "⚡", "🍌", "🏆",
+ *   "💔", "🤨", "😐", "🍓", "🍾", "💋", "🖕", "😈", "😴", "😭", "🤓", "👻", "👨‍💻",
+ *   "👀", "🎃", "🙈", "😇", "😨", "🤝", "✍", "🤗", "🫡", "🎅", "🎄", "☃", "💅",
+ *   "🤪", "🗿", "🆒", "💘", "🙉", "🦄", "😘", "💊", "🙊", "😎", "👾", "🤷‍♂", "🤷",
+ *   "🤷‍♀", "😡"
+ * @see https://core.telegram.org/bots/api/#reactiontypeemoji
+ */
+
+/**
+ * The reaction is based on a custom emoji.
+ *
+ * @typedef {object} ReactionTypeCustomEmoji
+ * @property {'custom_emoji'} type Type of the reaction, always “custom\_emoji”
+ * @property {string} custom_emoji_id Custom emoji identifier
+ * @see https://core.telegram.org/bots/api/#reactiontypecustomemoji
+ */
+
+/**
+ * Represents a reaction added to a message along with the number of times it was added.
+ *
+ * @typedef {object} ReactionCount
+ * @property {ReactionType} type Type of the reaction
+ * @property {number} total_count Number of times the reaction was added
+ * @see https://core.telegram.org/bots/api/#reactioncount
+ */
+
+/**
+ * This object represents a change of a reaction on a message performed by a user.
+ *
+ * @typedef {object} MessageReactionUpdated
+ * @property {Chat} chat The chat containing the message the user reacted to
+ * @property {number} message_id Unique identifier of the message inside the chat
+ * @property {User} [user] *Optional*. The user that changed the reaction, if the user isn't anonymous
+ * @property {Chat} [actor_chat] *Optional*. The chat on behalf of which the reaction was changed, if the user is
+ *   anonymous
+ * @property {number} date Date of the change in Unix time
+ * @property {ReactionType[]} old_reaction Previous list of reaction types that were set by the user
+ * @property {ReactionType[]} new_reaction New list of reaction types that have been set by the user
+ * @see https://core.telegram.org/bots/api/#messagereactionupdated
+ */
+
+/**
+ * This object represents reaction changes on a message with anonymous reactions.
+ *
+ * @typedef {object} MessageReactionCountUpdated
+ * @property {Chat} chat The chat containing the message
+ * @property {number} message_id Unique message identifier inside the chat
+ * @property {number} date Date of the change in Unix time
+ * @property {ReactionCount[]} reactions List of reactions that are present on the message
+ * @see https://core.telegram.org/bots/api/#messagereactioncountupdated
+ */
 
 /**
   * This object represents a forum topic.
@@ -1560,6 +1924,91 @@
   *   [answerWebAppQuery](https://core.telegram.org/bots/api/#answerwebappquery).
   * @see https://core.telegram.org/bots/api/#menubuttonwebapp
 */
+
+/**
+ * This object describes the source of a chat boost. It can be one of
+ *
+ * [ChatBoostSourcePremium](https://core.telegram.org/bots/api/#chatboostsourcepremium)
+ *
+ * [ChatBoostSourceGiftCode](https://core.telegram.org/bots/api/#chatboostsourcegiftcode)
+ *
+ * [ChatBoostSourceGiveaway](https://core.telegram.org/bots/api/#chatboostsourcegiveaway)
+ *
+ *
+ * @typedef {ChatBoostSourcePremium|ChatBoostSourceGiftCode|ChatBoostSourceGiveaway} ChatBoostSource
+ * @see https://core.telegram.org/bots/api/#chatboostsource
+ */
+/**
+ * The boost was obtained by subscribing to Telegram Premium or by gifting a Telegram Premium
+ * subscription to another user.
+ *
+ * @typedef {object} ChatBoostSourcePremium
+ * @property {'premium'} source Source of the boost, always “premium”
+ * @property {User} user User that boosted the chat
+ * @see https://core.telegram.org/bots/api/#chatboostsourcepremium
+ */
+/**
+ * The boost was obtained by the creation of Telegram Premium gift codes to boost a chat. Each such
+ * code boosts the chat 4 times for the duration of the corresponding Telegram Premium subscription.
+ *
+ * @typedef {object} ChatBoostSourceGiftCode
+ * @property {'gift_code'} source Source of the boost, always “gift\_code”
+ * @property {User} user User for which the gift code was created
+ * @see https://core.telegram.org/bots/api/#chatboostsourcegiftcode
+ */
+/**
+ * The boost was obtained by the creation of a Telegram Premium giveaway. This boosts the chat 4 times
+ * for the duration of the corresponding Telegram Premium subscription.
+ *
+ * @typedef {object} ChatBoostSourceGiveaway
+ * @property {'giveaway'} source Source of the boost, always “giveaway”
+ * @property {number} giveaway_message_id Identifier of a message in the chat with the giveaway; the message could have
+ *   been deleted already. May be 0 if the message isn't sent yet.
+ * @property {User} [user] *Optional*. User that won the prize in the giveaway if any
+ * @property {boolean} [is_unclaimed] *Optional*. True, if the giveaway was completed, but there was no user to win
+ *   the prize
+ * @see https://core.telegram.org/bots/api/#chatboostsourcegiveaway
+ */
+
+/**
+ * This object contains information about a chat boost.
+ *
+ * @typedef {object} ChatBoost
+ * @property {string} boost_id Unique identifier of the boost
+ * @property {number} add_date Point in time (Unix timestamp) when the chat was boosted
+ * @property {number} expiration_date Point in time (Unix timestamp) when the boost will automatically expire, unless
+ *   the booster's Telegram Premium subscription is prolonged
+ * @property {ChatBoostSource} source Source of the added boost
+ * @see https://core.telegram.org/bots/api/#chatboost
+ */
+
+/**
+ * This object represents a boost added to a chat or changed.
+ *
+ * @typedef {object} ChatBoostUpdated
+ * @property {Chat} chat Chat which was boosted
+ * @property {ChatBoost} boost Information about the chat boost
+ * @see https://core.telegram.org/bots/api/#chatboostupdated
+ */
+
+/**
+ * This object represents a boost removed from a chat.
+ *
+ * @typedef {object} ChatBoostRemoved
+ * @property {Chat} chat Chat which was boosted
+ * @property {string} boost_id Unique identifier of the boost
+ * @property {number} remove_date Point in time (Unix timestamp) when the boost was removed
+ * @property {ChatBoostSource} source Source of the removed boost
+ * @see https://core.telegram.org/bots/api/#chatboostremoved
+ */
+
+/**
+ * This object represents a list of boosts added to a chat by a user.
+ *
+ * @typedef {object} UserChatBoosts
+ * @property {ChatBoost[]} boosts The list of boosts added to the chat by the user
+ * @see https://core.telegram.org/bots/api/#userchatboosts
+ */
 
 /**
   * Describes that no specific value for the menu button was set.
@@ -2471,7 +2920,7 @@
   *   details.
   * @property {MessageEntity[]} [entities] *Optional*. List of special entities that appear in message text, which can
   *   be specified instead of *parse\_mode*
-  * @property {boolean} [disable_web_page_preview] *Optional*. Disables link previews for links in the sent message
+  * @property {LinkPreviewOptions} [link_preview_options] *Optional*. Link preview generation options for the message
   * @see https://core.telegram.org/bots/api/#inputtextmessagecontent
 */
 
@@ -2647,7 +3096,8 @@
   * This object represents a shipping address.
   *
   * @typedef {object} ShippingAddress
-  * @property {string} country_code Two-letter ISO 3166-1 alpha-2 country code
+  * @property {string} country_code Two-letter [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
+  *   country code
   * @property {string} state State, if applicable
   * @property {string} city City
   * @property {string} street_line1 First line for the address
