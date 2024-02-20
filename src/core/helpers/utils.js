@@ -92,6 +92,18 @@ function getThreadId (ctx) {
 }
 
 /**
+ * Returns `message_id` from {@link Message} object for current update.
+ *
+ * @param {OpengramContext} ctx Update context for extracting `message_id` from {@link Message} object
+ * @private
+ * @return {number|undefined}
+ */
+function getMsgIdFromAnySource (ctx) {
+  const msg = getMessageFromAnySource(ctx)
+  return (msg ?? ctx.messageReaction ?? ctx.messageReactionCount)?.message_id
+}
+
+/**
  * Prints warning messages
  *
  * @param {string} text Text of warning
@@ -132,4 +144,12 @@ function timingSafeEqual (a, b) {
   return crypto.timingSafeEqual(bufA, bufB) && aLen === bLen
 }
 
-module.exports = { getEntities, getText, getMessageFromAnySource, getThreadId, showWarning, timingSafeEqual }
+module.exports = {
+  getEntities,
+  getText,
+  getMessageFromAnySource,
+  getThreadId,
+  getMsgIdFromAnySource,
+  showWarning,
+  timingSafeEqual
+}
