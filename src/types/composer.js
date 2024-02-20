@@ -10,7 +10,7 @@
  * @typedef {
     "callback_query" | "channel_post" | "chosen_inline_result" | "edited_channel_post" | "edited_message" |
     "inline_query" | "shipping_query" | "pre_checkout_query" | "message" | "poll" | "poll_answer" |
-    "my_chat_member" | "chat_member" | "chat_join_request"
+    "my_chat_member" | "chat_member" | "chat_join_request" | "message_reaction"
  } UpdateType
  */
 
