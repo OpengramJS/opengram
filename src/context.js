@@ -15,7 +15,8 @@ const UpdateTypes = [
   'my_chat_member',
   'chat_member',
   'chat_join_request',
-  'message_reaction'
+  'message_reaction',
+  'message_reaction_count'
 ]
 
 const deprecatedMessageSubTypes = [
@@ -468,6 +469,10 @@ class OpengramContext {
 
   get messageReaction () {
     return this.update.message_reaction
+  }
+
+  get messageReactionCount () {
+    return this.update.message_reaction_count
   }
 
   /**
